@@ -102,11 +102,11 @@ def no_sign(x, y, r=16, w=3.5):
 def warn_tri(x, y, r=13, col=AMBER):
     return ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>'
             % (x, y - r, x + r * 1.1, y + r * 0.8, x - r * 1.1, y + r * 0.8, col)
-            + text(x, y + r * 0.62, '!', r * 1.15, weight=900, fill='#fff'))
+            + text(x, y + r * 0.62, '!', max(12, r * 1.15), weight=900, fill='#fff'))
 
 
 def excl(x, y, col=AMBER, r=13):
-    return '<circle cx="%.1f" cy="%.1f" r="%s" fill="%s"/>' % (x, y, r, col) + text(x, y + r * 0.45, '!', r * 1.25, weight=900, fill='#fff')
+    return '<circle cx="%.1f" cy="%.1f" r="%s" fill="%s"/>' % (x, y, r, col) + text(x, y + r * 0.45, '!', max(12, r * 1.25), weight=900, fill='#fff')
 
 
 def curved(x1, y1, x2, y2, bend=30, color=ACC2, w=2, dash=''):
@@ -479,7 +479,7 @@ def matrice_forma():
 @figx('anatomia-sigilli.svg')
 def sigilli():
     b = title('I 4 sigilli proteggono letto e matrice')
-    f, p = finger_nail(270, 330, hw=64, nail_len=180, free_len=26, shape='squoval', smile=10, finger_len=70)
+    f, p = finger_nail(270, 300, hw=64, nail_len=180, free_len=26, shape='squoval', smile=10, finger_len=70)
     b += f
     cx, yc, ys, hw = p['cx'], p['y_c'], p['y_s'], p['hw']
     # cuticola (bianca) sulla piega
@@ -487,7 +487,7 @@ def sigilli():
         cx - hw + 4, yc - 32, cx, yc + 8, cx + hw - 4, yc - 32)
     pts = {1: (cx, yc + 22), 2: (cx - hw - 18, (yc + ys) / 2 + 10), 3: (cx + hw + 18, (yc + ys) / 2 + 10)}
     # germi fermati
-    for (gx, gy), (tx, ty) in (((cx + 70, yc + 82), pts[1]), ((70, 320), pts[2]), ((470, 320), pts[3])):
+    for (gx, gy), (tx, ty) in (((cx + 70, yc + 82), pts[1]), ((70, 290), pts[2]), ((470, 290), pts[3])):
         b += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.8" stroke-dasharray="5 4"/>' % (
             gx, gy, (gx + tx) / 2, (gy + ty) / 2, GREY_D)
         ang = math.atan2(ty - gy, tx - gx)
@@ -504,10 +504,10 @@ def sigilli():
     b += '<line x1="553" y1="122" x2="567" y2="122" stroke="%s" stroke-width="4" stroke-linecap="round"/>' % OK
     b += text(578, 127, 'fermati dai sigilli', 13, 'start', 600, MUTED)
     # forbice barrata
-    b += scissors(92, 360, 1.0, -20) + no_sign(98, 358, 22)
-    b += mark(40, 410, False, 11) + text(56, 415, 'Non tagliare la pelle viva', 14, 'start', 700, ERR)
+    b += scissors(92, 330, 1.0, -20) + no_sign(98, 328, 22)
+    b += mark(40, 384, False, 11) + text(56, 389, 'Non tagliare la pelle viva', 14, 'start', 700, ERR)
     # inserto: sezione con iponichio
-    ix, iy = 540, 236
+    ix, iy = 540, 196
     b += frame(ix, iy, 200, 190, 'Di lato: iponichio')
     b += nail_side(ix + 6, iy + 104, 176)
     hx = ix + 6 + 176 * 0.84
@@ -517,7 +517,7 @@ def sigilli():
     b += badge(ix + 160, iy + 150, 4, OK, 14)
     b += germ(ix + 186, iy + 104, 6)
     b += text(ix + 100, iy + 184, 'sotto il bordo libero', 12.5, fill=MUTED)
-    return svg(760, 440, arrow_defs() + b, 'I quattro sigilli dell\'unghia: cuticola con piega prossimale, due pieghe laterali e iponichio')
+    return svg(760, 410, arrow_defs() + b, 'I quattro sigilli dell\'unghia: cuticola con piega prossimale, due pieghe laterali e iponichio')
 
 
 @figx('crescita-timeline.svg')
@@ -1321,14 +1321,26 @@ def protezione():
         b += text(bx, y + 35, str(i + 1), 15, weight=900, fill=cols[i] if i < 3 else '#fff')
         b += text(cx + 14, y + 34, t, 17 if i < 3 else 18, weight=800, fill=fc)
         b += text(cx + 14, y + 56, sub, 13, weight=600, fill=fc)
-    # icone ai lati
-    b += bottle(56, 136, 30, 54, '#dfe9f2', '') + mark(76, 92, True, 10)
-    b += '<rect x="30" y="196" width="72" height="34" rx="6" fill="#d8dde3" stroke="%s" stroke-width="2"/>' % GREY
-    b += ''.join('<line x1="%d" y1="200" x2="%d" y2="226" stroke="%s" stroke-width="2"/>' % (38 + j * 8, 38 + j * 8, GREY) for j in range(8))
-    b += ''.join('<path d="M%d,186 q4,6 0,12" stroke="%s" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>' % (46 + j * 20, ACC2) for j in range(3))
-    b += '<rect x="34" y="262" width="56" height="50" fill="#e6f1f8" stroke="%s" stroke-width="2.5"/><line x1="62" y1="262" x2="62" y2="312" stroke="%s" stroke-width="2"/><line x1="34" y1="287" x2="90" y2="287" stroke="%s" stroke-width="2"/>' % (GREY_D, GREY_D, GREY_D)
-    b += glasses(66, 346, 0.8)
-    b += '<path d="M44,366 Q66,356 88,366 L84,380 Q66,386 48,380 Z" fill="#f3f3f3" stroke="%s" stroke-width="1.5"/>' % GREY
+    # icone ai lati, in medaglioni
+    for i in range(4):
+        b += '<circle cx="52" cy="%d" r="34" fill="#fff" stroke="%s" stroke-width="2" filter="url(#nxShS)"/>' % (103 + i * 86, cols[i])
+    ic = ''
+    ic += '<g transform="translate(66,128) scale(.42)">%s</g>' % gel_bottle(0, 0, 70, 90)
+    ic += mark(88, 84, True, 10)
+    # aspiratore da tavolo che aspira la polvere
+    ic += '<rect x="38" y="196" width="56" height="18" rx="4" fill="#dfe3e8" stroke="%s" stroke-width="1.6"/>' % GREY_D
+    ic += ''.join('<rect x="%d" y="199" width="3.5" height="12" rx="1.5" fill="%s"/>' % (43 + j * 7, GREY) for j in range(7))
+    ic += ''.join('<path d="M%d,172 L%d,190" stroke="%s" stroke-width="2" marker-end="url(#ar)"/>' % (50 + j * 16, 50 + j * 16, ACC2) for j in range(3))
+    ic += dust(66, 170, 7, 22, '#a9b2ba', 4)
+    # finestra aperta con aria
+    ic += '<rect x="44" y="254" width="40" height="44" fill="#e6f1f8" stroke="%s" stroke-width="2.2"/>' % GREY_D
+    ic += '<path d="M64,254 L64,298 M44,276 L84,276" stroke="%s" stroke-width="1.8"/>' % GREY_D
+    ic += '<path d="M84,254 L96,260 L96,304 L84,298 Z" fill="#cfe3f0" stroke="%s" stroke-width="1.6"/>' % GREY_D
+    ic += '<path d="M40,262 q-6,6 0,12 M38,282 q-6,6 0,12" stroke="#7fb0cc" stroke-width="2" fill="none" stroke-linecap="round"/>'
+    # DPI
+    ic += glove(52, 368, 0.42, -10) + glasses(80, 348, 0.48)
+    ic += '<path d="M64,372 Q82,362 100,372 L96,386 Q82,392 68,386 Z" fill="#f7f7f7" stroke="%s" stroke-width="1.4"/>' % GREY
+    b += '<g transform="translate(-14,0)">%s</g>' % ic
     # freccia di efficacia
     b += '<defs><linearGradient id="eff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="%s"/><stop offset="1" stop-color="#f3c4d3"/></linearGradient></defs>' % OK
     b += '<rect x="690" y="70" width="14" height="306" rx="7" fill="url(#eff)"/>'
@@ -1974,6 +1986,16 @@ def foil(cx, cy, s=1.0):
             + '<path d="M%.1f,%.1f l%.1f,%.1f" stroke="#fff" stroke-width="2"/>' % (cx - 10 * s, cy - 14 * s, 14 * s, 4 * s))
 
 
+def foil_finger(cx, cy, s=1.0):
+    """Dito avvolto nella stagnola con cotone imbevuto (vista dall'alto, punta in alto)."""
+    o = '<path d="M-20,60 L-20,-10 A20,20 0 0 1 20,-10 L20,60 Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (SKIN, SKIN_D)
+    o += ('<path d="M-25,22 L-24,-14 C-24,-34 -10,-40 0,-40 C12,-40 25,-32 24,-14 L26,22 L16,26 L8,20 L-2,27 L-12,21 Z" '
+          'fill="#d9dee3" stroke="%s" stroke-width="1.5" stroke-linejoin="round"/>') % GREY_D
+    o += '<path d="M-14,-26 L-4,-14 L-12,0 M6,-32 L2,-16 L12,-6 M-18,8 L-6,12 M10,8 L18,14" stroke="#fff" stroke-width="1.6" fill="none"/>'
+    o += '<path d="M-14,-24 L-6,-12 M4,-30 L1,-18" stroke="#a9b2ba" stroke-width="1" fill="none"/>'
+    return '<g transform="translate(%.1f,%.1f) scale(%.2f)">%s</g>' % (cx, cy, s, o)
+
+
 def efile_hand(cx, cy, s=1.0, ang=0):
     return ('<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.2f)"><rect x="-10" y="-9" width="70" height="18" rx="9" fill="#e6e1ec" stroke="%s" stroke-width="1.6"/>'
             '<rect x="-18" y="-5" width="10" height="10" fill="%s"/><rect x="-34" y="-6" width="16" height="12" rx="2" fill="%s"/>'
@@ -1990,7 +2012,7 @@ def sistemi_rim():
     b += mark(222, 112, True, 10)
     b += text(290, 112, 'maglia larga:', 13, weight=700, fill=MUTED)
     b += text(290, 130, 'l\'acetone entra', 13, weight=700, fill=MUTED)
-    b += bowl(266, 170, 54) + foil(334, 180, 0.8)
+    b += bowl(262, 166, 54) + foil_finger(334, 178, 0.8)
     b += clock(270, 220, 13) + text(290, 225, '10–20 min', 13, 'start', 800, ACC2)
     b += para(40, 266, 'Soft gel, semipermanente, acrilico, dip, fibra', 320, 14, weight=700)[0]
     b += frame(386, 56, 354, 270, 'Si toglie limando')
@@ -2001,7 +2023,8 @@ def sistemi_rim():
     b += mark(588, 112, False, 10)
     b += text(660, 112, 'maglia fitta:', 13, weight=700, fill=MUTED)
     b += text(660, 130, 'l\'acetone non entra', 13, weight=700, fill=MUTED)
-    b += tool_file(650, 176, -20, 90, 16) + efile_hand(630, 218, 0.8, -10)
+    b += file_r('dritta', 650, 172, '#8f8379', '#2f2a28', ('', ''), -16, 0.72, seed=41)
+    b += handpiece_r(610, 216, -8, 0.5, 'cil', 'carburo', 'M', cord=True)
     b += para(406, 266, 'Hard gel (e alcuni polygel): si lima lasciando un velo', 320, 14, weight=700)[0]
     return svg(760, 340, arrow_defs() + b, 'Rete di polimero aperta (si scioglie in acetone) e fitta (si toglie limando)')
 
@@ -2140,7 +2163,7 @@ def gel_fasi():
         n = len(jars)
         for j, (lab, c) in enumerate(jars):
             jx = x + W / 2 + (j - (n - 1) / 2) * 72
-            b += jar(jx, 140, 48, 32, c)
+            b += gel_pot(jx, 140, 46, 30, c)
             for k, ln in enumerate(wrap(lab, 70, 12, True)):
                 b += text(jx, 158 + k * 15, ln, 12, weight=700)
         b += layered_side(x + 46, 232, 140, layers)
@@ -2206,10 +2229,17 @@ def dappen(cx, base, w=60, h=40, liquid=0.5, lid=False):
     return o
 
 
-def powder_jar(cx, base, w=70, h=44, col='#f6d6df', label=''):
-    o = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="8" fill="#fff" stroke="%s" stroke-width="2"/>' % (cx - w / 2, base - h, w, h, GREY_D)
-    o += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s"/>' % (
-        cx - w / 2 + 3, base - h * 0.55, cx, base - h * 0.75, cx + w / 2 - 3, base - h * 0.55, cx + w / 2 - 3, base - 3, cx - w / 2 + 3, base - 3, col)
+def powder_jar(cx, base, w=70, h=44, col='#f6d6df', label='', lid=False):
+    """Barattolo di polvere in vetro con cumulo di polvere (lid=True: con coperchio)."""
+    o = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="8" fill="#fbfdff" stroke="%s" stroke-width="1.8"/>' % (cx - w / 2, base - h, w, h, GREY_D)
+    o += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z" fill="%s"/>' % (
+        cx - w / 2 + 3, base - h * 0.5, cx, base - h * 0.78, cx + w / 2 - 3, base - h * 0.5, cx + w / 2 - 3, base - 8, cx + w / 2 - 3, base - 3, cx - w / 2 + 8, base - 3, col)
+    o += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>' % (
+        cx - w * 0.3, base - h * 0.55, cx - w * 0.1, base - h * 0.68, cx + w * 0.1, base - h * 0.66)
+    o += '<rect x="%.1f" y="%.1f" width="5" height="%.1f" rx="2.5" fill="#fff" opacity=".8"/>' % (cx - w / 2 + 5, base - h + 5, h - 12)
+    if lid:
+        o += '<rect x="%.1f" y="%.1f" width="%.1f" height="12" rx="4" fill="#3b2a30"/>' % (cx - w / 2 - 2, base - h - 11, w + 4)
+        o += '<rect x="%.1f" y="%.1f" width="%.1f" height="3" rx="1.5" fill="#fff" opacity=".25"/>' % (cx - w / 2 + 2, base - h - 9, w - 4)
     if label:
         o += text(cx, base + 18, label, 12.5, weight=700)
     return o
@@ -2227,15 +2257,15 @@ def acrilico_chimica():
         b += text(128, 135 + k * 30, t, 13.5, 'start', 700)
     # polvere
     b += frame(490, 56, 250, 262, 'Polvere – PMMA')
-    b += powder_jar(546, 250, 76, 56, '#f6d6df')
+    b += powder_jar(546, 250, 76, 56, '#f6d6df', lid=True)
     items_p = ['Perline di PMMA', 'Iniziatore BPO', 'Pigmenti']
     for k, t in enumerate(items_p):
         b += '<circle cx="600" cy="%d" r="4" fill="%s"/>' % (130 + k * 30, ACC)
         b += text(610, 135 + k * 30, t, 13.5, 'start', 700)
     b += ''.join('<circle cx="%d" cy="%d" r="4" fill="#fff" stroke="%s"/>' % (530 + (k % 4) * 10, 222 + (k // 4) * 9, ACC) for k in range(8))
     # centro
-    b += tool_brush(400, 164, -28, 90, '#e9d6c0')
-    b += bead(370, 182, 20, '#f9e3ea')
+    b += tool_brush(396, 168, -28, 76, '#e9d6c0')
+    b += bead(370, 184, 20, '#f9e3ea')
     b += carrow(290, 170, 340, 182, '#3f86b8', 2) + carrow(486, 200, 398, 190, ACC, 2)
     b += mtext(380, 236, ['Reazione all\'aria:', 'indurisce in pochi minuti'], 14, weight=800, fill=ACC2)
     b += text(380, 284, 'senza lampada', 13, weight=600, fill=MUTED)
@@ -2502,7 +2532,7 @@ def lamp_r(cx, y, w=120, label='', display=True, glow=('#d9c6ff', '#8a63d8', '#4
         cx - w * 0.4, y - h1 * 0.55, cx - w * 0.36, y - h1 * 0.95, cx - w * 0.12, y - h1 * 1.02, max(1.5, w * 0.025))
     if display and w >= 90:
         o += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="#2f2840"/>' % (cx - w * 0.12, y - h1 * 1.02, w * 0.24, w * 0.1)
-        o += text(cx, y - h1 * 1.02 + w * 0.08, '60s', w * 0.075, weight=800, fill='#b9f5cf')
+        o += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="1" fill="#b9f5cf" opacity=".85"/>' % (cx - w * 0.07, y - h1 * 1.02 + w * 0.035, w * 0.14, w * 0.03)
     if label:
         o += text(cx, y - h1 * 1.12 - 8, label, 13, weight=800, fill='#6b4fa0')
     return o
@@ -2514,7 +2544,7 @@ def doc_sheet(x, y, w, h, head, head_col, sub=''):
          % (x, y, x + w - 16, y, x + w, y + 16, x + w, y + h, x, y + h))
     o += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="#e9ecef" stroke="#c9ced4" stroke-width="1.2"/>' % (x + w - 16, y, x + w - 16, y + 16, x + w, y + 16)
     o += '<rect x="%.1f" y="%.1f" width="%.1f" height="20" fill="%s"/>' % (x + 8, y + 10, w - 34, head_col)
-    o += text(x + 14, y + 24.5, head, 11.5, 'start', 800, '#fff')
+    o += text(x + 14, y + 25, head, 12, 'start', 800, '#fff')
     if sub:
         o += text(x + 10, y + 46, sub, 12, 'start', 800, INK)
     return o
@@ -2560,11 +2590,11 @@ def tre_documenti():
         b += badge(x + 24, 80, k + 1, c)
         if k == 0:
             b += gel_bottle(cx, 250, 96, 136)
-            b += text(cx, 150, 'BUILDER GEL', 11.5, weight=900, fill=ACC2).replace('font-size="11.5"', 'font-size="12"')
+            b += text(cx, 150, 'BUILDER GEL', 12, weight=900, fill=ACC2)
             b += '<line x1="%.1f" y1="157" x2="%.1f" y2="157" stroke="%s" stroke-width="1"/>' % (cx - 34, cx + 34, '#ead7dd')
             b += text(cx - 34, 172, 'INCI:', 12, 'start', 800, INK)
             b += lines_block(cx - 34, 181, 66, 2, 7)
-            b += warn_tri(cx - 22, 209, 10) + pao(cx + 20, 204, '12M', 0.9)
+            b += warn_tri(cx - 20, 209, 10.5) + pao(cx + 16, 204, '12M', 1.0)
             b += text(cx, 234, 'LOT 2409A', 12, weight=800, fill=MUTED)
         elif k == 1:
             b += doc_sheet(cx - 74, 72, 148, 186, 'SCHEDA TECNICA', '#3f86b8', 'Builder Gel')
@@ -2574,7 +2604,7 @@ def tre_documenti():
                     b += text(cx - 35 + c2 * 58, 142.5 + r * 20, tt, 12, weight=800 if c2 == 0 else 700)
             b += lamp_r(cx + 36, 238, 56, display=False)
             for j, st in enumerate(['base', 'gel', 'top']):
-                b += badge(cx - 56, 188 + j * 21, j + 1, '#3f86b8', 8.5, 11)
+                b += badge(cx - 56, 188 + j * 21, j + 1, '#3f86b8', 9, 12)
                 b += text(cx - 43, 192 + j * 21, st, 12.5, 'start', 700)
         else:
             b += doc_sheet(cx - 74, 72, 148, 186, 'SDS · 16 SEZIONI', '#c62828')
@@ -2887,7 +2917,7 @@ def lime_igiene():
         b += '<rect x="%d" y="56" width="%d" height="270" rx="14" fill="%s"/>' % (x, W, bg)
         b += badge(x + 24, 80, k + 1, c)
         if k == 0:
-            b += file_r('dritta', cx - 26, 112, '#8f8379', '#2f2a28', ('100', '180'), -14, 0.82)
+            b += file_r('dritta', cx - 26, 112, '#8f8379', '#2f2a28', ('', ''), -14, 0.82)
             b += file_r('buffer', cx - 50, 160, '', '', ('', ''), 0, 0.62)
             # lente sui pori con polvere e germi intrappolati
             mx, my = cx + 56, 170
@@ -3294,7 +3324,7 @@ def kit_priorita():
                 b += polish_bottle(x + 72 + j * 36, 180, 0.8, cc)
         else:
             b += dappen(x + 50, 160, 50, 32, 0.5, lid=False) + powder_jar(x + 118, 160, 50, 32)
-            b += tool_brush(x + 170, 150, -35, 70, '#f3eee6')
+            b += tool_brush(x + 176, 156, -35, 48, '#f3eee6')
         yy = 202
         for it in items:
             lines = wrap(it, W - 40, 13, True)
