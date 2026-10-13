@@ -1648,11 +1648,11 @@ def pao(cx, cy, label='12M', s=1.0):
 def etichetta_inci():
     b = title('Cosa cercare in etichetta')
     # flacone di gel
-    b += '<rect x="58" y="150" width="110" height="200" rx="18" fill="#f6d6df" stroke="%s" stroke-width="2"/>' % NAIL_S
-    b += '<rect x="80" y="86" width="66" height="70" rx="8" fill="%s"/>' % INK
-    b += '<rect x="72" y="200" width="82" height="96" rx="6" fill="#fff"/>'
-    b += text(113, 228, 'BUILDER', 13, weight=900, fill=ACC2) + text(113, 248, 'GEL', 13, weight=900, fill=ACC2)
-    b += text(113, 276, '15 ml', 12, weight=600, fill=MUTED)
+    b += gel_bottle(113, 350, 112, 196)
+    b += text(113, 200, 'BUILDER', 13, weight=900, fill=ACC2) + text(113, 220, 'GEL', 13, weight=900, fill=ACC2)
+    b += '<line x1="80" y1="232" x2="146" y2="232" stroke="#ead7dd"/>'
+    b += lines_block(82, 248, 62, 4, 9)
+    b += text(113, 316, '15 ml', 12, weight=700, fill=MUTED)
     b += '<path d="M176,240 L214,200 M176,240 L214,330" stroke="%s" stroke-width="1.5" stroke-dasharray="4 4"/>' % GREY
     # etichetta ingrandita
     X, Y, Wd = 220, 60, 520
