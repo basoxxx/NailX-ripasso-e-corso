@@ -2415,25 +2415,25 @@ def fresa_anatomia():
     b += '<rect x="30" y="246" width="230" height="60" rx="12" fill="%s"/>' % BLUE_BG
     b += mtext(145, 270, ['Coppia: mantiene la velocità', 'sotto carico'], 13.5, weight=700, fill=ACC2)
     # ingrandimento
-    b += '<rect x="540" y="62" width="200" height="176" rx="14" fill="%s" stroke="%s" stroke-width="1.6" stroke-dasharray="5 4"/>' % (PANEL, GREY)
-    b += '<path d="M530,290 L560,238 M550,290 L720,238" stroke="%s" stroke-width="1.3" stroke-dasharray="4 4"/>' % GREY
+    b += '<rect x="540" y="62" width="200" height="188" rx="14" fill="%s" stroke="%s" stroke-width="1.6" stroke-dasharray="5 4"/>' % (PANEL, GREY)
+    b += '<path d="M530,290 L560,250 M550,290 L720,250" stroke="%s" stroke-width="1.3" stroke-dasharray="4 4"/>' % GREY
     b += '<path d="M556,92 L606,104 L606,132 L556,144 Z" fill="%s" stroke="%s" stroke-width="2"/>' % (METAL, METAL_D)
     b += '<rect x="606" y="112" width="58" height="12" fill="%s" stroke="%s" stroke-width="1.5"/>' % (METAL, METAL_D)
     b += '<rect x="664" y="100" width="56" height="36" rx="3" fill="#9aa3ad" stroke="%s" stroke-width="1.6"/>' % METAL_D
     for k in range(6):
         b += '<line x1="%d" y1="100" x2="%d" y2="136" stroke="%s" stroke-width="1.5"/>' % (670 + k * 9, 664 + k * 9, METAL_D)
     b += callout(580, 144, 580, 170, 'Mandrino', 13, 700)
-    b += callout(636, 124, 636, 194, 'Gambo 3/32"', 13, 700)
-    b += text(636, 212, '= 2,35 mm', 13, weight=700)
+    b += callout(636, 124, 636, 214, 'Gambo 3/32"', 13, 700)
+    b += text(636, 232, '= 2,35 mm', 13, weight=700)
     b += callout(700, 136, 700, 166, 'Testa', 13, 700)
     b += text(700, 182, 'della punta', 13, weight=700)
     # inserto punta storta
-    b += '<rect x="560" y="258" width="180" height="94" rx="12" fill="%s"/>' % ERR_BG
+    b += '<rect x="560" y="262" width="180" height="90" rx="12" fill="%s"/>' % ERR_BG
     b += '<path d="M584,300 L634,300 L656,288" fill="none" stroke="%s" stroke-width="6" stroke-linecap="round"/>' % METAL_D
     b += '<rect x="652" y="276" width="22" height="14" rx="2" fill="#9aa3ad" stroke="%s" transform="rotate(-28 663 283)"/>' % METAL_D
     for k in range(3):
         b += '<path d="M%d,%d q4,-6 0,-12 q-4,-6 0,-12" fill="none" stroke="%s" stroke-width="1.8"/>' % (690 + k * 8, 300 - k * 2, ERR)
-    b += mark(588, 276, False, 11)
+    b += mark(586, 284, False, 11)
     b += text(650, 336, 'Vibra = buttala', 14, weight=800, fill=ERR)
     return svg(760, 360, b, 'Le parti della fresa: centralina con velocità e senso di rotazione, manipolo, mandrino, gambo da 2,35 mm e testa della punta')
 
@@ -2495,8 +2495,7 @@ def fresa_rpm():
     b += '<rect x="%d" y="208" width="%d" height="22" rx="11" fill="url(#rpmg)"/>' % (x0, x1 - x0)
     for r in range(0, 35001, 5000):
         b += '<line x1="%.1f" y1="230" x2="%.1f" y2="236" stroke="%s"/>' % (X(r), X(r), INK)
-        b += text(X(r), 250, '{:,}'.format(r).replace(',', '.'), 12, 'middle' if 0 < r < 35000 else ('start' if r == 0 else 'end'), 600, MUTED)
-    b += text(x1, 266, 'RPM', 12, 'end', 700, MUTED)
+        b += text(X(r), 250, '{:,}'.format(r).replace(',', '.') + (' RPM' if r == 35000 else ''), 12, 'middle' if 0 < r < 35000 else ('start' if r == 0 else 'end'), 600, MUTED)
     # pelle → prodotto
     b += mini(None, 80, 290, 0.38)
     b += mini(None, 680, 290, 0.38, plate='#d6ebf6', free='#d6ebf6', free_len=30)
@@ -2538,16 +2537,16 @@ def fresa_angolo():
     b += side_nail_scene(40, 200, 250)
     b += handpiece(150, 191, 0, 0.85)
     b += arrow(110, 160, 190, 160, ACC2, 2.4, both=True)
-    b += '<ellipse cx="300" cy="224" rx="26" ry="14" fill="%s" stroke="%s" stroke-width="1.5"/>' % (SKIN, SKIN_D)
-    b += callout(300, 238, 300, 296, 'Punto d\'appoggio', 13, 700, ACC2)
+    b += '<ellipse cx="290" cy="226" rx="26" ry="14" fill="%s" stroke="%s" stroke-width="1.5"/>' % (SKIN, SKIN_D)
+    b += callout(296, 240, 296, 296, 'Punto d\'appoggio', 13, 700, ACC2)
     b += text(160, 296, 'mignolo sulla mano', 12.5, weight=600, fill=MUTED).replace('x="160.0"', 'x="130.0"')
     b += text(195, 318, 'Pressione leggera, sempre in movimento', 14, weight=800, fill=OK)
     # 2 inclinata
     b += side_nail_scene(410, 200, 200)
     b += handpiece(510, 186, -28, 0.85)
     b += '<circle cx="497" cy="199" r="9" fill="none" stroke="%s" stroke-width="2.5"/>' % ERR
-    b += thermometer(470, 150, 0.8)
-    b += text(470, 186, 'Calore da attrito', 12.5, weight=700, fill=ERR)
+    b += thermometer(436, 124, 0.8)
+    b += mtext(454, 112, ['Calore da', 'attrito'], 13, 'start', 700, ERR)
     # inserto vista dall'alto con anelli di fuoco
     ex = ''.join('<path d="M%.1f,%.1f a10,10 0 0 1 20,0" fill="none" stroke="%s" stroke-width="2.5" clip-path="url(#CLIP)"/>' % (px, py, ERR)
                  for px, py in ((-20, -30), (2, -46), (-10, -60), (8, -24)))
@@ -2574,7 +2573,8 @@ def kit_priorita():
         b += '<path d="M%d,70 Q%d,56 %d,56 L%d,56 Q%d,56 %d,70 L%d,94 L%d,94 Z" fill="%s"/>' % (x, x, x + 14, x + W - 14, x + W, x + W, x + W, x, c)
         b += text(cx, 82, t, 15, weight=900, fill='#fff')
         if k == 0:
-            b += lamp(x + 54, 150, 70) + jar(x + 118, 150, 30, 22, '#f6d6df', '') + jar(x + 156, 150, 30, 22, '#f8bbd0', '') + jar(x + 194, 150, 30, 22, '#fdf3dc', '')
+            b += ('<path d="M%.1f,150 L%.1f,124 Q%.1f,98 %.1f,124 L%.1f,150 Z" fill="#f4f1f8" stroke="#8a7d9e" stroke-width="2"/>'
+                  '<rect x="%.1f" y="150" width="70" height="6" rx="3" fill="#8a7d9e"/>' % (x + 24, x + 24, x + 54, x + 84, x + 84, x + 19)) + jar(x + 118, 150, 30, 22, '#f6d6df', '') + jar(x + 156, 150, 30, 22, '#f8bbd0', '') + jar(x + 194, 150, 30, 22, '#fdf3dc', '')
             b += text(x + 156, 174, 'Base · Builder · Top', 12, weight=700, fill=MUTED)
         elif k == 1:
             b += efile_hand(cx - 30, 128, 0.9, 0)
@@ -2582,12 +2582,12 @@ def kit_priorita():
                 b += bottle(x + 60 + j * 40, 172, 22, 30, cc, cap=INK)
         else:
             b += dappen(x + 60, 150, 50, 32, 0.5) + powder_jar(x + 130, 150, 50, 32) + tool_brush(x + 190, 132, -30, 50, '#f3eee6')
-        yy = 202
+        yy = 200
         for it in items:
-            lines = wrap(it, W - 52, 13.5, True)
+            lines = wrap(it, W - 40, 13, True)
             b += '<circle cx="%d" cy="%d" r="4" fill="%s"/>' % (x + 20, yy - 4, c)
-            b += mtext(x + 32, yy, lines, 13.5, 'start', 700)
-            yy += 18 * len(lines) + 2 if k == 0 else 26 * len(lines) + (0 if len(lines) == 1 else -6)
+            b += mtext(x + 32, yy, lines, 13, 'start', 700)
+            yy += (19 if k == 0 else 26) + 16 * (len(lines) - 1)
     b += '<rect x="20" y="376" width="760" height="36" rx="12" fill="%s"/>' % ACC2
     b += text(400, 400, 'Un solo sistema completo all\'inizio', 16, weight=800, fill='#fff')
     return svg(800, 420, b, 'Priorità di acquisto del kit: subito il necessario per un sistema, dopo qualche mese fresa e colori, più avanti acrilico e effetti')
@@ -2607,7 +2607,7 @@ def kit_postazione():
         b += '<rect x="%d" y="108" width="216" height="226" rx="10" fill="%s" stroke="%s" stroke-width="2" stroke-dasharray="7 5"/>' % (zx, bg, c)
         b += text(zx + 108, 132, t, 15, weight=800, fill=c)
     # pulita
-    b += pouch(70, 150, 90, 54) + pouch(70, 214, 90, 54)
+    b += pouch(70, 150, 90, 54, False) + nipper(118, 172, 0.6) + pouch(70, 214, 90, 54, False) + curette(110, 240, 0.7)
     b += text(115, 286, 'buste sterili', 12.5, weight=600)
     b += tool_file(220, 168, 90, 70, 12, '#b9aa9c', '#e6dbd0') + tool_file(238, 168, 90, 70, 12, '#b9aa9c', '#e6dbd0')
     b += text(229, 220, 'lime nuove', 12.5, weight=600)
@@ -2626,18 +2626,17 @@ def kit_postazione():
     b += '<circle cx="470" cy="170" r="12" fill="%s"/>' % GREY_D
     b += '<path d="M470,170 L440,190 L420,214" stroke="%s" stroke-width="5" stroke-linecap="round" fill="none"/>' % GREY_D
     b += '<ellipse cx="418" cy="216" rx="14" ry="9" fill="#fff3c4" stroke="%s" stroke-width="2"/>' % GREY_D
-    b += text(470, 200, 'lampada', 12, weight=700, fill=MUTED)
+    b += text(470, 150, 'lampada', 12, weight=700, fill=MUTED)
     # sporco
     b += '<rect x="548" y="150" width="110" height="70" rx="8" fill="#fff" stroke="%s" stroke-width="2"/>' % GREY_D
-    b += nipper(612, 176, 0.65, 10) + tool_pusher(568, 200, 0, 60)
+    b += nipper(612, 176, 0.65, 10) + tool_pusher(584, 200, 0, 60)
     b += text(603, 240, 'strumenti usati', 12.5, weight=600)
-    b += '<circle cx="706" cy="190" r="26" fill="#cfd6dd" stroke="%s" stroke-width="2"/><circle cx="706" cy="190" r="8" fill="%s"/>' % (GREY_D, GREY_D)
-    b += text(706, 236, 'cestino', 12.5, weight=600)
-    b += text(706, 252, 'con coperchio', 12.5, weight=600)
+    b += '<circle cx="700" cy="186" r="24" fill="#cfd6dd" stroke="%s" stroke-width="2"/><circle cx="700" cy="186" r="8" fill="%s"/>' % (GREY_D, GREY_D)
+    b += text(696, 230, 'cestino', 12.5, weight=600)
+    b += text(696, 246, 'con coperchio', 12.5, weight=600)
     for px, py in ((580, 286), (610, 296), (596, 274)):
         b += '<path d="M%d,%d l12,-6 l10,4 l6,10 l-8,8 l-14,0 l-8,-8 Z" fill="#fff" stroke="#c7b9ad" stroke-width="1.4"/>' % (px, py)
     b += text(670, 300, 'salviette usate', 12.5, weight=600)
-    b += carrow(270, 340, 530, 340, GREY, 2)
     return svg(800, 400, arrow_defs() + b, 'Postazione vista dall\'alto: zona pulita, zona di lavoro con poggiamano e aspiratore, zona sporco con strumenti usati e cestino')
 
 
@@ -2658,7 +2657,7 @@ def pennelli_cura():
             b += badge(x + 18, y + 18, k + 1, ACC, 11, 13)
             iy = y + 56
             if r == 0 and k == 0:
-                b += dappen(cx - 6, iy + 26, 54, 32, 0.6) + tool_brush(cx + 2, iy + 2, -55, 60, '#f3eee6')
+                b += dappen(cx - 6, iy + 26, 54, 32, 0.6) + tool_brush(cx + 4, iy + 12, -60, 34, '#f3eee6')
             elif r == 0 and k == 1:
                 b += '<rect x="%.1f" y="%d" width="100" height="34" rx="3" fill="#fff" stroke="#c7b9ad"/>' % (cx - 50, iy + 2)
                 b += tool_brush(cx - 30, iy + 16, 0, 70, '#f3eee6')
@@ -2737,13 +2736,14 @@ def strumenti_manuali():
     b += '<rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="#fff" stroke="%s" stroke-width="1.6"/>' % (x, y, W, H, GREY)
     b += text(x + W / 2, y + 22, 'Come si tiene', 13.5, weight=800, fill=ACC2)
     for j, ok in enumerate((True, False)):
-        yy = y + 70 + j * 62
-        b += nail_side(x + 14, yy, 130)
+        yy = y + 62 + j * 56
+        x0 = x + 12
+        b += nail_side(x0, yy, 110)
         if ok:
-            b += tool_pusher(x + 68, yy - 6, -12, 70)
+            b += tool_pusher(x0 + 54, yy - 7, -12, 64)
         else:
-            b += tool_pusher(x + 52, yy - 1, -40, 70)
-        b += mark(x + W - 20, yy - 20, ok, 11)
+            b += tool_pusher(x0 + 42, yy - 12, -40, 56)
+        b += mark(x + W - 18, yy - 18, ok, 11)
     return svg(800, 400, b, 'Strumenti manuali (spingicuticole, curetta, tronchesine, tagliatip, pinzette, bastoncino, spazzolino) e come trattarli dopo l\'uso')
 
 
@@ -2808,8 +2808,9 @@ def postura():
         b += '<path d="M%.1f,%.1f a20,20 0 0 1 %.1f,%.1f" fill="#5a3a2e"/>' % (head[0] - 20, head[1], 34, -14) if good else \
             '<path d="M%.1f,%.1f a20,20 0 0 1 %.1f,%.1f" fill="#5a3a2e"/>' % (head[0] - 18, head[1] - 10, 30, -10)
         if good:
-            for t, (lx, ly) in (('schiena dritta', (px + 40, 112)), ('avambracci appoggiati', (px + 120, 186)), ('piedi a terra', (px + 190, 338))):
-                b += text(lx, ly, t, 12.5, 'start', 700, OK)
+            b += text(px + 112, 150, 'schiena dritta', 12.5, 'start', 700, OK)
+            b += mtext(px + 124, 168, ['avambracci', 'appoggiati'], 12.5, 'start', 700, OK)
+            b += text(px + 190, 338, 'piedi a terra', 12.5, 'start', 700, OK)
         else:
             b += pain(sh[0] + 22, sh[1] - 6) + pain(hip[0] + 4, hip[1] - 26) + pain(hand[0] - 12, hand[1] + 4, 9)
             b += '<path d="M%.1f,%.1f q6,-12 14,-14" fill="none" stroke="%s" stroke-width="2"/>' % (sh[0] - 14, sh[1] - 14, ERR)
