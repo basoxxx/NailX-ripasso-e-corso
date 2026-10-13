@@ -1,42 +1,35 @@
-# Checklist GDPR per il titolare del sito
+# GDPR: cosa è fatto e cosa resta da fare
 
-L'informativa è in [`privacy.html`](../privacy.html). È una **bozza**: va completata e,
-idealmente, rivista da un consulente privacy. Questa checklist riassume cosa resta da fare.
-Non è consulenza legale.
+L'informativa è in [`privacy.html`](../privacy.html), compilata con titolare **Diego Basolo** e contatto
+**diegobasolo@gmail.com**. Questo documento non è consulenza legale: per un'attività strutturata
+è comunque consigliata una revisione da parte di un consulente privacy.
 
-## Prima di attivare le registrazioni
+## Fatto
 
-- [ ] **Completa `privacy.html`**: sostituisci tutti i campi tra `[parentesi quadre]`:
-  titolare, indirizzo, e-mail privacy, data, regione Supabase, tempi di conservazione, strumenti di trasferimento.
-- [ ] **Regione UE** del progetto Supabase (vedi `docs/SUPABASE.md`).
-- [ ] **Accordo con Supabase (DPA)**: verifica nella dashboard o sul sito di Supabase come accettare/scaricare
-  il *Data Processing Addendum* e conservane una copia.
-- [ ] **SMTP**: se usi un fornitore e-mail esterno, verifica il suo DPA e aggiungilo all'informativa.
-- [ ] **Conservazione**: decidi cosa fare degli account inattivi (es. cancellazione dopo 24 mesi con preavviso)
-  e indicalo nell'informativa. Se lo prevedi, ricordati di applicarlo davvero.
-- [ ] **Registro dei trattamenti** (art. 30 GDPR): annota finalità, categorie di dati, destinatari,
-  trasferimenti, tempi e misure di sicurezza. Le voci dell'informativa sono un buon punto di partenza.
-- [ ] **Età minima**: il modulo di accesso chiede di dichiarare almeno 14 anni; se il tuo pubblico è solo
-  maggiorenne puoi alzare il limite (testo in `assets/js/cloud.js` e nell'informativa).
+- **Informativa completa** (artt. 13-14): titolare, dati, finalità e basi giuridiche, conservazione,
+  destinatari, trasferimenti extra-UE, video YouTube, cookie e archiviazione locale, età minima, diritti, reclamo al Garante.
+- **Corso utilizzabile senza account** e senza invio di dati.
+- **Accettazione dell'informativa** obbligatoria per creare l'account: versione e data registrate nel profilo,
+  non modificabili dal browser; dichiarazione di età minima (14 anni).
+- **Minimizzazione**: solo e-mail e, per l'attestato, il nome.
+- **Foto degli esercizi** elaborate solo nel browser.
+- **Nessun cookie di profilazione o analytics**; video YouTube caricati solo dopo il clic (youtube-nocookie.com).
+- **Diritti** dalla pagina Account: *Scarica i miei dati* (JSON) ed *Elimina account* (cancellazione immediata).
+- **Conservazione**: account inattivi da 24 mesi cancellati automaticamente (migrazione `…_nailx_pulizia.sql`).
+- **Sicurezza**: Row Level Security, risposte d'esame non leggibili dal sito, verifica pubblica limitata ai dati dell'attestato.
 
-## Già implementato nel sito
+## Da fare una volta (dalla dashboard di Supabase)
 
-- Corso utilizzabile **senza account** e senza invio di dati.
-- **Consenso informato all'account**: casella obbligatoria con link all'informativa; la versione accettata e la
-  data vengono registrate nel profilo (non modificabili dal browser).
-- **Minimizzazione**: si chiedono solo e-mail e, per l'attestato, il nome.
-- **Foto degli esercizi** elaborate solo nel browser, mai caricate.
-- **Nessun cookie di profilazione o analytics**; solo archiviazione locale tecnica (elencata nell'informativa).
-- **Video YouTube** caricati solo dopo il clic, dal dominio `youtube-nocookie.com`.
-- **Diritti degli interessati** dalla pagina Account: *Scarica i miei dati* (accesso/portabilità, JSON)
-  ed *Elimina account* (cancellazione immediata di account, progressi, tentativi e attestato).
-- **Sicurezza**: Row Level Security (ognuna vede solo i propri dati), risposte d'esame non leggibili dal sito,
-  verifica pubblica che espone solo i dati stampati sull'attestato.
+- [ ] Verifica che la **regione del progetto sia nell'Unione europea** (l'informativa lo dichiara).
+      Se non lo è, scrivimelo e aggiorno il testo.
+- [ ] Accetta/scarica il **Data Processing Addendum (DPA)** di Supabase e conservane una copia.
+- [ ] Se configuri un **SMTP** esterno, conserva anche il suo DPA.
+- [ ] Tieni un semplice **registro dei trattamenti** (art. 30): puoi copiare le tabelle dei punti 2, 3, 5 e 6 dell'informativa.
 
 ## Quando succede qualcosa
 
-- **Richieste degli interessati** (rettifica, opposizione, revisione umana dell'esame…): rispondi entro un mese.
-- **Violazione dei dati** (data breach): valuta il rischio e, se necessario, notifica il Garante entro 72 ore
-  (art. 33) e, nei casi gravi, avvisa le persone coinvolte (art. 34). Tieni traccia di ogni incidente.
-- **Modifiche all'informativa**: aggiorna la versione in `privacy.html` **e** `privacyVersion` in
-  `assets/js/config.js`; per modifiche sostanziali avvisa chi ha un account.
+- **Richieste** (accesso, rettifica, revisione umana dell'esame…): rispondi entro un mese a diegobasolo@gmail.com.
+- **Violazione dei dati**: se c'è rischio per le persone, notifica il Garante entro 72 ore (art. 33) e,
+  nei casi gravi, avvisa le interessate (art. 34). Annota ogni incidente.
+- **Modifiche all'informativa**: aggiorna versione e data in `privacy.html` **e** `privacyVersion`
+  in `assets/js/config.js`; per modifiche sostanziali avvisa chi ha un account.

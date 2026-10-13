@@ -1,7 +1,6 @@
 -- Generato da tools/build_supabase_seed.js: non modificare a mano.
--- Esegui dopo schema.sql (SQL Editor di Supabase).
-
-begin;
+-- Catalogo del corso NailX (sostituisce integralmente quello precedente).
+-- catalogo: 0b29dbe6e1a39313
 
 delete from public.course_lessons;
 insert into public.course_lessons (key, minutes) values
@@ -177,5 +176,3 @@ insert into public.exam_questions (id, module, question, options, answer, explan
   (87, 'arte-gare', 'In gara, il gel non polimerizzato a fine prova comporta:', '["−5 punti","Nessuna penalità","Squalifica","Un bonus"]'::jsonb, 2, 'È una regola tipica dei regolamenti Nailympia.'),
   (88, 'arte-gare', 'La "vista a tunnel" valuta soprattutto:', '["La smile line","La curva C","Il colore","La lucentezza"]'::jsonb, 1, 'Si guarda l''unghia dalla punta.'),
   (89, 'arte-gare', 'In un''unghia con decorazione incapsulata, l''apex:', '["Non serve","Si costruisce sopra la decorazione","Va alla cuticola","Si sostituisce con glitter"]'::jsonb, 1, 'La struttura deve restare corretta.');
-
-commit;

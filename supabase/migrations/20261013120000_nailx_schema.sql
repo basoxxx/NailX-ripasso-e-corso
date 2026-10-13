@@ -1,10 +1,8 @@
 -- =====================================================================
--- NailX · schema Supabase (PostgreSQL)
--- Esegui questo file UNA volta nel SQL Editor di Supabase, poi seed.sql.
--- Guida completa: docs/SUPABASE.md
+-- NailX · schema (migrazione Supabase)
+-- Applicata in automatico dall'integrazione GitHub di Supabase ("Deploy to production"),
+-- oppure a mano incollandola nel SQL Editor. Guida: docs/SUPABASE.md
 -- =====================================================================
-
-create extension if not exists pgcrypto;
 
 -- ---------------------------------------------------------------------
 -- Profili: uno per utente, creato automaticamente alla registrazione
@@ -257,7 +255,7 @@ begin
      where user_id = uid returning * into c;
   else
     loop
-      new_code := 'NX-' || to_char(now(), 'YYYY') || '-' || upper(substr(encode(gen_random_bytes(6), 'hex'), 1, 8));
+      new_code := 'NX-' || to_char(now(), 'YYYY') || '-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 8));
       exit when not exists (select 1 from certificates where code = new_code);
     end loop;
     insert into certificates (code, user_id, full_name, final_score, lessons_done, lessons_total, exercises, module_quiz, hours)

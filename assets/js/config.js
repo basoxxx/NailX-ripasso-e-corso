@@ -7,5 +7,5 @@
 window.NAILX_CONFIG = window.NAILX_CONFIG || {
   supabaseUrl: '',        // es. 'https://abcdefghijklmno.supabase.co'
   supabaseAnonKey: '',    // chiave "anon public" (Project Settings → API)
-  privacyVersion: '2026-10' // aggiornala quando cambi l'informativa privacy
+  privacyVersion: "2026-10" // aggiornala quando cambi l'informativa privacy
 };

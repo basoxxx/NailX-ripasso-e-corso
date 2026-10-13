@@ -227,13 +227,24 @@ def fig(name):
     return deco
 
 
+LOGO_INNER = (
+    '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/>'
+    '<stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>'
+    '<rect width="64" height="64" rx="16" fill="url(#lg)"/>'
+    # boccetta di smalto: tappo, collo, corpo con smalto e riflesso
+    '<rect x="25" y="7" width="14" height="19" rx="3.5" fill="#fff"/>'
+    '<rect x="22" y="24" width="20" height="6" rx="2" fill="#fff"/>'
+    '<rect x="14" y="29" width="36" height="28" rx="9" fill="#fff"/>'
+    '<rect x="18" y="35" width="28" height="18" rx="6" fill="#f3a9c0"/>'
+    '<rect x="21" y="37" width="4" height="12" rx="2" fill="#fff" opacity=".75"/>'
+    # scintilla
+    '<path d="M50 8 C50.8 12.2 51.8 13.2 56 14 C51.8 14.8 50.8 15.8 50 20 C49.2 15.8 48.2 14.8 44 14 C48.2 13.2 49.2 12.2 50 8 Z" fill="#fff"/>'
+)
+
+
 @fig('logo.svg')
 def logo():
-    return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title>NailX</title>'
-            '<rect width="64" height="64" rx="16" fill="%s"/>'
-            '<path d="M20,54 L20,30 C20,14 27,8 32,6 C37,8 44,14 44,30 L44,54 Z" fill="#fff"/>'
-            '<path d="M24,52 L24,31 C24,20 28,14 32,12 C36,14 40,20 40,31 L40,52 Z" fill="%s"/>'
-            '<ellipse cx="32" cy="48" rx="7" ry="4" fill="#fff" opacity=".6"/></svg>\n') % (ACC, NAIL)
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title>NailX</title>%s</svg>\n' % LOGO_INNER
 
 
 @fig('hero.svg')

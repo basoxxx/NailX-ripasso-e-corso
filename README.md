@@ -18,13 +18,16 @@ dal livello base all'avanzato:
 - **Attestato di fine corso** (`attestato.html`): si sblocca con tutte le lezioni completate e l'esame finale
   superato (≥ 80%); riporta nome, data, codice, esito dell'esame, ore stimate e, in una seconda pagina, il
   dettaglio di moduli, quiz ed esercizi svolti. Si stampa/salva in PDF o si scarica come PNG.
+- **Stato del corso automatico**: lezioni completate a fine lettura, prossimo passo suggerito, stato dei moduli, percentuale sempre visibile.
 - Progressi salvati nel browser (localStorage), tema chiaro/scuro, layout responsive.
 
 ## Area online (facoltativa): login e attestati verificabili
 
-Con un progetto **Supabase** gratuito si attivano login via e-mail, progressi sincronizzati, esame corretto
-dal server e attestati con codice e QR code verificabili su `verifica.html`. Guida: [`docs/SUPABASE.md`](docs/SUPABASE.md).
-Privacy: informativa in `privacy.html` (bozza da completare) e checklist in [`docs/GDPR.md`](docs/GDPR.md).
+Con **Supabase** si attivano login via e-mail, progressi sincronizzati, esame corretto dal server e attestati
+con codice e QR code verificabili su `verifica.html`. Il database è in `supabase/migrations/`: con l'integrazione
+GitHub di Supabase ("Deploy to production") viene applicato in automatico a ogni merge su `main`.
+I due valori pubblici del progetto si impostano come variabili del repository (`SUPABASE_URL`, `SUPABASE_ANON_KEY`).
+Guida: [`docs/SUPABASE.md`](docs/SUPABASE.md). Privacy: `privacy.html` e [`docs/GDPR.md`](docs/GDPR.md).
 
 ## Pubblicare su GitHub Pages
 
@@ -42,7 +45,7 @@ python3 tools/gen_svg.py      # rigenera le illustrazioni in assets/img/
 ```
 
 I contenuti (lezioni, esercizi, quiz, glossario) sono tutti in `assets/js/data.js`.
-Dopo averli modificati, se usi Supabase rigenera `supabase/seed.sql` con `node tools/build_supabase_seed.js`.
+Dopo averli modificati esegui `node tools/build_supabase_seed.js`: se il catalogo è cambiato crea una nuova migrazione Supabase.
 
 > Materiale didattico a scopo formativo: non sostituisce la formazione abilitante prevista dalla legge
 > né il parere medico.

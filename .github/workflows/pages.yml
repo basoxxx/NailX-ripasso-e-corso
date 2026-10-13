@@ -23,6 +23,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Se nel repository sono definite le variabili SUPABASE_URL e SUPABASE_ANON_KEY
+      # (Settings → Secrets and variables → Actions → Variables) l'area online si attiva da sola.
+      # Sono valori pubblici: non usare mai qui la chiave service_role.
+      - name: Configura l'area online (Supabase)
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
+            node -e '
+              const fs = require("fs");
+              const f = "assets/js/config.js";
+              const v = (/privacyVersion:\s*"([^"]+)"/.exec(fs.readFileSync(f, "utf8")) || [, "2026-10"])[1];
+              const cfg = { supabaseUrl: process.env.SUPABASE_URL.trim(), supabaseAnonKey: process.env.SUPABASE_ANON_KEY.trim(), privacyVersion: v };
+              fs.writeFileSync(f, "/* Generato dal workflow di pubblicazione */\nwindow.NAILX_CONFIG = window.NAILX_CONFIG || " + JSON.stringify(cfg, null, 2) + ";\n");
+            '
+            echo "Area online attiva."
+          else
+            echo "Variabili SUPABASE_URL / SUPABASE_ANON_KEY non impostate: il sito resta in modalità locale."
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

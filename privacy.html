@@ -13,11 +13,7 @@
 <article class="lesson legal">
   <h1>Informativa privacy e cookie</h1>
   <p class="muted">Informativa ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 ("GDPR") e del D.Lgs. 196/2003 ("Codice privacy").<br>
-    Versione <strong>2026-10</strong> · ultimo aggiornamento: [GG/MM/AAAA]</p>
-
-  <div class="box warn"><strong class="t">Bozza da completare prima della pubblicazione</strong>
-    Sostituisci tutti i campi tra [parentesi quadre] con i dati reali e falla verificare da un consulente privacy:
-    questo testo è un modello e non costituisce consulenza legale. Vedi anche <code>docs/GDPR.md</code> nel repository.</div>
+    Versione <strong>2026-10</strong> · ultimo aggiornamento: 13 ottobre 2026</p>
 
   <h2>In breve</h2>
   <ul>
@@ -29,16 +25,16 @@
   </ul>
 
   <h2>1. Titolare del trattamento</h2>
-  <p>[Nome e cognome o ragione sociale], [indirizzo completo], [codice fiscale / P. IVA].<br>
-    E-mail per la privacy: <strong>[privacy@tuodominio.it]</strong>.<br>
-    Responsabile della protezione dei dati (DPO): [non nominato / nome e contatti, se nominato].</p>
+  <p><strong>Diego Basolo</strong>, persona fisica, che gestisce il corso NailX.<br>
+    E-mail per tutte le richieste sulla privacy: <a href="mailto:diegobasolo@gmail.com"><strong>diegobasolo@gmail.com</strong></a>.<br>
+    Non è stato nominato un Responsabile della protezione dei dati (DPO), non essendo obbligatorio per questo trattamento.</p>
 
   <h2>2. Quali dati trattiamo</h2>
   <table>
     <tr><th>Situazione</th><th>Dati</th><th>Dove restano</th></tr>
     <tr><td>Uso del corso senza account</td><td>Progressi (lezioni, quiz, esercizi, flashcard), preferenza del tema</td><td>Solo nel tuo browser (archiviazione locale). Non ci vengono trasmessi.</td></tr>
     <tr><td>Autovalutazione con foto</td><td>Foto del tuo lavoro</td><td>Solo nella memoria del browser durante la visita: non viene caricata né salvata da noi.</td></tr>
-    <tr><td>Account</td><td>E-mail; data di registrazione; versione dell'informativa accettata e data di accettazione; dichiarazione di avere almeno 14 anni</td><td>Database Supabase ([regione UE, es. Francoforte])</td></tr>
+    <tr><td>Account</td><td>E-mail; data di registrazione; versione dell'informativa accettata e data di accettazione; dichiarazione di avere almeno 14 anni</td><td>Database Supabase (server del progetto nell'Unione europea)</td></tr>
     <tr><td>Corso con account</td><td>Progressi del corso; tentativi d'esame (data, punteggio); risposte inviate per la correzione</td><td>Database Supabase</td></tr>
     <tr><td>Attestato</td><td>Nome e cognome indicati da te, codice, data di rilascio, punteggio, lezioni ed esercizi completati, ore stimate</td><td>Database Supabase</td></tr>
     <tr><td>Sicurezza dell'accesso</td><td>Indirizzo IP, data e ora degli accessi, tipo di browser, registrati dal servizio di autenticazione</td><td>Log di Supabase, per il tempo indicato al punto 5</td></tr>
@@ -62,22 +58,22 @@
   <h2>5. Per quanto tempo li conserviamo</h2>
   <ul>
     <li><strong>Account, progressi, tentativi d'esame e attestato</strong>: finché l'account è attivo. Cancellando l'account vengono eliminati subito dal database (e il codice dell'attestato non sarà più verificabile).</li>
-    <li><strong>Account inattivi</strong>: [cancellati dopo 24 mesi senza accessi, previo avviso via e-mail] <em>(scegli e applica una regola)</em>.</li>
-    <li><strong>Copie di sicurezza (backup)</strong>: [fino a N giorni, secondo il piano Supabase], poi sovrascritte.</li>
-    <li><strong>Log di accesso</strong>: [secondo la politica del fornitore, indicativamente pochi giorni].</li>
+    <li><strong>Account inattivi</strong>: cancellati automaticamente, con tutti i dati collegati, dopo 24 mesi senza accessi.</li>
+    <li><strong>Copie di sicurezza (backup)</strong>: conservate dal fornitore per il periodo previsto dal piano Supabase in uso, poi sovrascritte automaticamente.</li>
+    <li><strong>Log di accesso</strong>: per il periodo di conservazione dei log previsto dal fornitore, di norma pochi giorni.</li>
   </ul>
 
   <h2>6. A chi li comunichiamo</h2>
   <ul>
-    <li><strong>Supabase, Inc.</strong> (database, autenticazione, invio delle e-mail di accesso): responsabile del trattamento ai sensi dell'art. 28 GDPR, sulla base del suo Data Processing Addendum. Progetto ospitato in [regione UE].</li>
-    <li>[Fornitore SMTP per l'invio delle e-mail, se configurato]: responsabile del trattamento.</li>
+    <li><strong>Supabase, Inc.</strong> (database, autenticazione, invio delle e-mail di accesso): responsabile del trattamento ai sensi dell'art. 28 GDPR, sulla base del suo Data Processing Addendum (DPA). Il progetto è ospitato su server nell'Unione europea.</li>
+    <li>Eventuale fornitore del servizio di invio e-mail (SMTP) collegato a Supabase: responsabile del trattamento, limitatamente all'indirizzo e-mail e al messaggio di accesso.</li>
     <li><strong>GitHub, Inc.</strong> (hosting delle pagine del sito tramite GitHub Pages): riceve l'indirizzo IP dei visitatori per erogare le pagine e per sicurezza.</li>
     <li><strong>jsDelivr</strong> (rete di distribuzione delle librerie usate per l'area account): riceve l'indirizzo IP quando la pagina carica le librerie.</li>
   </ul>
   <p>I dati possono essere trattati da persone autorizzate dal titolare. Non sono diffusi, salvo i dati dell'attestato mostrati a chi ne conosce il codice.</p>
 
   <h2>7. Trasferimenti fuori dall'Unione europea</h2>
-  <p>Alcuni fornitori sono società con sede negli Stati Uniti. I trasferimenti avvengono sulla base del Data Privacy Framework UE-USA per le società certificate e/o delle Clausole contrattuali standard della Commissione europea [verifica e indica lo strumento in vigore per ciascun fornitore].</p>
+  <p>Alcuni fornitori sono società con sede negli Stati Uniti. I trasferimenti avvengono sulla base delle Clausole contrattuali standard approvate dalla Commissione europea, incluse negli accordi sul trattamento dei dati dei fornitori, e, per le società che vi aderiscono, del Data Privacy Framework UE-USA.</p>
 
   <h2>8. Video di YouTube</h2>
   <p>Alcune lezioni propongono video di YouTube. Nessun contenuto di YouTube viene caricato finché non premi ▶: solo allora il video viene caricato da <code>youtube-nocookie.com</code> (modalità di privacy avanzata) e Google LLC tratta i tuoi dati come titolare autonomo secondo la propria informativa (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>).</p>
@@ -100,7 +96,7 @@
   <p>Puoi esercitare in ogni momento i diritti previsti dagli artt. 15–22 GDPR: <strong>accesso</strong>, <strong>rettifica</strong>, <strong>cancellazione</strong>, <strong>limitazione</strong>, <strong>portabilità</strong> e <strong>opposizione</strong> ai trattamenti basati sul legittimo interesse.</p>
   <ul>
     <li>Dalla pagina <a href="accedi.html">Account</a>: <em>Scarica i miei dati</em> (copia in formato JSON) ed <em>Elimina account</em>.</li>
-    <li>Per ogni altra richiesta scrivi a <strong>[privacy@tuodominio.it]</strong>: rispondiamo entro un mese.</li>
+    <li>Per ogni altra richiesta scrivi a <a href="mailto:diegobasolo@gmail.com"><strong>diegobasolo@gmail.com</strong></a>: rispondiamo entro un mese.</li>
     <li>Puoi proporre reclamo al <strong>Garante per la protezione dei dati personali</strong> (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>).</li>
   </ul>
 

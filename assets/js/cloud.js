@@ -253,6 +253,9 @@
   function renderCertificate(root) {
     var app = A(), esc = app.esc;
     root.innerHTML = '<p class="muted">Caricamento…</p>';
+    function mapCert(c) {
+      return c ? { name: c.full_name, code: c.code, date: Date.parse(c.issued_at), final: c.final_score, hours: c.hours, exercises: c.exercises || [] } : null;
+    }
     ready.then(function () {
       if (!session) {
         root.innerHTML = '<div class="box info"><strong class="t">Accedi per ottenere l\'attestato</strong>' +
@@ -267,73 +270,22 @@
         ]);
       }).then(function (rs) {
         var best = rs[0].data && rs[0].data[0] ? rs[0].data[0].score : null;
-        var cert = rs[1].data;
         var s = app.summary();
-        var finalOk = (best || 0) >= app.PASS;
-        var req = [
-          [s.allLessons, 'Completa tutte le lezioni', s.done.length + '/' + s.lessons.length + ' lezioni completate', 'corso.html'],
-          [finalOk, 'Supera l\'esame finale online con almeno l\'' + app.PASS + '%', best != null ? 'miglior risultato: ' + best + '%' : 'non ancora svolto', 'quiz.html?m=final']
-        ];
-        var h = '<div class="card"><h2 style="margin-top:.2rem">Requisiti</h2><ul class="req">' + req.map(function (r) {
-          return '<li class="' + (r[0] ? 'ok' : 'todo') + '"><span class="ic">' + (r[0] ? '✓' : '•') + '</span><div><strong>' + r[1] + '</strong><br><small class="muted">' + r[2] + '</small></div>' +
-            (r[0] ? '' : '<a class="btn small" href="' + r[3] + '">Vai</a>') + '</li>';
-        }).join('') + '<li class="' + (s.exDone.length ? 'ok' : 'opt') + '"><span class="ic">' + (s.exDone.length ? '✓' : '○') + '</span><div><strong>Esercizi pratici (consigliati)</strong><br>' +
-          '<small class="muted">' + s.exDone.length + ' di ' + app.D.exercises.length + ' completati: verranno elencati nell\'attestato</small></div><a class="btn small ghost" href="esercizi.html">Esercizi</a></li></ul></div>';
-        if (!(s.allLessons && finalOk) && !cert) {
-          root.innerHTML = h + '<p class="muted">Quando avrai soddisfatto i requisiti potrai registrare il tuo attestato verificabile.</p>';
-          return;
-        }
-        h += '<div class="card cert-form"><label for="cname"><strong>Nome e cognome da riportare sull\'attestato</strong></label>' +
-          '<div class="row"><input id="cname" class="search" maxlength="60" autocomplete="name" value="' + esc((cert && cert.full_name) || '') + '" placeholder="Es. Maria Rossi">' +
-          '<button class="btn" id="cgen" type="button">' + (cert ? 'Aggiorna attestato' : 'Registra attestato') + '</button></div>' +
-          '<p class="muted"><small>Il nome comparirà anche nella pagina pubblica di verifica a chi conosce il codice.</small></p><div id="cerr"></div></div><div id="cout"></div>';
-        root.innerHTML = h;
-        if (cert) draw(cert);
-        root.querySelector('#cgen').addEventListener('click', function () {
-          var btn = this, name = root.querySelector('#cname').value.trim().replace(/\s+/g, ' ');
-          if (name.length < 3) { root.querySelector('#cname').classList.add('invalid'); root.querySelector('#cname').focus(); return; }
-          root.querySelector('#cname').classList.remove('invalid');
-          btn.disabled = true;
-          push(true).then(client).then(function (sb) { return sb.rpc('issue_certificate', { p_full_name: name }); }).then(function (r) {
-            btn.disabled = false;
-            if (r.error) throw r.error;
-            btn.textContent = 'Aggiorna attestato';
-            root.querySelector('#cerr').innerHTML = '';
-            draw(r.data);
-            root.querySelector('#cout').scrollIntoView({ behavior: 'smooth' });
-          }).catch(function (e) {
-            btn.disabled = false;
-            root.querySelector('#cerr').innerHTML = '<div class="box danger">' + esc(errMsg(e)) + '</div>';
-          });
+        app.certUI(root, {
+          lessonsDone: s.done.length, lessonsTotal: s.lessons.length, best: best,
+          cert: mapCert(rs[1].data), verifiable: true,
+          generate: function (name) {
+            return push(true).then(client).then(function (sb) { return sb.rpc('issue_certificate', { p_full_name: name }); })
+              .then(function (r) { if (r.error) throw r.error; return mapCert(r.data); });
+          },
+          qr: function (c) {
+            return (window.qrcode ? Promise.resolve() : loadScript(QR_JS)).then(function () { return qrSvg(verifyUrl(c.code), 112); })
+              .catch(function () { return null; });
+          },
+          verifyUrl: function (c) { return verifyUrl(c.code); }
         });
       });
     }).catch(function (e) { root.innerHTML = '<div class="box danger">' + esc(errMsg(e)) + '</div>'; });
-
-    function draw(c) {
-      var out = root.querySelector('#cout');
-      (window.qrcode ? Promise.resolve() : loadScript(QR_JS)).then(function () {
-        var s = app.summary();
-        s.final = c.final_score;
-        s.hours = c.hours;
-        s.exDone = c.exercises || [];
-        var meta = { code: c.code, date: Date.parse(c.issued_at) };
-        var url = verifyUrl(c.code);
-        out.innerHTML = '<div class="box tip"><strong class="t">Attestato registrato</strong>Codice <code>' + esc(c.code) + '</code> · ' +
-          '<a href="' + esc(url) + '" target="_blank" rel="noopener">pagina di verifica pubblica</a></div>' +
-          '<div class="btn-row cert-actions"><button class="btn" id="cprint" type="button">Stampa / salva in PDF</button>' +
-          '<button class="btn ghost" id="cpng" type="button">Scarica immagine (PNG)</button>' +
-          '<button class="btn ghost" id="ccopy" type="button">Copia link di verifica</button></div>' +
-          '<div class="cert-print"><div class="cert-page cert-wrap">' + app.certSvg(c.full_name, s, meta, qrSvg(url, 112)) + '</div>' +
-          '<div class="cert-page">' + app.certDetail(c.full_name, app.summary(), meta) + '</div></div>';
-        out.querySelector('#cprint').addEventListener('click', function () { window.print(); });
-        out.querySelector('#cpng').addEventListener('click', function () { app.downloadPng(out.querySelector('.cert-wrap svg'), 'attestato-nailx.png'); });
-        out.querySelector('#ccopy').addEventListener('click', function () {
-          var b = this;
-          (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { b.textContent = 'Link copiato ✓'; },
-            function () { prompt('Copia il link di verifica:', url); });
-        });
-      }).catch(function (e) { out.innerHTML = '<div class="box danger">' + esc(errMsg(e)) + '</div>'; });
-    }
   }
 
   /* ---------- ACCOUNT ---------- */

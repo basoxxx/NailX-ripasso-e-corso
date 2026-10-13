@@ -19,6 +19,7 @@
     state.updatedAt = Date.now();
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
     if (window.NAILX_CLOUD) window.NAILX_CLOUD.queuePush();
+    refreshNavProgress();
   }
   // area online (Supabase) attiva solo se configurata in assets/js/config.js
   function cloudEnabled() {
@@ -79,8 +80,10 @@
       '<div class="nav-links">' + links.map(function (x) {
         return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + (x[1] === 'accedi' ? ' id="nav-account"' : '') + '>' + x[2] + '</a>';
       }).join('') + '</div>' +
+      '<a class="nav-progress" href="index.html#progresso" title="Avanzamento del corso"><i></i><span>0%</span></a>' +
       '<button class="theme-btn" type="button" title="Cambia tema" aria-label="Cambia tema">☾</button></nav>';
     document.body.insertBefore(h, document.body.firstChild);
+    refreshNavProgress();
     $('.theme-btn', h).addEventListener('click', function () {
       var cur = document.documentElement.getAttribute('data-theme');
       var dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
@@ -95,6 +98,58 @@
     document.body.appendChild(f);
   }
 
+  /* ---------- stato del corso (calcolato in automatico) ---------- */
+  function lessonsDone() { return allLessons().filter(function (x) { return state.lessons[lessonKey(x.m, x.l)]; }).length; }
+  function coursePct() {
+    // lezioni 80%, esame finale 20%
+    var l = allLessons().length;
+    return Math.round(80 * lessonsDone() / l + ((state.quiz.final || 0) >= 80 ? 20 : 0));
+  }
+  function refreshNavProgress() {
+    var el = document.querySelector('.nav-progress');
+    if (!el) return;
+    var p = coursePct();
+    el.querySelector('span').textContent = p + '%';
+    el.querySelector('i').style.setProperty('--p', p);
+    el.setAttribute('aria-label', 'Avanzamento del corso: ' + p + '%');
+  }
+  function moduleStatus(m) {
+    var d = moduleDone(m), q = state.quiz[m.id];
+    if (d === m.lessons.length && (!D.quiz[m.id] || q >= 80)) return ['done', 'Completato ✓'];
+    if (d === m.lessons.length) return ['quiz', 'Manca il quiz'];
+    if (d > 0) return ['progress', 'In corso'];
+    return ['todo', 'Da iniziare'];
+  }
+  function nextStep() {
+    var last = state.last && allLessons().filter(function (x) { return lessonKey(x.m, x.l) === state.last; })[0];
+    if (last && !state.lessons[state.last]) return { t: 'Riprendi la lezione', d: last.l.title, href: lessonUrl(last.m, last.l), b: 'Riprendi', short: 'Riprendi: ' + last.l.title };
+    for (var i = 0; i < D.modules.length; i++) {
+      var m = D.modules[i];
+      var todo = m.lessons.filter(function (l) { return !state.lessons[lessonKey(m, l)]; })[0];
+      if (todo) {
+        return { t: lessonsDone() ? 'Prossima lezione' : 'Inizia il corso', d: 'Modulo ' + m.n + ' · ' + todo.title, href: lessonUrl(m, todo), b: lessonsDone() ? 'Continua' : 'Inizia', short: 'Continua: ' + todo.title };
+      }
+      if (D.quiz[m.id] && (state.quiz[m.id] || 0) < 80) {
+        return { t: 'Verifica il modulo ' + m.n, d: 'Quiz: ' + m.title + (state.quiz[m.id] != null ? ' (ultimo ' + state.quiz[m.id] + '%, obiettivo 80%)' : ''), href: 'quiz.html?m=' + m.id, b: 'Fai il quiz', short: 'Quiz del modulo ' + m.n };
+      }
+    }
+    if ((state.quiz.final || 0) < 80) return { t: 'Tutte le lezioni completate!', d: 'Ora l\'esame finale: 40 domande, soglia 80%.', href: 'quiz.html?m=final', b: 'Esame finale', short: 'Vai all\'esame finale' };
+    return { t: 'Corso completato 🎉', d: 'Scarica o aggiorna il tuo attestato di fine corso.', href: 'attestato.html', b: 'Attestato', short: 'Il tuo attestato' };
+  }
+
+  /* ---------- avvisi (toast) ---------- */
+  function toast(html, ms) {
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', 'status');
+    t.innerHTML = html;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add('show'); });
+    var close = function () { t.classList.remove('show'); setTimeout(function () { t.remove(); }, 300); };
+    setTimeout(close, ms || 6000);
+    return { el: t, close: close };
+  }
+
   /* ---------- HOME ---------- */
   function renderHome() {
     var lessons = allLessons();
@@ -106,14 +161,19 @@
       stat(D.exercises.length, 'esercizi pratici') + stat(countQuiz(), 'domande quiz');
     $('#global-progress').innerHTML = progressBar(pct(done, lessons.length),
       done + ' di ' + lessons.length + ' lezioni completate · ' + exDone + ' esercizi superati · ' + quizDone + ' quiz svolti');
-    var next = lessons.filter(function (x) { return !state.lessons[lessonKey(x.m, x.l)]; })[0] || lessons[0];
-    $('#continue').href = lessonUrl(next.m, next.l);
-    $('#continue').textContent = done ? 'Continua: ' + next.l.title : 'Inizia il corso';
+    var ns = nextStep();
+    $('#continue').href = ns.href;
+    $('#continue').textContent = done ? ns.short : 'Inizia il corso';
+    if ($('#nextstep')) {
+      $('#nextstep').innerHTML = '<div class="next-card"><div class="ring" style="--p:' + coursePct() + '"><span>' + coursePct() + '%</span></div>' +
+        '<div class="next-txt"><small>Prossimo passo</small><strong>' + esc(ns.t) + '</strong><span>' + esc(ns.d) + '</span></div>' +
+        '<a class="btn" href="' + ns.href + '">' + esc(ns.b) + ' →</a></div>';
+    }
 
     $('#modules').innerHTML = D.modules.map(function (m) {
-      var d = moduleDone(m);
-      return '<article class="card"><div style="display:flex;justify-content:space-between;align-items:center">' +
-        '<span class="mod-num">' + String(m.n).padStart(2, '0') + '</span>' + badge(m.level) + '</div>' +
+      var d = moduleDone(m), st = moduleStatus(m);
+      return '<article class="card mod-' + st[0] + '"><div style="display:flex;justify-content:space-between;align-items:center;gap:.4rem">' +
+        '<span class="mod-num">' + String(m.n).padStart(2, '0') + '</span><span class="status s-' + st[0] + '">' + st[1] + '</span>' + badge(m.level) + '</div>' +
         '<h3><a class="stretch" href="' + lessonUrl(m, m.lessons[0]) + '">' + esc(m.title) + '</a></h3>' +
         '<p>' + esc(m.desc) + '</p>' + progressBar(pct(d, m.lessons.length), d + '/' + m.lessons.length + ' lezioni') +
         '</article>';
@@ -175,10 +235,45 @@
     var mark = $('#mark');
     function upd() { mark.textContent = state.lessons[key] ? '✓ Completata' : 'Segna come completata'; mark.classList.toggle('ghost', !!state.lessons[key]); }
     upd();
-    mark.addEventListener('click', function () {
-      if (state.lessons[key]) delete state.lessons[key]; else state.lessons[key] = Date.now();
+    state.last = key;
+    save();
+    var userUndid = false;
+    function complete(auto) {
+      var before = lessonsDone(), modBefore = moduleDone(m);
+      state.lessons[key] = Date.now();
       save(); upd(); side();
+      if (auto) {
+        var t = toast('✓ Lezione completata in automatico. <button type="button" class="linklike">Annulla</button>');
+        t.el.querySelector('button').addEventListener('click', function () {
+          delete state.lessons[key]; userUndid = true; save(); upd(); side(); t.close();
+        });
+      }
+      // traguardi
+      if (modBefore < m.lessons.length && moduleDone(m) === m.lessons.length) {
+        toast('🎉 Hai completato il modulo <strong>' + esc(m.title) + '</strong>' +
+          (D.quiz[m.id] ? ' · <a href="quiz.html?m=' + m.id + '">fai il quiz</a>' : ''), 8000);
+      }
+      if (before < list.length && lessonsDone() === list.length) {
+        toast('🏁 Tutte le lezioni completate! <a href="quiz.html?m=final">Vai all\'esame finale</a>', 9000);
+      }
+    }
+    mark.addEventListener('click', function () {
+      if (state.lessons[key]) { delete state.lessons[key]; userUndid = true; save(); upd(); side(); }
+      else complete(false);
     });
+    // completamento automatico: fine della lezione raggiunta dopo un tempo minimo di lettura
+    var minMs = Math.min(30, (l.min || 10) * 6) * 1000, t0 = Date.now(), seenEnd = false, timer = null;
+    function tryAuto() {
+      if (state.lessons[key] || userUndid || !seenEnd) return;
+      var wait = minMs - (Date.now() - t0);
+      if (wait > 0) { clearTimeout(timer); timer = setTimeout(tryAuto, wait); return; }
+      complete(true);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { seenEnd = true; tryAuto(); }
+      }, { threshold: 0.5 }).observe($('.lesson-nav'));
+    }
     $('.menu-toggle').addEventListener('click', function () { $('#sidebar').classList.toggle('open'); });
   }
 
@@ -614,6 +709,11 @@
 
   /* ---------- ATTESTATO ---------- */
   var PASS = 80;
+  var LOGO = '<defs><linearGradient id="lgc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/><stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>' +
+    '<rect width="64" height="64" rx="16" fill="url(#lgc)"/><rect x="25" y="7" width="14" height="19" rx="3.5" fill="#fff"/>' +
+    '<rect x="22" y="24" width="20" height="6" rx="2" fill="#fff"/><rect x="14" y="29" width="36" height="28" rx="9" fill="#fff"/>' +
+    '<rect x="18" y="35" width="28" height="18" rx="6" fill="#f3a9c0"/><rect x="21" y="37" width="4" height="12" rx="2" fill="#fff" opacity=".75"/>' +
+    '<path d="M50 8 C50.8 12.2 51.8 13.2 56 14 C51.8 14.8 50.8 15.8 50 20 C49.2 15.8 48.2 14.8 44 14 C48.2 13.2 49.2 12.2 50 8 Z" fill="#fff"/>';
   function fmtDate(t) {
     return new Date(t).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
   }
@@ -637,51 +737,85 @@
     };
   }
 
-  function certSvg(name, s, cert, qrSvg) {
-    var W = 1123, H = 794, fs = Math.min(58, Math.floor(1500 / Math.max(name.length, 10)));
+  function certSvg(name, s, cert, qrSvg, opts) {
+    opts = opts || {};
+    var W = 1123, H = 794, GOLD = '#b8892f';
+    var shown = name || 'Il tuo nome';
+    var fs = Math.min(60, Math.floor(1600 / Math.max(shown.length, 10)));
     var t = function (x, y, str, size, weight, fill, extra) {
       return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '" font-weight="' + (weight || 400) +
         '" fill="' + (fill || '#3b2a30') + '"' + (extra || '') + '>' + esc(str) + '</text>';
     };
+    var sans = ' font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif"';
     var o = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" ' +
       'font-family="Georgia, \'Times New Roman\', serif" role="img" aria-label="Attestato di fine corso">' +
-      '<defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c2577a"/><stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>' +
-      '<rect width="' + W + '" height="' + H + '" fill="#fffaf8"/>' +
-      '<rect x="22" y="22" width="' + (W - 44) + '" height="' + (H - 44) + '" fill="none" stroke="url(#cg)" stroke-width="10"/>' +
-      '<rect x="44" y="44" width="' + (W - 88) + '" height="' + (H - 88) + '" fill="none" stroke="#e7c3cf" stroke-width="2"/>';
-    [[60, 60], [W - 60, 60], [60, H - 60], [W - 60, H - 60]].forEach(function (c) {
-      o += '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="9" fill="#c2577a"/>';
+      '<defs>' +
+      '<linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/><stop offset="1" stop-color="#7d2f4e"/></linearGradient>' +
+      '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d58e"/><stop offset=".5" stop-color="#c99a3e"/><stop offset="1" stop-color="#e9c977"/></linearGradient>' +
+      '<radialGradient id="bgr" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fbeff2"/></radialGradient>' +
+      '<pattern id="pt" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="18" stroke="#c2577a" stroke-width="1" opacity=".05"/></pattern>' +
+      '</defs>' +
+      '<rect width="' + W + '" height="' + H + '" fill="url(#bgr)"/>' +
+      '<rect x="56" y="56" width="' + (W - 112) + '" height="' + (H - 112) + '" fill="url(#pt)"/>' +
+      '<rect x="20" y="20" width="' + (W - 40) + '" height="' + (H - 40) + '" fill="none" stroke="url(#cg)" stroke-width="12"/>' +
+      '<rect x="38" y="38" width="' + (W - 76) + '" height="' + (H - 76) + '" fill="none" stroke="url(#gold)" stroke-width="2.5"/>' +
+      '<rect x="46" y="46" width="' + (W - 92) + '" height="' + (H - 92) + '" fill="none" stroke="#e7c3cf" stroke-width="1"/>';
+    // ornamenti agli angoli
+    [[46, 46, 1, 1], [W - 46, 46, -1, 1], [46, H - 46, 1, -1], [W - 46, H - 46, -1, -1]].forEach(function (c) {
+      var x = c[0], y = c[1], sx = c[2], sy = c[3];
+      o += '<path d="M' + x + ',' + (y + sy * 70) + ' L' + x + ',' + y + ' L' + (x + sx * 70) + ',' + y + '" fill="none" stroke="url(#gold)" stroke-width="5"/>' +
+        '<path d="M' + (x + sx * 14) + ',' + (y + sy * 48) + ' Q' + (x + sx * 14) + ',' + (y + sy * 14) + ' ' + (x + sx * 48) + ',' + (y + sy * 14) + '" fill="none" stroke="url(#gold)" stroke-width="2"/>' +
+        '<rect x="' + (x + sx * 22 - 6) + '" y="' + (y + sy * 22 - 6) + '" width="12" height="12" fill="#c2577a" transform="rotate(45 ' + (x + sx * 22) + ' ' + (y + sy * 22) + ')"/>';
     });
-    o += '<g transform="translate(' + (W / 2 - 28) + ',70) scale(.875)"><rect width="64" height="64" rx="16" fill="#c2577a"/>' +
-      '<path d="M20,54 L20,30 C20,14 27,8 32,6 C37,8 44,14 44,30 L44,54 Z" fill="#fff"/>' +
-      '<path d="M24,52 L24,31 C24,20 28,14 32,12 C36,14 40,20 40,31 L40,52 Z" fill="#f7c1cf"/></g>';
-    o += t(W / 2, 165, 'NAILX · CORSO DI RICOSTRUZIONE UNGHIE', 16, 700, '#8e3b5a', ' letter-spacing="4"');
-    o += t(W / 2, 240, 'Attestato di fine corso', 54, 700, '#2b1f22');
-    o += t(W / 2, 290, 'Si attesta che', 20, 400, '#6e5a5f', ' font-style="italic"');
-    o += t(W / 2, 365, name, fs, 700, '#c2577a');
-    o += '<line x1="' + (W / 2 - 260) + '" y1="385" x2="' + (W / 2 + 260) + '" y2="385" stroke="#e7c3cf" stroke-width="2"/>';
-    o += t(W / 2, 425, 'ha completato il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 19, 400);
-    o += t(W / 2, 455, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + ' ore di formazione', 17, 400, '#6e5a5f');
-    o += t(W / 2, 485, 'Esame finale superato con il ' + s.final + '% · ' + s.exDone.length + (s.exDone.length === 1 ? ' esercizio pratico completato' : ' esercizi pratici completati'), 17, 700, '#2f8a5b');
-    // programma su più righe (max ~125 caratteri ciascuna)
+    o += '<g transform="translate(' + (W / 2 - 26) + ',72) scale(.82)">' + LOGO + '</g>';
+    o += t(W / 2, 158, 'NAILX · CORSO DI RICOSTRUZIONE UNGHIE', 15, 700, '#8e3b5a', ' letter-spacing="5"' + sans);
+    o += t(W / 2, 228, 'Attestato di fine corso', 56, 700, '#2b1f22', ' letter-spacing="1"');
+    o += '<path d="M' + (W / 2 - 150) + ',250 L' + (W / 2 - 14) + ',250 M' + (W / 2 + 14) + ',250 L' + (W / 2 + 150) + ',250" stroke="' + GOLD + '" stroke-width="2"/>' +
+      '<rect x="' + (W / 2 - 6) + '" y="244" width="12" height="12" fill="url(#gold)" transform="rotate(45 ' + W / 2 + ' 250)"/>';
+    o += t(W / 2, 292, 'Si attesta che', 20, 400, '#6e5a5f', ' font-style="italic"');
+    o += t(W / 2, 362, shown, fs, 700, name ? '#b0466c' : '#d8b4c2', ' font-style="italic"');
+    o += '<line x1="' + (W / 2 - 280) + '" y1="384" x2="' + (W / 2 + 280) + '" y2="384" stroke="#e7c3cf" stroke-width="1.5"/>';
+    o += t(W / 2, 422, 'ha completato con successo il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 18.5, 400);
+    o += t(W / 2, 452, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + (s.hours === 1 ? ' ora' : ' ore') + ' di formazione', 16.5, 400, '#6e5a5f');
+    var nEx = s.exDone.length;
+    o += t(W / 2, 482, s.final != null ? 'Esame finale superato con il ' + s.final + '% · ' + nEx + (nEx === 1 ? ' esercizio pratico completato' : ' esercizi pratici completati')
+      : 'Esame finale: da sostenere', 17, 700, s.final != null ? '#2f8a5b' : '#b7791f');
     var lines = [], cur = 'Programma:';
     D.modules.forEach(function (m) {
       var add = (cur === 'Programma:' ? ' ' : ' · ') + m.title;
       if ((cur + add).length > 140) { lines.push(cur); cur = m.title; } else cur += add;
     });
     lines.push(cur);
-    lines.slice(0, 4).forEach(function (ln, i) {
-      o += t(W / 2, 514 + i * 18, ln, 11.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
-    });
-    o += '<line x1="150" y1="640" x2="420" y2="640" stroke="#3b2a30"/>' + t(285, 662, 'Data di rilascio', 14, 400, '#6e5a5f') + t(285, 630, fmtDate(cert.date), 19, 700);
-    var cx2 = qrSvg ? W - 330 : W - 285;
-    o += '<line x1="' + (cx2 - 135) + '" y1="640" x2="' + (cx2 + 135) + '" y2="640" stroke="#3b2a30"/>' + t(cx2, 662, qrSvg ? 'Codice · verificabile online' : 'Codice attestato', 14, 400, '#6e5a5f') + t(cx2, 630, cert.code, 19, 700, '#2b1f22', ' font-family="ui-monospace, monospace"');
-    if (qrSvg) o += '<g transform="translate(' + (W - 172) + ',588)">' + qrSvg + '</g>';
-    o += '<circle cx="' + W / 2 + '" cy="630" r="46" fill="url(#cg)"/><circle cx="' + W / 2 + '" cy="630" r="38" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>' +
-      t(W / 2, 624, 'CORSO', 12, 700, '#fff', ' letter-spacing="2"') + t(W / 2, 642, 'COMPLETATO', 9, 700, '#fff');
-    o += t(W / 2, 722, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
-      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
-    o += t(W / 2, 740, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
+    lines.slice(0, 4).forEach(function (ln, i) { o += t(W / 2, 512 + i * 17, ln, 11, 400, '#7a6369', sans); });
+    // data e codice
+    var cx1 = qrSvg ? 250 : 270, cx2 = qrSvg ? W - 360 : W - 270;
+    o += '<line x1="' + (cx1 - 120) + '" y1="652" x2="' + (cx1 + 120) + '" y2="652" stroke="#3b2a30" stroke-width="1"/>' +
+      t(cx1, 642, cert.date ? fmtDate(cert.date) : '—', 19, 700) + t(cx1, 672, 'Data di rilascio', 13.5, 400, '#6e5a5f', sans);
+    o += '<line x1="' + (cx2 - 130) + '" y1="652" x2="' + (cx2 + 130) + '" y2="652" stroke="#3b2a30" stroke-width="1"/>' +
+      t(cx2, 642, cert.code || 'NX-····-········', 19, 700, '#2b1f22', ' font-family="ui-monospace, Menlo, Consolas, monospace"') +
+      t(cx2, 672, qrSvg ? 'Codice · verificabile online' : 'Codice attestato', 13.5, 400, '#6e5a5f', sans);
+    if (qrSvg) o += '<g transform="translate(' + (W - 190) + ',575)">' + qrSvg + '</g>';
+    // sigillo a coccarda con nastri
+    var sx0 = W / 2, sy0 = 628, pts = [];
+    for (var k = 0; k < 48; k++) {
+      var a = Math.PI * 2 * k / 48, r = k % 2 ? 45 : 50;
+      pts.push((sx0 + r * Math.cos(a)).toFixed(1) + ',' + (sy0 + r * Math.sin(a)).toFixed(1));
+    }
+    o += '<path d="M' + (sx0 - 26) + ',' + (sy0 + 26) + ' l-16,40 l14,-6 l9,12 l12,-40 Z" fill="#9c3b60"/>' +
+      '<path d="M' + (sx0 + 26) + ',' + (sy0 + 26) + ' l16,40 l-14,-6 l-9,12 l-12,-40 Z" fill="#b0466c"/>' +
+      '<polygon points="' + pts.join(' ') + '" fill="url(#gold)"/>' +
+      '<circle cx="' + sx0 + '" cy="' + sy0 + '" r="38" fill="url(#cg)"/>' +
+      '<circle cx="' + sx0 + '" cy="' + sy0 + '" r="32" fill="none" stroke="#f1d58e" stroke-width="1.2" stroke-dasharray="2 3"/>' +
+      t(sx0, sy0 - 8, 'CORSO', 11, 700, '#fff', ' letter-spacing="2"' + sans) +
+      t(sx0, sy0 + 7, 'COMPLETATO', 7.5, 700, '#fff', sans) +
+      t(sx0, sy0 + 23, cert.date ? String(new Date(cert.date).getFullYear()) : '★', 11, 700, '#f1d58e', sans);
+    o += t(W / 2, 726, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
+      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 743, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
+    if (opts.preview) {
+      o += '<text x="' + W / 2 + '" y="' + H / 2 + '" text-anchor="middle" font-size="120" font-weight="800" fill="#c2577a" opacity=".1" ' +
+        'transform="rotate(-24 ' + W / 2 + ' ' + H / 2 + ')"' + sans + ' letter-spacing="12">ANTEPRIMA</text>';
+    }
     return o + '</svg>';
   }
 
@@ -715,54 +849,113 @@
     return h;
   }
 
-  function renderCertificate() {
-    if (cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderCertificate($('#cert')); return; }
-    var root = $('#cert');
-    var s = summary();
-    var req = [
-      [s.allLessons, 'Completa tutte le lezioni', s.done.length + '/' + s.lessons.length + ' lezioni completate', 'corso.html'],
-      [s.finalOk, 'Supera l\'esame finale con almeno l\'' + PASS + '%', s.final != null ? 'miglior risultato: ' + s.final + '%' : 'non ancora svolto', 'quiz.html?m=final']
-    ];
-    var ok = s.allLessons && s.finalOk;
-    var h = '<div class="card"><h2 style="margin-top:.2rem">Requisiti</h2><ul class="req">' + req.map(function (r) {
-      return '<li class="' + (r[0] ? 'ok' : 'todo') + '"><span class="ic">' + (r[0] ? '✓' : '•') + '</span><div><strong>' + r[1] + '</strong><br>' +
-        '<small class="muted">' + r[2] + '</small></div>' + (r[0] ? '' : '<a class="btn small" href="' + r[3] + '">Vai</a>') + '</li>';
-    }).join('') + '<li class="' + (s.exDone.length ? 'ok' : 'opt') + '"><span class="ic">' + (s.exDone.length ? '✓' : '○') + '</span><div><strong>Esercizi pratici (consigliati)</strong><br>' +
-      '<small class="muted">' + s.exDone.length + ' di ' + D.exercises.length + ' completati: verranno elencati nell\'attestato</small></div>' +
-      '<a class="btn small ghost" href="esercizi.html">Esercizi</a></li></ul></div>';
-    if (!ok) {
-      root.innerHTML = h + '<p class="muted">Quando avrai soddisfatto i requisiti potrai inserire il tuo nome e scaricare l\'attestato con il dettaglio del percorso svolto.</p>';
-      return;
+  /* Interfaccia della pagina attestato (usata in locale e online).
+   * ctx: { lessonsDone, lessonsTotal, best, cert:{name,code,date,final,hours,exercises}|null, verifiable,
+   *        generate(name) → Promise<cert>, qr(cert) → Promise<svg|null>, verifyUrl(cert) → url|null } */
+  function certUI(root, ctx) {
+    var lessonsOk = ctx.lessonsDone >= ctx.lessonsTotal;
+    var examOk = (ctx.best || 0) >= PASS;
+    var cert = ctx.cert;
+    var eligible = lessonsOk && examOk;
+    var ns = nextStep();
+    function step(n, st, title, sub, cta) {
+      var icon = st === 'done' ? '✓' : (st === 'locked' ? '🔒' : n);
+      return '<li class="st-' + st + '"><span class="st-ic">' + icon + '</span><div class="st-txt"><strong>' + title + '</strong><small>' + sub + '</small></div>' +
+        (cta && st !== 'done' && st !== 'locked' ? '<a class="btn small" href="' + cta[1] + '">' + cta[0] + '</a>' : '') + '</li>';
     }
-    var cert = state.cert || {};
-    h += '<div class="card cert-form"><label for="cname"><strong>Nome e cognome da riportare sull\'attestato</strong></label>' +
-      '<div class="row"><input id="cname" class="search" maxlength="60" autocomplete="name" value="' + esc(cert.name || '') + '" placeholder="Es. Maria Rossi">' +
-      '<button class="btn" id="cgen" type="button">' + (cert.code ? 'Aggiorna' : 'Genera attestato') + '</button></div></div>' +
-      '<div id="cout"></div>';
+    var pctNow = Math.round(80 * ctx.lessonsDone / ctx.lessonsTotal + (examOk ? 20 : 0));
+    var status = cert ? 'Attestato rilasciato il ' + fmtDate(cert.date) + (ctx.verifiable ? ' · verificabile online' : '')
+      : eligible ? 'Requisiti completati: inserisci il nome e genera l\'attestato.'
+        : 'Completa i passaggi qui sotto per sbloccare l\'attestato.';
+    var h = '<section class="card cert-hero no-print">' +
+      '<div class="cert-hero-top"><div class="ring big" style="--p:' + pctNow + '"><span>' + pctNow + '%</span></div>' +
+      '<div><h2>Il tuo percorso</h2><p class="muted">' + status + '</p></div></div><ol class="cert-steps">' +
+      step(1, lessonsOk ? 'done' : 'current', 'Lezioni', ctx.lessonsDone + ' di ' + ctx.lessonsTotal + ' completate', ['Continua', lessonsOk ? 'corso.html' : ns.href]) +
+      step(2, examOk ? 'done' : (lessonsOk ? 'current' : 'todo'), 'Esame finale', ctx.best != null ? 'miglior risultato ' + ctx.best + '% (soglia ' + PASS + '%)' : 'soglia ' + PASS + '% · non ancora svolto', ['Fai l\'esame', 'quiz.html?m=final']) +
+      step(3, cert ? 'done' : (eligible ? 'current' : 'locked'), 'Attestato', cert ? 'codice ' + esc(cert.code) : (eligible ? 'pronto da generare' : 'si sblocca dopo i passi 1 e 2'), null) +
+      '</ol></section>' +
+      '<div class="cert-layout"><aside class="card cert-panel no-print">' +
+      '<label for="cname"><strong>Nome e cognome sull\'attestato</strong></label>' +
+      '<input id="cname" class="search" maxlength="60" autocomplete="name" placeholder="Es. Maria Rossi" value="' + esc((cert && cert.name) || state.certDraft || '') + '">' +
+      '<button class="btn" id="cgen" type="button"' + (eligible ? '' : ' disabled') + '>' + (cert ? 'Aggiorna il nome' : 'Genera l\'attestato') + '</button>' +
+      (eligible ? '' : '<p class="muted"><small>🔒 Il pulsante si attiva quando lezioni ed esame sono completati. Intanto puoi vedere l\'anteprima con il tuo nome.</small></p>') +
+      '<div id="cerr" aria-live="polite"></div>' +
+      '<div class="cert-ex"><strong>Esercizi pratici</strong><span>' + summary().exDone.length + ' di ' + D.exercises.length + ' completati</span>' +
+      '<small class="muted">Facoltativi ma consigliati: compaiono sull\'attestato.</small><a href="esercizi.html">Vai agli esercizi →</a></div>' +
+      '<div id="cactions"></div></aside>' +
+      '<div class="cert-print"><div class="cert-page cert-wrap" id="cpreview"></div><div class="cert-page" id="cdetail"></div></div></div>';
     root.innerHTML = h;
 
-    function draw() {
-      var c = state.cert;
-      if (!c || !c.name) return;
-      var s2 = summary();
-      $('#cout').innerHTML = '<div class="btn-row cert-actions"><button class="btn" id="cprint" type="button">Stampa / salva in PDF</button>' +
-        '<button class="btn ghost" id="cpng" type="button">Scarica immagine (PNG)</button></div>' +
-        '<div class="cert-print"><div class="cert-page cert-wrap">' + certSvg(c.name, s2, c) + '</div><div class="cert-page">' + certDetail(c.name, s2, c) + '</div></div>';
-      $('#cprint').addEventListener('click', function () { window.print(); });
-      $('#cpng').addEventListener('click', function () { downloadPng($('.cert-wrap svg'), 'attestato-nailx.png'); });
+    var input = $('#cname', root);
+    function svgFor(c, qrSvg) {
+      var s = summary();
+      if (c) { s.final = c.final != null ? c.final : s.final; if (c.hours) s.hours = c.hours; if (c.exercises) s.exDone = c.exercises; }
+      else s.final = ctx.best != null && ctx.best >= PASS ? ctx.best : null;
+      var nm = input.value.trim().replace(/\s+/g, ' ');
+      return certSvg(nm || (c && c.name) || '', s, c || {}, qrSvg, { preview: !c });
     }
-    $('#cgen').addEventListener('click', function () {
-      var name = $('#cname').value.trim().replace(/\s+/g, ' ');
-      if (name.length < 3) { $('#cname').focus(); $('#cname').classList.add('invalid'); return; }
-      $('#cname').classList.remove('invalid');
-      var date = (state.cert && state.cert.date) || Date.now();
-      state.cert = { name: name, date: date, code: certCode(name, date, s.final) };
-      save();
-      $('#cgen').textContent = 'Aggiorna';
-      draw();
-      $('#cout').scrollIntoView({ behavior: 'smooth' });
+    function drawPreview() { $('#cpreview', root).innerHTML = svgFor(null); }
+    function drawCert(c) {
+      Promise.resolve(ctx.qr ? ctx.qr(c) : null).then(function (qrSvg) {
+        input.value = c.name;
+        $('#cpreview', root).innerHTML = svgFor(c, qrSvg);
+        $('#cdetail', root).innerHTML = certDetail(c.name, summary(), c);
+        var url = ctx.verifyUrl ? ctx.verifyUrl(c) : null;
+        $('#cactions', root).innerHTML = '<div class="cert-actions"><button class="btn" id="cprint" type="button">🖨 Stampa / salva PDF</button>' +
+          '<button class="btn ghost" id="cpng" type="button">⬇ Scarica immagine</button>' +
+          (navigator.share ? '<button class="btn ghost" id="cshare" type="button">↗ Condividi</button>' : '') +
+          (url ? '<button class="btn ghost" id="ccopy" type="button">🔗 Copia link di verifica</button><a class="small-link" href="' + esc(url) + '" target="_blank" rel="noopener">Apri la pagina di verifica</a>' : '') + '</div>';
+        $('#cprint', root).addEventListener('click', function () { window.print(); });
+        $('#cpng', root).addEventListener('click', function () { downloadPng($('#cpreview svg', root), 'attestato-nailx.png'); });
+        if ($('#cshare', root)) $('#cshare', root).addEventListener('click', function () {
+          navigator.share({ title: 'Il mio attestato NailX', text: 'Ho completato il corso di ricostruzione unghie NailX! Codice ' + c.code, url: url || location.href }).catch(function () {});
+        });
+        if ($('#ccopy', root)) $('#ccopy', root).addEventListener('click', function () {
+          var b = this;
+          (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { b.textContent = '✓ Link copiato'; },
+            function () { prompt('Copia il link di verifica:', url); });
+        });
+      });
+    }
+    input.addEventListener('input', function () {
+      state.certDraft = input.value;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+      if (!cert) drawPreview();
+      else $('#cgen', root).disabled = input.value.trim().replace(/\s+/g, ' ') === cert.name;
     });
-    draw();
+    $('#cgen', root).addEventListener('click', function () {
+      var btn = this, name = input.value.trim().replace(/\s+/g, ' ');
+      if (name.length < 3) { input.classList.add('invalid'); input.focus(); $('#cerr', root).innerHTML = '<p class="err">Scrivi nome e cognome (almeno 3 caratteri).</p>'; return; }
+      input.classList.remove('invalid');
+      $('#cerr', root).innerHTML = '';
+      btn.disabled = true;
+      Promise.resolve(ctx.generate(name)).then(function (c) {
+        // ridisegna tutta la pagina: passi, pannello e attestato aggiornati
+        certUI(root, Object.assign({}, ctx, { cert: c }));
+        toast('🎓 Attestato ' + (ctx.verifiable ? 'registrato' : 'generato') + ': codice <strong>' + esc(c.code) + '</strong>', 7000);
+        $('#cpreview', root).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }).catch(function (e) {
+        btn.disabled = false;
+        $('#cerr', root).innerHTML = '<div class="box danger">' + esc((e && e.message) || 'Errore imprevisto, riprova.') + '</div>';
+      });
+    });
+    if (cert) { drawCert(cert); $('#cgen', root).disabled = true; } else drawPreview();
+  }
+
+  function renderCertificate() {
+    if (cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderCertificate($('#cert')); return; }
+    var s = summary();
+    var c = state.cert && state.cert.name ? { name: state.cert.name, code: state.cert.code, date: state.cert.date, final: s.final } : null;
+    certUI($('#cert'), {
+      lessonsDone: s.done.length, lessonsTotal: s.lessons.length, best: state.quiz.final != null ? state.quiz.final : null,
+      cert: c, verifiable: false,
+      generate: function (name) {
+        var date = (state.cert && state.cert.date) || Date.now();
+        state.cert = { name: name, date: date, code: certCode(name, date, s.final) };
+        save();
+        return { name: name, code: state.cert.code, date: date, final: s.final };
+      }
+    });
   }
 
   function downloadPng(svgEl, filename) {
@@ -835,7 +1028,7 @@
   // funzioni condivise con assets/js/cloud.js
   window.NAILX_APP = {
     state: state, save: save, esc: esc, $: $, qs: qs, pct: pct, progressBar: progressBar, fmtDate: fmtDate,
-    summary: summary, certSvg: certSvg, certDetail: certDetail, downloadPng: downloadPng, shuffle: shuffle,
+    summary: summary, certSvg: certSvg, certDetail: certDetail, certUI: certUI, downloadPng: downloadPng, shuffle: shuffle, toast: toast,
     PASS: PASS, D: D, cloudEnabled: cloudEnabled
   };
 

@@ -136,3 +136,21 @@ do $$ begin
   assert not exists (select 1 from certificates where user_id = '11111111-1111-1111-1111-111111111111'), 'attestato rimasto';
   raise notice 'OK cancellazione account';
 end $$;
+
+-- ===== conservazione: cancellazione account inattivi da 24 mesi
+insert into auth.users (id, email, created_at, last_sign_in_at) values
+  ('33333333-3333-3333-3333-333333333333', 'vecchia@example.com', now() - interval '3 years', now() - interval '25 months'),
+  ('44444444-4444-4444-4444-444444444444', 'attiva@example.com',  now() - interval '3 years', now() - interval '2 months');
+do $$ declare n int; begin
+  n := cleanup_inactive_accounts();
+  assert not exists (select 1 from auth.users where id = '33333333-3333-3333-3333-333333333333'), 'inattiva non cancellata';
+  assert exists (select 1 from auth.users where id = '44444444-4444-4444-4444-444444444444'), 'attiva cancellata per errore';
+  raise notice 'OK pulizia account inattivi (%)', n;
+end $$;
+set role authenticated;
+do $$ begin
+  begin perform cleanup_inactive_accounts(); raise exception 'pulizia invocabile dal sito';
+  exception when insufficient_privilege then null; end;
+  raise notice 'OK pulizia non invocabile dal sito';
+end $$;
+reset role;
