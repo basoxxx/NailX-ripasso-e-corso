@@ -369,3 +369,62 @@ footer a { color: var(--muted); }
 .toast.show { transform: translate(-50%, 0); opacity: 1; }
 .toast + .toast { bottom: 80px; }
 .toast a, .linklike { color: inherit; font-weight: 800; text-decoration: underline; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; }
+
+/* Lezione: indice, barra di lettura, punti chiave, verifica rapida, appunti */
+.read-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; pointer-events: none; }
+.read-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .1s linear; }
+.toc { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1.1rem; margin: 1rem 0 1.4rem; font-size: .95rem; }
+.toc ol { margin: .4rem 0 0; padding-left: 1.2rem; columns: 2 16rem; column-gap: 2rem; }
+.toc li { break-inside: avoid; }
+.lesson-body h2 { scroll-margin-top: 80px; }
+.keypoints { border: 2px solid var(--accent); border-radius: 14px; padding: 1rem 1.2rem; margin: 1.6rem 0; background: var(--accent-soft); }
+.keypoints .t { display: block; font-size: 1.05rem; margin-bottom: .3rem; }
+.keypoints ol { margin: .2rem 0 0; }
+.quick-check { margin-top: 2rem; padding-top: .5rem; border-top: 1px dashed var(--border); }
+.quick-check h2 { margin-bottom: .2rem; }
+.notes { margin: 1.4rem 0; border: 1px solid var(--border); border-radius: 12px; padding: .7rem 1rem; background: var(--surface-2); }
+.notes summary { cursor: pointer; font-weight: 700; }
+.notes textarea { width: 100%; margin-top: .7rem; font: inherit; padding: .6rem .7rem; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); resize: vertical; box-sizing: border-box; }
+
+/* Programma */
+.prog-hero { padding: 1.5rem 0 .5rem; }
+.prog-hero h1 { margin: .4rem 0; }
+.search { width: 100%; box-sizing: border-box; font: inherit; padding: .75rem 1rem; border-radius: 999px; border: 2px solid var(--border); background: var(--surface); color: var(--text); }
+.search:focus { outline: none; border-color: var(--accent); }
+.results { list-style: none; padding: 0; }
+.results li { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: .6rem .9rem; margin: .5rem 0; }
+.syl { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin: .6rem 0; padding: .2rem 1.1rem; box-shadow: var(--shadow); }
+.syl[open] { padding-bottom: 1rem; }
+.syl summary { cursor: pointer; display: flex; align-items: center; gap: .8rem; padding: .7rem 0; list-style: none; }
+.syl summary::-webkit-details-marker { display: none; }
+.syl-t { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.syl-t small { color: var(--muted); }
+.faq details { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: .7rem 1rem; margin: .5rem 0; }
+.faq summary { cursor: pointer; font-weight: 700; }
+
+/* Dispensa */
+.hb-wrap { max-width: 860px; }
+.hb-tools { margin: 1rem 0; }
+.hb-cover { text-align: center; padding: 3rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); margin-bottom: 1.5rem; }
+.hb-cover h1 { margin: .8rem 0 .3rem; }
+.hb-index { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1.5rem; }
+.hb-index ol ol { font-size: .92rem; color: var(--muted); }
+.hb-mod { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.8rem; margin-bottom: 1.5rem; }
+.hb-mod table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .92rem; }
+.hb-mod th, .hb-mod td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+.hb-mod th { background: var(--surface-2); }
+.hb-lesson { border-top: 1px solid var(--border); padding-top: .6rem; margin-top: 1.4rem; }
+.hb-src { color: var(--muted); word-break: break-all; }
+
+@media print {
+
+  .hb-wrap { max-width: none; padding: 0; }
+  .hb-cover { border: 0; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; break-after: page; }
+  .hb-index { border: 0; break-after: page; }
+  .hb-mod { border: 0; padding: 0; break-before: page; }
+  .hb-lesson figure, .hb-lesson table, .hb-lesson .box { break-inside: avoid; }
+  .hb-lesson h2, .hb-lesson h3 { break-after: avoid; }
+  body[data-page="dispensa"] { background: #fff; }
+  .read-bar, .toc, .quick-check, .notes { display: none !important; }
+}
+@media (max-width: 560px) { .hb-mod { padding: 1rem; } .syl { padding: .1rem .8rem; } }
