@@ -8,18 +8,12 @@ sincronizzati, esame corretto dal server, attestato con QR code verificabile e a
 
 Il progetto **qytmciermutxplrbnqam** (regione eu-west-1, Irlanda, piano Free) è già configurato:
 
-- tutte le migrazioni di [`supabase/migrations/`](../supabase/migrations) sono applicate, **tranne**
-  `…_nailx_oblio.sql` (funzione *Elimina account*): vedi il paragrafo qui sotto;
+- tutte le migrazioni di [`supabase/migrations/`](../supabase/migrations) sono applicate
+  (`…_nailx_oblio.sql` dal SQL Editor, le altre con il connettore Supabase);
 - il sito è collegato tramite [`assets/js/config.js`](../assets/js/config.js) (URL e chiave pubblica);
 - la pulizia degli account inattivi è pianificata con `pg_cron` ogni domenica alle 3:17;
-- verifica eseguita sul database reale (in una transazione annullata): catalogo, profilo con privacy,
-  esame corretto dal server, attestato, verifica pubblica e isolamento tra utenti.
-
-### Da fare: funzione "Elimina account"
-
-Apri **SQL Editor → New query**, incolla il contenuto di
-[`supabase/migrations/20261013131500_nailx_oblio.sql`](../supabase/migrations/20261013131500_nailx_oblio.sql) e premi **Run**.
-Senza questa funzione il pulsante *Elimina account* mostra un errore (l'esportazione dei dati funziona).
+- verifica eseguita sul database reale (in transazioni annullate): catalogo, profilo con privacy,
+  esame corretto dal server, attestato, verifica pubblica, isolamento tra utenti ed eliminazione account.
 
 ## 1. Migrazioni
 
