@@ -15,13 +15,12 @@ begin
   return n;
 end $$;
 
-revoke all on function public.cleanup_inactive_accounts() from public;
-revoke all on function public.cleanup_inactive_accounts() from anon, authenticated;
+revoke all on function public.cleanup_inactive_accounts() from public, anon, authenticated;
 
 do $$
 begin
   if exists (select 1 from pg_available_extensions where name = 'pg_cron') then
-    create extension if not exists pg_cron;
+    create extension if not exists pg_cron with schema pg_catalog;
     perform cron.schedule('nailx-pulizia-account-inattivi', '17 3 * * 0', 'select public.cleanup_inactive_accounts()');
   else
     raise notice 'pg_cron non disponibile: esegui periodicamente select public.cleanup_inactive_accounts();';

@@ -24,7 +24,7 @@ create table if not exists public.progress (
 );
 
 -- ---------------------------------------------------------------------
--- Catalogo del corso (generato da tools/build_supabase_seed.js → seed.sql)
+-- Catalogo del corso (dati: migrazione …_nailx_catalogo.sql, generata da tools/build_supabase_seed.js)
 -- ---------------------------------------------------------------------
 create table if not exists public.course_lessons (
   key     text primary key,          -- "modulo/lezione"
@@ -160,7 +160,7 @@ begin
     raise exception 'Hai raggiunto il limite di 10 tentativi in 24 ore: riprova domani.' using errcode = 'P0001';
   end if;
   select array_agg(id) into ids from (select id from exam_questions order by random() limit 40) q;
-  if ids is null then raise exception 'Domande d''esame non caricate (seed.sql)' using errcode = 'P0001'; end if;
+  if ids is null then raise exception 'Domande d''esame non caricate (migrazione catalogo)' using errcode = 'P0001'; end if;
   insert into exam_attempts (user_id, question_ids) values (uid, ids) returning id into att;
   return jsonb_build_object(
     'attempt_id', att,
@@ -286,13 +286,14 @@ begin
   delete from auth.users where id = auth.uid();
 end $$;
 
--- Permessi sulle funzioni
-revoke all on function public.start_exam()                 from public;
-revoke all on function public.submit_exam(uuid, jsonb)     from public;
-revoke all on function public.issue_certificate(text)      from public;
-revoke all on function public.delete_my_account()          from public;
-revoke all on function public.verify_certificate(text)     from public;
-revoke all on function public.handle_new_user()            from public;
+-- Permessi sulle funzioni (su Supabase le funzioni nuove sono eseguibili da anon e
+-- authenticated per impostazione predefinita: i permessi vanno tolti esplicitamente)
+revoke all on function public.start_exam()                 from public, anon, authenticated;
+revoke all on function public.submit_exam(uuid, jsonb)     from public, anon, authenticated;
+revoke all on function public.issue_certificate(text)      from public, anon, authenticated;
+revoke all on function public.delete_my_account()          from public, anon, authenticated;
+revoke all on function public.verify_certificate(text)     from public, anon, authenticated;
+revoke all on function public.handle_new_user()            from public, anon, authenticated;
 grant execute on function public.start_exam()             to authenticated;
 grant execute on function public.submit_exam(uuid, jsonb) to authenticated;
 grant execute on function public.issue_certificate(text)  to authenticated;
