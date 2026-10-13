@@ -1883,6 +1883,7 @@ ${F('cartina-step.svg', 'Posizionare la cartina in quattro passaggi.')}
 <li><strong>Controlla il livello</strong> di profilo: la cartina deve continuare la linea della lamina, né verso il basso né verso l'alto.</li>
 <li><strong>Chiudi le alette</strong>: prima unisci le due alette sotto il polpastrello, poi fai aderire i lati ai <em>lati</em> del dito, senza avvolgere tutta la falange. <em>Perché</em>: se attacchi tutto alla nocca, quando il dito si piega la cartina si stacca.</li>
 </ol>
+<div class="box deep"><strong class="t">Approfondimento: perché la cartina decide la forza, non solo l'estetica</strong><p>I lati dell'allungamento devono uscire <strong>dritti dal solco laterale naturale</strong> e proseguire paralleli a esso. Se la cartina è storta o fuori livello, il prodotto nasce già nel posto sbagliato e l'unica correzione possibile è la lima.</p><ul><li>Dove manca prodotto, limando assottigli: nasce un punto debole.</li><li>Dove c'è troppo prodotto, resta spessore inutile: più peso e più leva sul letto ungueale.</li></ul><p>In entrambi i casi aumentano rotture e sollevamenti. Per questo le educatrici dicono che <em>la forma si costruisce sulla cartina e la lima rifinisce soltanto</em>. Tre minuti spesi in più per la cartina ti fanno risparmiare dieci minuti di limatura e una riparazione.</p></div>
 <h2>I tre controlli</h2>
 ${F('cartina.svg', 'Dall\'alto: cartina corretta, spazio sotto il bordo, fuori asse.')}
 ${F('cartina-livello.svg', 'Di profilo: cartina troppo bassa, giusta, troppo alta.')}
@@ -1894,6 +1895,7 @@ ${F('cartina-livello.svg', 'Di profilo: cartina troppo bassa, giusta, troppo alt
 </table>
 ${B('tip', 'Come correggere', 'Per raddrizzare una cartina non staccarla tutta: muovi le alette nella direzione della correzione. Le scanalature (linee di crescita) della lamina sono una guida migliore del bordo libero, che può essere irregolare.')}
 ${B('warn', 'Errore classico', 'Uno spazio tra cartina e bordo libero fa colare il prodotto sotto l\'unghia: crea sollevamenti e un "gradino" difficile da correggere.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Per vedere se la cartina (e poi l'unghia) è davvero centrata, metti dietro il dito qualcosa di <strong>nero</strong> (un cartoncino, la manica, il cuscinetto scuro), <strong>chiudi un occhio</strong> e guarda lungo l'unghia dalla cuticola verso la punta. Con un occhio solo la vista non "compensa" e lo sfondo scuro fa risaltare i contorni: ogni rotazione o ala più alta salta subito all'occhio. Fai questo controllo <em>prima</em> di appoggiare il prodotto, quando correggere costa solo un movimento delle alette.</div>
 <h2>Errori frequenti</h2>
 <ul>
 <li><strong>Cartina ruotata verso il pollice</strong>: è l'errore più comune su anulare e mignolo. Guarda la mano dall'alto con le dita dritte.</li>
@@ -1901,10 +1903,11 @@ ${B('warn', 'Errore classico', 'Uno spazio tra cartina e bordo libero fa colare 
 <li><strong>Cartina spinta contro la pelle</strong>: dolore e prodotto steso male.</li>
 <li><strong>Bordo libero non preparato</strong>: polvere e sebo anche sotto il bordo impediscono la saldatura.</li>
 </ul>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>La cartina dell'anulare continua a girare verso il mignolo, anche se la rifai.</strong></p><p>Ragiona così: (1) la cliente tiene la mano rilassata con le dita piegate? Allora l'asse che vedi non è quello vero: fai appoggiare la mano piatta sul cuscinetto, dita distese e in linea con l'avambraccio. (2) Chiudi le alette prima sotto il polpastrello, tirando con la stessa forza dai due lati; solo dopo fai aderire i fianchi. (3) Usa come riferimento le linee di crescita della lamina, non il bordo libero, che spesso su anulare e mignolo è asimmetrico. Se l'unghia naturale stessa cresce inclinata, allinea l'allungamento al dito e compensa l'asimmetria con la lima sul bordo, non spostando la cartina.</p></div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://www.youngnails.com/blogs/news/how-to-use-nail-forms',
-            'https://www.nailpro.com/how-to-customize-nail-forms/']
+            'https://www.nailpro.com/how-to-customize-nail-forms/', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes']
         },
         {
           id: 'adattare-cartina', simple: 'Non tutte le unghie sono uguali: a volte devi ritagliare la cartina perché si appoggi bene, senza spazi e senza far male.', title: 'Adattare la cartina alle unghie difficili', min: 8,
@@ -1930,11 +1933,14 @@ ${F('cartina-ritaglio-step.svg', 'Esempio passo-passo: ritagliare l\'incavo per 
 </ol>
 ${B('info', 'Quando la cartina non basta', 'Su unghie molto morsicate o con letto ungueale molto corto, a volte serve prima ricostruire il letto (vedi modulo "Onicofagia e unghie difficili"). Non promettere lunghezze che l\'unghia non può reggere.')}
 ${B('danger', 'Il dolore è un segnale', 'Se la cliente sente dolore con la cartina, è troppo spinta o preme su pelle viva. Togli e adatta: costruire sopra un punto doloroso non è mai accettabile.')}
+<div class="box deep"><strong class="t">Approfondimento: iponichio lungo o pterigio inverso?</strong><p>Non tutta la pelle che vedi sotto il bordo libero è un "iponichio lungo". Esiste una condizione chiamata <strong>pterigio inverso</strong> (pterygium inversum unguis o pterigio ventrale): la parte finale del letto ungueale resta <em>attaccata alla faccia inferiore della lamina</em> e il solco sotto la punta scompare. Spesso non dà fastidio, ma tagliare o spingere in quella zona provoca dolore o sanguinamento.</p><ul><li>Le fonti dermatologiche la collegano a malattie del tessuto connettivo, ma anche a fattori esterni come i prodotti acrilici e gel.</li><li>Non va "staccata", né raschiata, né spinta indietro con la cartina.</li><li>Lavora con lunghezze corte, cartina con incavo ampio e nessuna pressione.</li></ul><p>Se la pelle aderente aumenta da un appuntamento all'altro o fa male, annotalo e consiglia una visita dermatologica. Ricorda: come lo pterigio dorsale non è la cuticola, anche questo non è "pelle in più" da togliere.</p></div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente con unghie a "trampolino" (ski-jump) marcato che vuole un allungamento medio.</strong></p><ol><li>Accorcia il bordo libero naturale il più possibile: la parte che sale è proprio quella che ti porterebbe fuori linea.</li><li>Posiziona la cartina seguendo la linea della lamina vicino alla cuticola (le linee di crescita), quindi leggermente <em>più in basso</em> del bordo.</li><li>Riempi l'eventuale spazio tra bordo e cartina con strati sottili di prodotto, non con una perla grande.</li><li>Porta l'apex un po' più in alto del solito: di profilo la linea deve sembrare dritta, e lo spessore in più "nasconde" la salita della lamina.</li><li>Proponi una lunghezza prudente al primo servizio: la lamina a ski-jump è spesso sottile e flessibile.</li></ol></div>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Tieni una <strong>scheda delle cartine</strong> per le clienti abituali: annota "anulare destro: incavo profondo", "pollici: due cartine", "mignolo: aletta sinistra più stretta". Al refill o alla ricostruzione successiva ritagli le cartine <em>prima</em> che la cliente si sieda, e risparmi tempo e prove a secco. Un'altra abitudine utile: ritaglia sempre poco per volta e riprova. Un incavo troppo largo lascia uno spazio sotto il bordo, ed è proprio lo spazio che fa colare il prodotto.</div>
 `,
           sources: ['https://www.youngnails.com/blogs/news/how-to-use-nail-forms',
             'https://www.salongeek.com/threads/fitting-forms-with-high-hyponychium-advice-please.329807/',
             'https://www.nailpro.com/how-to-customize-nail-forms/',
-            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms']
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms', 'https://en.wikipedia.org/wiki/Pterygium_inversum_unguis', 'https://cdn.enzyklopaedie-dermatologie.de/en/dermatology/pterygium-unguis-ventralis-132424', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes']
         },
         {
           id: 'zone-apex', videos: [{"id": "Tx3lwXOS0L0", "title": "Do's and Don'ts of Apex Structure", "channel": "YoungNailsInc", "lang": "EN"}, {"id": "PD1qHAO3cvk", "title": "How to Build the Perfect Apex", "channel": "Liz Means Business", "lang": "EN"}], simple: 'Immagina un ponte: dove l\'unghia lascia il dito (punto di stress) serve il pilastro più alto, cioè l\'apex. Alla base e in punta il prodotto è sottile.', title: 'Le tre zone e l\'apex', min: 11,
@@ -1949,6 +1955,7 @@ ${F('zone-costruzione.svg', 'Le tre zone di costruzione.')}
 <tr><td><strong>Zona 3</strong> – zona cuticolare</td><td>Vicino a cuticola e solchi laterali</td><td>Sottilissima, sfumata "a zero"</td><td>Il prodotto deve fondersi con la lamina e non toccare mai la pelle</td></tr>
 </table>
 ${F('zone-spessori-sezione.svg', 'Sezione longitudinale e trasversale: dove il prodotto è spesso e dove è sottile.')}
+<div class="box deep"><strong class="t">Approfondimento: "sottile il più possibile, spesso solo dove serve"</strong><p>Le educatrici ripetono una regola: la ricostruzione deve essere <strong>sottile quanto basta per durare</strong>, e non di più. Lo spessore in eccesso non rende l'unghia più forte: la rende più pesante e rigida, e questo carica di stress la lamina naturale sotto. Il risultato tipico sono i sollevamenti, soprattutto alla base.</p><p>Pensa a una trave: serve materiale solo dove la trave si piega, cioè sopra il punto di stress. Per questo l'apex è <strong>un punto</strong>, non una fascia: dal centro si scende dolcemente verso i lati, che restano dritti ma non massicci, così la mano non sembra "a paletta".</p></div>
 <h2>Il margine dalla pelle</h2>
 <p>In zona 3 il prodotto si ferma a <strong>circa 1 mm</strong> da cuticola e solchi laterali (le fonti indicano da 0,5 a 1,5 mm; i manuali americani 1/16 di pollice, circa 1,6 mm) e non deve mai toccare la pelle. Questa sottile striscia di lamina scoperta non si vede a fine lavoro ma evita il contatto con la pelle, prima causa di sollevamenti e di allergie.</p>
 <h2>Dove sta esattamente l'apex</h2>
@@ -1965,6 +1972,7 @@ ${F('apex-confronto.svg', 'Apex corretto e due errori tipici.')}
 <tr><td><strong>Apex troppo indietro / gobba alla cuticola</strong></td><td>Aspetto grosso, sollevamenti alla base, nessun sostegno dove serve</td></tr>
 <tr><td><strong>Apex spostato su un lato</strong></td><td>L'unghia si rompe sul lato più sottile</td></tr>
 </table>
+<h3>L'apex cambia con la forma</h3><table><tr><th>Forma</th><th>Dove sta l'apex</th><th>Linea dall'apex alla punta</th></tr><tr><td>Quadrata, squoval</td><td>Al centro del letto ungueale "allungato"</td><td>Dritta, quasi orizzontale</td></tr><tr><td>Mandorla, stiletto</td><td>Circa a un terzo della lunghezza dell'unghia</td><td>Scende dritta verso la punta</td></tr><tr><td>Ballerina (coffin)</td><td>Circa a un terzo</td><td>Dritta fino alla punta</td></tr></table><p>Regola comune: <strong>più l'unghia è lunga, più l'apex sale e si sposta verso la cuticola</strong>, ma non così indietro da creare una gobba che non sostiene niente. Nelle forme a punta (mandorla, stiletto) l'apex viene chiamato anche "punto di equilibrio".</p>
 <h2>Come controllarlo</h2>
 ${F('apex-controllo-viste.svg', 'Controllo dell\'apex da tre punti di vista.')}
 <ol class="steps">
@@ -1974,11 +1982,13 @@ ${F('apex-controllo-viste.svg', 'Controllo dell\'apex da tre punti di vista.')}
 <li><strong>Dal basso</strong>: il bordo libero è sottile e uniforme.</li>
 </ol>
 ${B('tip', 'Il trucco del riflesso', 'Ruota lentamente il dito sotto la lampada: una striscia di luce continua e regolare indica una superficie ben costruita; una luce che si spezza indica avvallamenti o gobbe.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Oltre al punto più alto, guarda la <strong>linea che va dall'apex alla punta</strong> (l'arco superiore). Deve essere dritta. Se l'apex è troppo avanti, questa linea si incurva verso il basso e "tira" il bordo libero sopra il polpastrello: l'unghia sembra un artiglio e diventa debole proprio dove la leva è maggiore. Controllo veloce: appoggia una lima dritta sull'unghia di profilo, dall'apex verso la punta. Se sotto la lima vedi una "pancia" o una luce irregolare, la curva non è giusta.</div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Una cliente rompe tre volte di fila il medio, sempre con una crepa trasversale vicino alla linea del sorriso.</strong></p><p>Domande da farsi: la crepa è <em>sopra il punto di stress</em>? Allora la zona 2 era troppo sottile o l'apex era spostato in avanti. Guarda le tue foto di profilo: l'apex era sopra il punto in cui l'unghia si stacca dal dito? Il refill è stato fatto dopo 4 settimane o più? In quel caso l'apex era "migrato" verso la punta. Correzione: accorcia, ricostruisci la zona 2 con più spessore sopra il punto di stress e anticipa il refill di una settimana.</p></div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
             'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
-            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/']
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://scratchmagazine.co.uk/feature/why-the-arch-is-integral-to-a-well-balanced-nail-enhancement', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown', 'https://open-exam-prep.com/study-guides/ga-nail-technician/nail-enhancement-chemistry-acrylics/acrylic-maintenance-removal']
         },
         {
           id: 'proporzioni', simple: 'Più lunga è l\'unghia, più forte deve essere la struttura. Per un risultato equilibrato, la punta non dovrebbe superare circa metà della lunghezza del letto.', title: 'Lunghezza e proporzioni', min: 7,
@@ -1993,6 +2003,7 @@ ${F('lunghezza-proporzioni.svg', 'Proporzioni: bordo libero fino a circa metà d
 <li>Su letti ungueali corti si può "allungare il letto" con gel/polvere cover rosa, invece di aggiungere bianco.</li>
 </ul>
 ${B('info', 'Regole, non leggi', 'Le fonti professionali indicano un massimo di metà letto, alcune di un terzo. Nelle gare e negli stili "moda" le lunghezze possono essere molto maggiori, ma richiedono strutture e apex più importanti.')}
+<div class="box deep"><strong class="t">Approfondimento: la fisica della leva</strong><p>Quando la punta urta il bordo di un tavolo, la forza agisce come su una chiave inglese: <strong>più lungo è il braccio, maggiore è lo sforzo</strong> nel punto in cui l'unghia si stacca dal dito. In modo semplificato, se raddoppi la lunghezza che sporge, a parità di urto raddoppia lo sforzo sul punto di stress.</p><p>Per questo la regola della metà non è solo estetica. Oltre quella misura servono più spessore in zona 2 e una curva a C più marcata per reggere lo stesso urto; se la struttura non cresce insieme alla lunghezza, il prodotto si crepa o, peggio, fa leva sulla lamina e la stacca dal letto.</p></div>
 <h2>Più lunghezza = più struttura</h2>
 ${F('apex-lunghezza.svg', 'Unghia corta e unghia lunga: l\'apex cresce e resta sopra il punto di stress.')}
 <table>
@@ -2001,6 +2012,7 @@ ${F('apex-lunghezza.svg', 'Unghia corta e unghia lunga: l\'apex cresce e resta s
 <tr><td>Media (circa 1/2 del letto)</td><td>Apex ben visibile di profilo</td><td>Uso quotidiano in salone</td></tr>
 <tr><td>Lunga (oltre 1/2)</td><td>Apex alto, curva a C più marcata</td><td>Clienti abituate, eventi, gare</td></tr>
 </table>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Quando "allunghi il letto" con il cover, la smile line si sposta in avanti, ma <strong>la leva non cambia</strong>: si misura sempre dal punto in cui l'unghia lascia il dito fino alla punta. Un'unghia con un letto allungato bello e un bordo bianco corto può <em>sembrare</em> corta e invece essere molto lunga dal punto di vista della struttura. Calcola l'apex sulla lunghezza reale dell'allungamento, non sulla lunghezza del bianco.</div>
 <h2>Come decidere con la cliente</h2>
 <ol class="steps">
 <li><strong>Chiedi</strong> che lavoro fa, se usa tastiera o attrezzi, se fa sport.</li>
@@ -2009,10 +2021,11 @@ ${F('apex-lunghezza.svg', 'Unghia corta e unghia lunga: l\'apex cresce e resta s
 <li><strong>Segna</strong> la lunghezza sulla griglia della cartina, uguale per tutte le dita (il pollice può essere leggermente più lungo e il mignolo leggermente più corto, a parità di aspetto).</li>
 </ol>
 ${B('warn', 'Prima volta', 'Alla prima ricostruzione la cliente non è abituata: una lunghezza eccessiva aumenta il rischio di urti, rotture e traumi al letto ungueale.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente con letto ungueale cortissimo (ex onicofagia) che chiede unghie lunghe "come in foto".</strong></p><ul><li><strong>Spiega con un gesto:</strong> mostra con la cartina quanto sporgerebbe l'unghia rispetto alla base che la sostiene.</li><li><strong>Proponi una strada a tappe:</strong> primo servizio corto, con il cover per allungare otticamente il letto e un bordo libero sottile; al refill si aggiungono 1–2 mm se l'unghia ha tenuto.</li><li><strong>Scegli una forma che perdona:</strong> squoval o ovale corta, non stiletto.</li><li><strong>Annota sulla scheda</strong> la lunghezza in quadretti della griglia: così puoi aumentarla in modo controllato.</li></ul><p>Spesso la cliente si fida di più quando vede un piano chiaro che quando le dici solo di no.</p></div>
 `,
           sources: ['https://www.salongeek.com/threads/choosing-the-correct-length-for-balance-and-beauty.11417/',
             'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/',
-            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails']
+            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes', 'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms', 'https://www.salongeek.com/threads/camouflage-gel.60825/']
         },
         {
           id: 'curva-c', simple: 'Guardando l\'unghia dalla punta deve sembrare un piccolo arco, come una "C" sdraiata. Un arco regge più di una lastra piatta.', title: 'La curva a C (pinching)', min: 9,
@@ -2029,6 +2042,7 @@ ${F('curva-c-percentuali.svg', 'Curva a C espressa in percentuale di cerchio.')}
 <tr><td>Alta (circa 50–55%)</td><td>Gare, unghie lunghe</td></tr>
 </table>
 ${B('info', 'Valori indicativi', 'Le guide d\'esame americane citano circa 35–45% per il lavoro in salone; le riviste di settore indicano circa 50–55% per le gare. Non esiste un valore valido per tutti: si parte sempre dalla curva naturale della cliente e si cerca che sia uguale su tutte e dieci le unghie.')}
+<div class="box deep"><strong class="t">Approfondimento: perché un arco regge più di una lastra</strong><p>La curva a C funziona come l'arco di un ponte: una forza che arriva al centro non piega la lastra, ma viene <strong>deviata verso i lati</strong>, dove i solchi e i bordi laterali la scaricano. Una superficie piatta, invece, prende tutta la forza al centro e si flette.</p><p>Per questo una curva più alta permette lunghezze maggiori con meno spessore. Ma l'arco funziona solo se i <strong>lati sono pieni e dritti</strong>: se in limatura assottigli i fianchi, l'arco perde le sue "spalle" e la crepa nasce proprio lì. Le guide commerciali parlano di curve tra circa il 25 e il 50% per il salone: la percentuale giusta è quella che la lamina della cliente sopporta senza dolore.</p></div>
 <h2>Tre modi per ottenere la curva</h2>
 <ol class="steps">
 <li><strong>Con la cartina</strong>: dai la curva giusta alla cartina prima di costruire. È il metodo più sicuro per le principianti.</li>
@@ -2044,6 +2058,7 @@ ${F('curva-c-pinching-step.svg', 'Pinching: posizione delle dita, momento giusto
 <li><strong>Controlla</strong> dal davanti: curva simmetrica, nessuna crepa ai lati.</li>
 </ol>
 ${B('danger', 'Mai dolore', 'Il pinching non deve far male né staccare la lamina dal letto. Se la cliente sente dolore, smetti subito: una curva forzata su un\'unghia piatta può causare onicolisi.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong><ul><li><strong>Gel:</strong> molte educatrici fanno un flash di circa 10 secondi (dipende da gel e lampada), poi applicano la pinzetta, la lasciano in posizione e completano la polimerizzazione con la pinzetta montata. Dopo averla tolta, fai un'ultima passata in lampada: le parti coperte dalla pinzetta potrebbero aver ricevuto meno luce.</li><li><strong>Pinzetta che scivola sul gel:</strong> metti un pezzetto di nastro o di cerotto in tessuto all'interno delle ganasce.</li><li><strong>Troppo presto</strong> lasci un'impronta: un'ammaccatura sul fianco è un punto debole. <strong>Troppo tardi</strong> non cambi la curva e fai solo male.</li><li>Un bastoncino per curva a C troppo piccolo forza una curva troppo stretta e indebolisce l'unghia.</li></ul></div>
 <h2>Errori frequenti</h2>
 <ul>
 <li><strong>Pinching troppo tardi</strong> (acrilico già duro): crepe sui lati.</li>
@@ -2052,11 +2067,12 @@ ${B('danger', 'Mai dolore', 'Il pinching non deve far male né staccare la lamin
 <li><strong>Curve diverse tra le dita</strong>: la mano sembra disordinata.</li>
 </ul>
 ${B('tip', 'Strumenti', 'Esistono pinzette e "bastoncini per curva a C". Le pinze trasparenti sono preferibili con il gel perché lasciano passare la luce. In alcune gare le pinze sono vietate: controlla sempre il regolamento.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente con unghie naturali piatte che vede le foto da gara e vuole "quella curva".</strong></p><p>Una lamina piatta non si può forzare: il pinching sul letto provoca dolore e può staccare la lamina (onicolisi). La soluzione è costruire la curva <em>solo sull'allungamento</em>:</p><ol><li>Pre-curva la cartina in modo più marcato, partendo dal bordo libero.</li><li>Accetta che sulla parte naturale la curva resti quella della cliente: il passaggio deve essere graduale.</li><li>Fai il pinching solo sull'allungamento, dal punto di stress in avanti.</li><li>Spiega alla cliente che la curva aumenterà un po' a ogni servizio, man mano che l'allungamento è sostenuto meglio.</li></ol></div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
             'https://www.nailpro.com/technique/article/21156099/competition-technique-how-to-pre-shape-a-c-curve',
-            'https://purespadirect.com/blogs/pure-spa-direct-blog/how-to-achieve-the-perfect-c-curve-using-professional-pinching-tools-a-nail-techs-guide-to-strength-style']
+            'https://purespadirect.com/blogs/pure-spa-direct-blog/how-to-achieve-the-perfect-c-curve-using-professional-pinching-tools-a-nail-techs-guide-to-strength-style', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://www.nailpro.com/how-to-customize-nail-forms/']
         },
         {
           id: 'tutorial-gel', videos: [{"id": "ilkQqQbeCQQ", "title": "Ricostruzione unghie con cartine e gel: ogni passaggio spiegato", "channel": "Valeriya Nails", "lang": "IT"}, {"id": "jOJjB8vjEg0", "title": "Sculpting Gel Nails – Step by Step", "channel": "Nail Career Education", "lang": "EN"}], simple: 'Prepari l\'unghia, metti la cartina, disegni la punta con il gel, costruisci l\'apex, togli la cartina e limi: un passaggio alla volta, con la lampada dopo ogni strato.', title: 'Tutorial completo: gel su cartina', min: 14,
@@ -2070,6 +2086,7 @@ ${F('tut-gel-cartina.svg', 'Ricostruzione in gel su cartina in otto passaggi.')}
 <li>Cartine, pennello piatto o ovale per gel, lampada abbinata al gel</li>
 <li>Guanti in nitrile, salviette senza pelucchi</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: temperatura e autolivellamento</strong><p>La consistenza (viscosità) di un gel cambia con la temperatura. Con il freddo il gel diventa <strong>più denso</strong>: si autolivella poco e restano segni del pennello. Con il caldo diventa <strong>più fluido</strong>: si livella in fretta, ti lascia meno tempo per costruire e tende a colare verso i solchi e la cuticola.</p><ul><li>Molti produttori indicano una temperatura di lavoro di circa <strong>20–25 °C</strong>: controlla la scheda del tuo gel.</li><li>Non tenere i vasetti sul davanzale, vicino al termosifone o sotto la lampada accesa.</li><li>D'inverno lascia il vasetto a temperatura ambiente prima di usarlo; d'estate lavora un dito alla volta e fai un flash appena la perla è al posto giusto.</li></ul></div>
 <h2>Procedimento</h2>
 <ol class="steps">
 <li><strong>Prepara</strong>: igiene, cuticola, opacizzazione 180–240, polvere via, disidratante e primer solo sulla lamina.</li>
@@ -2086,6 +2103,7 @@ ${F('tut-gel-cartina.svg', 'Ricostruzione in gel su cartina in otto passaggi.')}
 ${F('tut-gel-zona1.svg', 'Zona 1 in gel: lati dritti che proseguono i solchi, lunghezza segnata sulla griglia.')}
 ${F('tut-gel-flip.svg', 'Il "capovolgimento": la gravità porta il gel verso l\'apex.')}
 ${F('zone-spessori-sezione.svg', 'Controllo finale: sottile alla cuticola, spesso sull\'apex, sottile in punta.')}
+<div class="box deep"><strong class="t">Approfondimento: lo strato appiccicoso (strato di dispersione)</strong><p>Dopo la lampada la superficie del gel resta appiccicosa perché <strong>l'ossigeno dell'aria blocca la crescita delle catene</strong> di polimero: quello strato è polimerizzato meno della metà. Non è un difetto: è la "colla" che fa aderire lo strato successivo.</p><ul><li>Non pulirlo tra uno strato e l'altro, se il produttore non lo chiede.</li><li>È gel non polimerizzato: <strong>non deve toccare la pelle</strong>. Toglilo con un tampone senza pelucchi e il cleaner, senza strofinare sulle cuticole.</li><li>Uno strato appiccicoso più spesso del solito può indicare una lampada debole o non adatta al gel.</li><li>I prodotti "no-wipe" sono formulati in modo diverso; secondo Doug Schoon, i gel senza strato di inibizione tendono a scaldare di più.</li></ul></div>
 <h2>Problemi durante il lavoro</h2>
 <table>
 <tr><th>Problema</th><th>Causa probabile</th><th>Rimedio</th></tr>
@@ -2095,10 +2113,12 @@ ${F('zone-spessori-sezione.svg', 'Controllo finale: sottile alla cuticola, spess
 <tr><td>Bolle</td><td>Pennello agitato o gel mescolato con forza</td><td>Movimenti lenti, gel a temperatura ambiente</td></tr>
 </table>
 ${B('tip', 'Checklist finale', 'Profilo con apex sopra il punto di stress · curva a C regolare · zona cuticolare pulita e sottile · bordo libero sottile (≈1–1,5 mm) e sigillato · lati dritti · nessuna sbavatura sulla pelle.')}
+<div class="box deep"><strong class="t">Approfondimento: da dove viene il bruciore</strong><p>Il calore <strong>non viene dalla lampada</strong> ma dalla reazione: ogni legame che si forma libera un po' di calore. Più prodotto polimerizza nello stesso momento, più calore arriva sul letto ungueale.</p><ul><li><strong>Spessore:</strong> più spesso = più calore. Per questo il pollice, che ha più superficie, si scalda di più.</li><li><strong>Velocità:</strong> un gel pensato per una lampada più lenta, sotto un LED potente, libera tutto il calore in poco tempo. Nell'esempio di Schoon, da 2 minuti a 30 secondi: lo stesso calore in un quarto del tempo.</li><li><strong>Lamina sottile:</strong> la lamina fa da isolante. Se è stata limata troppo, il calore arriva al letto. I recettori del dolore si attivano intorno a <strong>46 °C</strong>.</li></ul><p>Il calore eccessivo può contribuire al distacco della lamina (onicolisi). Usa la lampada indicata dal produttore e lavora a strati sottili.</p></div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Il gel scivola sempre verso il solco del lato del mignolo, solo su alcune dita.</strong></p><p>Cause probabili: dito inclinato mentre lavori (la gravità porta il gel verso il lato più basso), perla troppo grande, salone caldo. Soluzioni: tieni il dito della cliente perfettamente orizzontale e ruotalo tu per guardare; lavora <strong>un'unghia alla volta</strong> e fai un flash appena la perla è in posizione, invece di preparare quattro dita e poi la lampada; usa un pennello pulito per "riprendere" il gel dal solco prima del flash. Se succede su tutte le dita, il gel è probabilmente troppo caldo o è la viscosità sbagliata per quel lavoro.</p></div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://www.ellisons.co.uk/blog/how-to-build-the-perfect-apex-with-the-gelbottle-inc',
-            'https://www.nsinails.com.au/blogs/news/nail-preparation']
+            'https://www.nsinails.com.au/blogs/news/nail-preparation', 'https://www.homeofnailart.com/blogs/knowledge-hub/a-nail-tech-s-guide-to-heat-runny-builder-gel-and-heat-spikes', 'https://www.homeofnailart.com/blogs/knowledge-hub/easy-guide-to-temperature-control-for-perfect-hema-free-biab-and-gel-polish', 'https://nailknowledge.org/nail-knowledge-base/inhibition-layer-and-no-cleanse-gels', 'https://nailknowledge.org/blog/heat-spikes']
         },
         {
           id: 'tutorial-acrilico', videos: [{"id": "yVuhQ9Nh43M", "title": "Tutorial applicazione acrilico", "channel": "Nail Couture Italia", "lang": "IT"}, {"id": "-xLyP7jYlMA", "title": "Come realizzare un allungamento in acrilico", "channel": "Nailover International", "lang": "IT"}], simple: 'Con l\'acrilico mescoli un liquido e una polvere con il pennello: si forma una pallina (perla) che indurisce all\'aria. Lavori zona per zona: punta, centro, base.', title: 'Tutorial completo: acrilico su cartina', min: 14,
@@ -2113,6 +2133,7 @@ ${F('perla-acrilico.svg', 'Prima di iniziare: controlla la consistenza della per
 <tr><td><strong>Bagnata</strong></td><td>circa 2 : 1</td><td>Cola nei solchi e verso la cuticola, si ritira (shrinkage), aumenta il rischio di sensibilizzazione</td></tr>
 </table>
 ${B('info', 'Dipende dal sistema', 'Il rapporto 1,5 : 1 è un riferimento per molti sistemi EMA, non una legge: ogni marchio formula il suo monomero per un certo rapporto. Leggi le istruzioni del produttore.')}
+<div class="box deep"><strong class="t">Approfondimento: che cosa succede dentro la perla</strong><ul><li><strong>Nella polvere</strong> c'è un iniziatore, il perossido di benzoile: con il calore dell'ambiente e del dito si spezza e avvia la reazione.</li><li><strong>Nel liquido</strong> c'è un catalizzatore che accelera la rottura dell'iniziatore, e ci sono inibitori che impediscono al monomero di indurirsi nel flacone. La sfumatura viola indica assorbitori UV contro l'ingiallimento.</li><li>Il monomero deve <strong>avvolgere ogni granello</strong> di polvere: se manca liquido, i granelli non si legano bene (perla asciutta, fragile); se ce n'è troppo, il monomero in eccesso si ritira mentre indurisce e "tira" via il prodotto dalla lamina.</li></ul><p>Le polveri colorate hanno più pigmento e a volte vogliono una perla appena più umida: controlla le istruzioni del produttore.</p></div>
 <h2>Procedimento</h2>
 ${F('tut-acrilico.svg', 'Ricostruzione in acrilico su cartina in sei passaggi.')}
 <ol class="steps">
@@ -2128,6 +2149,7 @@ ${F('tut-acrilico.svg', 'Ricostruzione in acrilico su cartina in sei passaggi.')
 ${F('acrilico-pennello-carico.svg', 'Come si carica il pennello: immergi, scarica, tocca la polvere, aspetta la perla.')}
 ${F('perla-zone-acrilico.svg', 'Dove appoggiare le tre perle e quanto devono essere grandi.')}
 ${B('warn', 'Pulizia del pennello', 'Pulisci il pennello nel monomero e asciugalo su carta tra una perla e l\'altra; non toccare mai il monomero con la pelle. Il monomero usato va eliminato secondo le istruzioni, non rimesso nel flacone.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong><p><strong>La temperatura cambia i tempi.</strong> Con il freddo l'acrilico indurisce più lentamente e la perla tende a colare: scarica bene il pennello. Con il caldo indurisce in fretta. Valori indicativi di un marchio: prodotto normale circa 1 min 30 s prima che non si possa più muovere e circa 4 min 30 s prima di limarlo; prodotto rapido circa 1 min e 4 min.</p><p><strong>La grandezza della perla dipende dal liquido nel pennello.</strong> Più monomero nel corpo del pennello dà una perla più grande. Scarica l'eccesso sul bordo del dappen e appoggia la punta sulla polvere senza affondare. La perla giusta sembra una perla bagnata, senza polvere asciutta ai bordi: appena posata comincia a distendersi ma non scorre verso la pelle.</p></div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Conseguenza</th><th>Correzione</th></tr>
@@ -2137,11 +2159,12 @@ ${B('warn', 'Pulizia del pennello', 'Pulisci il pennello nel monomero e asciugal
 <tr><td>Apex piatto o troppo avanti</td><td>Crepa al centro o leva sul letto</td><td>Perla di zona 2 centrata sopra il punto di stress</td></tr>
 <tr><td>Troppo prodotto in una volta su unghia sottile</td><td>Calore durante l'indurimento</td><td>Perle più piccole, lavoro per strati</td></tr>
 </table>
+<div class="box warn"><strong class="t">Prodotti rapidi e calore</strong>Un acrilico "fast set" libera <strong>lo stesso calore</strong> di uno normale, ma in meno tempo: il calore diventa percepibile quando si libera in un minuto o meno. Per questo i prodotti rapidi scaldano di più nelle giornate calde. Anche usare una <strong>polvere di un altro sistema</strong> con il tuo liquido può provocare surriscaldamento: liquido e polvere sono studiati in coppia. Non rendere la perla più bagnata per "rallentare" un prodotto rapido: cambi il rapporto e indebolisci la struttura. Meglio scegliere il prodotto adatto alla stagione.</div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
             'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://nsinails.com.au/blogs/news/mix-ratio-l-p',
-            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-acrylic-chemistry-mix-ratio']
+            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-acrylic-chemistry-mix-ratio', 'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/liquid-powder-acrylics', 'https://nailknowledge.org/blog/heat-spikes']
         }
       ]
     },
@@ -2169,6 +2192,7 @@ ${F('forme.svg', 'Le forme principali.')}
 <tr><td>Edge</td><td>Base quadrata con una cresta centrale e angoli appuntiti</td><td>Moda, scultoreo</td><td>Delicata; tecnica avanzata</td><td>Gare, look moda</td></tr>
 </table>
 ${B('info', 'Nomi che cambiano', 'Alcune forme hanno descrizioni diverse a seconda delle fonti (per esempio la lipstick o la differenza tra ovale e mandorla). Quando una cliente chiede una forma "di moda", fatti mostrare una foto.')}
+<div class="box deep"><strong class="t">Approfondimento: ogni forma ha la sua cartina</strong><table><tr><th>Forma</th><th>Di profilo</th><th>Dall'alto</th></tr><tr><td>Quadrata, squoval</td><td>Dritta, in linea con il centro del dito</td><td>Lati paralleli, "aperti"</td></tr><tr><td>Mandorla, stiletto</td><td>Leggermente verso il basso: linea dritta dall'apex alla punta</td><td>Lati che si chiudono</td></tr><tr><td>Ballerina</td><td>Dritta come una quadrata</td><td>Chiusa come una mandorla</td></tr></table><p>Se costruisci con la cartina di una quadrata e poi limi una mandorla, apex e linea di profilo finiscono nel posto sbagliato: l'unghia è sbilanciata e più debole. Decidi la forma <strong>prima</strong> di posare la cartina.</p></div>
 <h2>Come scegliere con la cliente</h2>
 ${F('forme-scelta-dita.svg', 'La stessa forma su dita diverse: come cambia l\'effetto.')}
 <ol class="steps">
@@ -2179,15 +2203,17 @@ ${F('forme-scelta-dita.svg', 'La stessa forma su dita diverse: come cambia l\'ef
 <li><strong>Prima volta</strong>: proponi una forma semplice; si può cambiare al refill.</li>
 </ol>
 ${F('forme-resistenza.svg', 'Dalla più resistente alla più delicata.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Parrucchiera con dita corte che vuole la stiletto vista sui social.</strong></p><p>Pesa tre cose: lavora tutto il giorno con mani in acqua, prodotti e spazzole; ha dita corte (la stiletto la slancerebbe davvero); è alla prima ricostruzione. Proposta: una <strong>mandorla morbida di lunghezza media</strong>. Slancia quasi quanto la stiletto, ha la punta più larga e quindi più resistente, e non si impiglia nei capelli. Se dopo due refill l'unghia ha tenuto, si può stringere gradualmente verso la stiletto. Così la cliente ottiene l'effetto che vuole e tu non perdi tempo in riparazioni.</p></div>
 <h2>Esempio: ottenere una mandorla</h2>
 ${F('forme-limatura-step.svg', 'Dalla quadrata alla mandorla in quattro passaggi.')}
 ${B('tip', 'Scegli con la cliente', 'Considera lavoro, abitudini e forma del letto ungueale: una stiletto lunga non è adatta a chi lavora molto con le mani.')}
 ${B('warn', 'Le forme si costruiscono, non solo si limano', 'Una forma riesce bene se la prepari già con la cartina e con il prodotto (lati dritti, apex al posto giusto). La lima rifinisce: se il prodotto è stato messo male, limando assottigli i punti sbagliati.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Ballerina e coffin vengono spesso confuse: la <strong>coffin</strong> ha la punta piatta e gli angoli netti; la <strong>ballerina</strong> ha la punta squadrata ma con angoli leggermente ammorbiditi. In entrambe il restringimento riguarda <strong>solo l'allungamento</strong>: se limi i lati in diagonale già dove l'unghia poggia sul dito, togli prodotto proprio dai fianchi che reggono la struttura. I lati devono partire dritti e paralleli dai solchi, e cominciare a chiudersi solo dopo il bordo del dito.</div>
 `,
           sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
             'https://www.makeup.com/your-nail-shape-guide',
             'https://www.livethatglow.com/nail-shape-guide/',
-            'https://www.my-personaltrainer.it/bellezza/qual-e-la-forma-di-unghie-che-slancia-le-dita-e-resiste-davvero-agli-urti-senza-spezzarsi.html']
+            'https://www.my-personaltrainer.it/bellezza/qual-e-la-forma-di-unghie-che-slancia-le-dita-e-resiste-davvero-agli-urti-senza-spezzarsi.html', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes', 'https://scratchmagazine.co.uk/blog/simply-salon-nails-how-to-create-various-nail-shapes']
         },
         {
           id: 'forme-step', simple: 'Quasi tutte le forme partono da una quadrata: prima fai lati dritti e punta dritta, poi togli gli angoli quanto serve per arrivare alla forma voluta.', title: 'Limare le forme passo passo', min: 12,
@@ -2202,6 +2228,7 @@ ${F('quadrata-step.svg', 'La quadrata: punta dritta, lati paralleli, angoli nett
 <li><strong>Arco inferiore</strong>: gira il dito di lato e controlla che la linea sotto l'allungamento sia dritta, senza "pance".</li>
 <li><strong>Angoli</strong>: netti e uguali.</li>
 </ol>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Per una quadrata "morbida" senza trasformarla in squoval, tieni la lima a circa <strong>45°</strong> sullo spigolo superiore della punta e fai una o due passate leggere lungo tutto il bordo. Dall'alto la forma resta quadrata, ma il bordo non è più tagliente: si impiglia meno nelle calze e nei maglioni e si scheggia meno. Fai lo stesso numero di passate su tutte le dita, altrimenti la punta appare più sottile su alcune unghie.</div>
 <h2>Squoval</h2>
 <ol class="steps">
 <li>Parti dalla quadrata.</li>
@@ -2224,6 +2251,7 @@ ${F('stiletto-step.svg', 'Mandorla e stiletto: lati che convergono sull\'asse.')
 <li><strong>Mandorla</strong>: arrotonda la punta, che resta più stretta di un'ovale.</li>
 <li><strong>Stiletto</strong>: continua finché i lati si incontrano a punta; tieni i lati dritti, non "a pancia". Gira il dito di lato e mantieni dritto anche l'arco inferiore.</li>
 </ol>
+<div class="box deep"><strong class="t">Approfondimento: i due archi delle forme a punta</strong><p>Nelle forme a triangolo (stiletto e simili) l'<strong>arco superiore</strong> deve scendere dritto dall'apex alla punta, con un'inclinazione di circa 45°. L'<strong>arco inferiore</strong>, quello che vedi di lato sotto l'allungamento, deve restare parallelo all'asse del dito: se lo inclini in su o in giù aumenti la pressione sull'unghia e la indebolisci.</p><p>I lati della stiletto devono restare dritti, non arrotondati, fino alla punta. Una punta "a pancia" sembra più morbida ma ha meno materiale proprio dove la forma è più fragile.</p></div>
 <h2>Ballerina (coffin)</h2>
 ${F('ballerina-step.svg', 'Ballerina: lati che si restringono e punta dritta.')}
 <ol class="steps">
@@ -2241,10 +2269,11 @@ ${B('info', 'La forma dipende anche dal profilo', 'Nelle forme a punta (mandorla
 <tr><td>Forme diverse sulle 10 dita</td><td>Nessun confronto</td><td>Allinea le dita e guarda la mano intera ogni 2–3 unghie</td></tr>
 <tr><td>Stiletto che si spezza</td><td>Punta troppo sottile, arco inferiore limato</td><td>Mantieni spessore verso la punta; costruisci la forma già con il prodotto</td></tr>
 </table>
+<div class="box pro"><strong class="t">Consiglio da professionista: l'arco inferiore si lima per ultimo</strong><ol><li>Costruisci l'arco inferiore circa <strong>1 mm più basso</strong> del necessario: ti resta materiale per correggere. Togliere dove manca prodotto crea solo un punto debole.</li><li>Gira la mano della cliente di lato e lavora da quella vista.</li><li>Se serve, segna con matita e righello la linea da seguire.</li><li>Infila la lima nell'angolo, dal punto in cui finisce l'unghia naturale all'angolo della punta, e sostienila da dietro con uno o due dita perché non si fletta.</li><li>Una o due passate, togli la polvere, controlla. Ripeti solo se serve.</li></ol><p>Tieni la lima lontana dal solco laterale naturale: è un'abitudine comune e toglie dritto e forza all'arco.</p></div>
 `,
           sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
             'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians',
-            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-filing-different-nail-shapes/']
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-filing-different-nail-shapes/', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://scratchmagazine.co.uk/feature/why-the-arch-is-integral-to-a-well-balanced-nail-enhancement', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-the-lower-arch-and-side-walls-without-removing-too-much']
         },
         {
           id: 'tecnica', videos: [{"id": "UGpcsTGXAUI", "title": "Sculpting Gel Nails – Advanced Filing", "channel": "Nail Career Education", "lang": "EN"}], simple: 'Lima sempre nello stesso ordine: lunghezza, lati, punta, superficie, sotto il bordo. Movimenti leggeri, in una direzione, senza segare.', title: 'Tecnica di limatura', min: 11,
@@ -2265,6 +2294,7 @@ ${F('lima-presa.svg', 'Presa della lima e del dito della cliente.')}
 <tr><td>180/240 – buffer</td><td>Levigare prima del top; lavorare vicino alla pelle</td></tr>
 <tr><td>Mai</td><td>Grane 80–100 sull'unghia naturale</td></tr>
 </table>
+<div class="box deep"><strong class="t">Approfondimento: che cosa vuol dire il numero della grana</strong><p>Il numero indica quante particelle abrasive ci sono su una certa superficie (per pollice quadrato): <strong>numero basso = particelle grandi = lima aggressiva</strong>; numero alto = particelle piccole = lima fine. Per questo 100 accorcia in fretta e 240 leviga.</p><ul><li>Sull'unghia naturale molte fonti considerano <strong>240</strong> la grana più grossa consigliata; 80–100 assottigliano la lamina.</li><li>Una lima consumata "non morde": istintivamente premi di più, e la pressione produce calore e solchi. Quando senti che devi spingere, cambiala.</li><li>Attenzione: alcune etichette commerciali usano formule confuse. Fidati del numero, non della parola "grit alto/basso".</li></ul></div>
 <h2>La sequenza</h2>
 ${F('limatura-sequenza.svg', 'La sequenza di limatura in sei passaggi.')}
 <ol class="steps">
@@ -2284,6 +2314,7 @@ ${F('limatura-direzioni.svg', 'Direzioni di limatura: lati, punta, superficie.')
 <li>Sul prodotto artificiale si possono usare movimenti avanti-indietro controllati, ma sempre <strong>leggeri</strong> e con la lima in movimento.</li>
 </ul>
 ${F('limatura-arco-profilo.svg', 'Profilo: arco superiore dall\'apex alla punta, arco inferiore dritto.')}
+<div class="box deep"><strong class="t">Approfondimento: limatura e sensibilità al calore</strong>La lamina naturale fa da <strong>isolante</strong> per il letto ungueale. Ogni passata aggressiva in preparazione la assottiglia, e una lamina sottile lascia passare il calore della polimerizzazione. Una limatura troppo energica può anche causare una piccola <strong>ustione da attrito</strong> sul letto: da quel momento la cliente sente bruciore in lampada anche con un prodotto che prima tollerava bene. Per questo in preparazione basta togliere la lucidità; la forza della lima si usa sul prodotto, non sulla lamina.</div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Conseguenza</th><th>Come evitarlo</th></tr>
@@ -2295,11 +2326,12 @@ ${F('limatura-arco-profilo.svg', 'Profilo: arco superiore dall\'apex alla punta,
 </table>
 ${B('warn', 'Controlla da 4 punti di vista', 'Dall\'alto (simmetria), di profilo (apex), dal davanti (curva a C) e dal basso (pulizia del bordo). Vedi la lezione "Controllo finale e simmetria".')}
 ${B('info', 'Postura', 'Schiena appoggiata, spalle rilassate, piano di lavoro all\'altezza dei gomiti e luce buona: ogni ora alzati, muovi polsi e collo. La limatura manuale è un movimento ripetitivo: proteggi le tue mani.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Al refill la cliente sente bruciare in lampada solo su indice e medio, mai successo prima.</strong></p><p>Ragiona sulle differenze rispetto al servizio precedente: (1) Su quelle dita hai limato di più per togliere un sollevamento e sei arrivata alla lamina? (2) Hai usato più prodotto per ricostruire l'apex? (3) È cambiata la lampada? Rimedi immediati: tira fuori la mano per qualche secondo e rientra, strati più sottili. Per i prossimi servizi: annota sulla scheda le dita sensibili, prepara con buffer fine e lascia sempre un velo di prodotto quando elimini i sollevamenti. In genere la sensibilità diminuisce quando la lamina sottile è cresciuta via.</p></div>
 `,
           sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
             'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians',
             'https://open-exam-prep.com/study-guides/pa-nail-technician/manicure-pedicure-foundations/manicure-pedicure-procedures',
-            'https://www.katiebarnesacademy.com/blogs/allergies-and-nail-tech-protection/why-how-to-take-care-of-yourself-at-the-nail-desk']
+            'https://www.katiebarnesacademy.com/blogs/allergies-and-nail-tech-protection/why-how-to-take-care-of-yourself-at-the-nail-desk', 'https://purespadirect.com/blogs/pure-spa-direct-blog/is-higher-grit-number-smoother-or-rougher', 'https://purespadirect.com/blogs/pure-spa-direct-blog/what-nail-file-grit-to-use-for-natural-nails', 'https://nailknowledge.org/blog/heat-spikes', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown']
         },
         {
           id: 'controllo-simmetria', simple: 'Prima di mettere il top guarda ogni unghia da quattro lati e poi tutta la mano insieme: le unghie devono sembrare "sorelle".', title: 'Controllo finale e simmetria', min: 8,
@@ -2314,6 +2346,7 @@ ${F('controllo-4-viste.svg', 'Le quattro viste del controllo finale.')}
 <tr><td><strong>Dal davanti</strong></td><td>Punta dell'unghia verso i tuoi occhi</td><td>Curva a C regolare e simmetrica, spessore uguale ai lati</td></tr>
 <tr><td><strong>Dal basso</strong></td><td>Palmo verso l'alto</td><td>Bordo pulito, niente sbavature, spessore uniforme, lati dritti</td></tr>
 </table>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Per la vista dall'alto e dal davanti usa uno <strong>sfondo nero</strong> e guarda con <strong>un occhio chiuso</strong>, lungo l'unghia dalla cuticola verso la punta. Così vedi subito se l'apex è al centro e se i fianchi sono uguali. Per l'arco inferiore, invece, appoggia di lato una lima dritta sotto l'allungamento: se tocca in un punto solo, la linea non è dritta. Ricorda che lo stesso difetto si vede meglio a 30–40 cm di distanza che da vicino.</div>
 <h2>La simmetria con l'asse</h2>
 ${F('simmetria-asse.svg', 'L\'asse del dito: punta centrata e lati uguali.')}
 <ol class="steps">
@@ -2322,6 +2355,7 @@ ${F('simmetria-asse.svg', 'L\'asse del dito: punta centrata e lati uguali.')}
 <li><strong>I due lati</strong> devono essere a uguale distanza dalla linea, come immagini allo specchio.</li>
 <li><strong>Se un lato è più largo</strong>, lima solo quel lato, poche passate alla volta, e ricontrolla.</li>
 </ol>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Quando non sei sicura della simmetria, <strong>disegna l'asse</strong>: con una matita morbida traccia una linea sottile dal centro della cuticola alla punta, sopra il prodotto limato. Il segno si toglie con il buffer. Un altro trucco utile: fotografa la mano dall'alto con il telefono e guarda la foto <strong>capovolta</strong>. L'occhio, che si era "abituato" all'unghia, vede subito il lato più largo e la punta fuori centro.</div>
 <h2>Uniformità della mano</h2>
 ${F('mano-uniformita.svg', 'Le dieci unghie devono avere lunghezza, forma e curva coerenti.')}
 <ul>
@@ -2340,10 +2374,11 @@ ${B('tip', 'Il trucco del pugno', 'Chiedi alla cliente di chiudere la mano a pug
 <li>Le quattro viste sono corrette su tutte le dita.</li>
 </ol>
 ${B('warn', 'Non correggere con il top', 'Il top è sottile e lucido: mette in risalto i difetti invece di nasconderli. Correggi con la lima prima.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>L'unghia è perfetta da tutte le viste, ma passando il polpastrello verso la cuticola senti un leggero gradino.</strong></p><p>Non è un dettaglio estetico. Un bordo di prodotto spesso alla cuticola forma una piccola cresta: l'unghia naturale flette, la cresta no, e il prodotto comincia a staccarsi proprio da lì. È una delle cause più comuni di sollevamento alla base. Sfuma con un buffer fine finché il polpastrello passa dalla lamina al prodotto senza accorgersene, e controlla che non ci sia prodotto a contatto con la pelle. Se il gradino è spesso, chiediti perché: perla troppo grande in zona 3 o prodotto troppo vicino alla cuticola.</p></div>
 `,
           sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
             'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/',
-            'https://www.scratchmagazine.co.uk/wp-content/uploads/2026/01/Nailympia-2026-Scoresheet_French-Twist-3-shape-challenge.pdf']
+            'https://www.scratchmagazine.co.uk/wp-content/uploads/2026/01/Nailympia-2026-Scoresheet_French-Twist-3-shape-challenge.pdf', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-the-lower-arch-and-side-walls-without-removing-too-much', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown']
         }
       ]
     },
@@ -2376,6 +2411,7 @@ ${F('smile-line.svg', 'Smile line corrette ed errate.')}
 </ul>
 ${F('smile-line-profondita.svg', 'Piatta, corretta, troppo profonda: la curva giusta ha la stessa profondità (d) della curva della cuticola.')}
 ${B('info', 'Perché la profondità conta', 'Una smile line troppo piatta fa sembrare l\'unghia più larga e corta. Una troppo profonda la fa sembrare "appuntita" e innaturale. La curva che ripete la cuticola è la più armoniosa per la maggior parte delle unghie.')}
+<div class="box deep"><strong class="t">Approfondimento: perché il bianco è il colore più difficile</strong><p>Il pigmento bianco principale è il <strong>biossido di titanio</strong>. Riflette moltissima luce, e per questo:</p><ul><li><strong>Mostra ogni difetto:</strong> una piccola differenza di spessore cambia il riflesso e diventa una riga visibile. Sui colori scuri lo stesso difetto quasi non si vede.</li><li><strong>Si deposita:</strong> nel vasetto il pigmento scende verso il fondo; un bianco non mescolato dà strisce e grumi.</li><li><strong>Blocca la luce:</strong> uno strato spesso sembra duro in superficie ma sotto resta morbido, e poi si raggrinzisce.</li></ul><p>Non tutti i bianchi sono uguali: i bianchi da french sono spesso un po' traslucidi e vanno usati in modo diverso da un bianco coprente da nail art.</p></div>
 <h2>Quattro modi di fare il french</h2>
 <table>
 <tr><th>Tecnica</th><th>Come si fa</th><th>Vantaggi</th><th>Limiti</th></tr>
@@ -2400,6 +2436,7 @@ ${F('french-punti-guida.svg', 'Metodo dei punti guida: centro, due punti lateral
 ${F('tut-french.svg', 'French passo passo.')}
 ${B('tip', 'Controlla la simmetria', 'Capovolgi la mano della cliente e guarda le unghie "a testa in giù": l\'occhio vede subito il lato più alto. Poi confronta le dita a coppie (indice con anulare, medio da solo, mignolo più piccolo ma con la stessa curva).')}
 ${B('warn', 'Il bianco va steso sottile', 'I pigmenti bianchi schermano la luce della lampada (effetto ombrello): uno strato spesso si indurisce in superficie ma resta morbido sotto. Meglio due strati sottili polimerizzati bene che uno spesso.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong><ul><li><strong>Mescola il bianco</strong> con una spatolina prima di iniziare, soprattutto se il vasetto è fermo da giorni.</li><li>Usa la <strong>mano leggera</strong>: premere sul pennello crea micro-righe che rendono il bianco opaco e "gessoso".</li><li>Lascia che il gel si autolivelli: non ripassare tre volte nello stesso punto.</li><li>Polimerizza completamente ogni strato sottile prima del successivo.</li><li>Se cambi marca di bianco, rifai prove su tip: pigmento, densità e fotoiniziatori cambiano, e con loro il comportamento sotto la tua lampada.</li></ul></div>
 <h2>French scolpito (pink &amp; white): l'essenziale</h2>
 <ul>
 <li>Il bianco si posa sulla punta come <strong>zona 1</strong> della costruzione; poi il rosa o il cover costruisce zona 2 e zona 3 con l'<strong>apex</strong> sopra il punto di stress.</li>
@@ -2416,13 +2453,15 @@ ${B('warn', 'Il bianco va steso sottile', 'I pigmenti bianchi schermano la luce 
 <tr><td>Bordo libero che si scheggia</td><td>Bordo non sigillato</td><td>Passa colore e top sullo spessore della punta</td></tr>
 <tr><td>Smile diversa su ogni dito</td><td>Altezza decisa dito per dito</td><td>Decidi l'altezza prima e usa la stessa per tutte</td></tr>
 </table>
+<div class="box pro"><strong class="t">Consiglio da professionista: french in acrilico</strong><ul><li>Il bianco deve avere una consistenza "<strong>da argilla</strong>": una perla bagnata scivola giù dalla cartina curva.</li><li>Dopo aver preso la perla aspetta qualche secondo, poi tampona il dorso del pennello su carta per togliere il liquido in eccesso.</li><li>Appoggia la perla vicino alla smile, distribuiscila dall'alto e usa il <strong>fianco</strong> del pennello per "rimboccare" il bianco fino alla linea, senza superarla.</li><li>Per il rosa di sopra, una perla di circa metà del letto: con il dito della cliente rivolto verso il basso, accompagnala lungo il bordo perché la smile prenda una forma a goccia.</li><li>Controlla di lato che i fianchi siano dritti e non ad artiglio. Piccole irregolarità si correggono poi con la lima.</li></ul></div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente con il bordo libero naturale storto: su un lato la linea bianca naturale arriva molto più in basso.</strong></p><p>Se segui la linea naturale, la smile sarà storta. La smile si disegna rispetto all'<strong>asse del dito</strong> e all'altezza decisa per tutta la mano, non rispetto al bordo naturale. Sul lato dove il letto è più corto, prolunga il letto con il cover fino all'altezza dei punti laterali; sul lato più lungo la smile coprirà semplicemente un po' di letto. Controlla controluce che il cover sotto sia uniforme: se resta una zona trasparente si vedrà la vecchia linea "fantasma" sotto il bianco.</p></div>
 `,
           sources: ['https://www.scratchmagazine.co.uk/feature/how-to-create-a-crisp-smile-line-with-the-gel-system',
             'https://www.scratchmagazine.co.uk/nail_art/classic-french-manicure-using-gel',
             'https://www.scratchmagazine.co.uk/nail_art/how-to-perfect-a-french-tip',
             'https://www.opi.com/professionals/gelcolor-french-manicure-application',
             'https://www.salongeek.com/threads/how-do-you-do-your-smile-line-using-gel.86701/',
-            'https://nailknowledge.org/blog/uv-curing-why-thin-layers-matter-for-perfect-nails']
+            'https://nailknowledge.org/blog/uv-curing-why-thin-layers-matter-for-perfect-nails', 'https://nailknowledge.org/blog/why-white-gel-polish-looks-patchy', 'https://www.youngnails.com/blogs/news/how-to-do-french-tips', 'https://www.salongeek.com/threads/camouflage-gel.60825/']
         },
         {
           id: 'french-varianti', simple: "Il french si può reinventare: la mezzaluna alla base (reverse), la punta a V, una linea sottilissima (micro) o un colore al posto del bianco. Le regole restano le stesse: simmetria e linea netta.", title: 'Varianti del french: reverse, V, micro, colorato', min: 9,
@@ -2448,6 +2487,7 @@ ${F('reverse-french-step.svg', 'Reverse french: base e colore, arco dal centro v
 <li>Variante elegante: top <strong>opaco</strong> su tutta l'unghia lasciando <strong>lucida</strong> solo la mezzaluna.</li>
 </ol>
 ${B('warn', 'Vicino alla pelle', 'Nel reverse french il colore sta vicino alla cuticola. Se tocca la pelle non polimerizza bene: rischio di sollevamento e di allergia. Pulisci sempre prima della lampada.')}
+<div class="box deep"><strong class="t">Approfondimento: perché il reverse si solleva più facilmente</strong><p>Il reverse french porta il colore nella zona dove il prodotto è più sottile e dove nasce la maggior parte dei sollevamenti, cioè vicino alla cuticola. I sollevamenti alla base compaiono spesso entro <strong>5–7 giorni</strong> e hanno tre cause tipiche:</p><ul><li>residui di pterigio (la pellicina attaccata alla lamina) non tolti in preparazione;</li><li>base o colore che "allagano" la cuticola;</li><li>crema o olio sul bordo della piega prossimale.</li></ul><p>Per questo, nel reverse, la preparazione della zona cuticolare va fatta con ancora più cura, si sgrassa anche la piega prima del primer e si rispetta il margine dalla pelle (circa 1 mm).</p></div>
 <h2>V-french in tre mosse</h2>
 <ol class="steps">
 <li>Segna il <strong>punto centrale</strong> della V.</li>
@@ -2455,11 +2495,13 @@ ${B('warn', 'Vicino alla pelle', 'Nel reverse french il colore sta vicino alla c
 <li>Riempi verso la punta, sigilla il bordo libero, top.</li>
 </ol>
 ${B('tip', 'Allenati su tip', 'Disegna 10 V-french e 10 reverse su una ruota di tip prima di proporli: confronta le unghie a coppie e cerca la stessa misura.')}
+<div class="box pro"><strong class="t">Consiglio da professionista: il nastro guida</strong><p>Per le prime V-french puoi usare lo <strong>striping tape</strong> (nastro adesivo sottilissimo) come guida:</p><ol><li>Il colore di fondo deve essere completamente polimerizzato (e senza strato appiccicoso), altrimenti il nastro lo strappa.</li><li>Applica due pezzi di nastro a V e premili bene ai bordi, perché il colore non passi sotto.</li><li>Stendi il colore della V e togli il nastro <strong>subito</strong>, prima della lampada: se polimerizzi con il nastro sopra, il gel indurito si strappa insieme al nastro.</li><li>Sistema il bordo con un pennello pulito, polimerizza e sigilla con il top.</li></ol><p>Con l'esperienza passerai al pennello liner, più veloce e più preciso.</p></div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Quale variante proporre?</strong></p><ul><li><strong>Cliente con unghie corte e letto corto:</strong> micro french. La linea sottilissima sta solo sul bordo e lascia "rosa" quasi tutta l'unghia, che sembra più lunga.</li><li><strong>Cliente con dita corte e forma mandorla:</strong> V-french. Le due linee oblique seguono la chiusura dei lati e allungano visivamente il dito.</li><li><strong>Cliente con unghie larghe e quadrate:</strong> evita una smile piatta molto larga, che allarga ancora di più. Una smile più profonda, o una V poco accentuata, restringe visivamente.</li><li><strong>Cliente con cuticole irregolari o pterigio evidente:</strong> sconsiglia il reverse finché la zona cuticolare non è in ordine: il colore lì metterebbe in evidenza ogni difetto.</li></ul></div>
 `,
           sources: ['https://www.opi.com/nail-art/glow-with-the-flow',
             'https://www.opi.com/professionals/gelcolor-french-manicure-application',
             'https://www.scratchmagazine.co.uk/feature/how-to-reverse-french-using-halos-polibuild',
-            'https://www.design4nails.co.uk/?p=285413']
+            'https://www.design4nails.co.uk/?p=285413', 'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown', 'https://www.lulus.com/blog/guest-blogger/manicure-monday-chevron-nail-tutorial/', 'https://www.opi.com/blog/tutorialtuesday-light-blue-chevron', 'https://www.scratchmagazine.co.uk/feature/how-to-create-a-crisp-smile-line-with-the-gel-system']
         },
         {
           id: 'baby-boomer', videos: [{"id": "0L3JT8K-fx8", "title": "Baby boomer in gel: tutorial dettagliato", "channel": "Nail Couture Italia", "lang": "IT"}, {"id": "GamgGumobZE", "title": "Tutorial baby boomer con builder gel", "channel": "Crystal Nails Italia", "lang": "IT"}], simple: "Il baby boomer è un french senza linea: il bianco della punta sfuma piano piano nel rosa. La sfumatura si fa con il pennello, a strati sottili.", title: 'Baby boomer', min: 10,
@@ -2475,6 +2517,7 @@ ${F('baby-boomer.svg', 'Baby boomer in tre passaggi.')}
 <tr><td><strong>Spugnetta</strong></td><td>Bianco picchiettato in più passaggi leggeri</td><td>Sfumatura molto morbida</td><td>Pulire bene la pelle prima della lampada</td></tr>
 </table>
 ${B('tip', 'Colori semitrasparenti', 'Per iniziare scegli un bianco lattiginoso e un nude semitrasparente: si sfumano molto più facilmente di un bianco coprente e perdonano gli errori.')}
+<div class="box pro"><strong class="t">Consiglio da professionista: baby boomer in acrilico "a zone"</strong><ol><li>Posa una perla di cover nella zona cuticolare e sfumala verso il centro.</li><li>Posa una perla di bianco sulla punta e sfumala verso l'alto.</li><li>Aggiungi al centro una <strong>perla piccola, appena più umida</strong>: ammorbidisce il punto d'incontro tra i due colori.</li><li>Modella quasi tutta la forma con il pennello. Ogni passata di lima in più "taglia" la sfumatura.</li></ol><p>Il segreto è che le due perle si incontrino quando sono ancora lavorabili: lavora un'unghia alla volta.</p></div>
 <h2>Passo passo in gel builder</h2>
 ${F('baby-boomer-step.svg', 'Baby boomer in gel: bianco sulla punta, sfuma verso l\'alto, cover sopra con apex, top.')}
 <ol class="steps">
@@ -2487,6 +2530,7 @@ ${F('baby-boomer-step.svg', 'Baby boomer in gel: bianco sulla punta, sfuma verso
 <li><strong>Lima con delicatezza</strong> solo per la forma. <em>Perché</em>: se limi molto sulla zona sfumata la assottigli e la sfumatura diventa a macchie.</li>
 <li><strong>Top coat</strong> e bordo libero sigillato.</li>
 </ol>
+<div class="box deep"><strong class="t">Approfondimento: perché il bianco lattiginoso sfuma meglio</strong><p>Un bianco coprente ha molto biossido di titanio: riflette tanta luce, quindi ogni variazione di spessore diventa un "gradino" visibile. Un bianco <strong>lattiginoso</strong> ha meno pigmento e lascia passare parte della luce: nel passaggio verso il cover lo spessore cambia gradualmente e l'occhio vede una sfumatura invece di una linea.</p><p>C'è anche un vantaggio tecnico: meno pigmento significa che la luce della lampada arriva meglio in profondità. Anche così, tieni gli strati sottili e polimerizza completamente ognuno prima di coprirlo con il cover.</p></div>
 <h2>Versione in semipermanente</h2>
 <ol class="steps">
 <li>Base e polimerizzazione.</li>
@@ -2505,10 +2549,11 @@ ${F('sfumatura-errori.svg', 'Sfumatura corretta ed errori tipici: linea visibile
 <tr><td>Sfumatura a macchie</td><td>Limatura troppo forte sulla zona sfumata</td><td>La sfumatura si fa con il pennello, non con la lima</td></tr>
 <tr><td>Altezza diversa sulle dita</td><td>Nessun riferimento</td><td>Decidi un'altezza (per esempio metà unghia) e ripetila</td></tr>
 </table>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Al refill la cliente con baby boomer ha una fascia di ricrescita e la sfumatura è salita di 3 mm verso la punta.</strong></p><p>Assottiglia il vecchio prodotto seguendo il profilo e decidi: se la sfumatura è ancora nella metà alta dell'unghia, basta stendere il cover sulla ricrescita, sfumandolo sul vecchio, e rifare l'apex sopra il punto di stress. Se la parte bianca si è spostata troppo e l'unghia sembra un french sbavato, va rifatta la sfumatura (come un backfill): togli parte del vecchio bianco, riposa il bianco lattiginoso e ricostruisci. Calcola più tempo e annotalo, così al prossimo appuntamento lo prenoti già come servizio lungo.</p></div>
 `,
           sources: ['https://pinkgellac.com/blogs/news/baby-boomer-nails',
             'https://salongeek.com/threads/baby-boomer-nails.323883',
-            'https://onglesdor.com/en/blog/make-your-babyboomer-with-oh-blush-gel-and-powder.html']
+            'https://onglesdor.com/en/blog/make-your-babyboomer-with-oh-blush-gel-and-powder.html', 'https://nailknowledge.org/blog/why-white-gel-polish-looks-patchy', 'https://nailknowledge.org/blog/mastering-uv-gel-application-insights-into-pigments', 'https://www.opi.com/professionals/how-to-rebalance-and-fill-opi-gelevate-overlay-services']
         },
         {
           id: 'nail-art', videos: [{"id": "td7E52DtfMc", "title": "Come realizzare un effetto cat eye", "channel": "The Pink Glove Nails", "lang": "IT"}], simple: "La nail art di base usa pochi attrezzi: dotter per i puntini, pennello sottile per le linee, piastra e tampone per lo stamping. La decorazione non deve mai rovinare la struttura.", title: 'Incapsulati e nail art di base', min: 14,
@@ -2528,6 +2573,7 @@ ${F('nail-art.svg', 'Dotting, striping, incapsulato e stamping.')}
 <h2>Regola d'oro: la decorazione non rovina la struttura</h2>
 <p>Una decorazione appoggiata sopra un'unghia finita crea una <strong>gobba</strong> che si aggancia ovunque e si scheggia. Per questo le decorazioni in rilievo si <strong>incapsulano</strong> e, quando si costruisce, l'<strong>apex va sopra la decorazione</strong>.</p>
 ${F('incapsulato-sezione.svg', 'Incapsulato in sezione: base, decorazione piatta, prodotto trasparente con apex sopra, top. Errore: bordo scoperto.')}
+<div class="box deep"><strong class="t">Approfondimento: decorazioni che fanno ombra</strong><p>Foglia metallica, glitter grossi, strass e carta <strong>non lasciano passare la luce</strong> della lampada. Il gel che sta sotto una decorazione opaca può restare poco polimerizzato: è lo stesso "effetto ombrello" dei pigmenti, solo più forte.</p><ul><li>Polimerizza completamente lo strato su cui appoggi la decorazione <em>prima</em> di posarla.</li><li>Fissala con un velo sottilissimo di prodotto, così la luce lo raggiunge dai bordi.</li><li>Copri con builder trasparente e polimerizza per il tempo pieno.</li></ul><p>Gel non polimerizzato intrappolato sotto una decorazione è una causa nascosta di distacchi e, se arriva alla pelle durante la rimozione, di irritazioni.</p></div>
 <h2>Incapsulato passo passo</h2>
 <ol class="steps">
 <li>Prepara e costruisci uno strato sottile di base o builder; polimerizza.</li>
@@ -2539,6 +2585,7 @@ ${F('incapsulato-sezione.svg', 'Incapsulato in sezione: base, decorazione piatta
 <li>Top coat e bordo libero sigillato.</li>
 </ol>
 ${B('warn', 'Niente bordi scoperti', 'Un bordo di glitter o di fiore che esce dal prodotto trattiene sporco e acqua, si stacca e può far sollevare tutta la ricostruzione. Se lo senti con il polpastrello, va coperto.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Metti le decorazioni da incapsulare nella <strong>zona 2 o tra zona 1 e 2</strong>, mai a ridosso della cuticola. In zona 3 il prodotto deve essere sottilissimo: una decorazione lì crea spessore proprio dove nasce il sollevamento, e per coprirla dovresti alzare la base fino a formare una cresta. Se la cliente vuole un dettaglio vicino alla cuticola, usa una decorazione piatta (gel da pittura, stamping) invece di un oggetto in rilievo.</div>
 <h2>Dotting (puntini)</h2>
 ${F('dotting-striping-presa.svg', 'Presa corretta: dotter verticale e mignolo appoggiato; pennello liner trascinato verso di te.')}
 <ol class="steps">
@@ -2565,6 +2612,7 @@ ${F('stamping-step.svg', 'Stamping: smalto sulla piastra, raschia a 45°, raccog
 <li>Pulisci i bordi della pelle e sigilla con un top compatibile con il prodotto usato.</li>
 </ol>
 ${B('tip', 'Pressione', 'Troppa pressione sul tampone spinge lo smalto fuori dalle incisioni e il disegno "si allarga"; troppo poca lascia buchi. Fai prove su un tip prima di lavorare sulla cliente.')}
+<div class="box pro"><strong class="t">Consiglio da professionista: lo stamping che non riesce</strong><ul><li>Su una piastra nuova togli la <strong>pellicola protettiva</strong> blu.</li><li>Pulisci la piastra dopo ogni uso con acetone puro: i solventi con oli lasciano residui, e lo smalto secco nelle incisioni rovina i disegni successivi.</li><li>Usa dischetti piatti o salviette senza pelucchi, non batuffoli di cotone.</li><li><strong>Non pulire il tampone in silicone con l'acetone</strong>: diventa opaco. Usa nastro adesivo o un rullo levapelucchi.</li><li>Movimento leggero e rapido, rotolando: tenere il tampone premuto deforma il disegno.</li><li>Il gel semipermanente comune non è adatto allo stamping: sul tampone forma goccioline e non si trasferisce.</li></ul></div>
 <h2>Adesivi e transfer</h2>
 <ul>
 <li><strong>Adesivi (sticker)</strong>: si posano su colore polimerizzato, si premono bene ai bordi e si sigillano con top su tutta la superficie.</li>
@@ -2581,7 +2629,7 @@ ${B('tip', 'Pressione', 'Troppa pressione sul tampone spinge lo smalto fuori dal
 </table>
 `,
           sources: ['https://www.nailpro.com/technique/article/21157379/howto-master-nail-stamping',
-            'https://www.scratchmagazine.co.uk/nail_art/cat-eye-chrome-nail-art-tutorial/']
+            'https://www.scratchmagazine.co.uk/nail_art/cat-eye-chrome-nail-art-tutorial/', 'https://nailknowledge.org/blog/mastering-uv-gel-application-insights-into-pigments', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-apex-placement-for-different-nail-shapes', 'https://maniology.com/blogs/maniology-blog/nail-stamping-not-working-common-mistakes']
         }
       ]
     },
@@ -2611,6 +2659,7 @@ ${F('refill.svg', 'Profilo prima, durante e dopo la ricrescita.')}
 <li><strong>Semipermanente</strong>: di solito si rifà ogni <strong>2–3 settimane</strong>.</li>
 <li><strong>Unghie che crescono veloci, onicofagia, clienti nuove</strong>: anche ogni <strong>2 settimane</strong>.</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: misura la ricrescita, non solo i giorni</strong><p>Nello studio di Yaemsiri e colleghi (2010) le unghie delle mani crescevano in media <strong>3,47 mm al mese</strong>; il mignolo più lentamente delle altre dita, e <strong>senza differenze significative tra mano destra e sinistra</strong>. Le medie però nascondono grandi differenze tra persone.</p><p>Abitudine da professionista: al refill misura con il righello o con la griglia di una cartina la fascia di ricrescita del medio e annotala. Se una cliente arriva sempre con 3 mm o più dopo tre settimane, l'apex sarà già fuori posto: proponi un intervallo più breve. Se ne ha 1,5 mm dopo quattro settimane, puoi allungarlo senza rischi.</p></div>
 <h2>Prima di tutto: la valutazione</h2>
 ${F('refill-valutazione.svg', 'Prima del refill: controlla ricrescita, sollevamenti, crepe e macchie, poi decidi.')}
 <ol class="steps">
@@ -2621,6 +2670,7 @@ ${F('refill-valutazione.svg', 'Prima del refill: controlla ricrescita, sollevame
 <li>Decidi: <strong>refill semplice</strong>, <strong>refill con riparazioni</strong> o <strong>rimozione completa</strong>.</li>
 </ol>
 ${B('danger', 'Quando NON fare il refill', 'Macchia verde sotto il prodotto, pus, gonfiore, dolore o distacco dell\'unghia dal letto: non si copre nulla. Si rimuove il prodotto (se possibile senza traumi) e si consiglia il medico.')}
+<div class="box pro"><strong class="t">Consiglio da professionista: leggere i sollevamenti come una mappa</strong><table><tr><th>Dove</th><th>Quando</th><th>Cause più probabili</th></tr><tr><td>Alla cuticola</td><td>Entro 5–7 giorni, spesso 1–2 dita</td><td>Pterigio non tolto, prodotto sulla pelle, crema o olio sulla piega</td></tr><tr><td>Al bordo libero</td><td>Entro 3–5 giorni, clienti che usano molto le mani</td><td>Bordo non sigillato a ogni strato, sotto della punta non sgrassato, prodotto troppo rigido su lamina flessibile</td></tr><tr><td>Tutta l'unghia in un pezzo</td><td>Variabile</td><td>Primer saltato o ancora umido, opacizzazione saltata</td></tr></table><p>Un trucco veloce: se si solleva soprattutto l'indice della mano dominante, pensa all'uso; se succede su tutte e dieci le dita, il problema è nella procedura.</p></div>
 <h2>Il refill passo passo</h2>
 ${F('refill-step.svg', 'Il refill visto dall\'alto, passo passo.')}
 <ol class="steps">
@@ -2638,6 +2688,7 @@ ${F('refill-step.svg', 'Il refill visto dall\'alto, passo passo.')}
 ${F('refill-assottigliare.svg', 'Di profilo: apex spostato dopo 3 settimane, prodotto assottigliato, nuovo apex sopra il punto di stress.')}
 ${F('refill-gradino.svg', 'Raccordo alla base: il gradino crea una gobba, il raccordo liscio no. Sempre con il margine dalla pelle.')}
 ${B('danger', 'Mai coprire un sollevamento', 'Sotto un sollevamento possono esserci umidità, sporco e batteri. Coprirlo li chiude dentro: è così che nascono infezioni e macchie verdi. Il sollevamento si elimina tutto.')}
+<div class="box deep"><strong class="t">Approfondimento: prodotto nuovo su prodotto vecchio</strong>Nel refill il nuovo prodotto si attacca bene al vecchio perché, come dice Doug Schoon, "la plastica aderisce alla plastica". Il problema nasce quando sul vecchio prodotto c'è <strong>un sistema diverso</strong>: marchi diversi possono avere flessibilità diverse, e due materiali che si piegano in modo diverso tendono a separarsi. Se la cliente arriva da un altro salone e non sai che cosa porta, la scelta più sicura è la rimozione completa, oppure assottigliare fino a un velo sottile e ricostruire con il tuo sistema. Annota sempre marca e prodotto sulla scheda: al refill successivo lo sai già.</div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Conseguenza</th><th>Cosa fare invece</th></tr>
@@ -2648,13 +2699,14 @@ ${B('danger', 'Mai coprire un sollevamento', 'Sotto un sollevamento possono esse
 <tr><td>Saltare la valutazione</td><td>Si coprono problemi e infezioni</td><td>Guarda sempre dall'alto, di profilo e da sotto</td></tr>
 </table>
 ${B('tip', 'Backfill (french)', 'Nel pink &amp; white, quando la smile line si è spostata in avanti, si fa un "backfill": si toglie il vecchio bianco e si rifà la smile nella posizione giusta. Richiede più tempo di un refill normale.')}
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente con unghie che crescono in fretta, arriva dopo 4 settimane: l'apex è a metà dell'allungamento e due unghie hanno piccole crepe ai lati.</strong></p><ol><li>Accorcia prima di tutto: meno leva mentre lavori.</li><li>Lima le crepe finché spariscono del tutto.</li><li>Assottiglia il <strong>vecchio apex</strong>: se lasci quello spessore a metà unghia e ne costruisci uno nuovo più indietro, l'unghia diventa pesante in avanti e si rompe di nuovo.</li><li>Ricostruisci l'apex sopra il punto di stress attuale.</li><li>Fissa il prossimo refill a 2–3 settimane e spiega il perché alla cliente: non è per vendere di più, è perché le sue unghie crescono più veloci della media.</li></ol></div>
 `,
           sources: ['https://www.opi.com/professionals/how-to-rebalance-and-fill-opi-gelevate-overlay-services',
             'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown',
             'https://nailknowledge.org/?p=49737',
             'https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112380',
             'https://dilei.it/bellezza/cose-e-quanto-costa-il-refill-delle-unghie-in-gel/637264/',
-            'https://booksolo.co/nailedbyalire/aftercare']
+            'https://booksolo.co/nailedbyalire/aftercare', 'https://hero.epa.gov/hero/index.cfm/reference/details/reference_id/7330295', 'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes', 'https://nailknowledge.org/?p=44851', 'https://open-exam-prep.com/study-guides/ga-nail-technician/nail-enhancement-chemistry-acrylics/acrylic-maintenance-removal']
         },
         {
           id: 'riparazione', simple: "Se un'unghia si crepa o si stacca prima del refill, la cliente non deve incollarla né coprirla con un cerotto: va sistemata in salone, togliendo la parte rovinata e ricostruendo.", title: 'Riparare un\'unghia tra un appuntamento e l\'altro', min: 9,
@@ -2669,6 +2721,7 @@ ${F('riparazione-decisione.svg', 'Cosa si è rotto? Prodotto, unghia naturale o 
 <tr><td>Unghia naturale <strong>rotta oltre il bordo libero</strong>, letto intatto</td><td>Rimuovi il prodotto rotto, ricostruisci (eventualmente su cartina) a lunghezza ridotta</td></tr>
 <tr><td>Rottura <strong>dentro il letto</strong>, sangue, dolore, unghia staccata dal letto</td><td><strong>Non coprire</strong>: pulisci, proteggi e consiglia il medico</td></tr>
 </table>
+<div class="box deep"><strong class="t">Approfondimento: dove si rompe dice perché si rompe</strong><table><tr><th>Che cosa vedi</th><th>Causa da verificare</th></tr><tr><td>Crepa trasversale sopra il punto di stress</td><td>Zona 2 troppo sottile, apex troppo avanti o "migrato" per il refill in ritardo</td></tr><tr><td>Crepa su un fianco</td><td>Fianchi assottigliati in limatura; forma ristretta già sul dito (ballerina, mandorla)</td></tr><tr><td>Scheggiature sul bordo libero</td><td>Bordo non sigillato, zona 1 troppo sottile, forma con angoli netti su chi usa molto le mani</td></tr><tr><td>Sacca d'aria al centro (pocket lifting)</td><td>Preparazione, primer, polimerizzazione insufficiente</td></tr></table><p>Annota il tipo di rottura sulla scheda: tre crepe uguali sullo stesso dito non sono "sfortuna", sono un messaggio sulla struttura.</p></div>
 <h2>Riparare una crepa nel prodotto</h2>
 ${F('riparazione-crepa.svg', 'Riparazione di una crepa: lima finché sparisce, ricostruisci con l\'apex, rifinisci e annota.')}
 <ol class="steps">
@@ -2682,9 +2735,11 @@ ${F('riparazione-crepa.svg', 'Riparazione di una crepa: lima finché sparisce, r
 </ol>
 ${B('danger', 'Colla e cerotti: no', 'Spiega alla cliente di non incollare l\'unghia sollevata e di non coprirla con un cerotto: entrambi chiudono umidità e batteri sotto il prodotto. Meglio limare via la parte che si aggancia e prenotare la riparazione.')}
 ${B('tip', 'Rotture ripetute', 'Se la stessa cliente rompe spesso le unghie, prima di cambiare prodotto controlla: lunghezza adatta alle sue abitudini, apex nel posto giusto, zona 2 non troppo sottile. Poi rivedi la tua tecnica con le foto di profilo.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong><ul><li>Ripara con <strong>lo stesso sistema</strong> con cui hai costruito: due prodotti con flessibilità diverse si separano proprio sulla linea della riparazione.</li><li>Molte educatrici <strong>polimerizzano i pollici a parte</strong>, ben dritti sotto la lampada: nella posizione con le quattro dita il pollice spesso resta inclinato e riceve meno luce.</li><li>Se la riparazione riguarda il fianco, ricostruisci il fianco intero fino al solco, non solo la parte crepata: un "rattoppo" piccolo crea un nuovo punto di debolezza sul suo bordo.</li></ul></div>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Cliente impiegata, destrimane, rompe sempre l'indice destro, di solito sull'angolo esterno.</strong></p><p>Un problema concentrato sull'indice della mano dominante fa pensare all'<strong>uso</strong> più che alla tecnica (se fosse la tecnica, i problemi sarebbero su più dita). Chiedi: apre lattine, scatole o tasti dell'auto con quell'unghia? Batte sulla tastiera con le punte? Soluzioni: su quel dito angoli più arrotondati (squoval invece di quadrata), 1 mm in meno di lunghezza, fianco esterno costruito pieno. E un consiglio pratico: usare il polpastrello, non l'unghia, per aprire e premere. Annota se la soluzione funziona al refill successivo.</p></div>
 `,
           sources: ['https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown',
-            'https://nailknowledge.org/?p=49737']
+            'https://nailknowledge.org/?p=49737', 'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes', 'https://nailknowledge.org/?p=44851']
         },
         {
           id: 'rimozione', videos: [{"id": "60O2H65aZfA", "title": "Rimozione sicura del gel in 7 step", "channel": "Nail Couture Italia", "lang": "IT"}, {"id": "k4gk4ZWEvB0", "title": "Come togliere il semipermanente con acetone", "channel": "Semilac Italia", "lang": "IT"}], simple: "Per togliere gel e acrilico si assottiglia, si ammorbidisce con l'acetone e si spinge via con delicatezza. Non si raschia e non si strappa mai: è questo che rovina l'unghia.", title: 'La rimozione', min: 14,
@@ -2702,6 +2757,7 @@ ${F('rimozione-decisione.svg', 'Quale prodotto? Soak-off, file-off o scheda tecn
 <tr><td>Hard gel</td><td>File-off (non si scioglie in acetone)</td><td>—</td></tr>
 </table>
 <p class="muted"><small>I tempi variano con prodotto, spessore e temperatura: segui sempre le istruzioni del produttore.</small></p>
+<div class="box deep"><strong class="t">Approfondimento: perché alcuni prodotti si sciolgono e altri no</strong><p>Quando un gel polimerizza, le molecole si collegano tra loro formando una rete. Nei gel <strong>soak-off</strong> (soft gel) questa rete è più "aperta": le piccole molecole di acetone riescono a entrare, la rete si gonfia e si ammorbidisce. Negli <strong>hard gel</strong> la rete è molto più fitta e il solvente non entra: per questo sono più resistenti ma vanno limati.</p><ul><li>Molti semipermanenti hanno un <strong>top più duro</strong>: se non lo opacizzi, l'acetone fatica a passare.</li><li>Nei sistemi a immersione (dip) la polvere riempie gli spazi della rete e la rimozione è più lenta.</li></ul></div>
 <h2>Soak-off passo passo</h2>
 ${F('rimozione-soakoff-step.svg', 'Soak-off in sei passaggi.')}
 <ol class="steps">
@@ -2715,7 +2771,7 @@ ${F('rimozione-soakoff-step.svg', 'Soak-off in sei passaggi.')}
 <li>Togli i residui con un <strong>buffer morbido</strong>, lava le mani, applica <strong>olio</strong> per cuticole.</li>
 </ol>
 ${F('rimozione.svg', 'Rimozione soak-off.')}
-${B('warn', 'Acetone: sicurezza', 'L\'acetone è molto infiammabile: usane poco, in un contenitore chiuso, lontano da fiamme e fonti di calore, con la stanza ben ventilata. Non scaldarlo mai. Non usarlo su pelle ferita o irritata.')}
+${B('warn', 'Acetone: sicurezza', 'L\'acetone è molto infiammabile: usane poco, in un contenitore chiuso, lontano da fiamme e fonti di calore, con la stanza ben ventilata. Non metterlo mai su fonti di calore dirette (piastre, scaldini, microonde). Non usarlo su pelle ferita o irritata.')}
 <h2>File-off (hard gel e prodotti che non si sciolgono)</h2>
 <ol class="steps">
 <li>Togli il colore e il top con lima o fresa (punta per la rimozione, velocità media, sempre in movimento).</li>
@@ -2733,18 +2789,20 @@ ${F('rimozione-errori.svg', 'Cosa non fare: leva, raschietto in metallo, strappo
 <tr><td>Fresa sulla lamina</td><td>Assottiglia, scalda, rende sensibile al calore</td><td>Fermati al velo</td></tr>
 <tr><td>Lasciar staccare il prodotto alla cliente</td><td>Strappo della lamina</td><td>Spiega che la rimozione va fatta in salone</td></tr>
 </table>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Nuova cliente da un altro salone, non sa che prodotto ha.</strong></p><p>Usa il tempo di ammorbidimento come indizio:</p><ul><li>Gel soak-off: si ammorbidisce in genere in <strong>10–20 minuti</strong>.</li><li>Acrilico (EMA): in genere intorno ai <strong>30 minuti</strong>.</li><li>Nessun cambiamento dopo il tempo previsto: probabilmente <strong>hard gel</strong>, da limare.</li><li>Prodotto durissimo, che dopo molto tempo in acetone resta quasi invariato, spesso con odore forte: può essere un acrilico a base di <strong>MMA</strong>. Si rimuove con la lima, con molta cautela, perché aderisce in modo aggressivo alla lamina.</li></ul><p>Rimuovere il lavoro di un'altra persona richiede tempo: prevedilo nel prezzo e chiedi già al telefono che cosa porta la cliente.</p></div>
 <h2>Dopo la rimozione</h2>
 <ul>
 <li>Guarda la lamina: se è sottile, dolente o con macchie, valuta una <strong>pausa</strong> o un servizio leggero, e annotalo.</li>
 <li>Consiglia olio per cuticole ogni giorno per qualche settimana.</li>
 <li>Se ci sono segni di infezione o distacco dal letto, consiglia il medico.</li>
 </ul>
+<div class="box pro"><strong class="t">Consiglio da professionista: il test della goccia d'acqua</strong>Dopo la rimozione la lamina può apparire bianca e opaca. Per capire se è solo disidratazione o un danno, metti una <strong>goccia d'acqua</strong> sulla zona bianca. Se il bianco sparisce, è disidratazione superficiale: la superficie resta più asciutta per circa 30–40 minuti e si reidrata del tutto in qualche ora. Se il bianco resta, la causa è un danno meccanico (graffi, strati di lamina sollevati) o residui di prodotto. Mostra il test alla cliente: capisce subito la differenza tra "l'acetone mi ha rovinato le unghie" e una rimozione fatta male.</div>
 `,
           sources: ['https://nailknowledge.org/blog/does-acetone-affect-the-natural-nail',
             'https://karanailedit.substack.com/p/how-to-remove-your-gel-safely',
             'https://onglesdor.com/en/shellac-remover-wraps-10-unit.html',
             'https://nailknowledge.org/?p=49737',
-            'https://www.marionnaud.it/m-life/tutorial/come-togliere-unghie-gel']
+            'https://www.marionnaud.it/m-life/tutorial/come-togliere-unghie-gel', 'https://nailknowledge.org/glossary/soak-off-gels', 'https://nailknowledge.org/?p=52939']
         }
       ]
     },
@@ -3400,6 +3458,7 @@ ${B("info", "Attenzione al termine", "In questo corso «allungamento del letto u
 <h2>Perché il cover deve essere coprente</h2>
 <p>Se il cover lascia trasparire la lamina, si vede ancora dove finisce il letto naturale e l'effetto sparisce. Molti rosa venduti come "coprenti" non lo sono abbastanza. Nei forum professionali i tecnici lo segnalano spesso: un rosa velato non copre un letto corto, serve un rosa davvero non trasparente.</p>
 ${F("cover-controluce.svg", "Prova controluce: cover uniforme (giusto), cover con «finestre» e french con «orecchie» trasparenti ai lati (sbagliati).")}
+<div class="box deep"><strong class="t">Approfondimento: coprenza e polimerizzazione</strong><p>Un cover è coprente perché contiene molto pigmento. Ma più pigmento significa anche <strong>meno luce che arriva in profondità</strong> (l'effetto ombrello). Ecco perché con i cover vale più che mai la regola degli strati sottili:</p><ul><li>Due strati sottili coprono come uno spesso, ma polimerizzano fino in fondo.</li><li>Il pollice ha una superficie più grande e si scalda di più: è il dito dove il calore si sente per primo.</li><li>Uno strato di cover rimasto morbido sotto si nota dopo qualche giorno: grinze, distacchi, o un'unghia che si "ammacca" premendo.</li></ul></div>
 <h2>Procedura passo per passo</h2>
 ${F("cover-step.svg", "French con letto allungato in cover: sei passaggi.")}
 <ol class="steps">
@@ -3414,12 +3473,14 @@ ${F("cover-sezione.svg", "L'unghia in sezione: lamina, base, cover, bianco, buil
 <h2>Gli angoli della smile line</h2>
 <p>Il bianco deve appoggiarsi al cover lungo tutta la smile line, angoli compresi. Se gli angoli restano troppo "alti", cioè troppo verso la punta, tra il bianco e il cover restano due piccole zone trasparenti ai lati, chiamate a volte <strong>"orecchie"</strong>: controluce si vedono subito. Per evitarle, <strong>abbassa leggermente gli angoli della smile line</strong> fino a toccare il cover, oppure porta il cover fino al bordo laterale.</p>
 ${B("tip", "Cover denso o fluido?", "I cover più densi (che non si autolivellano) restano dove li appoggi: aiutano a costruire la curva a C e non colano nei solchi laterali. Sono più facili per chi inizia.")}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Decidi la lunghezza del nuovo letto usando la <strong>proporzione</strong>, non la stessa misura in millimetri su tutte le dita: il mignolo ha un letto più corto del medio, e con la stessa misura sembrerebbe "tutto rosa". Un metodo pratico: allinea le dita e guarda la mano a 40 cm di distanza; le smile line devono formare una linea armoniosa, come i denti in un sorriso. Ricorda che il letto allungato sta <strong>sopra l'allungamento</strong>: non spingere mai il cover sopra l'iponichio per guadagnare millimetri.</div>
 <h2>Il cover nel refill</h2>
 <ul>
 <li>Con la ricrescita, tra la cuticola e il vecchio cover si vede una fascia di unghia naturale.</li>
 <li>Assottiglia il vecchio prodotto, poi stendi il cover nuovo nella zona di ricrescita, sfumandolo sul vecchio senza scalini.</li>
 <li>Se il letto naturale si è allungato (per esempio dopo l'onicofagia), accorcia di conseguenza il cover.</li>
 </ul>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Ex onicofagica, dopo tre mesi il letto naturale si è allungato di circa 2 mm.</strong></p><p>Il letto naturale ora arriva sotto la parte di cover che prima "fingeva" il letto. Va bene così: è il risultato che volevi. Al refill:</p><ol><li>Fotografa la mano prima di iniziare e confronta con le foto dei servizi precedenti.</li><li>Assottiglia il vecchio prodotto e valuta dove finisce ora il letto vero.</li><li>Se il cover allungato ora sembra eccessivo, accorcialo: la smile line si riposiziona più vicina al bordo naturale.</li><li>Se la cliente lo desidera, prova un cover un po' più trasparente: il suo letto non ha più bisogno di essere nascosto.</li></ol></div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Cosa si vede</th><th>Correzione</th></tr>
@@ -3434,7 +3495,7 @@ ${B("tip", "Cover denso o fluido?", "I cover più densi (che non si autolivellan
             'https://www.scratchmagazine.co.uk/feature/how-to-ace-encapsulation-in-lp-gel-nails',
             'https://www.salongeek.com/threads/camouflage-gel.60825/',
             'https://www.irishbeauty.ie/New-Cover-Gel-launched-by-Crystal-Nails.html',
-            'https://www.my-personaltrainer.it/bellezza/unghie-effetto-correttore-il-trend-concealer-nails-del-2026-per-una-manicure-naturale-e-perfetta.html']
+            'https://www.my-personaltrainer.it/bellezza/unghie-effetto-correttore-il-trend-concealer-nails-del-2026-per-una-manicure-naturale-e-perfetta.html', 'https://nailknowledge.org/blog/mastering-uv-gel-application-insights-into-pigments', 'https://nailknowledge.org/blog/heat-spikes', 'https://www.scratchmagazine.co.uk/feature/how-to-create-a-crisp-smile-line-with-the-gel-system', 'https://www.opi.com/professionals/how-to-rebalance-and-fill-opi-gelevate-overlay-services']
         },
         {
           id: 'colori', title: 'Teoria del colore e scelta del nude', min: 14,
@@ -3458,6 +3519,7 @@ ${F("colori-sottotono.svg", "Cerchio cromatico e scelta del cover.")}
 <li><strong>Analoghi</strong>: colori vicini sul cerchio (per esempio rosa, corallo, pesca). Accostati danno un effetto armonioso, utile per ombré delicati.</li>
 </ul>
 ${B("info", "Perché il viola «toglie» il giallo", "È lo stesso principio dei correttori del trucco: un pigmento leggermente violaceo rende meno evidente un tono giallastro. Per questo alcuni top e smalti «anti-giallo» hanno un velo lilla.")}
+<div class="box deep"><strong class="t">Approfondimento: il camouflage con i complementari</strong><p>Come nel trucco correttivo: il verde neutralizza il rosso, pesca e arancio neutralizzano i toni blu-violacei, il lilla attenua il giallo. Applicato alle unghie:</p><table><tr><th>Che cosa vedi</th><th>Scelta di cover</th></tr><tr><td>Letto molto rosso o arrossato</td><td>Nude beige più neutro, non un rosa acceso che lo esalta</td></tr><tr><td>Letto bluastro o violaceo (mani fredde)</td><td>Cover con base pesca</td></tr><tr><td>Lamina un po' ingiallita (es. dopo smalti rossi senza base)</td><td>Nude rosato; top con riflesso lilla</td></tr></table><p><strong>Attenzione:</strong> il camouflage è per lamine sane con piccole discromie. Macchie verdi, nere, una striscia scura o un colore che cambia vanno mostrati al medico, non coperti.</p></div>
 <h2>Il sottotono della pelle</h2>
 <p>Il <strong>tono</strong> è quanto la pelle è chiara o scura. Il <strong>sottotono</strong> è il riflesso di colore sotto la superficie: freddo (rosato), caldo (dorato) o neutro. Due persone con la stessa pelle chiara possono avere sottotoni diversi.</p>
 ${F("sottotono-test.svg", "Tre test pratici per capire il sottotono: vene, foglio bianco, gioielli.")}
@@ -3467,6 +3529,7 @@ ${F("sottotono-test.svg", "Tre test pratici per capire il sottotono: vene, fogli
 <li><strong>Test dei gioielli</strong>: se all'argento la pelle "si accende" è più fredda; con l'oro è più calda; se vanno bene entrambi è neutra.</li>
 </ol>
 ${B("warn", "Test indicativi", "Questi test sono indicazioni pratiche, non misure. A volte danno risultati diversi tra loro, e il sottotono «olivastro» non rientra bene in nessuna casella. Usali per orientarti, poi decidi provando il colore vero sull'unghia.")}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Il colore del letto ungueale non dipende solo dal sottotono: risente anche della <strong>temperatura delle mani</strong>. Una cliente che arriva dal freddo può avere letti pallidi o violacei, e un cover scelto in quel momento risulterà troppo caldo dopo mezz'ora. Fai la prova colore <strong>dopo</strong> la preparazione, quando le mani si sono scaldate (anche con un breve lavaggio in acqua tiepida). E valuta sempre il letto ungueale e la pelle intorno insieme: il cover deve legare con entrambi.</div>
 <h2>Scegliere il cover (indicazione pratica)</h2>
 <table>
 <tr><th>Sottotono</th><th>Come appare</th><th>Cover di partenza</th></tr>
@@ -3484,6 +3547,7 @@ ${F("nude-prova-tip.svg", "La prova del tip: campioni appoggiati all'unghia, all
 <li>Scegli quello che "sparisce": il passaggio tra letto naturale e tip non si deve notare. Confronta con il letto ungueale, non con il dorso della mano.</li>
 <li>Annota il colore scelto nella scheda cliente: al refill lo ritrovi subito.</li>
 </ol>
+<div class="box deep"><strong class="t">Approfondimento: il metamerismo</strong><p>Due colori possono sembrare identici sotto una luce e diversi sotto un'altra. Si chiama <strong>metamerismo</strong>: il colore che vediamo dipende sia dalla superficie sia dalla luce che la illumina. Le luci fluorescenti e molti LED economici hanno uno spettro "a picchi" e rendono il fenomeno più evidente.</p><p>Per le unghie vuol dire che un cover che "sparisce" sotto la lampada da tavolo può staccare alla luce del giorno, o viceversa. Per i colori più delicati (nude, cover, rosa) fai la prova in <strong>due luci</strong>: vicino alla finestra e sotto la luce del tuo posto di lavoro. Una lampada con un indice di resa cromatica alto aiuta, ma non garantisce che il colore resti uguale ovunque.</p></div>
 <h2>Errori frequenti</h2>
 <ul>
 <li>Scegliere il colore sotto la lampada da lavoro.</li>
@@ -3491,10 +3555,11 @@ ${F("nude-prova-tip.svg", "La prova del tip: campioni appoggiati all'unghia, all
 <li>Usare un solo cover per tutte le clienti.</li>
 <li>Fidarsi solo del colore nel vasetto: steso sottile appare diverso.</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: il contrasto simultaneo</strong>Josef Albers ha mostrato che lo stesso colore cambia aspetto a seconda di ciò che lo circonda: un grigio sembra più chiaro su sfondo scuro e più scuro su sfondo chiaro. Per questo un tip nude sulla ruota bianca della cartella non è lo stesso nude sull'unghia della cliente: lì è circondato dalla pelle, che lo fa sembrare più chiaro, più scuro, più rosa o più giallo. È un motivo in più per <strong>appoggiare sempre il campione sul dito</strong> e confrontare colori a coppie, sullo stesso sfondo.</div>
 `,
           sources: ['https://www.masterclass.com/articles/how-to-identify-your-skins-undertone',
             'https://makeup.com/product-and-reviews/foundation/identifying-your-skins-undertone',
-            'https://www.my-personaltrainer.it/bellezza/unghie-effetto-correttore-il-trend-concealer-nails-del-2026-per-una-manicure-naturale-e-perfetta.html']
+            'https://www.my-personaltrainer.it/bellezza/unghie-effetto-correttore-il-trend-concealer-nails-del-2026-per-una-manicure-naturale-e-perfetta.html', 'https://www.cbc.ca/life/style/colour-correcting-101-the-why-and-how-of-this-technical-makeup-step-1.7055449', 'https://aad.org/nail-care-secrets/manicure-pedicure-safety', 'https://rmit.pressbooks.pub/colourtheory1/chapter/metamerism-when-colours-seem-to-change-in-different-light-sources/', 'https://www.printed-editions.com/blog/josefs-albers-colour-theory/']
         },
         {
           id: 'gel-colorati', title: 'Gel colorati, pigmenti e polimerizzazione', min: 13,
@@ -3522,11 +3587,12 @@ ${F("pigmenti-luce.svg", "Effetto ombrello: in uno strato sottile la luce arriva
 <p>Il gel indurisce grazie ai <strong>fotoiniziatori</strong>, che "si accendono" con la luce UV o LED. Anche i pigmenti però assorbono quella luce e fanno ombra agli strati sotto: un divulgatore della chimica delle unghie (Doug Schoon) lo chiama "effetto ombrello".</p>
 <ul>
 <li>Più pigmento = meno luce arriva in profondità.</li>
-<li>I pigmenti <strong>rossi e neri</strong> assorbono la luce più dei colori chiari come il bianco o il blu: sono i più "difficili".</li>
+<li>I pigmenti <strong>rossi e neri</strong> assorbono molta luce UV: sono tra i più "difficili". Anche il <strong>bianco coprente</strong> (biossido di titanio) è delicato: non assorbe, ma riflette e blocca la luce negli strati spessi. Per entrambi: strati sottili.</li>
 <li>Anche lo <strong>spessore</strong> conta: in uno strato spesso la parte in alto assorbe la luce e quella in fondo resta poco polimerizzata, anche senza pigmenti.</li>
 </ul>
 ${B("warn", "Strati sottili prima di tutto", "Con un gel molto pigmentato le fonti consigliano strati sottili e, se la scheda tecnica lo prevede, un tempo di lampada più lungo. Un tempo più lungo però non «salva» uno strato troppo spesso: la luce comunque non arriva in fondo. Lo strato sotto resta morbido, il colore si raggrinzisce o si stacca, e il gel non polimerizzato può dare allergia se tocca la pelle.")}
 ${F("colore-strati-step.svg", "Stendere il colore: mescola, base, primo strato sottile, sigilla la punta, secondo strato e top.")}
+<div class="box deep"><strong class="t">Approfondimento: e il bianco?</strong><p>Secondo NailKnowledge, i pigmenti <strong>rossi e neri</strong> sono quelli che assorbono più luce UV. Il <strong>bianco</strong> funziona in modo diverso: il biossido di titanio non "assorbe" come il nero, ma riflette e diffonde moltissimo la luce, e in uno strato spesso la blocca prima che arrivi in fondo. Il risultato è lo stesso: sopra duro, sotto molle, poi grinze.</p><p>Quindi la regola pratica non cambia: <strong>rossi, neri, bianchi coprenti e cover molto pigmentati</strong> sono i colori in cui gli strati sottili contano di più.</p></div>
 <h2>Procedura: colore in gel a regola d'arte</h2>
 <ol class="steps">
 <li><strong>Mescola il colore</strong>. Gira il vasetto o rotola la boccetta tra le mani: il pigmento tende a depositarsi sul fondo. Non agitare forte, si formano bolle.</li>
@@ -3538,6 +3604,7 @@ ${F("colore-strati-step.svg", "Stendere il colore: mescola, base, primo strato s
 <li><strong>Top</strong> e lampada; togli lo strato di dispersione se il top lo prevede.</li>
 </ol>
 ${B("tip", "Rossi e arancio: la base è d'obbligo", "I dermatologi americani consigliano uno strato in più di base sotto smalti rossi o arancio: proteggono la lamina dall'ingiallimento. Se la lamina si macchia, di solito torna normale in qualche settimana senza quel colore.")}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Non basta "dare più tempo di lampada": conta <strong>quale</strong> lampada. Ogni gel contiene fotoiniziatori che rispondono a certe lunghezze d'onda. Un gel con fotoiniziatori non adatti alla tua lampada polimerizza lentamente e lascia uno strato appiccicoso più spesso; uno pensato per lampade lente, sotto un LED potente, polimerizza troppo in fretta e scalda. Se cambi marca di colore senza cambiare lampada, prova prima su tip: superficie, grinze e calore ti dicono se la combinazione funziona.</div>
 <h2>Problemi comuni</h2>
 <table>
 <tr><th>Problema</th><th>Causa probabile</th><th>Cosa fare</th></tr>
@@ -3548,11 +3615,12 @@ ${B("tip", "Rossi e arancio: la base è d'obbligo", "I dermatologi americani con
 <tr><td>Macchie sulla pelle o sulle cuticole</td><td>Colore steso troppo vicino</td><td>Togli con un bastoncino prima della lampada; margine di circa 1 mm dalla pelle</td></tr>
 <tr><td>Calore in lampada</td><td>Strato spesso, molto pigmentato</td><td>Strati sottili; se brucia, mano fuori qualche secondo (flash and pull)</td></tr>
 </table>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>Una cliente con un gel nude chiaro si lamenta che il colore è ingiallito.</strong></p><p>Fai una domanda chiave: <em>era già giallo quando è uscita dal salone, o lo è diventato durante la settimana?</em></p><ul><li><strong>Giallo subito:</strong> calore in lampada, spesso per strati spessi con lampada molto potente. Strati più sottili.</li><li><strong>Giallo dopo giorni o una vacanza:</strong> esposizione al sole; alcuni top ingialliscono con gli UV. Valuta un top stabilizzato.</li><li><strong>Lamina gialla dopo la rimozione:</strong> pigmento a contatto diretto con la lamina, senza base.</li><li><strong>Giallo che si ripete a ogni servizio:</strong> fumo, prodotti per la pulizia, tinte per capelli. Consiglia i guanti.</li></ul></div>
 `,
           sources: ['https://nailknowledge.org/blog/mastering-uv-gel-application-insights-into-pigments',
             'https://nailknowledge.org/blog/unveiling-the-hazards-of-thick-uv-gel-application',
             'https://aad.org/nail-care-secrets/manicure-pedicure-safety',
-            'https://pinkgellac.com/blogs/news/how-to-use-cat-eye-gel-polish']
+            'https://pinkgellac.com/blogs/news/how-to-use-cat-eye-gel-polish', 'https://nailknowledge.org/blog/why-white-gel-polish-looks-patchy', 'https://nailknowledge.org/blog/heat-spikes', 'https://nailknowledge.org/nail-knowledge-base/inhibition-layer-and-no-cleanse-gels', 'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes']
         },
         {
           id: 'consulenza-colore', title: 'Consulenza colore e cartella campioni', min: 10,
@@ -3569,6 +3637,7 @@ ${F("cartella-colori.svg", "Una cartella colori ordinata: per famiglie, dal chia
 <li><strong>Dentro ogni famiglia</strong> ordina dal più chiaro al più scuro.</li>
 <li><strong>Aggiorna</strong> quando compri un colore nuovo; togli quelli fuori produzione.</li>
 </ol>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong>Per i colori <strong>jelly</strong> e per i cover semitrasparenti prepara due campioni: uno con uno strato e uno con tre. Il colore cambia molto con lo spessore, e la cliente deve vedere quello che otterrà davvero. Conserva la cartella al riparo dal sole: alcuni top ingialliscono con gli UV, e un campione ingiallito non è più fedele. Ogni tanto confronta il campione con un tip appena fatto con lo stesso colore: se non coincidono più, rifallo.</div>
 <h2>Le domande da fare</h2>
 <ul>
 <li>"Per quale occasione?" (lavoro, cerimonia, vacanza)</li>
@@ -3587,15 +3656,17 @@ ${F("armonie-colore.svg", "Abbinamenti facili: monocromatico, analoghi, compleme
 </table>
 ${B("tip", "Mostra, non descrivere", "Invece di chiedere «rosso o bordeaux?», appoggia due tip sull'unghia della cliente alla luce naturale. Decide in pochi secondi.")}
 ${B("info", "Colore e lavoro", "In ambienti sanitari e alimentari spesso valgono regole interne su unghie artificiali e smalto. Chiedi sempre alla cliente: non è un tuo giudizio, è un'informazione che le serve.")}
+<div class="box deep"><strong class="t">Approfondimento: prima la luminosità, poi la tinta</strong>Un disegno si legge da lontano soprattutto grazie al <strong>contrasto di luminosità</strong> (chiaro contro scuro), più che alla differenza di tinta. Due colori diversi ma ugualmente chiari, per esempio un rosa e un azzurro pastello, da lontano si confondono. Prova semplice: fotografa i tip della proposta e guarda la foto in <strong>bianco e nero</strong>. Se il disegno sparisce, aumenta la differenza di luminosità: scurisci uno dei due colori o aggiungi un contorno sottile.</div>
 <h2>Errori frequenti</h2>
 <ul>
 <li>Cartella con campioni sbiaditi o graffiati.</li>
 <li>Campioni stesi diversamente da come lavori: il risultato non coincide.</li>
 <li>Proporre troppi colori insieme: la cliente si confonde. Meglio 3–4 proposte mirate.</li>
 </ul>
+<div class="box case"><strong class="t">Caso pratico</strong><p><strong>La cliente non riesce a decidere tra tre nude quasi uguali.</strong></p><ol><li><strong>Elimina per sottotono:</strong> se ha riflessi dorati, il nude più rosato è il primo a uscire.</li><li><strong>Confronta a coppie:</strong> due tip sul dito, alla luce della finestra; quello che "sparisce" meglio vince e sfida il terzo.</li><li><strong>Cambia luce:</strong> ricontrolla il vincitore sotto la luce del tuo tavolo, perché i nude sono i colori più sensibili al cambio di luce.</li><li><strong>Annota</strong> il colore scelto sulla scheda, con la nota "scelto alla luce naturale".</li></ol><p>In pochi minuti la scelta diventa ragionata, e la cliente si sente seguita.</p></div>
 `,
           sources: ['https://www.masterclass.com/articles/how-to-identify-your-skins-undertone',
-            'https://www.youngnails.com/blogs/news/how-to-do-ombre-gel-polish-nails']
+            'https://www.youngnails.com/blogs/news/how-to-do-ombre-gel-polish-nails', 'https://nailknowledge.org/blog/mastering-uv-gel-application-insights-into-pigments', 'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes', 'https://www.printed-editions.com/blog/josefs-albers-colour-theory/', 'https://rmit.pressbooks.pub/colourtheory1/chapter/metamerism-when-colours-seem-to-change-in-different-light-sources/']
         }
       ]
     },
