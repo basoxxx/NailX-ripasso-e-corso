@@ -1454,49 +1454,52 @@ def heat_causes():
 @figx('grinze-sezione.svg')
 def wrinkles():
     b = title('Perché si formano le grinze')
+    V = '#9a6be0'
     for i in range(2):
         ok = i == 1
         x = 20 + i * 370
         body = ''
-        lcx = x + 175
-        # lampada stilizzata
+        L0, L1 = x + 22, x + 262
+        lcx = (L0 + L1) / 2
         body += '<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Z" fill="#f4f1f8" stroke="#8a7d9e" stroke-width="2"/>' % (
-            lcx - 110, 112, lcx - 110, 96, lcx, 74, lcx + 110, 96, lcx + 110, 112)
+            lcx - 112, 112, lcx - 112, 96, lcx, 74, lcx + 112, 96, lcx + 112, 112)
         for k in range(5):
-            body += '<rect x="%d" y="108" width="16" height="6" rx="2" fill="#9a6be0"/>' % (lcx - 88 + k * 40)
+            body += '<rect x="%d" y="108" width="16" height="6" rx="2" fill="%s"/>' % (lcx - 88 + k * 40, V)
+        body += text(lcx, 96, 'lampada', 12.5, weight=700, fill='#6b4fa0')
         py = 250
-        body += '<rect x="%d" y="%d" width="300" height="14" fill="%s" stroke="%s"/>' % (x + 25, py, PLATE_SEC, NAIL_S)
-        body += '<rect x="%d" y="%d" width="300" height="14" fill="%s"/>' % (x + 25, py + 14, BED)
+        body += '<rect x="%d" y="%d" width="%d" height="14" fill="%s" stroke="%s"/>' % (L0, py, L1 - L0, PLATE_SEC, NAIL_S)
+        body += '<rect x="%d" y="%d" width="%d" height="14" fill="%s"/>' % (L0, py + 14, L1 - L0, BED)
+        body += text(L1 + 8, py + 11, 'lamina', 12.5, 'start', 600, MUTED)
+        rays = [L0 + 24 + k * 48 for k in range(5)]
         if not ok:
-            top = py - 76
-            body += '<rect x="%d" y="%d" width="300" height="%d" fill="#c2577a" opacity=".9"/>' % (x + 25, top, py - top)
-            body += '<rect x="%d" y="%d" width="300" height="%d" fill="#e9a6bc"/>' % (x + 25, top + 26, py - top - 26)
+            top = py - 80
+            body += '<rect x="%d" y="%d" width="%d" height="%d" fill="#c2577a"/>' % (L0, top, L1 - L0, 26)
+            body += '<rect x="%d" y="%d" width="%d" height="%d" fill="#eab3c5"/>' % (L0, top + 26, L1 - L0, py - top - 26)
             rng = random.Random(11)
-            for k in range(70):
-                body += '<circle cx="%.1f" cy="%.1f" r="1.6" fill="#fff" opacity=".85"/>' % (x + 30 + rng.uniform(0, 290), top + 32 + rng.uniform(0, 40))
-            wav = ' '.join('q8,-6 16,0' for _ in range(19))
-            body += '<path d="M%d,%d %s" fill="none" stroke="%s" stroke-width="3"/>' % (x + 25, top, wav, INK)
-            for k in range(6):
-                rx = x + 50 + k * 50
-                body += carr('M%d,%d L%d,%d' % (rx, 120, rx, top + 14), '#9a6be0' if True else DARK, 2.4)
-            for k in range(6):
-                ux = x + 50 + k * 50
-                body += '<path d="M%d,%d a7,6 0 0 1 14,0 Z" fill="%s"/><line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.3"/>' % (
-                    ux - 7, top + 18, INK, ux, top + 18, ux, top + 24, INK)
-            body += leader(x + 300, top - 2, x + 300, 150, 'superficie dura', 'middle', 13)
-            body += leader(x + 120, top + 50, x + 120, 300, 'gel ancora liquido sotto', 'middle', 13, fill=ERR)
+            for k in range(60):
+                body += '<circle cx="%.1f" cy="%.1f" r="1.8" fill="#fff" opacity=".9"/>' % (L0 + 6 + rng.uniform(0, L1 - L0 - 12), top + 34 + rng.uniform(0, 40))
+            wav = ' '.join('q7.5,-6 15,0' for _ in range(16))
+            body += '<path d="M%d,%d %s" fill="none" stroke="%s" stroke-width="3"/>' % (L0, top, wav, INK)
+            for rx in rays:
+                body += carr('M%d,%d L%d,%d' % (rx, 120, rx, top - 4), V, 2.4)
+                body += '<path d="M%d,%d a8,7 0 0 1 16,0 Z" fill="%s"/><line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.5"/>' % (
+                    rx - 8, top + 15, INK, rx, top + 15, rx, top + 22, INK)
+            body += mtext(L1 + 8, top + 8, ['superficie', 'dura'], 13, 'start', 700, INK)
+            body += mtext(L1 + 8, top + 50, ['gel ancora', 'liquido'], 13, 'start', 700, ERR)
+            body += text(L0 + 6, top + 22, '', 12)
         else:
-            t1 = py - 26
-            t2 = t1 - 26
-            body += '<rect x="%d" y="%d" width="300" height="26" fill="#c2577a"/>' % (x + 25, t1)
-            body += '<rect x="%d" y="%d" width="300" height="26" fill="#cf6a8b"/>' % (x + 25, t2)
-            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 3"/>' % (x + 25, t1, x + 325, t1)
-            for k in range(6):
-                rx = x + 50 + k * 50
-                body += carr('M%d,%d L%d,%d' % (rx, 120, rx, py - 2), '#9a6be0', 2.4)
-            body += text(x + 175, 300, 'due strati sottili, polimerizzati uno alla volta', 13, weight=700, fill=OK)
+            t1 = py - 28
+            t2 = t1 - 28
+            body += '<rect x="%d" y="%d" width="%d" height="28" fill="#c2577a"/>' % (L0, t1, L1 - L0)
+            body += '<rect x="%d" y="%d" width="%d" height="28" fill="#cf6a8b"/>' % (L0, t2, L1 - L0)
+            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 3"/>' % (L0, t1, L1, t1)
+            for rx in rays:
+                body += carr('M%d,%d L%d,%d' % (rx, 120, rx, py - 3), V, 2.4)
+            body += text(L1 + 8, t2 + 19, 'strato 2', 12.5, 'start', 700, INK)
+            body += text(L1 + 8, t1 + 19, 'strato 1', 12.5, 'start', 700, INK)
         cap = 'Strati sottili: la luce arriva in fondo' if ok else 'Strato spesso: i pigmenti fanno ombra'
-        b += frame(x, 55, 350, 285, None, ok=ok, body=body, cap=cap)
+        b += frame(x, 55, 350, 270, None, ok=ok, body=body, cap=cap)
+    b += text(380, 345, 'Ogni strato sottile si polimerizza prima di stendere il successivo.', 13.5, fill=MUTED)
     return svg(760, 355, defs() + b, 'Grinze: in uno strato spesso i pigmenti fermano la luce, la superficie indurisce e sotto resta gel liquido; con strati sottili la luce arriva in fondo')
 
 

@@ -865,7 +865,7 @@ def cover_controluce():
         cx, by = x + 125, 290
         if k < 2:
             body += rays(cx, 205)
-            n, ys = french_nail(cx, by, 74, 170, cov_top=0.95, sc=6, sw=None, win=(k == 1))
+            n, ys = french_nail(cx, by, 74, 170, cov_top=1.1, sc=6, sw=None, win=(k == 1))
             body += n
             if k == 1:
                 body += circ(cx - 12, by - 170 * 0.35, 18, 'none', ERR, 2.2) + circ(cx + 10, by - 85, 14, 'none', ERR, 2.2)
