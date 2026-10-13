@@ -531,6 +531,213 @@ def _form(cx, ys, w=80, h=130):
     s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-dasharray="4 4"/>' % (cx, ys - h, cx, ys - 8, ACC2)
     return s
 
+
+# ---------------------------------------------------------------- helper locali (igiene, piedi, difetti)
+def _P(d, fill='none', stroke=INK, sw=2, extra=''):
+    return '<path d="%s" fill="%s" stroke="%s" stroke-width="%s" stroke-linecap="round" stroke-linejoin="round"%s/>' % (d, fill, stroke, sw, extra)
+
+
+def _ln(x1, y1, x2, y2, col=INK, w=2, extra=''):
+    return '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="%s" stroke-linecap="round"%s/>' % (x1, y1, x2, y2, col, w, extra)
+
+
+def _mixc(c1, c2, t):
+    a = [int(c1[i:i + 2], 16) for i in (1, 3, 5)]
+    b = [int(c2[i:i + 2], 16) for i in (1, 3, 5)]
+    return '#%02x%02x%02x' % tuple(int(round(a[i] + (b[i] - a[i]) * t)) for i in range(3))
+
+
+def _lgrad(stops, x2=1, y2=0, x1=0, y1=0, p='lg'):
+    gid = uid(p)
+    st = ''.join('<stop offset="%s" stop-color="%s" stop-opacity="%s"/>' % s if len(s) == 3 else
+                 '<stop offset="%s" stop-color="%s"/>' % s for s in stops)
+    return gid, '<defs><linearGradient id="%s" x1="%s" y1="%s" x2="%s" y2="%s">%s</linearGradient></defs>' % (gid, x1, y1, x2, y2, st)
+
+
+def _toe_top(cx, by, hw=46, nail_len=78, free=6, plate='#f3cbc6', free_col=None, finger_len=40, extra='', shape='squoval', deep=True):
+    """Alluce visto dall'alto (da tools/svg_d.toe_top): polpastrello largo che sporge oltre l'unghia,
+    lamina larga quasi quadrata, pieghe laterali morbide, piega prossimale bassa."""
+    y_c = by
+    y_s = y_c - nail_len
+    y_t = y_s - free
+    tw = hw * 1.5
+    bw = hw * 1.3
+    yp = min(y_s, y_t) - hw * 0.52
+    yb = by + finger_len
+    toe = ('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f '
+           'C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z') % (
+        cx - bw, yb + 30,
+        cx - bw, y_c, cx - tw, y_s + hw * 1.0, cx - tw, y_s + hw * 0.45,
+        cx - tw * 0.97, yp + hw * 0.3, cx - tw * 0.58, yp, cx, yp,
+        cx + tw * 0.58, yp, cx + tw * 0.97, yp + hw * 0.3, cx + tw, y_s + hw * 0.45,
+        cx + tw, y_s + hw * 1.0, cx + bw, y_c, cx + bw, yb + 30,
+        cx + bw * 0.4, yb + 40, cx - bw * 0.4, yb + 40, cx - bw, yb + 30)
+    nat = plate == '#f3cbc6'
+    gn, dn = _lgrad([(0, '#eab0a4'), (.2, '#f7d5cc'), (.5, '#fde6df'), (.8, '#f6d0c6'), (1, '#e6ab9f')], p='tn')
+    gs, ds = _lgrad([(0, '#8a3f2e', .3), (.18, '#8a3f2e', .05), (.5, '#8a3f2e', 0), (.82, '#8a3f2e', .06), (1, '#8a3f2e', .32)], p='ts')
+    gh, dh = _lgrad([(0, '#fff', .9), (.6, '#fff', .35), (1, '#fff', 0)], 0, 1, p='th')
+    tc = uid('toe')
+    o = dn + ds + dh + '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (tc, toe)
+    o += '<path d="%s" fill="%s"/>' % (toe, SKIN)
+    o += '<ellipse cx="%.1f" cy="%.1f" rx="%.1f" ry="%.1f" fill="#fff" opacity=".28" clip-path="url(#%s)"/>' % (
+        cx - hw * 0.15, yp + hw * 0.32, tw * 0.62, hw * 0.24, tc)
+    outline = nail_outline(cx, y_c, y_s, y_t, hw, shape)
+    clip = uid()
+    o += '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (clip, outline)
+    o += '<path d="%s" fill="%s"/>' % (outline, 'url(#%s)' % gn if nat else plate)
+    if free > 0:
+        fc = free_col or (_mixc(plate, '#ffffff', .55) if nat else plate)
+        o += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" clip-path="url(#%s)"/>' % (cx - hw - 4, y_t - 10, 2 * hw + 8, free + 10, fc, clip)
+        o += _ln(cx - hw, y_s, cx + hw, y_s, _mixc(plate, '#000000', .12), 1, ' opacity=".6"')
+    o += extra.replace('CLIP', clip)
+    o += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)" clip-path="url(#%s)"/>' % (cx - hw, y_t - 4, 2 * hw, nail_len + free + 12, gs, clip)
+    o += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="url(#%s)" opacity=".6" clip-path="url(#%s)"/>' % (
+        cx - hw * 0.55, y_t + 8, hw * 0.2, nail_len * 0.62, hw * 0.1, gh, clip)
+    o += '<path d="%s" fill="none" stroke="%s" stroke-width="1.5"/>' % (outline, '#c98f88' if nat else _mixc(plate, '#000000', .35))
+    for sx in (-1, 1):
+        x_in = cx + sx * (hw - 3)
+        x_out = cx + sx * (tw + 2)
+        fold = 'M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (
+            x_in, y_c - 6, x_in - sx * 3, y_c - nail_len * 0.45, x_in + sx * 1, y_s + 18, cx + sx * (hw + 3), y_s + 4,
+            x_out, y_s, x_out, y_c + 10)
+        o += '<path d="%s" fill="%s" clip-path="url(#%s)"/>' % (fold, SKIN, tc)
+        o += _P('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (x_in, y_c - 6, x_in - sx * 3, y_c - nail_len * 0.45, x_in + sx * 1, y_s + 18,
+                                                                cx + sx * (hw + 3), y_s + 4), 'none', SKIN_D, 1.6)
+        if deep:
+            o += _P('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (x_in + sx * 3, y_c - 10, x_in + sx * 1, y_c - nail_len * 0.45, x_in + sx * 4, y_s + 20,
+                                                                    cx + sx * (hw + 5), y_s + 8), 'none', '#b07a62', 1.4, ' opacity=".7"')
+        o += _P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (x_in + sx * 8, y_c - 14, x_in + sx * 9, y_c - nail_len * 0.5, x_in + sx * 8, y_s + 16),
+                'none', '#fff', 3, ' opacity=".25"')
+    pf = 'M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (cx - tw - 2, y_c - 12, cx, y_c + 16, cx + tw + 2, y_c - 12,
+                                                                     cx + tw + 2, yb + 50, cx - tw - 2, yb + 50)
+    o += '<path d="%s" fill="%s" clip-path="url(#%s)"/>' % (pf, SKIN, tc)
+    o += _P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - hw - 2, y_c - 8, cx, y_c + 12, cx + hw + 2, y_c - 8), 'none', '#f7e3da', 2.4)
+    o += _P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - hw - 4, y_c - 6, cx, y_c + 15, cx + hw + 4, y_c - 6), 'none', SKIN_D, 1.6)
+    if finger_len >= 22:
+        for j, dy in enumerate((0.55, 0.75)):
+            yy = y_c + finger_len * dy + 6
+            o += _P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - hw * (0.7 - j * 0.15), yy, cx, yy + 5, cx + hw * (0.7 - j * 0.15), yy),
+                    'none', SKIN_D, 1.1, ' opacity=".6"')
+    o += '<path d="%s" fill="none" stroke="%s" stroke-width="1.6"/>' % (toe, SKIN_D)
+    return o, dict(cx=cx, y_c=y_c, y_s=y_s, y_t=y_t, hw=hw, fw=tw, clip=clip, yp=yp, tw=tw)
+
+
+def _lens(cx, cy, r, inner, px=None, py=None, ring=ACC2):
+    """Ingrandimento circolare (lente) con contenuto ritagliato e linea di richiamo verso il punto (px, py)."""
+    c = uid('ln')
+    s = ''
+    if px is not None:
+        a = math.atan2(py - cy, px - cx)
+        s += _ln(cx + r * math.cos(a), cy + r * math.sin(a), px, py, ring, 1.4, ' stroke-dasharray="4 3"')
+        s += '<circle cx="%.1f" cy="%.1f" r="4" fill="none" stroke="%s" stroke-width="1.6"/>' % (px, py, ring)
+    s += '<defs><clipPath id="%s"><circle cx="%.1f" cy="%.1f" r="%.1f"/></clipPath></defs>' % (c, cx, cy, r)
+    s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" filter="url(#nxShS)"/>' % (cx, cy, r)
+    s += '<g clip-path="url(#%s)">%s</g>' % (c, inner)
+    s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="none" stroke="%s" stroke-width="2.5"/>' % (cx, cy, r, ring)
+    return s
+
+
+# icone (centrate in 0,0, ingombro ~60x60) per igiene e ciclo degli strumenti
+def _ic_soap():
+    s = '<ellipse cx="0" cy="27" rx="30" ry="4" fill="#000" opacity=".08"/>'
+    s += '<rect x="-15" y="-6" width="30" height="33" rx="7" fill="#e6f2fa" stroke="#7fa8c2" stroke-width="1.6"/>'
+    s += '<rect x="-11" y="4" width="22" height="19" rx="5" fill="#bcdcef"/>'
+    s += '<rect x="-9" y="-1" width="4" height="22" rx="2" fill="#fff" opacity=".7"/>'
+    s += '<rect x="-6" y="-13" width="12" height="8" rx="2" fill="#5f8fae"/>'
+    s += '<rect x="-3" y="-21" width="6" height="9" fill="#5f8fae"/>'
+    s += '<path d="M-6,-24 L16,-24 L16,-19 L10,-19 L10,-21 L-6,-21 Z" fill="#4b7896"/>'
+    for (x, y, r) in [(22, -8, 5), (27, 4, 3.5), (19, 10, 2.6), (-24, 8, 4)]:
+        s += '<circle cx="%d" cy="%d" r="%.1f" fill="#fff" stroke="#9cc3dc" stroke-width="1.2"/>' % (x, y, r)
+        s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#9cc3dc" opacity=".6"/>' % (x - r * .35, y - r * .35, r * .25)
+    return s
+
+
+def _ic_tray(tools=True):
+    """Vaschetta per disinfezione a immersione: coperchio sollevato, liquido, strumenti immersi."""
+    s = '<ellipse cx="0" cy="25" rx="32" ry="4" fill="#000" opacity=".08"/>'
+    s += '<path d="M-30,-2 L30,-2 L26,22 Q25,25 21,25 L-21,25 Q-25,25 -26,22 Z" fill="#eef4f8" stroke="#7d8792" stroke-width="1.6"/>'
+    s += '<path d="M-28,6 L28,6 L26,21 Q25,23 21,23 L-21,23 Q-25,23 -26,21 Z" fill="#a9d5ee" opacity=".85"/>'
+    s += _ln(-26, 6, 26, 6, '#5ea3c9', 1.4)
+    if tools:
+        s += '<g transform="rotate(-18)"><rect x="-22" y="0" width="40" height="4.5" rx="2.2" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/>'
+        s += '<path d="M-22,0.5 L-30,-2 L-30,6.5 L-22,4 Z" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/></g>'
+        s += '<g transform="rotate(14)"><rect x="-14" y="2" width="34" height="4" rx="2" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/>'
+        s += '<circle cx="21" cy="4" r="3.2" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/></g>'
+    s += '<path d="M-30,-2 L30,-2" stroke="#7d8792" stroke-width="1.6"/>'
+    s += '<path d="M-26,-10 L22,-22 L24,-17 L-24,-5 Z" fill="#dfe6ec" stroke="#7d8792" stroke-width="1.4"/>'
+    s += '<rect x="-4" y="-21" width="10" height="4" rx="2" fill="#7d8792" transform="rotate(-14 1 -19)"/>'
+    for (x, y) in [(-10, 13), (8, 16), (16, 10)]:
+        s += '<circle cx="%d" cy="%d" r="1.8" fill="#fff" opacity=".9"/>' % (x, y)
+    return s
+
+
+def _ic_autoclave():
+    s = '<ellipse cx="0" cy="27" rx="34" ry="4" fill="#000" opacity=".08"/>'
+    s += '<rect x="-32" y="-22" width="64" height="47" rx="9" fill="#eef1f4" stroke="#7d8792" stroke-width="1.6"/>'
+    s += '<rect x="-32" y="17" width="64" height="8" rx="3" fill="#cfd6dd"/>'
+    s += '<circle cx="-10" cy="-1" r="15" fill="#cfd6dd" stroke="#7d8792" stroke-width="1.6"/>'
+    s += '<circle cx="-10" cy="-1" r="10" fill="#f7f9fb" stroke="#9aa3ad" stroke-width="1.2"/>'
+    s += '<path d="M-16,-5 Q-12,-9 -6,-8" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>'
+    s += '<rect x="10" y="-14" width="17" height="10" rx="2" fill="#2f3b45"/>'
+    s += '<rect x="12" y="-12" width="9" height="2.5" rx="1" fill="#7fe0a8"/>'
+    s += '<circle cx="13" cy="5" r="2.4" fill="%s"/><circle cx="20" cy="5" r="2.4" fill="#e8b23a"/><circle cx="27" cy="5" r="2.4" fill="#9aa3ad"/>' % OK
+    return s
+
+
+def _ic_pouch():
+    """Busta per sterilizzazione: lato carta e lato film, strumento dentro, indicatore di processo."""
+    s = '<g transform="rotate(-8)">'
+    s += '<rect x="-30" y="-22" width="60" height="44" rx="3" fill="#f6f2e8" stroke="#a9a08a" stroke-width="1.4"/>'
+    s += '<rect x="-26" y="-18" width="52" height="34" rx="2" fill="#dceaf4" opacity=".85"/>'
+    s += '<rect x="-30" y="16" width="60" height="6" fill="#efe8d4"/>'
+    s += _ln(-30, 16, 30, 16, '#a9a08a', 1, ' stroke-dasharray="3 2"')
+    s += '<rect x="-20" y="-6" width="34" height="5" rx="2.5" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/>'
+    s += '<path d="M-20,-5.5 L-27,-8 L-27,1 L-20,-1 Z" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/>'
+    s += '<rect x="2" y="-15" width="16" height="5" rx="1.5" fill="#8a5a2b"/>'
+    s += '<rect x="-24" y="5" width="22" height="3" rx="1.5" fill="#a9a08a" opacity=".6"/>'
+    return s + '</g>'
+
+
+def _ic_tap():
+    """Rubinetto con acqua che scorre su uno strumento + panno per asciugare."""
+    s = '<path d="M-28,-24 L-6,-24 Q4,-24 4,-14 L4,-10 L-4,-10 L-4,-14 Q-4,-16 -6,-16 L-28,-16 Z" fill="#9aa3ad" stroke="#5f6973" stroke-width="1.3"/>'
+    s += '<rect x="-34" y="-28" width="8" height="16" rx="2" fill="#6f7983"/>'
+    s += '<rect x="-20" y="-31" width="8" height="7" rx="2" fill="#6f7983"/>'
+    s += '<path d="M-3,-10 L3,-10 L4,12 L-4,12 Z" fill="#bfe0f3" opacity=".9"/>'
+    for (x, y) in [(-7, 4), (7, 8), (0, 16)]:
+        s += '<path d="M%d,%d q3,4.5 0,6.5 q-3,-2 0,-6.5 z" fill="#7fbfe3"/>' % (x, y)
+    s += '<rect x="-24" y="16" width="44" height="5" rx="2.5" fill="#9aa3ad" stroke="#5f6973" stroke-width=".8"/>'
+    s += '<path d="M8,22 L32,14 L34,26 L12,30 Z" fill="#f4c9d6" stroke="#c98ea2" stroke-width="1.2"/>'
+    s += _ln(14, 24, 30, 19, '#c98ea2', 1)
+    return s
+
+
+def _ic_register():
+    """Registro: scontrino dell'autoclave e cartella con spunta."""
+    s = '<rect x="-26" y="-24" width="40" height="50" rx="4" fill="#fff" stroke="#7d8792" stroke-width="1.5"/>'
+    s += '<rect x="-14" y="-28" width="16" height="7" rx="2" fill="#9aa3ad"/>'
+    for k in range(4):
+        s += _ln(-19, -12 + k * 9, 6, -12 + k * 9, '#c9ced4', 2)
+        s += '<path d="M-22,%d l2,2 l3,-4" stroke="%s" stroke-width="1.6" fill="none" stroke-linecap="round"/>' % (-11 + k * 9, OK)
+    s += '<path d="M8,-6 L30,-6 L30,24 L27,21 L24,24 L21,21 L18,24 L15,21 L12,24 L8,21 Z" fill="#fbfbf8" stroke="#a9a08a" stroke-width="1.2"/>'
+    for k in range(4):
+        s += _ln(12, k * 5 - 1, 26 - (k % 2) * 5, k * 5 - 1, '#b9b4a6', 1.4)
+    return s
+
+
+def _ic_brushwash():
+    """Detersione: spazzolino che strofina uno strumento nella bacinella con schiuma."""
+    s = '<ellipse cx="0" cy="25" rx="32" ry="4" fill="#000" opacity=".08"/>'
+    s += '<path d="M-30,0 L30,0 L25,22 Q24,25 20,25 L-20,25 Q-24,25 -25,22 Z" fill="#eef4f8" stroke="#7d8792" stroke-width="1.6"/>'
+    s += '<path d="M-28,8 L28,8 L25,21 Q24,23 20,23 L-20,23 Q-24,23 -25,21 Z" fill="#cfe7f5"/>'
+    for (x, y, r) in [(-18, 6, 5), (-9, 3, 6), (2, 5, 5), (12, 3, 6), (21, 6, 4.5), (-2, -2, 4), (9, -3, 3.5)]:
+        s += '<circle cx="%d" cy="%d" r="%.1f" fill="#fff" stroke="#b8d6e8" stroke-width="1"/>' % (x, y, r)
+    s += '<g transform="translate(6,-14) rotate(-28)"><rect x="-22" y="-5" width="30" height="10" rx="4" fill="#3d7fb3"/>'
+    s += '<rect x="-20" y="5" width="26" height="6" fill="#f2f2f2" stroke="#cfd6dd" stroke-width=".8"/>'
+    s += '<rect x="8" y="-3" width="20" height="6" rx="3" fill="#2f6a99"/></g>'
+    return s
+
+
 LOGO_INNER = (
     '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/>'
     '<stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>'
@@ -937,6 +1144,49 @@ def tip_app():
     return svg(950, 340, arrow_defs() + defs + b, 'Applicazione del tip in quattro passaggi')
 
 
+def _form_sheet(cx, ys, hole=50):
+    """Cartina adesiva vista dall'alto: foglio dorato con griglia stampata, asse centrale, alette laterali e foro ovale."""
+    gid, gd = _lgrad([(0, '#fbf0c4'), (1, '#efdc92')], 0, 1)
+    w, top, bot = 92, ys - 150, ys + 40
+    sheet = ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f A%.1f,%.1f 0 0 0 %.1f,%.1f Z'
+             % (cx - w, bot, cx - w, top + 12, cx - w, top, cx - w + 12, top, cx + w - 12, top, cx + w, top, cx + w, top + 12,
+                cx + w, bot, cx + 52, bot, 52, hole, cx - 52, bot))
+    s = gd + '<path d="%s" fill="url(#%s)" stroke="#cdb45a" stroke-width="1.3"/>' % (sheet, gid)
+    # alette adesive (più scure) ai lati del foro
+    for sx in (-1, 1):
+        s += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="#e6cf7a" opacity=".7"/>' % (
+            cx + sx * w, bot, cx + sx * w, ys - 22, cx + sx * 66, ys - 22, cx + sx * 54, bot)
+    # griglia graduata
+    for k in range(1, 6):
+        yy = ys - 6 - k * 22
+        s += _ln(cx - w + 12, yy, cx + w - 12, yy, '#d8c26a', 1 if k % 2 else 1.6)
+    for k in range(-3, 4):
+        if k:
+            s += _ln(cx + k * 24, top + 10, cx + k * 24, ys - 30, '#e3d07f', .8)
+    s += _ln(cx, top + 6, cx, ys - 10, ACC2, 1.6, ' stroke-dasharray="5 4"')
+    return s
+
+
+def _form_lens(lx, ly, gap):
+    """Vista laterale ingrandita del bordo libero appoggiato sulla cartina."""
+    s = '<rect x="%.1f" y="%.1f" width="120" height="100" fill="#fbf6f4"/>' % (lx - 60, ly - 50)
+    fy = ly - 4 + gap
+    s += '<rect x="%.1f" y="%.1f" width="70" height="8" rx="1.5" fill="#f1df98" stroke="#cdb45a" stroke-width="1.2"/>' % (lx - 4 + (16 if gap else 0), fy)
+    s += _ln(lx + 22, fy + 4, lx + 60, fy + 4, '#d8c26a', 1)
+    s += _P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
+        lx - 70, ly - 4, lx - 16, ly - 4, lx + 4, ly - 2, lx + 6, ly + 16, lx + 4, ly + 38, lx - 20, ly + 44, lx - 70, ly + 44),
+        SKIN, SKIN_D, 1.4)
+    s += _P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
+        lx - 70, ly - 13, lx + 8, ly - 13, lx + 13, ly - 9, lx + 8, ly - 4, lx - 70, ly - 4), '#f6c9d4', NAIL_S, 1.4)
+    if gap:
+        s += '<rect x="%.1f" y="%.1f" width="12" height="%.1f" fill="%s" opacity=".22"/>' % (lx + 6, ly - 4, gap, ERR)
+        s += _P('M%.1f,%.1f h-7 M%.1f,%.1f v%.1f M%.1f,%.1f h-7' % (lx + 34, ly - 4, lx + 30.5, ly - 4, gap, lx + 34, fy), 'none', ERR, 2.2)
+        s += '<path d="M%.1f,%.1f q5,7 0,11 q-5,-4 0,-11 z" fill="#cfe6f4" stroke="#5e9cc0" stroke-width="1.2"/>' % (lx + 11, fy + 13)
+    else:
+        s += '<circle cx="%.1f" cy="%.1f" r="9" fill="none" stroke="%s" stroke-width="2"/>' % (lx + 10, ly - 4, OK)
+    return s
+
+
 @fig('cartina.svg')
 def form_place():
     b = ''
@@ -949,23 +1199,23 @@ def form_place():
         b += mark(x + 250, 48, ok)
         cx, yc = x + 140, 300
         ys = yc - 95
-        # cartina (dietro il dito), ritagliata al pannello
         pc = uid()
-        b += '<defs><clipPath id="%s"><rect x="%d" y="62" width="280" height="270"/></clipPath></defs>' % (pc, x)
-        hole = 50 + gap
-        form = ('<g clip-path="url(#%s)"><g transform="rotate(%d %d %d)"><path d="M%d,%d L%d,%d L%d,%d L%d,%d L%d,%d A%d,%d 0 0 0 %d,%d Z" fill="#f6e7a8" stroke="#d8c26a"/>'
-                % (pc, ang, cx, ys, cx - 90, ys + 40, cx - 90, ys - 140, cx + 90, ys - 140, cx + 90, ys + 40, cx + 52, ys + 40,
-                   52, hole, cx - 52, ys + 40))
-        for k in range(1, 6):
-            form += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#d8c26a" stroke-width="1"/>' % (cx - 80, ys - k * 24 + 4, cx + 80, ys - k * 24 + 4)
-        form += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.6" stroke-dasharray="5 4"/></g></g>' % (cx, ys - 140, cx, ys - 10, ACC2)
-        b += form
+        b += '<defs><clipPath id="%s"><rect x="%d" y="62" width="280" height="262"/></clipPath></defs>' % (pc, x)
+        b += '<g clip-path="url(#%s)"><g transform="rotate(%d %d %d)" filter="url(#nxShS)">%s</g></g>' % (pc, ang, cx, ys, _form_sheet(cx, ys, 50 + gap))
         f, p = finger_nail(cx, yc, hw=34, nail_len=95, free_len=8, shape='tonda', smile=6, finger_len=30)
-        b += f
-        if gap:
-            b += '<path d="M%d,%d Q%d,%d %d,%d" stroke="%s" stroke-width="3" fill="none"/>' % (cx - 30, ys - 4, cx, ys - 22, cx + 30, ys - 4, ERR)
-        b += text(cx, 350, sub, 13, weight=600, fill=OK if ok else ERR)
-    return svg(920, 380, b, 'Posizionamento corretto ed errato della cartina')
+        b += '<g clip-path="url(#%s)">%s</g>' % (pc, f)
+        if ang:
+            # asse dell'unghia (verde) e asse della cartina (rosso)
+            b += _ln(cx, ys - 150, cx, yc + 16, OK, 2, ' stroke-dasharray="6 4"')
+            a = math.radians(ang)
+            b += _ln(cx + 150 * math.sin(a), ys - 150 * math.cos(a), cx - 26 * math.sin(a), ys + 26 * math.cos(a), ERR, 2, ' stroke-dasharray="6 4"')
+            b += _P('M%.1f,%.1f A70,70 0 0 1 %.1f,%.1f' % (cx, ys - 70, cx + 70 * math.sin(a), ys - 70 * math.cos(a)), 'none', ERR, 2)
+            b += _tag(cx - 50, ys - 96, 'asse unghia', OK, 12)
+            b += _tag(cx + 82, ys - 116, 'asse cartina', ERR, 12)
+        else:
+            b += _lens(x + 222, 138, 40, _form_lens(x + 222, 138, gap), cx + 26, ys - 6, OK if ok else ERR)
+        b += text(cx, 346, sub, 13, weight=700, fill=OK if ok else ERR)
+    return svg(920, 380, b, 'Posizionamento della cartina: corretta, con spazio sotto il bordo libero, fuori asse')
 
 
 @fig('perla-acrilico.svg')
@@ -1016,25 +1266,49 @@ def bead():
 
 @fig('smile-line.svg')
 def smile():
-    b = text(40, 40, 'French: la linea del sorriso (smile line)', 20, 'start', 800, ACC2)
-    cases = [('Simmetrica', True, 0, 22), ('Asimmetrica', False, 14, 18), ('Piatta', False, 0, 3), ('A "V"', True, 0, -1)]
-    for i, (t, ok, skew, d) in enumerate(cases):
+    b = text(30, 40, 'French: la linea del sorriso (smile line)', 20, 'start', 800, ACC2)
+    cases = [('Simmetrica', True, 0, 22, 'punti laterali alla stessa altezza'),
+             ('Asimmetrica', False, 16, 18, 'un lato più alto dell\'altro'),
+             ('Piatta', False, 0, 2, 'dritta: il dito sembra più largo'),
+             ('A "V"', True, 0, -1, 'variante decorativa, simmetrica')]
+    for i, (t, ok, skew, d, cap) in enumerate(cases):
         x = 20 + i * 225
-        b += panel(x, 60, 210, 330, t)
+        b += panel(x, 60, 210, 345, t)
         b += mark(x + 182, 88, ok)
-        cx, yc = x + 105, 345
+        cx, yc = x + 105, 330
         hw, ys = 38, yc - 110
-        extra = ''
         if d >= 0:
-            fp = 'M%d,%d Q%d,%d %d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, ys + d, cx + skew, ys - d - 2 + skew, cx + hw + 4, ys + d - skew, cx + hw + 4, 60, cx - hw - 4, 60)
+            yl, yr, ym = ys + d, ys + d - skew, ys - d - 2 + skew
+            fp = 'M%d,%d Q%d,%d %d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, yl, cx + skew, ym, cx + hw + 4, yr, cx + hw + 4, 60, cx - hw - 4, 60)
+            edge = 'M%d,%d Q%d,%d %d,%d' % (cx - hw - 4, yl, cx + skew, ym, cx + hw + 4, yr)
         else:
+            yl = yr = ys - 12
             fp = 'M%d,%d L%d,%d L%d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, ys - 12, cx, ys + 26, cx + hw + 4, ys - 12, cx + hw + 4, 60, cx - hw - 4, 60)
-        extra = '<path d="%s" fill="#ffffff" clip-path="url(#CLIP)"/>' % fp
-        f, p = finger_nail(cx, yc, hw=hw, nail_len=110, free_len=70, shape='squoval', smile=0, plate='#f6c9d4', free='#f6c9d4', finger_len=20, extra=extra, lunula=False)
+            edge = 'M%d,%d L%d,%d L%d,%d' % (cx - hw - 4, ys - 12, cx, ys + 26, cx + hw + 4, ys - 12)
+        gw, gwd = _lgrad([(0, '#ffffff'), (1, '#f7f1ee')], 0, 1)
+        extra = gwd + '<path d="%s" fill="url(#%s)" clip-path="url(#CLIP)"/>' % (fp, gw)
+        extra += '<path d="%s" fill="none" stroke="#e7d9d4" stroke-width="1.5" clip-path="url(#CLIP)"/>' % edge
+        f, p = finger_nail(cx, yc, hw=hw, nail_len=110, free_len=70, shape='squoval', smile=0, plate='#f6c9d4', free='#f6c9d4',
+                           finger_len=20, extra=extra, lunula=False)
         b += f
-        b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-dasharray="4 4"/>' % (cx, ys - 85, cx, yc - 10, MUTED)
-    b += text(470, 412, 'Controlla la simmetria guardando l\'unghia dal davanti e capovolgendo la mano della cliente.', 13.5, fill=MUTED)
-    return svg(940, 425, b, 'Smile line del french: corretta ed errata')
+        # asse dell'unghia (leggero)
+        b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1" stroke-dasharray="3 4" opacity=".7"/>' % (cx, ys - 84, cx, yc - 14, MUTED)
+        # guide sui punti laterali
+        col = OK if ok else ERR
+        xl, xr = cx - hw, cx + hw
+        if skew:
+            # due quote diverse: mostra lo scarto
+            for yy in (yl - 1, yr + 1):
+                b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.5" stroke-dasharray="5 4"/>' % (xl - 16, yy, xr + 16, yy, col)
+            b += _P('M%d,%d h8 M%d,%d v%d M%d,%d h8' % (xr + 20, yr + 1, xr + 24, yr + 1, yl - yr - 2, xr + 20, yl - 1), 'none', ERR, 2)
+            b += text(xr + 30, (yl + yr) / 2 + 4.5, '≠', 14, 'start', 800, ERR)
+        else:
+            b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.5" stroke-dasharray="5 4"/>' % (xl - 16, yl - 1, xr + 16, yr - 1, col)
+        for (px, py) in ((xl, yl - 1), (xr, yr + (1 if skew else -1))):
+            b += '<circle cx="%d" cy="%d" r="4.5" fill="%s" stroke="#fff" stroke-width="1.5"/>' % (px, py, col)
+        b += text(cx, 393, cap, 12.5, weight=600, fill=col)
+    b += text(470, 428, 'Controlla la simmetria guardando l\'unghia dal davanti e capovolgendo la mano della cliente.', 13.5, fill=MUTED)
+    return svg(940, 442, arrow_defs() + b, 'Smile line del french: simmetrica e a V corrette; asimmetrica e piatta errate')
 
 
 @fig('baby-boomer.svg')
@@ -1201,22 +1475,31 @@ def lifting():
 
 @fig('igiene.svg')
 def hygiene():
-    b = text(40, 40, 'I tre livelli di trattamento igienico', 20, 'start', 800, ACC2)
-    levels = [('Detersione / sanificazione', 'Riduce sporco e carica microbica', 'mani, superfici, lime monouso', '#f8dfe7'),
-              ('Disinfezione', 'Elimina la maggior parte dei patogeni', 'strumenti non sterilizzabili, superfici', '#eeaabf'),
-              ('Sterilizzazione', 'Elimina ogni forma di vita, spore incluse', 'autoclave classe B (EN 13060), con tracciabilità', ACC)]
-    for i, (t, d, u, c) in enumerate(levels):
-        w = 760 - i * 160
-        x = 450 - w / 2
-        y = 290 - i * 95
-        b += '<rect x="%.1f" y="%d" width="%d" height="82" rx="12" fill="%s"/>' % (x, y, w, c)
+    b = text(30, 40, 'I tre livelli di trattamento igienico', 20, 'start', 800, ACC2)
+    levels = [('Detersione / sanificazione', 'Riduce sporco e carica microbica', 'mani, superfici, lime monouso', '#f9e6ec', '#e7bfcc', _ic_soap()),
+              ('Disinfezione', 'Elimina la maggior parte dei patogeni', 'strumenti non sterilizzabili, superfici', '#f1bccc', '#d98ea8', _ic_tray()),
+              ('Sterilizzazione', 'Elimina ogni forma di vita, spore incluse', 'autoclave classe B (EN 13060), con tracciabilità', ACC, ACC2, _ic_autoclave())]
+    for i, (t, d, u, c, st, ic) in enumerate(levels):
+        w = 780 - i * 170
+        x = 440 - w / 2
+        y = 282 - i * 100
+        b += '<rect x="%.1f" y="%d" width="%d" height="88" rx="14" fill="%s" stroke="%s" stroke-width="1.2" filter="url(#nxSh)"/>' % (x, y, w, c, st)
+        # gradino: numero di livello
+        b += '<circle cx="%.1f" cy="%d" r="34" fill="#fff" stroke="%s" stroke-width="1.5"/>' % (x + 52, y + 44, st)
+        b += '<g transform="translate(%.1f,%d) scale(.78)">%s</g>' % (x + 52, y + 44, ic)
         fc = '#fff' if i == 2 else INK
-        b += text(450, y + 28, t, 17, weight=800, fill=fc)
-        b += text(450, y + 50, d, 13.5, fill=fc)
-        b += text(450, y + 70, 'Per: ' + u, 13, fill=fc, style='italic')
-    b += arrow(860, 360, 860, 110, MUTED, 1.6)
-    b += text(850, 100, 'più efficace', 13, 'end', fill=MUTED)
-    return svg(900, 390, arrow_defs() + b, 'Detersione, disinfezione e sterilizzazione')
+        tx = x + 98 + (w - 118) / 2
+        b += text(tx, y + 30, t, 17, weight=800, fill=fc)
+        b += text(tx, y + 52, d, 13.5, fill=fc)
+        b += text(tx, y + 73, 'Per: ' + u, 13, fill='#fde8ef' if i == 2 else MUTED, style='italic')
+    # scala di efficacia
+    gid, gd = _lgrad([(0, ACC2), (1, '#f3d3dd')], 0, 1)
+    b += gd
+    b += '<rect x="862" y="104" width="10" height="266" rx="5" fill="url(#%s)"/>' % gid
+    b += '<path d="M856,108 L867,88 L878,108 Z" fill="%s"/>' % ACC2
+    b += text(880, 76, 'più efficace', 13, 'end', 700, ACC2)
+    b += text(30, 396, 'Si procede sempre dal basso: prima si pulisce, poi si disinfetta o si sterilizza.', 13, 'start', fill=MUTED)
+    return svg(900, 405, b, 'Detersione, disinfezione e sterilizzazione: tre livelli di efficacia crescente')
 
 
 @fig('lampade.svg')
@@ -1326,29 +1609,82 @@ def systems():
     return svg(940, 380, b, 'Confronto tra gel, acrilico, polygel e fibra')
 
 
+def _crack(pts, w=2.4):
+    d = 'M' + ' L'.join('%.1f,%.1f' % p for p in pts)
+    dl = 'M' + ' L'.join('%.1f,%.1f' % (x + 1.4, y + 1.2) for x, y in pts)
+    return (_P(dl, 'none', '#fff', w * .7, ' opacity=".8"') + _P(d, 'none', '#5a2a3a', w))
+
+
+def _bubbles(spec, stroke='#c97c95'):
+    s = ''
+    for (x, y, r) in spec:
+        s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" fill-opacity=".55" stroke="%s" stroke-width="1"/>' % (x, y, r, stroke)
+        s += '<path d="M%.1f,%.1f A%.1f,%.1f 0 0 1 %.1f,%.1f" stroke="#fff" stroke-width="%.1f" fill="none" stroke-linecap="round"/>' % (
+            x - r * .6, y - r * .1, r * .6, r * .6, x - r * .05, y - r * .62, max(1, r * .25))
+        s += '<path d="M%.1f,%.1f A%.1f,%.1f 0 0 0 %.1f,%.1f" stroke="%s" stroke-width="%.1f" fill="none" opacity=".45"/>' % (
+            x - r * .7, y + r * .35, r, r, x + r * .55, y + r * .6, stroke, max(.8, r * .18))
+    return s
+
+
+def _wrinkles(x0, y0, n, w, dy, amp=4, k=1.0):
+    s = ''
+    for j in range(n):
+        y = y0 + j * dy
+        d = 'M%.1f,%.1f' % (x0, y)
+        seg = w / 4
+        for q in range(4):
+            d += ' q%.1f,%.1f %.1f,0' % (seg / 2, -amp if q % 2 == 0 else amp, seg)
+        s += _P(d, 'none', '#fff', 2.2 * k, ' opacity=".75"')
+        s += '<path d="%s" fill="none" stroke="#b5587a" stroke-width="%.1f" opacity=".75" transform="translate(0,%.1f)"/>' % (d, 1.6 * k, 2.2 * k)
+    return s
+
+
 @fig('problemi.svg')
 def problems():
-    b = text(40, 40, 'Riconosci il difetto', 20, 'start', 800, ACC2)
+    b = text(30, 40, 'Riconosci il difetto', 20, 'start', 800, ACC2)
     names = [('Crepa / rottura', 'apex assente o mal posizionato'), ('Bolle', 'gel agitato, perla asciutta'),
              ('Grinze', 'strato troppo spesso'), ('Ingiallimento', 'top non polimerizzato, UV')]
     for i, (n, sub) in enumerate(names):
         x = 20 + i * 225
-        b += panel(x, 60, 210, 320, n)
-        cx, yc = x + 105, 330
+        b += panel(x, 60, 210, 330, n)
+        cx, yc = x + 95, 338
+        y_s = yc - 130
         extra = ''
-        plate = '#f2b6c6'
+        plate = '#f3bccb'
+        lx, ly = x + 166, 168
         if i == 0:
-            extra = '<path d="M%d,%d l12,18 l-8,10 l14,20 l-6,12" stroke="%s" stroke-width="2.5" fill="none"/>' % (cx - 22, yc - 160, INK)
+            pts = [(cx - 41, y_s - 2), (cx - 30, y_s + 8), (cx - 23, y_s + 2), (cx - 12, y_s + 18), (cx - 3, y_s + 12), (cx + 8, y_s + 28), (cx + 16, y_s + 24)]
+            extra = _crack(pts, 3)
+            px, py = cx - 12, y_s + 20
+            zoom = '<rect x="%.1f" y="%.1f" width="80" height="80" fill="#f3bccb"/>' % (lx - 40, ly - 40)
+            zoom += _crack([(lx - 40, ly - 14), (lx - 22, ly + 2), (lx - 12, ly - 8), (lx + 6, ly + 12), (lx + 16, ly + 4), (lx + 40, ly + 26)], 4)
+            zoom += _P('M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f' % (lx - 12, ly - 8, lx - 6, ly - 22, lx + 2, ly - 26), 'none', '#5a2a3a', 1.6)
         elif i == 1:
-            extra = ''.join('<circle cx="%d" cy="%d" r="%d" fill="#fff" opacity=".9" stroke="#d48aa2"/>' % (cx - 20 + (k * 13) % 44, yc - 150 + (k * 29) % 110, 3 + k % 3 * 2) for k in range(10))
+            spec = [(cx - 18, y_s - 30, 4), (cx - 8, y_s - 22, 6), (cx + 10, y_s - 4, 3), (cx - 14, y_s + 6, 7), (cx + 4, y_s + 22, 4),
+                    (cx + 18, y_s - 40, 5), (cx - 22, y_s + 40, 3.5), (cx + 14, y_s + 52, 6), (cx - 4, y_s + 70, 3), (cx + 22, y_s + 26, 2.6)]
+            extra = _bubbles(spec)
+            px, py = cx - 14, y_s + 6
+            zoom = '<rect x="%.1f" y="%.1f" width="80" height="80" fill="#f3bccb"/>' % (lx - 40, ly - 40)
+            zoom += _bubbles([(lx - 8, ly - 6, 15), (lx + 16, ly + 16, 8), (lx + 18, ly - 20, 6), (lx - 22, ly + 22, 5)])
         elif i == 2:
-            extra = ''.join('<path d="M%d,%d q8,-6 16,0 q8,6 16,0 q8,-6 16,0" stroke="#c46784" stroke-width="2" fill="none" clip-path="url(#CLIP)"/>' % (cx - 30, yc - 170 + k * 18) for k in range(7))
+            extra = '<g clip-path="url(#CLIP)">%s</g>' % _wrinkles(cx - 44, y_s + 6, 6, 88, 15, 4)
+            px, py = cx + 10, y_s + 36
+            zoom = '<rect x="%.1f" y="%.1f" width="80" height="80" fill="#f3bccb"/>' % (lx - 40, ly - 40)
+            zoom += _wrinkles(lx - 44, ly - 22, 4, 88, 15, 6, 1.6)
         else:
-            plate = '#f2dfa8'
+            plate = '#f0d98f'
+            gy, gyd = _lgrad([(0, '#e9c45a'), (.55, '#f2dc93'), (1, '#f6e6b4')], 0, 1)
+            extra = gyd + '<rect x="%.1f" y="%.1f" width="100" height="190" fill="url(#%s)" clip-path="url(#CLIP)"/>' % (cx - 50, y_s - 55, gy)
+            px, py = cx + 18, y_s - 20
+            zoom = '<rect x="%.1f" y="%.1f" width="40" height="80" fill="#f6c9d4"/>' % (lx - 40, ly - 40)
+            zoom += '<rect x="%.1f" y="%.1f" width="40" height="80" fill="#e9c45a"/>' % (lx, ly - 40)
+            zoom += _ln(lx, ly - 40, lx, ly + 40, '#fff', 2)
+            zoom += mark(lx - 18, ly, True, 10) + mark(lx + 20, ly, False, 10)
         f, p = finger_nail(cx, yc, hw=40, nail_len=130, free_len=50, shape='squoval', plate=plate, free=plate, finger_len=20, extra=extra, lunula=False)
         b += f
-        b += text(cx, 370, sub, 12.5, fill=MUTED)
-    return svg(940, 395, b, 'Difetti comuni: crepa, bolle, grinze, ingiallimento')
+        b += _lens(lx, ly, 36, zoom, px, py, ACC2)
+        b += text(x + 105, 380, sub, 12.5, weight=600, fill=MUTED)
+    return svg(940, 405, b, 'Difetti comuni: crepa, bolle, grinze, ingiallimento, con ingrandimento del dettaglio')
 
 
 @fig('nail-art.svg')
@@ -1498,7 +1834,7 @@ def tut_acr():
     labels = ['Perla in zona 1', 'Picchietta e modella', 'Perla in zona 2', 'Zona 3 sottilissima', 'Pinching (curva a C)', 'Lima e rifinisci']
 
     def d(i, x, y):
-        cx, yb = x + 140, y + 255
+        cx, yb = x + 140, y + 236
         ys = yb - 90
         s = ''
         if i < 4:
@@ -1869,20 +2205,34 @@ def ppe():
 @fig('ciclo-sterilizzazione.svg')
 def steril_cycle():
     b = text(20, 38, 'Il ciclo degli strumenti dopo ogni cliente', 20, 'start', 800, ACC2)
-    steps = [('Detergi', 'acqua e detergente'), ('Disinfetta', 'per immersione'), ('Risciacqua', 'e asciuga bene'),
-             ('Imbusta', 'buste sigillate'), ('Autoclave', 'classe B (EN 13060)'), ('Registra', 'conserva la stampa')]
-    for k, (t, sub) in enumerate(steps):
-        cx = 90 + k * 150
-        cy = 140
-        b += '<circle cx="%d" cy="%d" r="50" fill="%s"/>' % (cx, cy, ['#f8dfe7', '#f3c4d3', '#eeaabf', '#e48fa9', ACC, ACC2][k])
-        b += text(cx, cy - 4, str(k + 1), 22, weight=800, fill='#fff' if k > 2 else ACC2)
-        b += text(cx, cy + 18, t, 14, weight=800, fill='#fff' if k > 2 else INK)
-        b += text(cx, cy + 75, sub, 12, fill=MUTED)
+    steps = [('Detergi', 'acqua e detergente', _ic_brushwash()), ('Disinfetta', 'per immersione', _ic_tray()),
+             ('Risciacqua', 'e asciuga bene', _ic_tap()), ('Imbusta', 'buste sigillate', _ic_pouch()),
+             ('Autoclave', 'classe B (EN 13060)', _ic_autoclave()), ('Registra', 'conserva la stampa', _ic_register())]
+    cols = ['#f3c4d3', '#eeaabf', '#e48fa9', '#d6708f', ACC, ACC2]
+    cw, gap, x0, y0, ch = 134, 22, 13, 62, 190
+    for k, (t, sub, ic) in enumerate(steps):
+        x = x0 + k * (cw + gap)
+        cx = x + cw / 2
+        b += '<rect x="%d" y="%d" width="%d" height="%d" rx="14" fill="%s"/>' % (x, y0, cw, ch, PANEL)
+        b += '<circle cx="%.1f" cy="%d" r="44" fill="#fff" stroke="#efdcd6" stroke-width="1.2"/>' % (cx, y0 + 70)
+        b += '<g transform="translate(%.1f,%d)">%s</g>' % (cx, y0 + 70, ic)
+        b += '<circle cx="%d" cy="%d" r="13" fill="%s" stroke="#fff" stroke-width="2" filter="url(#nxShS)"/>' % (x + 20, y0 + 22, cols[k])
+        b += text(x + 20, y0 + 27, str(k + 1), 13.5, weight=800, fill='#fff' if k > 1 else ACC2)
+        b += text(cx, y0 + 144, t, 15, weight=800)
+        b += text(cx, y0 + 166, sub, 12.5, fill=MUTED)
         if k < 5:
-            b += arrow(cx + 54, cy, cx + 94, cy)
-    b += '<rect x="40" y="245" width="860" height="44" rx="10" fill="#fbe7e4"/>'
-    b += text(470, 273, 'Lime in carta e buffer non si sterilizzano: sono monouso o si regalano alla cliente.', 14, weight=600, fill=ERR)
-    return svg(940, 305, arrow_defs() + b, 'Ciclo di ricondizionamento degli strumenti')
+            ax = x + cw + gap / 2
+            b += '<circle cx="%.1f" cy="%d" r="12" fill="%s" stroke="#fff" stroke-width="2" filter="url(#nxShS)"/>' % (ax, y0 + 70, ACC2)
+            b += '<path d="M%.1f,%d l7,6 l-7,6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' % (ax - 3, y0 + 64)
+    # avvertenza: monouso
+    y1 = y0 + ch + 18
+    b += '<rect x="13" y="%d" width="914" height="50" rx="12" fill="#fbe7e4" stroke="#f0c4bd" stroke-width="1"/>' % y1
+    lime = ('<g transform="translate(52,%d) rotate(-20)"><rect x="-26" y="-6" width="52" height="12" rx="6" fill="#efe7df" stroke="#cbbdb0"/>'
+            '<rect x="-24" y="-4" width="48" height="8" rx="4" fill="#8f8178"/></g>' % (y1 + 25))
+    b += lime + ('<circle cx="52" cy="%d" r="17" fill="none" stroke="%s" stroke-width="3"/>'
+                 '<line x1="40" y1="%d" x2="64" y2="%d" stroke="%s" stroke-width="3"/>' % (y1 + 25, ERR, y1 + 37, y1 + 13, ERR))
+    b += text(84, y1 + 30, 'Lime in carta e buffer non si sterilizzano: sono monouso o si regalano alla cliente.', 14.5, 'start', 700, ERR)
+    return svg(940, y1 + 66, b, 'Ciclo di ricondizionamento degli strumenti: detersione, disinfezione, risciacquo, imbustamento, autoclave, registrazione')
 
 
 @fig('pennelli.svg')
@@ -2118,16 +2468,28 @@ def toenail():
         x = 20 + k * 225
         b += panel(x, 60, 210, 290, t)
         b += mark(x + 185, 112, ok)
-        cx, yb = x + 105, 320
-        f, p = finger_nail(cx, yb, hw=48, nail_len=100, free_len=8 if ok else 2, shape=sh, smile=4, finger_len=20, lunula=False,
-                           plate='#f3cbc6')
-        b += f
+        cx, yb = x + 105, 316
+        hw, nl = 50, 86 if k != 1 else 76
+        extra = ''
         if k == 2:
+            # angoli scavati a "V" nei solchi laterali
             for sx in (-1, 1):
-                b += '<path d="M%d,%d Q%d,%d %d,%d L%d,%d Z" fill="%s"/>' % (cx + sx * 50, yb - 112, cx + sx * 30, yb - 104, cx + sx * 26, yb - 112, cx + sx * 50, yb - 70, '#f3cdb6')
-        if not ok:
-            b += '<circle cx="%d" cy="%d" r="16" fill="none" stroke="%s" stroke-width="3"/>' % (cx + 50, yb - 100, ERR)
-            b += text(cx, 135, 'rischio unghia incarnita', 12.5, weight=600, fill=ERR)
+                extra += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" clip-path="url(#CLIP)"/>' % (
+                    cx + sx * (hw + 2), yb - nl - 8, cx + sx * (hw - 20), yb - nl - 8, cx + sx * (hw + 2), yb - nl + 34, '#e9b9a6')
+                extra += _P('M%.1f,%.1f L%.1f,%.1f' % (cx + sx * (hw - 20), yb - nl - 4, cx + sx * (hw + 1), yb - nl + 32), 'none', '#b5776a', 1.6)
+        f, p = _toe_top(cx, yb, hw=hw, nail_len=nl, free=8 if ok else (0 if k == 1 else 4), shape=sh, finger_len=20, extra=extra)
+        pc = uid('p')
+        b += '<defs><clipPath id="%s"><rect x="%d" y="60" width="210" height="290" rx="16"/></clipPath></defs>' % (pc, x)
+        b += '<g clip-path="url(#%s)">%s</g>' % (pc, f)
+        if ok:
+            b += _ln(cx - hw - 18, p['y_t'], cx + hw + 18, p['y_t'], OK, 2, ' stroke-dasharray="6 4"')
+            b += text(cx, 160, 'dritto, a filo del dito', 12.5, weight=600, fill=OK)
+        else:
+            ry = p['y_s'] + (hw * 0.42 if k == 1 else 10)
+            b += '<circle cx="%.1f" cy="%.1f" r="15" fill="none" stroke="%s" stroke-width="3"/>' % (cx + hw, ry, ERR)
+            b += '<path d="M%.1f,%.1f l10,0 M%.1f,%.1f l7,-7 M%.1f,%.1f l7,7" stroke="%s" stroke-width="2" stroke-linecap="round"/>' % (
+                cx + hw + 18, ry, cx + hw + 18, ry - 5, cx + hw + 18, ry + 5, ERR)
+            b += text(cx, 160, 'rischio unghia incarnita', 12.5, weight=600, fill=ERR)
     x0 = 700
     b += panel(x0, 60, 220, 290, 'Crescita media')
     for k, (lab, v, col) in enumerate([('Mani', 3.47, ACC), ('Piedi', 1.62, '#8a7d9e')]):
@@ -2145,7 +2507,7 @@ def pedicure():
     labels = ['Anamnesi', 'Ispeziona: dubbi? STOP', 'Pediluvio igienico', 'Taglio dritto', 'Cuticola senza tagli', 'Semipermanente sottile']
 
     def d(i, x, y):
-        cx, yb = x + 140, y + 255
+        cx, yb = x + 140, y + 236
         s = ''
         if i == 0:
             s += '<rect x="%d" y="%d" width="130" height="160" rx="10" fill="#fff" stroke="#e5d6d2" stroke-width="2" filter="url(#nxShS)"/>' % (cx - 65, y + 70)
@@ -2167,16 +2529,16 @@ def pedicure():
                 s += '<circle cx="%d" cy="%d" r="%.1f" fill="#fff" stroke="#9cc3dc"/>' % (cx + dx, y + dy, r)
             return s
         plate = '#c2577a' if i == 5 else '#f3cbc6'
-        f, p = finger_nail(cx, yb, hw=50, nail_len=92, free_len=6, shape='squoval', smile=4, finger_len=20, lunula=False, plate=plate, free=plate)
+        f, p = _toe_top(cx, yb, hw=52, nail_len=84, free=6 if i != 5 else 0, shape='squoval', finger_len=30, plate=plate)
         s += f
         if i == 1:
             s += text(cx, y + 64, 'gialla, spessa, friabile → medico', 12.5, weight=700, fill=ERR)
             s += text(cx, y + 82, 'diabete con ferite → podologo', 12.5, weight=700, fill=ERR)
         elif i == 3:
-            s += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="2" stroke-dasharray="6 4"/>' % (cx - 76, p['y_t'] + 2, cx + 76, p['y_t'] + 2, OK)
+            s += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="2" stroke-dasharray="6 4"/>' % (cx - 96, p['y_t'], cx + 96, p['y_t'], OK)
             s += text(cx, y + 64, 'angoli appena smussati', 12.5, fill=MUTED)
         elif i == 4:
-            s += _pusher(cx + 10, yb - 32, -60, 120)
+            s += _pusher(cx + 4, yb - 8, -58, 120)
             s += text(cx, y + 64, 'arretra e togli la pellicina', 12.5, fill=MUTED)
         else:
             s += sparkle(cx - 14, yb - 70)

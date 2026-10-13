@@ -2044,50 +2044,127 @@ def file_bar(x, y, ang, l=120, w=16):
     return tool_file(x, y, ang, l, w)
 
 
+def _pro_finger(shape, hw=34, nail_len=86, free_len=50, flen=120, fw=None, plate=NAIL, free=FREE, weak=False):
+    """Dito con unghia vista dall'alto, resa "da manuale" (coordinate locali: punta in alto, cuticola in y=0, asse x=0).
+    Dito affusolato con polpastrello che sporge ai lati, pieghe laterali, eponichio, lunula, curva a C ombreggiata,
+    bordo libero con smile line naturale e riflesso. weak=True segna in rosso i punti fragili della forma."""
+    fw = fw or hw * 1.36
+    y_s = -nail_len
+    y_t = y_s - free_len
+    ytip = y_s - hw * 0.30          # polpastrello
+    # dito: leggermente più largo alla base, fianchi morbidi, punta arrotondata
+    fpath = ('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f '
+             'C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
+                 -fw * 1.06, flen,
+                 -fw * 1.04, flen * .4, -fw * 1.02, y_s * .2, -fw, y_s * .55,
+                 -fw * .98, y_s - hw * .05, -fw * .7, ytip, 0, ytip,
+                 fw * .7, ytip, fw * .98, y_s - hw * .05, fw, y_s * .55,
+                 fw * 1.02, y_s * .2, fw * 1.04, flen * .4, fw * 1.06, flen,
+                 -fw * 1.06, flen))
+    s = '<path d="%s" fill="%s" stroke="%s" stroke-width="1.4"/>' % (fpath, SKIN, SKIN_D)
+    # pieghe dell'articolazione
+    for j, k in enumerate((.62, .74)):
+        s += '<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.2" fill="none" opacity=".55"/>' % (
+            -fw * (.55 - j * .12), flen * k, flen * k + 5, fw * (.55 - j * .12), flen * k, SKIN_D)
+    outline = nail_outline(0, 0, y_s, y_t, hw, shape)
+    clip = uid('pf')
+    sh = uid('pfs')
+    s += ('<defs><clipPath id="%s"><path d="%s"/></clipPath>'
+          '<linearGradient id="%s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a2840" stop-opacity=".28"/>'
+          '<stop offset=".2" stop-color="#7a2840" stop-opacity=".04"/><stop offset=".5" stop-color="#7a2840" stop-opacity="0"/>'
+          '<stop offset=".8" stop-color="#7a2840" stop-opacity=".05"/><stop offset="1" stop-color="#7a2840" stop-opacity=".3"/></linearGradient></defs>'
+          % (clip, outline, sh))
+    s += '<path d="%s" fill="%s"/>' % (outline, plate)
+    s += '<ellipse cx="0" cy="-12" rx="%.1f" ry="20" fill="#fff" opacity=".5" clip-path="url(#%s)"/>' % (hw * .52, clip)
+    if free_len > 0:
+        s += ('<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" clip-path="url(#%s)"/>'
+              % (-hw - 4, y_s + 7, y_s - 9, hw + 4, y_s + 7, hw + 4, y_t - 40, -hw - 4, y_t - 40, free, clip))
+        s += ('<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f" stroke="#e9c3cf" stroke-width="1.6" fill="none" clip-path="url(#%s)"/>'
+              % (-hw - 4, y_s + 7, y_s - 9, hw + 4, y_s + 7, clip))
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)" clip-path="url(#%s)"/>' % (-hw, y_t - 4, 2 * hw, -y_t + 8, sh, clip)
+    s += ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="#fff" opacity=".45" clip-path="url(#%s)"/>'
+          % (-hw * .58, y_t + 8, hw * .18, -y_t - 30, hw * .09, clip))
+    s += '<path d="%s" fill="none" stroke="%s" stroke-width="1.6"/>' % (outline, NAIL_S)
+    # pieghe laterali ed eponichio
+    for sx in (-1, 1):
+        s += '<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.4" fill="none"/>' % (
+            sx * (hw + 2), -16, sx * (hw + 4), y_s * .4, sx * (hw + 3), y_s * .8, sx * (hw + 1), y_s + 6, SKIN_D)
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s"/>'
+          % (-fw * .99, -24, -hw - 6, -24, -hw * .7, 10, 10, hw * .7, 10, hw + 6, -24, fw * .99, -24, fw * 1.0, 26, -fw * 1.0, 26, SKIN))
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.6" fill="none"/>'
+          % (-hw - 6, -24, -hw * .9, 2, -hw * .7, 10, 10, hw * .7, 10, hw * .9, 2, hw + 6, -24, SKIN_D))
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="2.4" fill="none" opacity=".45"/>'
+          % (-hw * .85, -10, -hw * .75, 8, -hw * .55, 15, 15, hw * .55, 15, hw * .75, 8, hw * .85, -10))
+    if weak:
+        pts = {'quadrata': [(-hw, y_t), (hw, y_t)], 'ballerina': [(-hw * .52, y_t), (hw * .52, y_t)],
+               'stiletto': [(0, y_t)], 'mandorla': [(0, y_t)]}.get(shape, [])
+        for (px, py) in pts:
+            s += '<circle cx="%.1f" cy="%.1f" r="7" fill="%s" fill-opacity=".18" stroke="%s" stroke-width="2"/>' % (px, py, ERR, ERR)
+    return s
+
+
+def _place(x, y, s, inner, ang=0):
+    return '<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.3f)">%s</g>' % (x, y, ang, s, inner)
+
+
 @figx('forme-scelta-dita.svg')
 def shapes_fingers():
     W, H = 940, 360
     b = ''
-    rows = [('Dito corto', 'e largo', 46, 70, [('quadrata', False, 'accorcia'), ('ovale', True, 'allunga'), ('mandorla', True, 'slancia')]),
-            ('Dito lungo', 'e sottile', 30, 104, [('quadrata', True, 'equilibra'), ('squoval', True, 'equilibra'), ('stiletto', None, 'molto lunga')])]
-    for r, (l1, l2, hw, nl, items) in enumerate(rows):
+    rows = [('Dito corto', 'e largo', dict(hw=40, nail_len=58, flen=64, fw=60), [('quadrata', False, 'accorcia'), ('ovale', True, 'allunga'), ('mandorla', True, 'slancia')]),
+            ('Dito lungo', 'e sottile', dict(hw=26, nail_len=90, flen=118, fw=36), [('quadrata', True, 'equilibra'), ('squoval', True, 'equilibra'), ('stiletto', None, 'molto lunga')])]
+    FL = {'quadrata': 34, 'squoval': 34, 'ovale': 46, 'mandorla': 52, 'stiletto': 66}
+    for r, (l1, l2, geo, items) in enumerate(rows):
         y0 = 20 + r * 170
         b += '<rect x="20" y="%d" width="900" height="158" rx="16" fill="%s"/>' % (y0, PANEL)
         b += mtext(36, y0 + 72, [l1, l2], 16, 'start', 800, ACC2)
         for k, (sh, ok, eff) in enumerate(items):
-            bx = 260 + k * 230
-            yy = y0 + 84
-            fl = 50 if sh in ('quadrata', 'squoval') else 64
-            f, p = horiz_finger(bx - 40, yy, 0.62, hw=hw, nail_len=nl, free_len=fl, shape=sh, finger_len=60)
-            b += f
+            bx = 300 + k * 230
+            yy = y0 + 88
+            s = .72
+            fin = _pro_finger(sh, geo['hw'], geo['nail_len'], FL[sh], geo['flen'], geo['fw'])
+            b += _place(bx, yy, s, fin, 90)
+            # sfumatura della base del dito nel pannello
+            gid = uid('fd')
+            x0 = bx - geo['flen'] * s - 2
+            b += ('<defs><linearGradient id="%s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fbf2ef"/>'
+                  '<stop offset="1" stop-color="#fbf2ef" stop-opacity="0"/></linearGradient></defs>' % gid)
+            b += '<rect x="%.1f" y="%.1f" width="46" height="%.1f" fill="url(#%s)"/>' % (x0, yy - geo['fw'] * s * 1.2, geo['fw'] * s * 2.4, gid)
             name = {'quadrata': 'Quadrata', 'ovale': 'Ovale', 'mandorla': 'Mandorla', 'squoval': 'Squoval', 'stiletto': 'Stiletto'}[sh]
-            b += text(bx - 22, y0 + 32, name, 14.5, 'start', 800)
+            b += text(bx - 4, y0 + 32, name, 14.5, 'start', 800)
             if ok is None:
-                b += excl(bx - 38, y0 + 27, 11)
+                b += excl(bx - 20, y0 + 27, 11)
             else:
-                b += mark(bx - 38, y0 + 27, ok, 11)
+                b += mark(bx - 20, y0 + 27, ok, 11)
             b += text(bx + 10, y0 + 146, eff, 13, 'middle', 700, OK if ok else (ERR if ok is False else WARN))
     return svg(W, H, b, 'La stessa forma su dita diverse: come cambia l\'effetto su dita corte e larghe o lunghe e sottili')
 
 
 @figx('forme-resistenza.svg')
 def shapes_strength():
-    W, H = 940, 260
+    W, H = 940, 300
     b = text(20, 34, 'Dalla più resistente alla più delicata', 20, 'start', 800, ACC2)
+    b += ('<circle cx="%d" cy="29" r="7" fill="%s" fill-opacity=".18" stroke="%s" stroke-width="2"/>' % (782, ERR, ERR)
+          + text(796, 34, 'punto fragile', 13, 'start', 600, ERR))
     order = [('squoval', 'Squoval'), ('tonda', 'Tonda'), ('ovale', 'Ovale'), ('quadrata', 'Quadrata'), ('mandorla', 'Mandorla'),
              ('ballerina', 'Ballerina'), ('stiletto', 'Stiletto')]
+    base = 206
     for k, (sh, name) in enumerate(order):
-        cx = 90 + k * 128
-        fl = 40 if sh in ('quadrata', 'squoval', 'tonda') else 64
-        f, p = shape_nail(cx, 150, sh, 34, 70, fl, 0.75, finger_len=6)
-        b += f
-        b += text(cx, 196, name, 14, weight=800)
+        cx = 84 + k * 128
+        fl = 30 if sh in ('quadrata', 'squoval', 'tonda') else (54 if sh != 'stiletto' else 62)
+        b += _place(cx, base, .9, _pro_finger(sh, 30, 66, fl, 36, 42, weak=True))
+        b += text(cx, base + 52, name, 14, weight=800)
+    # sfumatura della base delle dita
+    b += ('<defs><linearGradient id="gfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
+          '<stop offset="1" stop-color="#fff"/></linearGradient></defs>')
+    b += '<rect x="0" y="%d" width="%d" height="28" fill="url(#gfade)"/>' % (base + 6, W)
     b += ('<defs><linearGradient id="gres" x1="0" x2="1"><stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="#e8c25a"/>'
           '<stop offset="1" stop-color="%s"/></linearGradient></defs>' % (OK, ERR))
-    b += '<rect x="40" y="210" width="860" height="14" rx="7" fill="url(#gres)"/>'
-    b += text(40, 250, 'uso intenso delle mani', 13.5, 'start', 700, OK)
-    b += text(900, 250, 'serve lunghezza e struttura', 13.5, 'end', 700, ERR)
-    return svg(W, H + 14, b, 'Forme dell\'unghia ordinate dalla più resistente alla più delicata')
+    b += '<rect x="40" y="%d" width="860" height="12" rx="6" fill="url(#gres)"/>' % (base + 62)
+    b += '<path d="M40,%d l-12,6 l12,6 Z" fill="%s"/><path d="M900,%d l12,6 l-12,6 Z" fill="%s"/>' % (base + 62, OK, base + 62, ERR)
+    b += text(40, base + 98, 'uso intenso delle mani', 13.5, 'start', 700, OK)
+    b += text(900, base + 98, 'serve lunghezza e struttura', 13.5, 'end', 700, ERR)
+    return svg(W, H + 26, b, 'Forme dell\'unghia ordinate dalla più resistente alla più delicata, con i punti fragili evidenziati')
 
 
 def step3(title_list, draw, desc, W=940, H=310, oks=(None, None, None)):

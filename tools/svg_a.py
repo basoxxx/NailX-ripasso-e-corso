@@ -453,22 +453,70 @@ def mini_section(x, y, w, mlen, thick):
     return s
 
 
+def _matrix_section(x, y, w, ml, th):
+    """Sezione longitudinale del dito (punta a destra). y = fondo della lamina (letto ungueale);
+    ml = lunghezza della matrice, th = spessore della lamina. Restituisce (svg, punti utili)."""
+    xf = x + 96                  # bordo della piega prossimale
+    xm0 = xf - 8 - ml            # inizio della matrice (sotto la piega)
+    xt = x + w - 34              # fine del letto (iponichio)
+    xe = x + w - 6               # bordo libero
+    top = y - th - 26            # dorso del dito
+    gid = uid('ms')
+    s = ('<defs><linearGradient id="%s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8dccb"/>'
+         '<stop offset=".5" stop-color="#f3cdb6"/><stop offset="1" stop-color="#dcab92"/></linearGradient></defs>' % gid)
+    body = ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z'
+            % (x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, xt, y,
+               xt + 22, y + 4, xt + 26, y + 34, xt + 10, y + 56, xt - 6, y + 74, xt - 40, y + 80, x, y + 80))
+    s += '<path d="%s" fill="url(#%s)" stroke="%s" stroke-width="1.5"/>' % (body, gid, SKIN_D)
+    # falange (osso) e letto ungueale
+    s += ('<path d="M%.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="#f6efe2" stroke="#d9cbb3" stroke-width="1.2"/>'
+          % (x, y + 22, xt - 40, y + 20, xt - 14, y + 20, xt - 14, y + 52, xt - 40, y + 54, x, y + 56))
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="6" fill="#f2a3b6"/>' % (xm0 + ml, y, xt - xm0 - ml)
+    # matrice (germinativa) a mezzaluna sotto la piega
+    s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="#8f2a22" stroke-width="1"/>'
+          % (xm0, y - 2, xm0 + ml / 2, y + 14, xm0 + ml, y + 2, xm0 + ml, y + 9, xm0 + ml / 2, y + 22, xm0, y + 7, ERR))
+    # lamina: dalla radice al bordo libero, con strati
+    pl = ('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z'
+          % (xm0, y - 1, xm0 + 2, y - th, xm0 + 12, y - th, xt, y - th, xe - 2, y - th, xe, y - th / 2 + 1,
+             xe - 2, y, xt, y, xm0 + ml, y, xm0 + 4, y + 1, xm0, y - 1))
+    s += '<path d="%s" fill="%s" stroke="%s" stroke-width="1.5"/>' % (pl, NAIL, NAIL_S)
+    if th > 10:
+        for k in (1, 2):
+            yy = y - th * k / 3
+            s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1" opacity=".45"/>' % (xm0 + 12, yy, xe - 6, yy, NAIL_S)
+    # piega prossimale sopra la radice
+    s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="url(#%s)"/>'
+          % (x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, xf - 14, y - th - 2, x, y - th - 2, gid))
+    s += '<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.5" fill="none"/>' % (
+        x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, SKIN_D)
+    s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="2.5" opacity=".8" fill="none" stroke-linecap="round"/>' % (
+        xf + 6, y - th - 1, xf + 14, y - th - 2.5, xf + 22, y - th - 2)
+    return s, dict(xm0=xm0, xm1=xm0 + ml, xe=xe, xt=xt, top=top)
+
+
 @figx('matrice-forma.svg')
 def matrice_forma():
     b = title('La matrice decide spessore e forma della lamina')
     pw = 232
-    for i, (t, ml, th, lab) in enumerate((('Matrice lunga', 64, 22, 'Lamina spessa'), ('Matrice corta', 26, 7, 'Lamina sottile'))):
+    for i, (t, ml, th, lab) in enumerate((('Matrice lunga', 60, 18, 'Lamina spessa'), ('Matrice corta', 24, 6, 'Lamina sottile'))):
         x = 20 + i * (pw + 12)
         b += frame(x, 56, pw, 244, t, i + 1)
-        b += mini_section(x + 12, 176, pw - 24, ml, th)
-        b += callout(x + 90 - ml / 2, 183, x + 70, 272, 'matrice', 13.5, 700, ERR)
-        b += callout(x + 170, 176 - th / 2, x + 150, 112, lab, 15, 800, ACC2)
+        y = 168
+        s, p = _matrix_section(x + 8, y, pw - 16, ml, th)
+        b += s
+        # misura della matrice
+        b += '<path d="M%.1f,%.1f v6 H%.1f v-6" stroke="%s" stroke-width="1.6" fill="none"/>' % (p['xm0'], y + 34, p['xm1'], y + 34, ERR)
+        b += callout((p['xm0'] + p['xm1']) / 2, y + 40, x + 70, 280, 'matrice', 13.5, 700, ERR)
+        b += callout(p['xe'] - 30, y - th / 2, x + 150, 112, lab, 15, 800, ACC2)
+        # spessore
+        b += '<path d="M%.1f,%.1f h6 M%.1f,%.1f v%.1f M%.1f,%.1f h6" stroke="%s" stroke-width="1.6"/>' % (
+            p['xe'] + 2, y - th, p['xe'] + 5, y - th, th, p['xe'] + 2, y, ACC2)
     x = 20 + 2 * (pw + 12)
     b += frame(x, 56, pw, 244, 'Vista dalla punta', 3)
-    b += nail_front(x + 62, 160, 36, 0.05, thick=7)
-    b += nail_front(x + 172, 160, 36, 1.0, thick=7)
-    b += mtext(x + 62, 228, ['Matrice piatta', '→ unghia piatta'], 13, weight=600)
-    b += mtext(x + 172, 228, ['Matrice curva', '→ curva a C', 'profonda'], 13, weight=600)
+    b += gen_svg._ctip(x + 62, 132, 3, 44, NAIL, 7)
+    b += gen_svg._ctip(x + 172, 140, 22, 40, NAIL, 7)
+    b += mtext(x + 62, 248, ['Matrice piatta', '→ unghia piatta'], 13, weight=600)
+    b += mtext(x + 172, 248, ['Matrice curva', '→ curva a C', 'profonda'], 13, weight=600)
     b += '<rect x="20" y="314" width="720" height="50" rx="12" fill="#f1ecee"/>'
     b += calendar(40, 321, 38, 34)
     b += text(94, 345, 'Dalla matrice al bordo libero: circa 4–6 mesi', 16, 'start', 700)
