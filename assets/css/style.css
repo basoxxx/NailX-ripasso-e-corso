@@ -71,10 +71,12 @@ footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .8
 .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; padding: 1.5rem 0 1rem; }
 .hero p.lead { font-size: 1.12rem; color: var(--muted); }
 .hero-img { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow); }
-.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; padding: .7rem 1.2rem; border-radius: 999px; border: 0; cursor: pointer; font-size: 1rem; }
-.btn:hover { background: var(--accent-2); }
-.btn.ghost { background: transparent; color: var(--accent-2); border: 2px solid var(--accent); }
-.btn.small { padding: .4rem .85rem; font-size: .9rem; }
+.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font: inherit; font-weight: 700; line-height: 1.3; padding: .6rem 1.15rem; border-radius: 999px; border: 2px solid var(--accent); cursor: pointer; font-size: 1rem; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn:hover { background: var(--accent-2); border-color: var(--accent-2); }
+.btn.ghost { background: transparent; color: var(--accent-2); border-color: var(--accent); }
+.btn.ghost:hover { background: var(--accent-soft); color: var(--accent-2); }
+.btn.small { padding: .35rem .85rem; font-size: .9rem; }
 .btn-row { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
 
 /* Cards */
@@ -299,3 +301,9 @@ figure img { cursor: zoom-in; }
   .layout { display: block; }
   .lesson { border: 0; box-shadow: none; }
 }
+
+/* Esame online, account, pagine legali */
+.opt.chosen { border-color: var(--accent); background: var(--accent-soft); }
+.danger-btn { color: var(--err) !important; border-color: var(--err) !important; }
+.legal { max-width: 860px; margin: 0 auto; }
+footer a { color: var(--muted); }

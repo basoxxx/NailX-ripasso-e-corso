@@ -16,7 +16,14 @@
   state.quizAt = state.quizAt || {};
   state.exAt = state.exAt || {};
   function save() {
+    state.updatedAt = Date.now();
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+    if (window.NAILX_CLOUD) window.NAILX_CLOUD.queuePush();
+  }
+  // area online (Supabase) attiva solo se configurata in assets/js/config.js
+  function cloudEnabled() {
+    var c = window.NAILX_CONFIG;
+    return !!(c && c.supabaseUrl && c.supabaseAnonKey);
   }
 
   /* ---------- helpers ---------- */
@@ -64,12 +71,13 @@
       ['glossario.html', 'glossario', 'Glossario'],
       ['attestato.html', 'attestato', 'Attestato']
     ];
+    if (cloudEnabled()) links.push(['accedi.html', 'accedi', 'Accedi']);
     var h = document.createElement('header');
     h.className = 'site-header';
     h.innerHTML = '<nav class="nav"><a class="brand" href="index.html">' +
       '<img src="assets/img/logo.svg" alt="" width="30" height="30"><span>Nail<b>X</b></span></a>' +
       '<div class="nav-links">' + links.map(function (x) {
-        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + '>' + x[2] + '</a>';
+        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + (x[1] === 'accedi' ? ' id="nav-account"' : '') + '>' + x[2] + '</a>';
       }).join('') + '</div>' +
       '<button class="theme-btn" type="button" title="Cambia tema" aria-label="Cambia tema">☾</button></nav>';
     document.body.insertBefore(h, document.body.firstChild);
@@ -82,7 +90,8 @@
     });
     var f = document.createElement('footer');
     f.innerHTML = 'NailX · Corso di ricostruzione unghie · Materiale didattico a scopo formativo: non sostituisce ' +
-      'la formazione abilitante prevista dalla legge né il parere medico.';
+      'la formazione abilitante prevista dalla legge né il parere medico.<br>' +
+      '<a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
     document.body.appendChild(f);
   }
 
@@ -275,6 +284,7 @@
   }
   function renderQuiz() {
     var id = qs('m');
+    if (id === 'final' && cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderExam($('#quiz')); return; }
     var root = $('#quiz');
     if (!id) {
       root.innerHTML = '<div class="grid">' + D.modules.filter(function (m) { return D.quiz[m.id]; }).map(function (m) {
@@ -627,7 +637,7 @@
     };
   }
 
-  function certSvg(name, s, cert) {
+  function certSvg(name, s, cert, qrSvg) {
     var W = 1123, H = 794, fs = Math.min(58, Math.floor(1500 / Math.max(name.length, 10)));
     var t = function (x, y, str, size, weight, fill, extra) {
       return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '" font-weight="' + (weight || 400) +
@@ -652,7 +662,7 @@
     o += '<line x1="' + (W / 2 - 260) + '" y1="385" x2="' + (W / 2 + 260) + '" y2="385" stroke="#e7c3cf" stroke-width="2"/>';
     o += t(W / 2, 425, 'ha completato il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 19, 400);
     o += t(W / 2, 455, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + ' ore di formazione', 17, 400, '#6e5a5f');
-    o += t(W / 2, 485, 'Esame finale superato con il ' + s.final + '% · ' + s.exDone.length + ' esercizi pratici completati', 17, 700, '#2f8a5b');
+    o += t(W / 2, 485, 'Esame finale superato con il ' + s.final + '% · ' + s.exDone.length + (s.exDone.length === 1 ? ' esercizio pratico completato' : ' esercizi pratici completati'), 17, 700, '#2f8a5b');
     // programma su più righe (max ~125 caratteri ciascuna)
     var lines = [], cur = 'Programma:';
     D.modules.forEach(function (m) {
@@ -664,10 +674,13 @@
       o += t(W / 2, 514 + i * 18, ln, 11.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
     });
     o += '<line x1="150" y1="640" x2="420" y2="640" stroke="#3b2a30"/>' + t(285, 662, 'Data di rilascio', 14, 400, '#6e5a5f') + t(285, 630, fmtDate(cert.date), 19, 700);
-    o += '<line x1="' + (W - 420) + '" y1="640" x2="' + (W - 150) + '" y2="640" stroke="#3b2a30"/>' + t(W - 285, 662, 'Codice attestato', 14, 400, '#6e5a5f') + t(W - 285, 630, cert.code, 19, 700, '#2b1f22', ' font-family="ui-monospace, monospace"');
+    var cx2 = qrSvg ? W - 330 : W - 285;
+    o += '<line x1="' + (cx2 - 135) + '" y1="640" x2="' + (cx2 + 135) + '" y2="640" stroke="#3b2a30"/>' + t(cx2, 662, qrSvg ? 'Codice · verificabile online' : 'Codice attestato', 14, 400, '#6e5a5f') + t(cx2, 630, cert.code, 19, 700, '#2b1f22', ' font-family="ui-monospace, monospace"');
+    if (qrSvg) o += '<g transform="translate(' + (W - 172) + ',588)">' + qrSvg + '</g>';
     o += '<circle cx="' + W / 2 + '" cy="630" r="46" fill="url(#cg)"/><circle cx="' + W / 2 + '" cy="630" r="38" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>' +
       t(W / 2, 624, 'CORSO', 12, 700, '#fff', ' letter-spacing="2"') + t(W / 2, 642, 'COMPLETATO', 9, 700, '#fff');
-    o += t(W / 2, 722, 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
+    o += t(W / 2, 722, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
+      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
     o += t(W / 2, 740, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
     return o + '</svg>';
   }
@@ -703,6 +716,7 @@
   }
 
   function renderCertificate() {
+    if (cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderCertificate($('#cert')); return; }
     var root = $('#cert');
     var s = summary();
     var req = [
@@ -775,10 +789,61 @@
     img.src = url;
   }
 
+  /* ---------- VERIFICA ATTESTATO (pubblica) ---------- */
+  function renderVerify() {
+    var root = $('#verify');
+    if (!cloudEnabled()) {
+      root.innerHTML = '<div class="box warn"><strong class="t">Verifica non disponibile</strong>Questo sito non ha ancora attivato l\'archivio online degli attestati.</div>';
+      return;
+    }
+    root.innerHTML = '<form class="card cert-form" id="vform"><label for="vcode"><strong>Codice dell\'attestato</strong></label>' +
+      '<div class="row"><input id="vcode" class="search" placeholder="NX-2026-XXXXXXXX" autocomplete="off" maxlength="20" value="' + esc(qs('c') || '') + '">' +
+      '<button class="btn" type="submit">Verifica</button></div></form><div id="vres" aria-live="polite"></div>';
+    $('#vform').addEventListener('submit', function (e) { e.preventDefault(); check($('#vcode').value); });
+    if (qs('c')) check(qs('c'));
+    function check(code) {
+      code = String(code || '').trim().toUpperCase();
+      if (!/^NX-\d{4}-[0-9A-F]{8}$/.test(code)) { $('#vres').innerHTML = '<div class="box warn">Formato del codice non valido (esempio: NX-2026-1A2B3C4D).</div>'; return; }
+      $('#vres').innerHTML = '<p class="muted">Verifica in corso…</p>';
+      var c = window.NAILX_CONFIG;
+      fetch(c.supabaseUrl.replace(/\/$/, '') + '/rest/v1/rpc/verify_certificate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: c.supabaseAnonKey, Authorization: 'Bearer ' + c.supabaseAnonKey },
+        body: JSON.stringify({ p_code: code })
+      }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (v) {
+        if (!v || !v.code) {
+          $('#vres').innerHTML = '<div class="box danger"><strong class="t">Attestato non trovato</strong>Nessun attestato corrisponde al codice ' + esc(code) + '.</div>';
+        } else if (!v.valid) {
+          $('#vres').innerHTML = '<div class="box danger"><strong class="t">Attestato revocato</strong>Il codice ' + esc(v.code) + ' esiste ma l\'attestato non è più valido.</div>';
+        } else {
+          $('#vres').innerHTML = '<div class="box tip"><strong class="t">✓ Attestato autentico</strong>' +
+            '<p><strong>' + esc(v.full_name) + '</strong> ha completato il corso NailX.</p><ul>' +
+            '<li>Codice: <code>' + esc(v.code) + '</code></li>' +
+            '<li>Rilasciato il ' + fmtDate(v.issued_at) + '</li>' +
+            '<li>Lezioni completate: ' + v.lessons_done + ' di ' + v.lessons_total + '</li>' +
+            '<li>Esame finale: ' + v.final_score + '% (soglia ' + PASS + '%)</li>' +
+            '<li>Ore di formazione stimate: circa ' + v.hours + '</li>' +
+            '<li>Esercizi pratici completati: ' + (v.exercises && v.exercises.length ? v.exercises.map(esc).join(', ') : 'nessuno') + '</li></ul>' +
+            '<p class="muted"><small>Attestato di partecipazione a un corso online: non è un titolo abilitante.</small></p></div>';
+        }
+      }).catch(function () {
+        $('#vres').innerHTML = '<div class="box warn">Servizio di verifica non raggiungibile. Riprova più tardi.</div>';
+      });
+    }
+  }
+
+  // funzioni condivise con assets/js/cloud.js
+  window.NAILX_APP = {
+    state: state, save: save, esc: esc, $: $, qs: qs, pct: pct, progressBar: progressBar, fmtDate: fmtDate,
+    summary: summary, certSvg: certSvg, certDetail: certDetail, downloadPng: downloadPng, shuffle: shuffle,
+    PASS: PASS, D: D, cloudEnabled: cloudEnabled
+  };
+
   /* ---------- avvio ---------- */
   var page = document.body.dataset.page;
   header(page);
   lightbox();
   ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
-    attestato: renderCertificate, ripasso: renderReview }[page] || function () {})();
+    attestato: renderCertificate, ripasso: renderReview, verifica: renderVerify,
+    accedi: function () { if (window.NAILX_CLOUD) window.NAILX_CLOUD.renderAccount($('#account')); } }[page] || function () {})();
 })();
