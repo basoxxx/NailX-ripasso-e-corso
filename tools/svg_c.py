@@ -1552,7 +1552,7 @@ def diag_flow():
             b += fx + '<path d="M%.1f,%.1f q11,-10 22,0 l0,-7 q-11,-10 -22,0 z" fill="%s" opacity=".8"/>' % (cx - 11, iy + 16, Z_BASE)
             b += '<path d="M%.1f,%.1f q11,-10 22,0 l0,-30 q-11,-10 -22,0 z" fill="none" stroke="%s" stroke-width="1.5"/>' % (cx - 11, iy + 16, NAIL_S)
         elif k == 1:
-            b += mini_hand(cx - 2, iy - 12, 0.42, (0, 1, 2, 3, 4))
+            b += mini_hand(cx + 1, iy - 3, 0.4, (0, 1, 2, 3, 4))
         elif k == 2:
             b += ic_calendar(cx, iy + 2, 1.0)
         elif k == 3:
@@ -1586,6 +1586,264 @@ def diag_card():
     b += ic_camera(60, 262, 1.1)
     b += text(92, 268, '+ foto dall\'alto e di profilo, alla fine del servizio e al refill', 15, 'start', 700)
     return svg(860, 300, defs() + b, 'Esempio di registro dei difetti: data, dito, dove, quando, causa probabile e correzione, con foto')
+
+
+# ================================================================= MODULO 12 – PROFESSIONE
+@figx('consulenza-flusso.svg')
+def consult_flow():
+    b = title('La consulenza in 5 fasi')
+    steps = [(ic_doc, dict(pen=True), ['Informativa', 'e consensi']), (ic_heart, {}, ['Domande', 'sulla salute']),
+             (ic_lens, {}, ['Osserva unghie', 'e pelle']), (ic_bubble, {}, ['Abitudini', 'e desideri']),
+             (ic_calendar, {}, ['Accordo: servizio,', 'prezzo, refill'])]
+    for k, (fn, kw, lab) in enumerate(steps):
+        x = 22 + k * 194
+        b += '<rect x="%d" y="58" width="170" height="140" rx="16" fill="%s"/>' % (x, PANEL)
+        b += numc(x + 24, 82, k + 1)
+        b += '<circle cx="%d" cy="104" r="28" fill="#fff"/>' % (x + 85) + fn(x + 85, 104, 1.15, **kw)
+        b += text(x + 85, 162, lab[0], 14.5, weight=800) + text(x + 85, 181, lab[1], 14.5, weight=800)
+        if k < 4:
+            b += arr(x + 172, 128, x + 192, 128, DARK, 2.2)
+    x3 = 22 + 2 * 194 + 85
+    b += arr(x3, 200, x3, 236, ERR, 2.4)
+    b += ic_stop(x3 - 120, 262, 1.25)
+    b += label_box(x3 - 92, 244, 220, 36, 'STOP → medico', RED_BG, ERR, ERR, 15, 800)
+    b += text(x3 + 140, 268, 'se ci sono controindicazioni', 14, 'start', 700, ERR)
+    return svg(1000, 300, defs() + b, 'La consulenza in cinque fasi: informativa e consensi, salute, osservazione, abitudini e desideri, accordo; stop in caso di controindicazioni')
+
+
+@figx('consensi-separati.svg')
+def consents():
+    b = title('Informativa e consensi separati')
+    sheets = [('Informativa privacy', 'da consegnare e far leggere'), ('Dati sulla salute', 'allergie, farmaci, gravidanza'), ('Foto e social', 'consenso facoltativo')]
+    for k, (t, sub) in enumerate(sheets):
+        x = 30 + k * 290
+        b += '<path d="M%d,58 L%d,58 L%d,78 L%d,262 L%d,262 Z" fill="#fff" stroke="#d8c8c4" stroke-width="2" stroke-linejoin="round"/>' % (x, x + 230, x + 250, x + 250, x)
+        b += '<path d="M%d,58 L%d,78 L%d,78" fill="none" stroke="#d8c8c4" stroke-width="2"/>' % (x + 230, x + 230, x + 250)
+        b += text(x + 20, 92, t, 17, 'start', 800, ACC2)
+        b += text(x + 20, 114, sub, 13.5, 'start', 400, MUTED, 'italic')
+        for j in range(3):
+            b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#eadfdc" stroke-width="2"/>' % (x + 20, 136 + j * 14, x + 230 - j * 30, 136 + j * 14)
+        if k == 0:
+            b += '<rect x="%d" y="190" width="18" height="18" rx="3" fill="#fff" stroke="%s" stroke-width="2"/>' % (x + 20, ACC2) + text(x + 46, 204, 'Ricevuta', 15, 'start', 700)
+        else:
+            b += text(x + 20, 182, 'Acconsento:', 13.5, 'start', 600, MUTED)
+            b += '<rect x="%d" y="190" width="18" height="18" rx="3" fill="#fff" stroke="%s" stroke-width="2"/>' % (x + 20, ACC2) + text(x + 46, 204, 'Sì', 15, 'start', 700)
+            b += '<rect x="%d" y="190" width="18" height="18" rx="3" fill="#fff" stroke="%s" stroke-width="2"/>' % (x + 96, ACC2) + text(x + 122, 204, 'No', 15, 'start', 700)
+        b += '<line x1="%d" y1="244" x2="%d" y2="244" stroke="%s" stroke-width="1.5"/>' % (x + 20, x + 230, MUTED) + text(x + 20, 240, 'Firma', 12.5, 'start', 400, MUTED)
+        if k == 2:
+            b += ic_camera(x + 200, 205, 1.0)
+    b += label_box(608, 276, 284, 34, 'Se dice no, il servizio si fa lo stesso', GREEN_BG, OK, OK, 14, 800)
+    return svg(900, 320, defs() + b, 'Informativa privacy e due consensi separati: dati sulla salute, foto e social (facoltativo)')
+
+
+@figx('aftercare-si-no.svg')
+def aftercare_yn():
+    b = title('Dopo il servizio')
+    yes = [(ic_drop, {}, 'Olio ogni giorno'), (ic_glove, {}, 'Guanti per le pulizie'), (ic_calendar, {}, 'Refill puntuale'), (ic_phone, {}, 'Chiama se si stacca')]
+    no = [(ic_can, 'Unghie come attrezzi'), (ic_teeth, 'Mordere, "pizzicare"'), (ic_glue, 'Colla'), (ic_plaster, 'Cerotto'), (ic_bottle, 'Solventi, acetone')]
+    b += box(20, 56, 420, 290, GREEN_BG, GREEN_BG, 16)
+    b += mark(52, 86, True, 15) + text(76, 93, 'Sì', 20, 'start', 800, OK)
+    for k, (fn, kw, l) in enumerate(yes):
+        col, row = k % 2, k // 2
+        x, y = 85 + col * 210, 120 + row * 110
+        b += '<circle cx="%d" cy="%d" r="30" fill="#fff"/>' % (x + 40, y + 30) + fn(x + 40, y + 30, 1.15, **kw)
+        b += text(x + 40, y + 84, l, 14.5, weight=700)
+    b += box(460, 56, 420, 290, RED_BG, RED_BG, 16)
+    b += mark(492, 86, False, 15) + text(516, 93, 'No', 20, 'start', 800, ERR)
+    for k, (fn, l) in enumerate(no):
+        x, y = 486, 116 + k * 45
+        b += '<circle cx="%d" cy="%d" r="19" fill="#fff"/>' % (x + 20, y + 16) + fn(x + 20, y + 16, 0.8)
+        b += text(x + 54, y + 21, l, 15, 'start', 700)
+        b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="2.5" stroke-linecap="round"/>' % (x + 6, y + 30, x + 34, y + 2, ERR)
+    return svg(900, 360, defs() + b, 'Consigli dopo il servizio: cosa fare (olio, guanti, refill, chiamare) e cosa evitare (attrezzi, mordere, colla, cerotto, solventi)')
+
+
+@figx('aftercare-cartoncino.svg')
+def aftercare_card():
+    b = title('Il biglietto post-trattamento')
+    for k in range(2):
+        x = 30 + k * 365
+        b += '<rect x="%d" y="62" width="335" height="210" rx="14" fill="#fff" stroke="#d8c8c4" stroke-width="2"/>' % x
+        b += text(x + 167, 292, 'Fronte' if k == 0 else 'Retro', 13.5, weight=700, fill=MUTED)
+    x = 30
+    b += '<circle cx="%d" cy="112" r="28" fill="#e9e4e6"/>' % (x + 60) + text(x + 60, 117, 'logo', 13, weight=700, fill=MUTED)
+    b += text(x + 104, 108, 'Il tuo prossimo', 17, 'start', 800, ACC2) + text(x + 104, 129, 'appuntamento', 17, 'start', 800, ACC2)
+    b += text(x + 30, 190, 'Data', 15, 'start', 700) + '<line x1="%d" y1="192" x2="%d" y2="192" stroke="%s" stroke-width="1.5"/>' % (x + 72, x + 180, MUTED)
+    b += text(x + 194, 190, 'Ora', 15, 'start', 700) + '<line x1="%d" y1="192" x2="%d" y2="192" stroke="%s" stroke-width="1.5"/>' % (x + 228, x + 305, MUTED)
+    b += ic_calendar(x + 290, 240, 0.9)
+    x = 395
+    b += text(x + 24, 96, 'I miei 3 consigli per te:', 16, 'start', 800, ACC2)
+    for j, l in enumerate(['1. Olio ogni giorno', '2. Guanti per le pulizie', '3. Non usarle come attrezzi']):
+        b += text(x + 30, 130 + j * 28, l, 15, 'start', 600)
+    b += '<rect x="%d" y="222" width="295" height="32" rx="8" fill="%s"/>' % (x + 20, YEL_BG)
+    b += text(x + 167, 243, 'Se qualcosa si stacca, chiamami', 14.5, weight=800, fill='#7a5a12')
+    return svg(760, 310, defs() + b, 'Biglietto post-trattamento: fronte con il prossimo appuntamento, retro con tre consigli')
+
+
+@figx('calcolo-prezzo.svg')
+def price_calc():
+    b = title('Come nasce il prezzo')
+    blocks = [('Margine', 30, '#c9b6e4'), ('Spese fisse', 50, '#f6d38a'), ('Tempo × valore orario', 84, '#e98fae'), ('Materiali', 32, '#9cc3d8')]
+    y = 62
+    for l, h, col in blocks:
+        b += '<rect x="60" y="%d" width="270" height="%d" rx="8" fill="%s" stroke="#fff" stroke-width="3"/>' % (y, h, col)
+        b += text(195, y + h / 2 + 5.5, l, 15.5, weight=800)
+        y += h
+    b += text(28, 62 + (y - 62) / 2 + 6, '+', 26, weight=800, fill=MUTED)
+    b += text(370, 62 + (y - 62) / 2 + 12, '=', 40, weight=800, fill=ACC2)
+    ty = 62 + (y - 62) / 2
+    b += '<path d="M410,%d L440,%d L580,%d L580,%d L440,%d Z" fill="%s"/>' % (ty, ty - 40, ty - 40, ty + 40, ty + 40, ACC2)
+    b += '<circle cx="436" cy="%d" r="6" fill="#fff"/>' % ty + text(512, ty + 8, 'Prezzo', 22, weight=800, fill='#fff')
+    b += box(630, 92, 250, 150, PANEL, PANEL, 16)
+    b += ic_map(755, 136, 1.3)
+    b += text(755, 192, 'Poi confronta con', 15, weight=800) + text(755, 212, 'i prezzi della tua zona', 15, weight=800)
+    b += arr(590, ty, 624, ty, DARK, 2)
+    return svg(900, 290, defs() + b, 'Come nasce il prezzo: materiali, tempo per valore orario, spese fisse e margine; poi confronto con la zona')
+
+
+@figx('agenda-tempi.svg')
+def agenda():
+    b = title('Un appuntamento in agenda')
+    x0, w_min = 36, 7.0   # px per minuto
+    segs = [(['Consulenza'], 15, '#c9b6e4'), (['Servizio'], 75, '#e98fae'), (['Consigli', '+ refill'], 10, '#f6d38a'), (['Pulizia e', 'sterilizzazione'], 15, '#9cc3d8')]
+
+    def bar(y, segs):
+        s = ''
+        x = x0
+        for l, m, col in segs:
+            w = m * w_min
+            s += '<rect x="%.1f" y="%d" width="%.1f" height="46" fill="%s" stroke="#fff" stroke-width="3"/>' % (x, y, w, col)
+            fs = 14 if len(l) == 1 else 12.5
+            y0 = y + 28 if len(l) == 1 else y + 20
+            s += mtext(x + w / 2, y0, l, fs, weight=800, lh=1.2)
+            x += w
+        return s
+    b += mark(x0 + 9, 72, True, 11) + text(x0 + 28, 77, 'Giusto: il tempo per pulire è in agenda', 14.5, 'start', 800, OK)
+    b += bar(92, segs)
+    for k, lab in enumerate(['9:00', '9:30', '10:00', '10:30', '11:00']):
+        tx = x0 + k * 30 * w_min
+        b += '<line x1="%.1f" y1="142" x2="%.1f" y2="150" stroke="%s" stroke-width="1.5"/>' % (tx, tx, MUTED) + text(tx, 166, lab, 12.5, fill=MUTED)
+    segs2 = [(['Consulenza'], 15, '#c9b6e4'), (['Servizio'], 75, '#e98fae'), (['Prossima cliente'], 25, '#d9d2d4')]
+    b += mark(x0 + 9, 198, False, 11) + text(x0 + 28, 203, 'Sbagliato: la cliente dopo arriva subito', 14.5, 'start', 800, ERR)
+    b += bar(216, segs2)
+    xe = x0 + 90 * w_min
+    b += '<line x1="%.1f" y1="208" x2="%.1f" y2="270" stroke="%s" stroke-width="3"/>' % (xe, xe, ERR)
+    b += text(xe, 290, 'niente tempo per la pulizia', 13.5, 'middle', 700, ERR)
+    b += ic_stopwatch(x0 + 10, 286, 0.9) + text(x0 + 28, 292, 'Misura i tuoi tempi reali', 14, 'start', 700)
+    return svg(900, 310, defs() + b, 'Agenda: consulenza, servizio, consigli e pulizia; errore: appuntamento successivo senza tempo per la pulizia')
+
+
+@figx('percorso-apertura.svg')
+def opening_path():
+    b = title('Aprire l\'attività: il percorso')
+    pts = [(80, 150), (240, 230), (400, 150), (560, 230), (720, 150), (870, 230)]
+    d = smooth_d([(40, 190)] + pts + [(950, 190)])
+    b += '<path d="%s" fill="none" stroke="#efe3df" stroke-width="22" stroke-linecap="round"/>' % d
+    b += '<path d="%s" fill="none" stroke="%s" stroke-width="2.5" stroke-dasharray="8 7"/>' % (d, ACC)
+    labels = [['Qualifica', 'di estetista'], ['Partita IVA', '+ codice ATECO'], ['Camera di Commercio', '+ Albo artigiani'],
+              ['INPS artigiani', '+ INAIL'], ['SCIA', 'al SUAP del Comune'], ['Privacy, tariffe,', 'assicurazione']]
+    for k, ((px, py), lab) in enumerate(zip(pts, labels)):
+        b += '<circle cx="%d" cy="%d" r="22" fill="%s" stroke="#fff" stroke-width="3"/>' % (px, py, ACC2) + text(px, py + 6.5, str(k + 1), 18, weight=800, fill='#fff')
+        up = py < 190
+        ly = py - 60 if up else py + 46
+        b += text(px, ly, lab[0], 15, weight=800) + text(px, ly + 19, lab[1], 13.5, fill=MUTED)
+    b += ic_flag(948, 168, 1.1) + text(948, 120, 'Prima', 14, weight=800, fill=ACC) + text(948, 136, 'cliente', 14, weight=800, fill=ACC)
+    b += label_box(300, 300, 400, 30, 'Verifica sempre con commercialista e Comune', YEL_BG, YEL_S, '#7a5a12', 14)
+    return svg(1000, 340, defs() + b, 'Percorso per aprire l\'attività: qualifica, partita IVA, Camera di Commercio, INPS e INAIL, SCIA, privacy e assicurazione')
+
+
+@figx('forfettario-esempio.svg')
+def flat_tax():
+    b = title('Forfettario: esempio')
+    x0, W, y = 40, 820, 86
+    w67 = W * 0.67
+    b += text(x0, 74, 'Incassi 30.000 €', 16, 'start', 800)
+    b += '<rect x="%d" y="%d" width="%.1f" height="56" rx="10" fill="%s"/>' % (x0, y, w67, ACC)
+    b += '<rect x="%.1f" y="%d" width="%.1f" height="56" fill="#e2dcde"/>' % (x0 + w67, y, W - w67)
+    b += '<rect x="%d" y="%d" width="%d" height="56" rx="10" fill="none" stroke="#fff" stroke-width="0"/>' % (x0, y, W)
+    b += text(x0 + w67 / 2, y + 25, '67% = reddito 20.100 €', 17, weight=800, fill='#fff')
+    b += text(x0 + w67 / 2, y + 45, 'su questo si calcolano contributi e imposta', 13, weight=600, fill='#fff')
+    b += text(x0 + w67 + (W - w67) / 2, y + 25, '33% = 9.900 €', 16, weight=800)
+    b += text(x0 + w67 + (W - w67) / 2, y + 45, 'costi forfettari, non tassati', 13, weight=600, fill=MUTED)
+    b += arr(x0 + 160, y + 60, x0 + 120, 200, DARK, 2.2)
+    b += arr(x0 + 400, y + 60, x0 + 430, 200, DARK, 2.2)
+    b += label_box(x0, 204, 300, 62, ['Contributi INPS', 'fissi + %'], PANEL, PANEL, INK, 15.5, 800, 12)
+    b += label_box(x0 + 300, 204, 280, 62, ['Imposta sostitutiva', '5% (nuova attività) o 15%'], PANEL, PANEL, INK, 15.5, 800, 12)
+    b += label_box(x0 + 590, 204, 230, 62, ['Le spese reali', 'non si scaricano'], RED_BG, '#efc4bd', ERR, 14.5, 800, 12)
+    b += text(450, 300, 'Numeri semplificati, regole 2026: chiedi conferma al commercialista.', 13.5, fill=MUTED)
+    return svg(900, 316, defs() + b, 'Esempio di regime forfettario: incassi 30.000 euro, reddito 67% pari a 20.100 euro, contributi e imposta')
+
+
+@figx('foto-set.svg')
+def photo_set():
+    b = title('Il set fotografico')
+    # finestra
+    b += '<rect x="30" y="70" width="90" height="190" rx="6" fill="#e7f2fb" stroke="%s" stroke-width="3"/>' % GREY
+    b += '<line x1="75" y1="70" x2="75" y2="260" stroke="%s" stroke-width="3"/><line x1="30" y1="165" x2="120" y2="165" stroke="%s" stroke-width="3"/>' % (GREY, GREY)
+    for k in range(4):
+        b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#f5c542" stroke-width="3" stroke-dasharray="7 6" opacity=".9"/>' % (124, 100 + k * 40, 300, 236 + k * 6)
+    b += text(75, 288, 'Luce naturale', 14, weight=800) + text(75, 306, 'o fredda', 14, weight=800)
+    # tavolo e cartoncino
+    b += '<rect x="170" y="268" width="380" height="10" rx="3" fill="#d9cfc6"/>'
+    b += '<rect x="230" y="258" width="290" height="10" rx="2" fill="#f2ede9" stroke="#d9cfc6"/>'
+    # mano di profilo con unghie
+    b += '<path d="M250,258 L250,232 Q300,218 410,226 Q446,230 452,246 L452,258 Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (SKIN, SKIN_D)
+    b += '<path d="M404,224 Q436,224 452,240" stroke="%s" stroke-width="6" fill="none" stroke-linecap="round"/>' % FUCHSIA
+    # supporto e telefono
+    b += '<line x1="520" y1="258" x2="520" y2="120" stroke="%s" stroke-width="5"/><line x1="520" y1="120" x2="420" y2="120" stroke="%s" stroke-width="5"/>' % (GREY_D, GREY_D)
+    b += '<rect x="380" y="110" width="76" height="16" rx="4" fill="%s"/>' % INK
+    b += '<rect x="405" y="126" width="22" height="5" rx="2" fill="#9fb8cf"/>'
+    b += dashed(416, 132, 420, 220, MUTED, 1.5)
+    b += leader(500, 262, 600, 296, 'Sfondo neutro', 'start')
+    b += leader(440, 112, 600, 96, 'Telefono fermo', 'start')
+    b += leader(430, 232, 600, 210, 'Cuticole pulite, poco olio', 'start')
+    b += leader(418, 176, 600, 152, 'Fuoco sulle unghie', 'start')
+    # riquadro errore
+    b += box(578, 238, 0, 0)
+    bx, by = 260, 60
+    b += box(bx - 90, by + 6, 0, 0)
+    eb = box(156, 66, 200, 78, RED_BG, '#efc4bd', 12)
+    eb += '<circle cx="190" cy="98" r="14" fill="#f5c542"/><rect x="183" y="112" width="14" height="10" rx="2" fill="%s"/>' % GREY_D
+    eb += '<line x1="172" y1="80" x2="208" y2="122" stroke="%s" stroke-width="3"/>' % ERR
+    eb += text(218, 96, 'Luce calda:', 14, 'start', 800, ERR) + text(218, 115, 'colori gialli', 14, 'start', 700, ERR)
+    eb += mark(340, 80, False, 11)
+    b += eb
+    return svg(860, 330, defs() + b, 'Set fotografico: luce naturale o fredda, sfondo neutro, telefono fermo, cuticole pulite; da evitare la luce calda')
+
+
+@figx('foto-angolazioni.svg')
+def photo_angles():
+    b = title('Tre foto per ogni lavoro')
+    heads = ['Dall\'alto', 'Di profilo', 'A tunnel']
+    caps = ['simmetria, smile line', 'apex, spessore', 'curva a C']
+    for i in range(3):
+        x = 20 + i * 292
+        body = ''
+        if i == 0:
+            for k, (dx, ln) in enumerate([(-81, 92), (-27, 106), (27, 102), (81, 86)]):
+                cx = x + 139 + dx
+                yc = 226 - (ln - 86) // 2
+                ys = yc - ln + 30
+                f, p = nail(cx, yc, hw=17, nail_len=ln - 30, free_len=30, plate='#f6c9d4', free='#f6c9d4',
+                            extra=tip_fill(cx, ys, 17, 11, ys - 30), finger_len=20)
+                body += f
+        elif i == 1:
+            sec, fd, pp = section(x + 60, 200, L=140, F=40, body_h=60)
+            pts = [(x + 66, 200), (x + 100, 188), (x + 170, 172), (x + 210, 176), (x + 244, 196)]
+            body += sec + product(pts, 200, end_x=x + 244, end_y=206, fill='#f6c9d4', stroke=NAIL_S) + fd
+            body += '<circle cx="%d" cy="%d" r="6" fill="%s" stroke="#fff" stroke-width="2"/>' % (x + 186, 171, ACC2)
+            body += leader(x + 186, 171, x + 186, 120, 'apex', 'middle', 13.5)
+        else:
+            cx, cy = x + 139, 190
+            body += '<ellipse cx="%d" cy="%d" rx="76" ry="56" fill="%s" stroke="%s" stroke-width="1.5"/>' % (cx, cy + 34, SKIN, SKIN_D)
+            body += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="14" stroke-linecap="round"/>' % (cx - 64, cy + 10, cx, cy - 46, cx + 64, cy + 10, '#f6c9d4')
+            body += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="2" />' % (cx - 70, cy + 3, cx, cy - 56, cx + 70, cy + 3, NAIL_S)
+            body += dashed(cx - 70, cy + 12, cx + 70, cy + 12, MUTED, 1.4)
+            body += text(cx, cy + 4, 'C', 18, weight=800, fill=ACC2)
+            body += text(cx, cy + 74, 'vista dalla punta', 12.5, fill=MUTED, style='italic')
+        body += ic_phone(x + 252, 92, 0.85)
+        b += frame(x, 55, 278, 250, heads[i], num=i + 1, body=body, cap=caps[i], capcol=INK)
+    return svg(900, 320, defs() + b, 'Tre foto per ogni lavoro: dall\'alto, di profilo e a tunnel')
 
 
 # ================================================================= main

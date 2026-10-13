@@ -618,7 +618,7 @@ def smile():
         if d >= 0:
             fp = 'M%d,%d Q%d,%d %d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, ys + d, cx + skew, ys - d - 2 + skew, cx + hw + 4, ys + d - skew, cx + hw + 4, 60, cx - hw - 4, 60)
         else:
-            fp = 'M%d,%d L%d,%d L%d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, ys + 20, cx, ys - 16, cx + hw + 4, ys + 20, cx + hw + 4, 60, cx - hw - 4, 60)
+            fp = 'M%d,%d L%d,%d L%d,%d L%d,%d L%d,%d Z' % (cx - hw - 4, ys - 12, cx, ys + 26, cx + hw + 4, ys - 12, cx + hw + 4, 60, cx - hw - 4, 60)
         extra = '<path d="%s" fill="#ffffff" clip-path="url(#CLIP)"/>' % fp
         f, p = finger_nail(cx, yc, hw=hw, nail_len=110, free_len=70, shape='squoval', smile=0, plate='#f6c9d4', free='#f6c9d4', finger_len=20, extra=extra, lunula=False)
         b += f
@@ -1368,18 +1368,21 @@ def client_card():
     b += '<rect x="30" y="20" width="620" height="60" rx="14" fill="%s"/><rect x="30" y="60" width="620" height="20" fill="%s"/>' % (ACC, ACC)
     b += text(60, 58, 'Scheda cliente', 22, 'start', 800, '#fff')
     b += text(620, 58, 'n. ____', 15, 'end', 600, '#fff')
-    rows = [('Nome e cognome', 'line'), ('Telefono / e-mail', 'line'), ('Consenso privacy (GDPR)', 'check'),
+    rows = [('Nome e cognome', 'line'), ('Telefono / e-mail', 'line'), ('Informativa privacy consegnata', 'check'), ('Consenso dati di salute (firmato)', 'check'),
             ('Allergie (acrilati, lattice…)', 'line'), ('Farmaci, diabete, gravidanza, terapie', 'line'),
             ('Abitudini (onicofagia, acqua…)', 'line'), ('Stato della lamina / controindicazioni', 'line'),
-            ('Servizio e prodotti (lotti)', 'line'), ('Foto prima / dopo', 'check'), ('Prossimo refill', 'line')]
+            ('Servizio e prodotti (lotti)', 'line'), ('Consenso foto (facoltativo, a parte)', 'box'), ('Prossimo refill', 'line')]
     for k, (lab, kind) in enumerate(rows):
-        y = 115 + k * 42
+        y = 112 + k * 38
         b += text(60, y, lab, 14, 'start', 600)
         if kind == 'line':
             b += '<line x1="340" y1="%d" x2="620" y2="%d" stroke="#d8c8c4" stroke-width="1.5"/>' % (y + 3, y + 3)
         else:
             b += '<rect x="340" y="%d" width="16" height="16" rx="3" fill="none" stroke="%s" stroke-width="2"/>' % (y - 12, ACC2)
-            b += '<path d="M343,%d l4,5 l8,-10" stroke="%s" stroke-width="2.5" fill="none"/>' % (y - 4, OK)
+            if kind == 'check':
+                b += '<path d="M343,%d l4,5 l8,-10" stroke="%s" stroke-width="2.5" fill="none"/>' % (y - 4, OK)
+            else:
+                b += text(366, y, 'sì / no: decide la cliente', 12.5, 'start', fill=MUTED)
     b += text(60, 530, 'Firma della cliente ______________________     Data ___/___/______', 13.5, 'start', fill=MUTED)
     return svg(680, 560, b, 'Esempio di scheda cliente')
 

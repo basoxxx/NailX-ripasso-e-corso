@@ -805,8 +805,8 @@ def cover_step():
             ys = yb - NB - CV
             for (dx, dy) in [(0, 0), (-30, 10), (30, 10)]:
                 s += circ(cx + dx, ys + dy, 4.5, ACC2, '#fff', 1.5)
-            s += text(cx + 88, ys + 4, '1 centro', 12.5, 'start', 700, ACC2)
-            s += text(cx + 88, ys + 22, '2–3 angoli', 12.5, 'start', 700, ACC2)
+            s += text(cx + 84, ys + 4, '1° centro,', 12.5, 'start', 700, ACC2)
+            s += text(cx + 84, ys + 22, 'poi angoli', 12.5, 'start', 700, ACC2)
         else:
             f, p = ext_nail(cx - 20, yb, hw=32, nat=NB, cov=CV, free=FR, smile=10, show_nat=False)
             s += f + gloss(cx - 20, yb - 10, 90)
@@ -1234,12 +1234,12 @@ def armonie():
         if hl:
             b += color_wheel(x + 104, 140, 40, hl)
         else:
-            b += circ(x + 82, 140, 30, '#e9c7b8', '#c9a898', 1.5)
+            b += circ(x + 76, 140, 26, '#e9c7b8', '#c9a898', 1.5)
             gid = uid('cr')
             b += ('<defs><linearGradient id="%s" x1="0" x2="1"><stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="%s"/>'
                   '<stop offset="1" stop-color="%s"/></linearGradient></defs>') % (gid, CHROME[0], CHROME[1], CHROME[2])
-            b += circ(x + 138, 140, 18, 'url(#%s)' % gid, '#8a8f99', 1.5)
-            b += text(x + 113, 146, '+', 18, weight=800)
+            b += circ(x + 142, 140, 18, 'url(#%s)' % gid, '#8a8f99', 1.5)
+            b += text(x + 113, 147, '+', 20, weight=800)
             b += text(x + 104, 196, 'nude + 1 effetto', 12.5, weight=600, fill=MUTED)
         for j, c in enumerate(cols):
             nx = x + 30 + j * 37
@@ -1257,6 +1257,1028 @@ def armonie():
             else:
                 b += nail_shape(nx, by, 28, hh, c, '#7d6a70', 1.2)
     return svg(W, H, b, 'Abbinamenti facili per nail art: monocromatico, analoghi, complementari, neutro più accento')
+
+
+def toe_top(cx, by, hw=46, nail_len=78, free=6, plate='#f3cbc6', free_col=None, finger_len=40, extra='', shape='squoval', deep=True):
+    """Alluce visto dall'alto: unghia larga, solchi laterali marcati."""
+    f, p = finger_nail(cx, by, hw=hw, nail_len=nail_len, free_len=free, shape=shape, smile=3, finger_len=finger_len, lunula=False,
+                       plate=plate, free=free_col or plate, extra=extra)
+    if deep:
+        for sx in (-1, 1):
+            f += ln(cx + sx * (hw + 4), by - 28, cx + sx * (hw + 4), by - nail_len + 6, '#b07a62', 3)
+    return f, p
+
+
+def basin(cx, by, w=170, h=80, water=True, liner=False, steam=False, tilt=0, alpha=1.0):
+    s = ''
+    if liner:
+        s += P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f' % (cx - w / 2 - 8, by - h - 4, cx - w / 2 + 12, by - 8, cx, by + 2, cx + w / 2 - 12, by - 8, cx + w / 2 + 8, by - h - 4),
+               'none', '#9ccbe6', 3)
+    s += P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (cx - w / 2, by - h, cx - w / 2 + 14, by - 6, cx, by + 2, cx + w / 2 - 14, by - 6, cx + w / 2, by - h),
+           '#eef6fb', '#7fa9c4', 2.2, ' fill-opacity="%.2f"' % (alpha if alpha < 1 else 1))
+    if water:
+        s += P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (cx - w / 2 + 6, by - h + 18, cx - w / 2 + 16, by - 8, cx, by, cx + w / 2 - 16, by - 8, cx + w / 2 - 6, by - h + 18),
+               WATER, 'none', 0, ' fill-opacity="%.2f"' % (alpha if alpha < 1 else 1))
+        for k in range(2):
+            s += P('M%.1f,%.1f q12,-7 24,0 q12,7 24,0 q12,-7 24,0' % (cx - 36, by - h + 32 + k * 18), 'none', WATER_S, 2)
+    if steam:
+        for k in range(3):
+            s += P('M%.1f,%.1f q-8,-10 0,-20 q8,-10 0,-20' % (cx - 30 + k * 30, by - h - 6), 'none', '#c0392b', 2.4, ' opacity=".8"')
+    return g(s, 0, 0, tilt) if not tilt else '<g transform="rotate(%d %.1f %.1f)">%s</g>' % (tilt, cx, by, s)
+
+
+def thermometer(x, y, s=1.0, col='#e57373'):
+    b = rbox(-5, -34, 10, 46, '#fff', GREY_D, 2, 5) + circ(0, 16, 9, col, GREY_D, 2) + rbox(-2, -14, 4, 28, col, 'none', 0, 2)
+    for k in range(4):
+        b += ln(5, -26 + k * 8, 9, -26 + k * 8, GREY_D, 1.2)
+    return g(b, x, y, 0, s)
+
+
+def clipper(x, y, ang=0, s=1.0):
+    """Tronchesino: ganasce dritte in alto, manici sotto."""
+    b = (P('M-14,-4 L14,-4 L18,6 L-18,6 Z', '#b9c1ca', GREY_D, 2)
+         + P('M-16,6 Q-22,40 -12,70', 'none', GREY_D, 7) + P('M16,6 Q22,40 12,70', 'none', GREY_D, 7)
+         + P('M-10,30 Q0,22 10,30', 'none', '#b9c1ca', 2.5) + ln(-14, -4, 14, -4, '#5d6670', 2.5))
+    return g(b, x, y, ang, s)
+
+
+def towel(x, y, s=1.0):
+    b = rbox(-30, -18, 60, 36, '#cfe8f6', '#7fb4d6', 2, 6)
+    for k in range(4):
+        b += ln(-30, -10 + k * 7, 30, -10 + k * 7, '#a9d3ea', 1.5)
+    return g(b, x, y, 0, s)
+
+
+def jar(x, y, s=1.0, col='#ffffff', lid='#c2577a', label=''):
+    b = rbox(-22, -18, 44, 34, col, '#b5a8a3', 2, 8) + rbox(-24, -28, 48, 12, lid, 'none', 0, 4)
+    if label:
+        b += text(0, 6, label, 11, weight=700, fill=MUTED)
+    return g(b, x, y, 0, s)
+
+
+def blade(x, y, ang=-30, s=1.0):
+    b = rbox(0, -4, 60, 8, '#8a7d74', 'none', 0, 3) + P('M0,-6 L-34,-2 L-38,4 L0,6 Z', '#dfe5ea', GREY_D, 1.6)
+    return g(b, x, y, ang, s)
+
+
+def hourglass(x, y, s=1.0):
+    b = (rbox(-18, -30, 36, 6, '#8a6d4f', 'none', 0, 2) + rbox(-18, 24, 36, 6, '#8a6d4f', 'none', 0, 2)
+         + P('M-14,-24 L14,-24 L2,0 L14,24 L-14,24 L-2,0 Z', '#eef6fb', GREY_D, 2)
+         + P('M-8,18 L8,18 L12,24 L-12,24 Z', '#e8b83a', 'none', 0) + P('M-9,-20 L9,-20 L2,-8 L-2,-8 Z', '#e8b83a', 'none', 0))
+    return g(b, x, y, 0, s)
+
+
+def stethoscope(x, y, s=1.0, col='#2c5a78'):
+    b = (P('M-14,-24 L-14,-6 Q-14,14 0,14 Q14,14 14,-6 L14,-24', 'none', col, 3.5)
+         + P('M0,14 L0,26 Q0,38 12,38 L18,38', 'none', col, 3.5) + circ(24, 38, 7, '#fff', col, 3.5)
+         + circ(-14, -26, 3, col, 'none', 0) + circ(14, -26, 3, col, 'none', 0))
+    return g(b, x, y, 0, s)
+
+
+def podo_icon(x, y, s=1.0, col='#2c5a78'):
+    """Impronta di piede con croce sanitaria = podologo."""
+    b = P('M-8,24 C-20,22 -20,0 -14,-12 C-8,-24 8,-26 10,-12 C12,0 8,8 6,16 C4,24 0,26 -8,24 Z', '#fff', col, 2.5)
+    for k, (dx, dy, r) in enumerate([(-14, -24, 4.5), (-5, -30, 3.6), (3, -30, 3.2), (10, -27, 2.8), (15, -21, 2.4)]):
+        b += circ(dx, dy - 2, r, '#fff', col, 2)
+    b += rbox(14, 4, 20, 20, '#d64545', 'none', 0, 4) + rbox(21.5, 7, 5, 14, '#fff', 'none', 0, 1) + rbox(17, 11.5, 14, 5, '#fff', 'none', 0, 1)
+    return g(b, x, y, 0, s)
+
+
+def ban(x, y, r=16):
+    return circ(x, y, r, '#fff', ERR, 4) + ln(x - r * 0.7, y + r * 0.7, x + r * 0.7, y - r * 0.7, ERR, 4)
+
+
+def notebook(x, y, w=80, h=64, cols=('data', 'ora', 'sigla'), rows=3):
+    s = rbox(x, y, w, h, '#fff', '#b5a8a3', 2, 6) + rbox(x, y, w, 14, '#e5d6d2', 'none', 0, 6)
+    cw = w / len(cols)
+    for k, c in enumerate(cols):
+        s += text(x + cw * (k + 0.5), y + 11, c, 9.5, weight=700, fill=INK)
+        if k:
+            s += ln(x + cw * k, y + 14, x + cw * k, y + h, '#d9cfc6', 1)
+    for r in range(rows):
+        yy = y + 14 + (r + 1) * (h - 14) / (rows + 0.2)
+        s += ln(x + 4, yy, x + w - 4, yy, '#e5d6d2', 1)
+    return s
+
+
+def foot_side(ox, oy, s=1.0):
+    """Piede di profilo (punta a destra), oy = pianta."""
+    b = P('M0,0 L118,0 Q140,0 140,-14 Q138,-26 118,-28 L84,-34 Q58,-40 40,-62 L36,-120 L4,-120 L2,-40 Q-14,-26 -8,-10 Q-6,0 0,0 Z', SKIN, SKIN_D, 1.6)
+    b += P('M120,-28 L134,-26', 'none', NAIL_S, 4)
+    return g(b, ox, oy, 0, s)
+
+
+def foot_top(cx, by, s=1.0, squeeze=0.0, nail='#f3cbc6', sx=1.0):
+    """Pianta del piede vista dall'alto (dita in alto). squeeze 0..1 = dita compresse."""
+    b = ''
+    toes = [(-30, -150, 17, 22), (-1, -146, 11, 14), (20, -140, 10, 12), (38, -130, 9, 11), (52, -116, 8, 10)]
+    for k, (dx, dy, rx, ry) in enumerate(toes):
+        tx = dx * (1 - 0.32 * squeeze) + (6 * squeeze if k == 0 else -4 * squeeze * k / 2)
+        ty = dy + (8 * squeeze if k else 0)
+        rot = (16 * squeeze) if k == 0 else (-10 * squeeze * k)
+        tb = '<ellipse cx="0" cy="0" rx="%.1f" ry="%.1f" fill="%s" stroke="%s" stroke-width="1.5"/>' % (rx, ry, SKIN, SKIN_D)
+        tb += '<ellipse cx="0" cy="%.1f" rx="%.1f" ry="%.1f" fill="%s" stroke="%s" stroke-width="1"/>' % (-ry * 0.35, rx * 0.6, ry * 0.45, nail, NAIL_S)
+        b += g(tb, tx, ty, rot)
+    b += P('M-46,-118 C-50,-150 40,-150 62,-112 C76,-80 54,-40 46,0 C40,30 20,40 0,40 C-24,40 -38,24 -38,0 C-38,-40 -44,-80 -46,-118 Z', SKIN, SKIN_D, 1.6)
+    # ridisegno le dita sopra il bordo dell'avampiede
+    for k, (dx, dy, rx, ry) in enumerate(toes):
+        tx = dx * (1 - 0.32 * squeeze) + (6 * squeeze if k == 0 else -4 * squeeze * k / 2)
+        ty = dy + (8 * squeeze if k else 0)
+        rot = (16 * squeeze) if k == 0 else (-10 * squeeze * k)
+        tb = '<ellipse cx="0" cy="0" rx="%.1f" ry="%.1f" fill="%s" stroke="%s" stroke-width="1.5"/>' % (rx, ry, SKIN, SKIN_D)
+        tb += '<ellipse cx="0" cy="%.1f" rx="%.1f" ry="%.1f" fill="%s" stroke="%s" stroke-width="1"/>' % (-ry * 0.35, rx * 0.6, ry * 0.45, nail, NAIL_S)
+        b += g(tb, tx, ty, rot)
+    return '<g transform="translate(%.1f,%.1f) scale(%.3f,%.3f)">%s</g>' % (cx, by, s * sx, s, b)
+
+
+@figx('piede-unghia-anatomia.svg')
+def piede_anat():
+    W, H = 860, 400
+    b = T('L\'unghia dell\'alluce')
+    f, p = toe_top(170, 300, hw=62, nail_len=120, free=10, finger_len=50)
+    b += frame(20, 58, 400, 270, 'Vista dall\'alto', body=f)
+    cx, ys, yc = 170, p['y_s'], 300
+    b += leader(cx + 20, ys - 6, 270, 104, 'bordo libero', 'start', 13.5)
+    b += leader(cx + 10, ys + 50, 270, 150, 'lamina più spessa', 'start', 13.5)
+    b += leader(cx + 66, ys + 70, 270, 196, 'solchi laterali profondi', 'start', 13.5)
+    b += leader(cx + 30, yc - 22, 270, 242, 'cuticola', 'start', 13.5)
+    # sezione dalla punta
+    x2 = 432
+    body = ''
+    cx2, cy2 = x2 + 204, 246
+    body += P('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z' % (
+        cx2 - 150, cy2 - 30, cx2 - 160, cy2 + 70, cx2 + 160, cy2 + 70, cx2 + 150, cy2 - 30, cx2 + 120, cy2 - 52, cx2 - 120, cy2 - 52, cx2 - 150, cy2 - 30), SKIN, SKIN_D, 1.5)
+    # pieghe laterali che "abbracciano" gli angoli
+    body += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx2 - 100, cy2 - 6, cx2, cy2 - 74, cx2 + 100, cy2 - 6), 'none', NAIL_S, 9)
+    body += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx2 - 100, cy2 - 6, cx2, cy2 - 74, cx2 + 100, cy2 - 6), 'none', '#f3cbc6', 5)
+    for sx in (-1, 1):
+        body += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z' % (
+            cx2 + sx * 136, cy2 - 34, cx2 + sx * 112, cy2 - 34, cx2 + sx * 96, cy2 - 8, cx2 + sx * 118, cy2 + 4, cx2 + sx * 140, cy2 - 4), SKIN, SKIN_D, 1.3)
+        body += circ(cx2 + sx * 100, cy2 - 4, 16, 'none', ERR, 2.2, ' stroke-dasharray="4 3"')
+    for k in (-60, 0, 60):
+        body += arrow(cx2 + k, 128, cx2 + k * 0.9, 160, MUTED, 2.6)
+    body += text(cx2, 118, 'pressione della scarpa', 13.5, weight=700, fill=MUTED)
+    body += text(cx2, 304, 'gli angoli scendono nella pelle', 13.5, weight=800, fill=ERR)
+    b += frame(x2, 58, 408, 270, 'Vista dalla punta (sezione)', body=body)
+    b += strip(20, 340, 820, 40, 'Crescita: mani ≈ 3,5 mm/mese · piedi ≈ 1,6 mm/mese (alluce rinnovato in 12–18 mesi)', 'info', 14)
+    return svg(W, H, arrow_defs() + b, 'L\'unghia dell\'alluce: più spessa, più curva, con solchi laterali profondi')
+
+
+@figx('piede-taglio-step.svg')
+def piede_taglio_step():
+    labels = ['Ammorbidisci', 'Taglia dritto a piccoli colpi', 'Lima gli angoli', 'A filo del dito']
+    subs = ['pediluvio tiepido, pochi minuti', 'da un lato all\'altro', 'una sola direzione', 'né più lungo né più corto']
+    pw, ph = 224, 280
+    W = 20 + 4 * pw + 3 * 12 + 20
+    b = T('Taglio dell\'unghia del piede: 4 passaggi')
+    for i, lab in enumerate(labels):
+        x = 20 + i * (pw + 12)
+        cx = x + pw / 2
+        s = ''
+        if i == 0:
+            s += basin(cx - 6, 248, 180, 70, water=False)
+            s += foot_side(cx - 74, 236, 0.9)
+            s += basin(cx - 6, 248, 180, 70, alpha=0.75)
+            s += thermometer(cx + 70, 140, 0.9)
+            s += text(cx + 70, 108, 'tiepida', 13, weight=800, fill='#c0392b')
+        elif i == 1:
+            f, p = toe_top(cx, 250, hw=50, nail_len=92, free=14, finger_len=40)
+            s += f
+            yt = p['y_t']
+            s += dashed(cx - 64, yt + 2, cx + 64, yt + 2, OK, 2)
+            for k in range(3):
+                xx = cx - 36 + k * 36
+                s += circ(xx, yt - 18, 10, ACC, 'none', 0) + text(xx, yt - 13.5, str(k + 1), 12, weight=800, fill='#fff')
+            s += arrow(cx - 50, yt - 38, cx + 50, yt - 38, ACC2, 2)
+            s += clipper(cx + 78, yt + 30, -20, 0.8)
+        elif i == 2:
+            f, p = toe_top(cx, 250, hw=50, nail_len=92, free=6, finger_len=40)
+            s += f
+            s += tool_file(cx + 54, p['y_t'] - 4, -55, 110, 16)
+            s += arrow(cx + 40, p['y_t'] + 34, cx + 64, p['y_t'] - 8, ACC2, 2.4)
+            s += circ(cx + 47, p['y_t'] + 6, 14, 'none', ACC2, 2, ' stroke-dasharray="3 3"')
+        else:
+            ox = x + 10
+            s += finger_side(ox, 190, L=180, th=66, nx0=ox + 92, nx1=ox + 184, nail_th=8, plate='#f3cbc6', bone=False)
+            s += dashed(ox + 186, 110, ox + 186, 270, OK, 2)
+            s += text(ox + 180, 102, 'punta del dito', 12.5, 'end', 700, OK)
+            s += mark(x + pw - 26, 240, True, 13)
+        b += frame(x, 58, pw, ph, lab, i + 1, body=s, sub=subs[i], subcol=MUTED, tsize=14)
+    return svg(W, 58 + ph + 20, arrow_defs() + b, 'Taglio dell\'unghia del piede in quattro passaggi: ammorbidisci, taglia dritto a piccoli colpi, lima gli angoli, lunghezza a filo')
+
+
+@figx('scarpa-pressione.svg')
+def scarpa():
+    W, H = 820, 340
+    b = T('La scarpa conta')
+    for k, okk in enumerate([False, True]):
+        x = 20 + k * 400
+        cx, by = x + 190, 300
+        s = ''
+        if not okk:
+            shoe = 'M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z' % (
+                cx - 52, by, cx - 62, by - 110, cx - 40, by - 180, cx + 2, by - 214, cx + 40, by - 180, cx + 66, by - 110, cx + 54, by, cx + 20, by + 20, cx - 20, by + 20, cx - 52, by)
+        else:
+            shoe = 'M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z' % (
+                cx - 56, by, cx - 66, by - 120, cx - 72, by - 196, cx + 6, by - 200, cx + 90, by - 200, cx + 84, by - 120, cx + 62, by, cx + 20, by + 20, cx - 20, by + 20, cx - 56, by)
+        s += P(shoe, '#f5ece6', '#8a6d5a', 3)
+        s += foot_top(cx, by - (30 if not okk else 18), 0.95, 0.0 if okk else 1.0, sx=1.0 if okk else 0.8)
+        s += P(shoe, 'none', '#8a6d5a', 3, ' stroke-dasharray="7 5"')
+        if not okk:
+            s += arrow(cx - 110, by - 160, cx - 50, by - 160, ERR, 3) + arrow(cx + 116, by - 150, cx + 58, by - 150, ERR, 3)
+            s += text(cx, 92, 'punta stretta: preme sugli angoli', 14, weight=800, fill=ERR)
+        else:
+            s += text(cx, 92, 'punta ampia: spazio per le dita', 14, weight=800, fill=OK)
+        b += frame(x, 58, 380, 270, None, None, okk, s)
+    return svg(W, H, '<defs><marker id="arE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="%s"/></marker></defs>' % ERR
+               + arrow_defs() + b.replace('marker-end="url(#arw)"', 'marker-end="url(#arE)"'), 'La scarpa conta: punta stretta che preme sugli angoli e punta comoda con spazio per le dita')
+
+
+@figx('piede-segnali-stop.svg')
+def segnali_stop():
+    W, H = 960, 460
+    b = T('Segnali di STOP sui piedi')
+    b += rbox(20, 54, 920, 34, RED_BG, ERR, 1.5, 12)
+    b += text(480, 76, 'Non coprire, non limare, non diagnosticare: consiglia', 15, weight=800, fill=ERR)
+    cards = [('unghia gialla, spessa', 'medico o podologo', 'both'), ('pelle squamata tra le dita', 'medico', 'med'),
+             ('angolo rosso e gonfio', 'podologo', 'pod'), ('ferite, vesciche', 'niente servizio', 'ban'),
+             ('escrescenza ruvida', 'medico, non limare', 'med'), ('unghia "a corno"', 'podologo', 'pod')]
+    for k, (t, dest, ic) in enumerate(cards):
+        x = 20 + (k % 3) * 310
+        y = 98 + (k // 3) * 176
+        cid = uid('sc')
+        b += '<defs><clipPath id="%s"><rect x="%d" y="%d" width="300" height="166" rx="14"/></clipPath></defs>' % (cid, x, y)
+        b += rbox(x, y, 300, 166, '#fff', 'none', 0, 14)
+        cx, cy = x + 76, y + 92
+        s = ''
+        if k == 0:
+            ext = ''.join(P('M%.1f,%.1f l6,-4' % (cx - 30 + j * 11, cy - 30 + (j % 3) * 14), 'none', '#a37d1c', 2) for j in range(6))
+            f, p = toe_top(cx, cy + 64, hw=40, nail_len=70, free=8, plate=MYC, finger_len=24, extra=ext, shape='quadrata')
+            s += f
+            for j in range(5):
+                s += P('M%.1f,%.1f l4,-6 l4,6' % (cx - 34 + j * 14, p['y_t']), '#fff', '#a37d1c', 1.5)
+        elif k == 1:
+            for sx in (-1, 1):
+                s += rbox(cx + sx * 26 - 22, cy - 54, 44, 110, SKIN, SKIN_D, 1.5, 22)
+            s += rbox(cx - 8, cy - 30, 16, 80, '#f19a90', 'none', 0, 6)
+            for j in range(6):
+                s += P('M%.1f,%.1f l6,4 l6,-4' % (cx - 9, cy - 24 + j * 12), 'none', '#fff', 1.6)
+        elif k == 2:
+            f, p = toe_top(cx, cy + 64, hw=40, nail_len=70, free=4, finger_len=24)
+            s += f
+            s += '<ellipse cx="%.1f" cy="%.1f" rx="16" ry="30" fill="%s" opacity=".75"/>' % (cx + 44, cy + 6, INFL)
+            s += circ(cx + 44, cy + 6, 34, 'none', ERR, 2, ' stroke-dasharray="4 3"')
+        elif k == 3:
+            s += P('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z' % (
+                cx - 34, cy + 60, cx - 50, cy - 10, cx - 30, cy - 66, cx + 4, cy - 66, cx + 40, cy - 66, cx + 46, cy, cx + 30, cy + 60), SKIN, SKIN_D, 1.5)
+            s += circ(cx - 4, cy - 20, 13, '#fbe3e6', '#e57373', 2) + circ(cx - 8, cy - 24, 4, '#fff', 'none', 0)
+            s += P('M%.1f,%.1f l18,10' % (cx + 4, cy + 24), 'none', '#c0392b', 3)
+        elif k == 4:
+            s += P('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z' % (
+                cx - 34, cy + 60, cx - 50, cy - 10, cx - 30, cy - 66, cx + 4, cy - 66, cx + 40, cy - 66, cx + 46, cy, cx + 30, cy + 60), SKIN, SKIN_D, 1.5)
+            s += circ(cx, cy, 18, '#e9d2b8', '#a98b6a', 2)
+            for j in range(7):
+                s += circ(cx - 9 + (j * 7) % 18, cy - 9 + (j * 11) % 18, 1.8, '#5b3b2a', 'none', 0)
+        else:
+            s += finger_side(cx - 70, cy + 6, L=110, th=48, nx0=cx - 18, bone=False, nail_path=(
+                'M%.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
+                    cx - 18, cy - 14, cx + 20, cy - 22, cx + 50, cy - 26, cx + 64, cy - 6, cx + 56, cy + 30, cx + 46, cy + 28,
+                    cx + 48, cy + 4, cx + 36, cy - 4, cx + 20, cy - 2, cx - 18, cy + 1)), plate='#e3c08a')
+        b += '<g clip-path="url(#%s)">%s</g>' % (cid, s)
+        b += rbox(x, y, 300, 166, 'none', ERR, 2, 14)
+        b += ftext(x + 222, y + 56, t, 14, 150, weight=800)
+        b += arrow(x + 160, y + 82, x + 190, y + 82, ACC2, 2)
+        if ic == 'med':
+            b += stethoscope(x + 214, y + 94, 0.8)
+        elif ic == 'pod':
+            b += podo_icon(x + 222, y + 96, 0.9)
+        elif ic == 'ban':
+            b += ban(x + 222, y + 92, 16)
+        else:
+            b += stethoscope(x + 206, y + 92, 0.7) + podo_icon(x + 254, y + 96, 0.75)
+        b += ftext(x + 222, y + 146, dest, 13.5, 150, weight=800, fill=ERR)
+    return svg(W, H, arrow_defs() + b, 'Segnali di STOP sui piedi: quando non si lavora e si consiglia medico o podologo')
+
+
+@figx('pediluvio-disinfezione.svg')
+def pediluvio():
+    W, H = 900, 480
+    b = T('Vaschetta: dopo ogni cliente')
+    cx, cy, R = 450, 246, 128
+    steps = [('Svuota', 0), ('Spazzola + sapone', 1), ('Risciacqua', 2), ('Disinfettante', 3), ('Svuota e asciuga', 4), ('Registro', 5)]
+    b += circ(cx, cy, R, 'none', '#ead9d5', 18)
+    for k in range(6):
+        a0 = math.radians(-90 + k * 60 + 14)
+        a1 = math.radians(-90 + (k + 1) * 60 - 14)
+        b += '<path d="M%.1f,%.1f A%d,%d 0 0 1 %.1f,%.1f" fill="none" stroke="%s" stroke-width="3" marker-end="url(#ar)"/>' % (
+            cx + R * math.cos(a0), cy + R * math.sin(a0), R, R, cx + R * math.cos(a1), cy + R * math.sin(a1), ACC2)
+    b += circ(cx, cy, 82, GREEN_BG, OK, 1.5)
+    b += mtext(cx, cy - 8, ['senza tubature', '= più sicura'], 15, weight=800, fill=OK)
+    pos = []
+    for k, (t, _) in enumerate(steps):
+        a = math.radians(-90 + k * 60)
+        px, py = cx + (R + 0) * math.cos(a), cy + (R + 0) * math.sin(a)
+        pos.append((px, py))
+    for k, (t, _) in enumerate(steps):
+        px, py = pos[k]
+        # scheda con icona
+        side = 'start' if math.cos(math.radians(-90 + k * 60)) > 0.1 else ('end' if math.cos(math.radians(-90 + k * 60)) < -0.1 else 'middle')
+        b += circ(px, py, 40, '#fff', ACC, 2.5)
+        ic = ''
+        if k == 0:
+            ic = basin(0, 14, 56, 30, water=False, tilt=-25)
+        elif k == 1:
+            ic = rbox(-22, -6, 36, 12, '#8a6d4f', 'none', 0, 4) + ''.join(ln(-18 + j * 6, 6, -18 + j * 6, 16, '#6b5a4a', 2) for j in range(6))
+            ic += circ(18, -12, 6, '#fff', '#9ccbe6', 1.5) + circ(10, -20, 4, '#fff', '#9ccbe6', 1.5) + circ(24, -2, 4, '#fff', '#9ccbe6', 1.5)
+        elif k == 2:
+            ic = rbox(-20, -22, 30, 8, GREY, 'none', 0, 3) + rbox(4, -22, 8, 16, GREY, 'none', 0, 2)
+            ic += ''.join(P('M%.1f,%.1f q4,6 0,9 q-4,-3 0,-9 z' % (8 + j * 0, -2 + j * 11), '#7fc3e8', 'none', 0) for j in range(3))
+        elif k == 3:
+            ic = rbox(-16, -16, 26, 40, '#e4f0f8', '#2c5a78', 2, 5) + rbox(-10, -24, 14, 9, '#2c5a78', 'none', 0, 2)
+            ic += rbox(-12, -2, 18, 12, '#fff', 'none', 0, 2) + text(-3, 7, '+', 11, weight=800, fill='#2c5a78')
+        elif k == 4:
+            ic = rbox(-18, -20, 36, 40, '#fff', '#b5a8a3', 2, 3) + ''.join(ln(-14, -12 + j * 9, 14, -12 + j * 9, '#e5d6d2', 1.5) for j in range(4))
+        else:
+            ic = g(notebook(-26, -20, 52, 40, ('d', 'h', 's')), 0, 0)
+        b += g(ic, px, py)
+        lab_x = px + (52 if side == 'start' else -52 if side == 'end' else 0)
+        lab_y = py + (5 if side != 'middle' else (-50 if k == 0 else 62))
+        b += circ(px - 28, py - 28, 12, ACC, 'none', 0) + text(px - 28, py - 23.5, str(k + 1), 13, weight=800, fill='#fff')
+        b += text(lab_x, lab_y, t, 15, side, 800)
+        if k == 3:
+            b += timer(lab_x + 6, lab_y + 26, '10 min (o da etichetta)')
+        if k == 5:
+            b += text(lab_x, lab_y + 20, 'data · ora · sigla', 13, side, 600, MUTED)
+    return svg(W, H, arrow_defs() + b, 'Pulizia e disinfezione della vaschetta da pediluvio dopo ogni cliente, con il registro')
+
+
+@figx('piede-diabetico-regole.svg')
+def diabete():
+    W, H = 900, 440
+    b = T('Cliente con diabete')
+    yes = [('acqua tiepida, misurata', 'therm'), ('asciuga tra le dita', 'towel'), ('taglio dritto', 'clip'),
+           ('crema, ma non tra le dita', 'cream'), ('dubbi? podologo', 'pod')]
+    no = [('acqua calda', 'hot'), ('pediluvio lungo', 'hour'), ('lame su calli o cuticole', 'blade'),
+          ('prodotti callifughi', 'callif'), ('lavorare su ferite', 'wound')]
+    for c, (lst, ok) in enumerate([(yes, True), (no, False)]):
+        x = 20 + c * 436
+        col = OK if ok else ERR
+        b += rbox(x, 58, 424, 320, GREEN_BG if ok else RED_BG, col, 1.5, 16)
+        b += mark(x + 30, 84, ok, 13) + text(x + 52, 90, 'Sì' if ok else 'No', 18, 'start', 800, col)
+        for k, (t, ic) in enumerate(lst):
+            y = 128 + k * 52
+            b += circ(x + 44, y, 22, '#fff', col, 1.5)
+            if ic == 'therm':
+                s = thermometer(x + 44, y + 2, 0.5)
+            elif ic == 'towel':
+                s = towel(x + 44, y, 0.55)
+            elif ic == 'clip':
+                s = clipper(x + 44, y - 12, 0, 0.42)
+            elif ic == 'cream':
+                s = jar(x + 44, y + 4, 0.55)
+            elif ic == 'pod':
+                s = podo_icon(x + 42, y + 2, 0.55)
+            elif ic == 'hot':
+                s = g(basin(0, 10, 50, 22, water=True, steam=True), x + 44, y + 2, 0, 0.62)
+            elif ic == 'hour':
+                s = hourglass(x + 44, y, 0.55)
+            elif ic == 'blade':
+                s = blade(x + 52, y + 6, -30, 0.55)
+            elif ic == 'callif':
+                s = jar(x + 44, y + 4, 0.55, '#fff', '#8a6d4f') + ln(x + 30, y + 14, x + 58, y - 12, ERR, 3)
+            else:
+                s = rbox(x + 30, y - 7, 28, 14, '#f4d7b9', '#b88a5a', 1.5, 6) + circ(x + 44, y, 3.5, '#d9534f', 'none', 0)
+            b += s
+            b += text(x + 80, y + 5, t, 15, 'start', 700)
+    b += strip(20, 390, 860, 38, 'Ferite, infezioni, perdita di sensibilità → niente servizio: podologo o medico', 'warn', 14.5)
+    return svg(W, H, b, 'Cliente con diabete: cosa fare e cosa evitare durante la pedicure')
+
+
+@figx('estetista-podologo.svg')
+def esteti_podo():
+    W, H = 900, 380
+    b = T('Estetista e podologo: chi fa cosa')
+    cols = [('Estetista', 'piede sano', '#fbe0ea', ACC, ['taglio e lima', 'cuticole (delicatamente)', 'colore', 'idratazione e massaggio']),
+            ('Podologo', 'professione sanitaria', BLUE_BG, '#2c5a78', ['unghie incarnite', 'unghie spesse o deformi', 'calli e duroni', 'piede doloroso', 'pazienti a rischio'])]
+    for c, (t, sub, bg, col, items) in enumerate(cols):
+        x = 20 + c * 540
+        b += rbox(x, 58, 320, 270, bg, col, 2, 22)
+        b += text(x + 24, 92, t, 19, 'start', 800, col) + text(x + 24, 114, sub, 13.5, 'start', 600, MUTED)
+        if c == 1:
+            b += podo_icon(x + 280, 92, 0.8, col)
+        else:
+            b += g(nail_shape(0, 0, 18, 30, '#e46f8f', NAIL_S, 1.2), x + 290, 106)
+        for k, it in enumerate(items):
+            y = 148 + k * 34
+            b += circ(x + 32, y - 5, 5, col, 'none', 0)
+            b += text(x + 46, y, it, 15, 'start', 600)
+    # frecce centrali
+    b += '<line x1="350" y1="160" x2="550" y2="160" stroke="%s" stroke-width="6" marker-end="url(#ar)"/>' % ACC2
+    b += mtext(450, 136, ['dolore, infiammazione,', 'deformità → invia'], 13.5, weight=800, fill=ACC2, lh=1.2)
+    b += '<line x1="550" y1="240" x2="350" y2="240" stroke="%s" stroke-width="2" marker-end="url(#arw)"/>' % MUTED
+    b += mtext(450, 266, ['piede sano → torna', 'per l\'estetica'], 13, weight=700, fill=MUTED, lh=1.2)
+    b += stethoscope(372, 352, 0.6) + text(396, 362, 'sospetta malattia (micosi, verruche, ferite) → medico', 14, 'start', 700, '#2c5a78')
+    return svg(W, H, arrow_defs() + b, 'Estetista e podologo: chi fa cosa e quando inviare la cliente')
+
+
+@figx('pedicure-postazione.svg')
+def postazione():
+    W, H = 900, 420
+    b = T('Postazione di pedicure (vista dall\'alto)')
+    b += rbox(20, 54, 860, 352, '#fbf7f4', '#ead9d5', 1.5, 16)
+    # poltrona cliente
+    b += rbox(330, 70, 220, 110, '#d8c7e8', '#8a7d9e', 2, 26) + rbox(350, 82, 180, 70, '#e8ddf3', 'none', 0, 18)
+    b += rbox(318, 84, 26, 90, '#cbb9df', '#8a7d9e', 1.5, 10) + rbox(536, 84, 26, 90, '#cbb9df', '#8a7d9e', 1.5, 10)
+    b += text(440, 124, 'poltrona cliente', 13, weight=700, fill='#5d4f78')
+    # poggiapiedi
+    b += rbox(385, 196, 110, 70, '#e6dccf', '#a89a88', 2, 14) + text(440, 236, 'poggiapiedi', 12.5, weight=700, fill=MUTED)
+    # sgabello
+    b += circ(440, 330, 34, '#cfd8dc', '#8a9aa3', 2) + text(440, 335, 'sgabello', 12.5, weight=700, fill='#4a5a63')
+    # tavolino a destra
+    b += rbox(612, 120, 250, 250, '#fff', '#b5a8a3', 2, 12)
+    b += ln(737, 130, 737, 360, '#b5a8a3', 1.5, ' stroke-dasharray="5 4"')
+    b += rbox(620, 128, 110, 26, GREEN_BG, OK, 1.2, 8) + text(675, 146, 'PULITO', 13, weight=800, fill=OK)
+    b += rbox(744, 128, 110, 26, RED_BG, ERR, 1.2, 8) + text(799, 146, 'USATO', 13, weight=800, fill=ERR)
+    # pulito: busta sterile, lime nuove, separadita, guanti
+    b += rbox(630, 168, 90, 44, '#eaf4fb', '#7fa9c4', 1.5, 4) + text(675, 186, 'busta', 11.5, weight=700, fill='#2c5a78') + text(675, 201, 'sterile', 11.5, weight=700, fill='#2c5a78')
+    b += tool_file(675, 230, 0, 80, 12)
+    b += ''.join(circ(645 + j * 15, 262, 6, '#f4a6c0', '#c2577a', 1) for j in range(5)) + text(675, 284, 'separadita', 11.5, weight=600, fill=MUTED)
+    b += glove(675, 326, 0.7, '#9fc6e8')
+    # usato: contenitore con coperchio + cestino
+    b += rbox(752, 170, 94, 70, '#fde6e3', '#b5a8a3', 1.5, 8) + rbox(748, 164, 102, 12, '#e5a6a0', 'none', 0, 4)
+    b += mtext(799, 196, ['strumenti da', 'sterilizzare'], 11.5, weight=700, fill=ERR)
+    b += P('M770,268 L828,268 L822,334 L776,334 Z', '#eee8e4', '#8a7d74', 2) + rbox(764, 260, 70, 10, '#8a7d74', 'none', 0, 3)
+    b += text(799, 306, 'monouso', 11.5, weight=700, fill=MUTED) + text(799, 352, 'cestino', 11.5, weight=600, fill=MUTED)
+    b += text(737, 392, 'flusso: pulito → usato, mai al contrario', 13, weight=800, fill=ACC2)
+    # sinistra: vaschetta, lampada, registro
+    b += basin(140, 196, 150, 70, water=True, liner=True)
+    b += rbox(84, 210, 112, 26, '#fff', OK, 1.5, 6) + text(140, 228, 'disinfettata ✓ 10:15', 11.5, weight=700, fill=OK)
+    b += text(140, 104, 'vaschetta con fodera', 12.5, weight=700, fill=MUTED)
+    b += g(lamp(0, 0, 100), 110, 340, 0, 0.8) + text(110, 362, 'lampada (fondo rimovibile)', 11.5, weight=600, fill=MUTED)
+    b += notebook(206, 286, 86, 60) + text(249, 362, 'registro', 11.5, weight=600, fill=MUTED)
+    return svg(W, H, arrow_defs() + b, 'Postazione di pedicure vista dall\'alto: poltrona, poggiapiedi, zona pulito e zona usato')
+
+
+@figx('tut-semipermanente-piedi.svg')
+def tut_semi_piedi():
+    labels = ['Ispeziona', 'Taglio dritto', 'Asciuga bene', 'Separadita', 'Opacizza e sgrassa', 'Base', '2 strati sottili', 'Top e olio']
+    subs = ['niente colore su unghie sospette', 'angoli limati appena', 'aspetta qualche minuto', 'il colore non tocca il vicino',
+            'buffer 180–240, poi disidratante', 'margine dalla pelle', 'lampada dopo ogni strato', 'lampada, poi olio']
+    pw, ph = 219, 232
+    W = 20 + 4 * pw + 3 * 12 + 20
+    b = T('Semipermanente sui piedi: 8 passaggi')
+    RED = '#c62f4a'
+    for i, lab in enumerate(labels):
+        x = 20 + (i % 4) * (pw + 12)
+        y = 58 + (i // 4) * (ph + 12)
+        cx, by = x + pw / 2 - 10, y + 172
+        s = ''
+        plate = '#f3cbc6'
+        if i >= 5:
+            plate = '#f6dbe2'
+        ext = ''
+        if i == 5:
+            ext = ''
+        f, p = toe_top(cx, by, hw=38, nail_len=70, free=6, plate=plate, finger_len=12)
+        if i >= 6:
+            f, p = toe_top(cx, by, hw=38, nail_len=70, free=6, plate=plate, finger_len=12,
+                           extra='<rect x="%.1f" y="%.1f" width="80" height="80" fill="%s" clip-path="url(#CLIP)"/>' % (cx - 40, by - 82, RED))
+        s += f
+        if i == 0:
+            s += magnifier(cx + 20, by - 54, 22)
+        elif i == 1:
+            s += dashed(cx - 50, p['y_t'] + 2, cx + 50, p['y_t'] + 2, OK, 2) + clipper(cx + 66, p['y_t'] - 10, -15, 0.65)
+        elif i == 2:
+            s += towel(cx + 64, by - 60, 0.8)
+            for j in range(3):
+                s += P('M%.1f,%.1f q4,6 0,9 q-4,-3 0,-9 z' % (cx - 18 + j * 18, by - 44 - j * 6), '#7fc3e8', 'none', 0, ' opacity="%.2f"' % (0.9 - j * 0.3))
+        elif i == 3:
+            for sx in (-1, 1):
+                s += rbox(cx + sx * 64 - 10, by - 70, 20, 80, '#f4a6c0', '#c2577a', 1.5, 9)
+            s += text(cx + 64, by - 80, 'separadita', 12, 'middle', 700, ACC2)
+        elif i == 4:
+            s += tool_file(cx + 10, by - 40, -30, 70, 18, '#c9c0b8', '#efe9e4')
+            s += oil_bottle(cx + 74, by - 70, 0.8)
+        elif i == 5:
+            s += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - 30, by - 30, cx, by - 6, cx + 30, by - 30), 'none', '#fff', 3)
+            s += tool_brush(cx + 34, by - 66, -50, 60, '#f6dbe2')
+        elif i == 6:
+            s += mini_lamp(cx + 72, by - 92, 0.4) + text(cx + 72, by - 66, '×2', 15, weight=800, fill=ACC2)
+        else:
+            s += gloss(cx, by - 4, 70, 0.9) + oil_bottle(cx + 70, by - 70, 0.8)
+        b += frame(x, y, pw, ph, lab, i + 1, body=s, sub=subs[i], subcol=MUTED, tsize=14)
+    return svg(W, 58 + 2 * (ph + 12) + 8, arrow_defs() + b, 'Il semipermanente sui piedi in otto passaggi')
+
+
+@figx('piedi-errori-colore.svg')
+def piedi_errori():
+    W, H = 860, 330
+    b = T('Errori di colore sui piedi')
+    RED = '#c62f4a'
+    items = [('colore sulla pelle', False), ('bordo non sigillato', False), ('troppo prodotto nei solchi', False), ('margine pulito, punta sigillata', True)]
+    for k, (t, ok) in enumerate(items):
+        x = 20 + k * 208
+        cx, by = x + 98, 234
+        hw, nl = 40, 74
+        ext = '<rect x="%.1f" y="%.1f" width="90" height="90" fill="%s" clip-path="url(#CLIP)"/>' % (cx - 45, by - nl - 10, RED)
+        f, p = toe_top(cx, by, hw=hw, nail_len=nl, free=6, plate=RED, finger_len=4)
+        s = f
+        zx, zy = cx + 54, by - 120
+        if k == 0:
+            s += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z' % (
+                cx - 26, by - 8, cx - 18, by + 14, cx + 2, by + 12, cx + 20, by + 16, cx + 24, by - 6, cx, by + 2, cx - 26, by - 8), RED, '#8e1f35', 1)
+            s += circ(cx, by + 4, 28, 'none', ERR, 2.2)
+        elif k == 1:
+            for j in range(3):
+                s += P('M%.1f,%.1f l5,8 l5,-8 Z' % (cx - 30 + j * 22, p['y_t'] - 1), '#f3cbc6', 'none', 0)
+            s += circ(cx - 10, p['y_t'] + 2, 24, 'none', ERR, 2.2)
+        elif k == 2:
+            for sx in (-1, 1):
+                s += rbox(cx + sx * (hw + 2) - 5, by - nl + 4, 10, nl - 30, '#e0405e', '#8e1f35', 1.5, 5)
+                s += ln(cx + sx * (hw + 2) - 1, by - nl + 10, cx + sx * (hw + 2) - 1, by - 40, '#fff', 2)
+            s += circ(cx + hw + 2, by - 50, 22, 'none', ERR, 2.2)
+        else:
+            s += gloss(cx, by - 6, nl, 0.9)
+            s += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - 38, by - 30, cx, by + 16, cx + 38, by - 30), 'none', '#f3cbc6', 5)
+        b += frame(x, 58, 196, 250, None, None, ok, s, sub=t, subcol=OK if ok else ERR)
+    return svg(W, H, arrow_defs() + b, 'Errori tipici del semipermanente sui piedi: colore sulla pelle, bordo non sigillato, prodotto nei solchi')
+
+
+def chrome_grad(gid, vertical=False):
+    return ('<defs><linearGradient id="%s" x1="0" y1="%s" x2="1" y2="%s"><stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="%s"/>'
+            '<stop offset="1" stop-color="%s"/></linearGradient></defs>') % (gid, 0, 1 if vertical else 0, CHROME[0], CHROME[1], CHROME[2])
+
+
+def magnet(x, y, w=44, h=22, ang=0):
+    b = rbox(-w / 2, -h / 2, w / 2, h, '#d64545', '#4b3a40', 1.5, 3) + rbox(0, -h / 2, w / 2, h, '#3f6fc4', '#4b3a40', 1.5, 3)
+    b += text(-w / 4, h / 4 - 1, 'N', 11, weight=800, fill='#fff') + text(w / 4, h / 4 - 1, 'S', 11, weight=800, fill='#fff')
+    return g(b, x, y, ang)
+
+
+def brush_flat(x, y, ang=0, c1='#ffffff', c2='#e46f8f', load=0.75, s=1.0, ferrule_dirty=False):
+    """Pennello piatto visto di fronte, setole verso il basso (prima della rotazione). load = frazione delle setole caricata."""
+    bl = 46
+    gid = uid('bf')
+    b = ('<defs><linearGradient id="%s" x1="0" x2="1"><stop offset="0" stop-color="%s"/><stop offset=".38" stop-color="%s"/>'
+         '<stop offset=".62" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient></defs>') % (gid, c1, c1, c2, c2)
+    b += rbox(-7, -78, 14, 38, '#4b3a40', 'none', 0, 5)
+    b += P('M-12,-44 L12,-44 L14,0 L-14,0 Z', '#c9cdd3' if not ferrule_dirty else '#c9cdd3', GREY_D, 1.5)
+    if ferrule_dirty:
+        b += P('M-13,-16 L13,-16 L14,0 L-14,0 Z', 'url(#%s)' % gid, 'none', 0)
+    b += P('M-14,0 L14,0 L16,%.1f L-16,%.1f Z' % (bl, bl), '#f3e6c9', '#b9a77d', 1.2)
+    top = bl * (1 - load)
+    b += P('M%.1f,%.1f L%.1f,%.1f L16,%.1f L-16,%.1f Z' % (-14 - 2 * top / bl, top, 14 + 2 * top / bl, top, bl, bl), 'url(#%s)' % gid, 'none', 0)
+    for k in range(-12, 13, 4):
+        b += ln(k, 2, k * 1.1, bl - 1, '#000', 0.6, ' opacity=".15"')
+    return g(b, x, y, ang, s)
+
+
+def petal(cx, cy, ang=0, L=40, W=22, c_out='#ffffff', c_in='#e46f8f'):
+    gid = uid('pt')
+    b = ('<defs><linearGradient id="%s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient></defs>'
+         % (gid, c_out, c_in))
+    b += P('M0,0 C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f 0,0 Z' % (-W, -L * 0.3, -W * 0.8, -L, -L, W * 0.8, -L, W, -L * 0.3),
+           'url(#%s)' % gid, '#c2577a', 1.2)
+    # in SVG il gradiente va dalla punta (esterno, chiaro) alla base
+    return g(b, cx, cy, ang)
+
+
+def leaf(cx, cy, ang=0, L=56, W=16):
+    gid = uid('lf')
+    b = ('<defs><linearGradient id="%s" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#a5d6a7"/><stop offset="1" stop-color="#2e7d32"/></linearGradient></defs>' % gid)
+    b += P('M0,0 C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f 0,0 Z' % (-W, -L * 0.3, -W * 0.5, -L * 0.8, -L, W * 0.2, -L * 0.7, W * 0.9, -L * 0.3),
+           'url(#%s)' % gid, '#1b5e20', 1.2)
+    b += P('M0,-4 Q2,%.1f 0,%.1f' % (-L * 0.5, -L + 8), 'none', '#1b5e20', 1, ' opacity=".6"')
+    return g(b, cx, cy, ang)
+
+
+@figx('chrome-step.svg')
+def chrome_step():
+    labels = ['Colore liscio', 'Top no-wipe', 'Poca polvere', 'Strofina', 'Pulisci il bordo', 'Top sulla punta']
+    subs = ['meglio su nero o scuro', '≈30 s, vedi scheda', 'spugnetta o silicone', 'fino allo specchio', 'buffer + pennello',
+            'avvolge il bordo libero']
+    pw, ph = 145, 262
+    W = 20 + 6 * pw + 5 * 10 + 20
+    b = T('Chrome in 6 passaggi')
+    BLK = '#1d1a20'
+    for i, lab in enumerate(labels):
+        x = 20 + i * (pw + 10)
+        cx, by = x + pw / 2 - 6, 58 + 214
+        s = ''
+        ext = ''
+        if i >= 3:
+            gid = uid('ch')
+            if i == 3:
+                ext = chrome_grad(gid) + '<rect x="%.1f" y="%.1f" width="70" height="60" fill="url(#%s)" clip-path="url(#CLIP)"/>' % (cx - 35, by - 124, gid)
+            else:
+                ext = chrome_grad(gid) + '<rect x="%.1f" y="%.1f" width="70" height="140" fill="url(#%s)" clip-path="url(#CLIP)"/>' % (cx - 35, by - 136, gid)
+        s += nail_shape(cx, by, 56, 120, BLK, '#000', 1.6, ext)
+        if i == 0:
+            s += gloss(cx, by, 120, 0.9)
+        elif i == 1:
+            s += gloss(cx, by, 120, 0.9) + mini_lamp(cx + 40, 128, 0.36)
+        elif i == 2:
+            s += g(rbox(-5, 0, 10, 48, '#4b3a40', 'none', 0, 4) + '<ellipse cx="0" cy="-6" rx="13" ry="9" fill="#d9d4cf" stroke="#9a948d"/>'
+                   + ''.join(circ(-8 + j * 4, -10 + (j % 2) * 4, 1.6, '#9da3b0', 'none', 0) for j in range(5)), cx + 38, 140, 25)
+        elif i == 3:
+            s += curved_arrow(cx - 30, by - 30, cx + 30, by - 30, 26) + curved_arrow(cx + 30, by - 74, cx - 30, by - 74, 26)
+        elif i == 4:
+            s += tool_file(cx, by - 126, 0, 70, 14, '#c9c0b8', '#efe9e4')
+            for j in range(6):
+                s += circ(cx - 34 + j * 13, by - 150 - (j % 3) * 7, 1.8, '#9da3b0', 'none', 0)
+        else:
+            s += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - 34, by - 96, cx, by - 160, cx + 34, by - 96), 'none', ACC2, 2.2, ' marker-end="url(#ar)"')
+            s += mark(cx + 50, by - 24, True, 12)
+        b += frame(x, 58, pw, ph, lab, i + 1, body=s, sub=subs[i], subcol=OK if i == 5 else MUTED, tsize=13.5)
+    return svg(W, 58 + ph + 18, arrow_defs() + b, 'Chrome in sei passaggi: colore, top no-wipe, polvere, strofina, pulisci il bordo, top finale')
+
+
+@figx('cat-eye-magnete.svg')
+def cat_eye():
+    W, H = 900, 470
+    b = T('Cat-eye: posizione del magnete')
+    body = ''
+    ox, oy = 40, 170
+    body += finger_side(ox, oy, L=290, th=50, nx0=ox + 130, nx1=ox + 316, nail_th=6, plate='#2b2733', bone=False)
+    body += rbox(ox + 130, oy - 20, 190, 14, '#3a3442', '#000', 1, 6)
+    for j in range(15):
+        xx = ox + 140 + j * 12
+        d = xx - (ox + 225)
+        angd = max(-60, min(60, d * 1.2))
+        body += g(ln(0, -4, 0, 4, '#c9c4d9', 2), xx, oy - 13, -angd)
+    body += magnet(ox + 225, oy - 60, 70, 24)
+    body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.8" marker-start="url(#ar)" marker-end="url(#ar)"/>' % (ox + 285, oy - 48, ox + 285, oy - 22, ACC2)
+    body += text(ox + 298, oy - 30, '1–5 mm: non toccare', 14, 'start', 800, ACC2)
+    body += text(560, 140, 'Le particelle metalliche si', 13.5, 'start', 600, INK)
+    body += text(560, 160, 'spostano verso il magnete', 13.5, 'start', 600, INK)
+    body += text(560, 180, 'finché il gel è fluido.', 13.5, 'start', 600, INK)
+    b += frame(20, 58, 860, 170, 'Di profilo', body=body, tsize=14)
+    names = [('centro', 'linea centrale'), ('45°', 'banda diagonale'), ('lato', 'luce su un lato'), ('due magneti', 'effetto galassia'), ('velvet', 'luce diffusa')]
+    for k, (n, sub) in enumerate(names):
+        x = 20 + k * 174
+        cx, by = x + 58, 382
+        gid = uid('ce')
+        if k == 0:
+            ext = '<rect x="%.1f" y="%.1f" width="12" height="130" fill="#e7e2ff" opacity=".9" clip-path="url(#CLIP)"/>' % (cx - 6, by - 126)
+        elif k == 1:
+            ext = '<rect x="%.1f" y="%.1f" width="14" height="170" fill="#e7e2ff" opacity=".9" transform="rotate(35 %.1f %.1f)" clip-path="url(#CLIP)"/>' % (cx - 7, by - 150, cx, by - 60)
+        elif k == 2:
+            ext = ('<defs><linearGradient id="%s" x1="0" x2="1"><stop offset="0" stop-color="#2b2733"/><stop offset=".7" stop-color="#2b2733"/>'
+                   '<stop offset="1" stop-color="#e7e2ff"/></linearGradient></defs><rect x="%.1f" y="%.1f" width="60" height="130" fill="url(#%s)" clip-path="url(#CLIP)"/>') % (gid, cx - 30, by - 126, gid)
+        elif k == 3:
+            ext = ('<defs><radialGradient id="%s"><stop offset="0" stop-color="#e7e2ff"/><stop offset=".55" stop-color="#7d73a8"/><stop offset="1" stop-color="#2b2733"/></radialGradient></defs>'
+                   '<rect x="%.1f" y="%.1f" width="60" height="130" fill="url(#%s)" clip-path="url(#CLIP)"/>') % (gid, cx - 30, by - 126, gid)
+        else:
+            ext = ''.join(circ(cx - 20 + (j * 11) % 42, by - 10 - (j * 17) % 106, 2.2, '#bdb3e6', 'none', 0, ' opacity=".8"') for j in range(40))
+        b += rbox(x, 240, 162, 216)
+        b += nail_shape(cx, by, 50, 120, '#2b2733', '#000', 1.5, ext)
+        mx = x + 124
+        if k == 0:
+            b += magnet(mx, 320, 40, 16, 90)
+        elif k == 1:
+            b += magnet(mx, 320, 40, 16, 45)
+        elif k == 2:
+            b += magnet(mx, 350, 40, 16, 90)
+        elif k == 3:
+            b += magnet(mx - 14, 320, 36, 14, 90) + magnet(mx + 14, 320, 36, 14, 90)
+        else:
+            b += magnet(mx, 300, 40, 16, 0) + curved_arrow(mx - 20, 336, mx + 20, 336, 10) + curved_arrow(mx + 20, 352, mx - 20, 352, 10)
+        b += text(x + 81, 414, n, 14.5, weight=800)
+        b += ftext(x + 81, 434, sub, 12.5, 150, weight=600, fill=MUTED)
+    b += rbox(560, 18, 320, 30, YEL_BG, YEL, 1.2, 12) + text(720, 38, 'Flash ≈ 10 s, un dito alla volta', 13.5, weight=800, fill='#7a5a12')
+    return svg(W, H, arrow_defs() + b, 'Cat-eye: dove tieni il magnete decide il disegno')
+
+
+@figx('foil-ombre-step.svg')
+def foil_ombre():
+    W = 960
+    b = T('Foil e ombré')
+    pw, ph = 222, 196
+    rows = [('Foil', ['gel per foil sottile', 'foil: disegno in su', 'strofina e solleva', 'top che sigilla']),
+            ('Ombré con spugnetta', ['spugna sul nastro', 'due colori vicini', 'picchietta dalla punta', 'lampada, ripeti, top'])]
+    BASE = '#f2c6d2'
+    for r, (rt, labs) in enumerate(rows):
+        y = 58 + r * (ph + 40)
+        b += text(20, y + 8, rt, 16, 'start', 800, ACC2)
+        y += 18
+        for i, lab in enumerate(labs):
+            x = 20 + i * (pw + 12)
+            cx, by = x + pw / 2 - 20, y + 176
+            s = ''
+            if r == 0:
+                ext = ''
+                if i == 0:
+                    ext = '<path d="M%.1f,%.1f q20,-30 40,-10 q10,20 -10,40 z" fill="#ffffff" opacity=".55" clip-path="url(#CLIP)"/>' % (cx - 14, by - 80)
+                if i >= 2:
+                    ext = ('<path d="M%.1f,%.1f q20,-30 40,-10 q10,20 -10,40 z" fill="%s" clip-path="url(#CLIP)"/>' % (cx - 14, by - 80, GOLD)
+                           + ''.join(ln(cx - 10 + j * 8, by - 84 + j * 4, cx + j * 8, by - 70 + j * 4, '#f6e39a', 1.5) for j in range(3)))
+                s += nail_shape(cx, by, 52, 120, '#7a2b4a', '#3b1525', 1.5, ext)
+                if i == 0:
+                    s += mini_lamp(cx + 68, y + 76, 0.34) + text(cx + 68, y + 98, 'appiccicoso', 11.5, weight=700, fill=MUTED)
+                elif i == 1:
+                    s += g(rbox(-34, -22, 68, 44, GOLD, '#a8871f', 1.5, 3) + ''.join(ln(-28 + j * 12, -16, -18 + j * 12, 16, '#f6e39a', 2) for j in range(5)), cx + 4, by - 72, -8)
+                    s += text(cx + 66, y + 66, 'lato opaco', 11.5, weight=700, fill=MUTED) + text(cx + 66, y + 80, 'verso l\'unghia', 11.5, weight=700, fill=MUTED)
+                elif i == 2:
+                    s += P('M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (cx + 14, by - 90, cx + 66, by - 140, cx + 50, by - 96), '#e8e0c0', '#a8871f', 1.5)
+                    s += arrow(cx + 50, by - 110, cx + 74, by - 140, ACC2, 2)
+                else:
+                    s += gloss(cx, by, 120, 0.9) + mark(cx + 70, y + 52, True, 12)
+            else:
+                if i == 0:
+                    s += rbox(cx - 50, by - 30, 100, 18, '#f3e3a6', '#c9b25a', 1.5, 3)
+                    s += rbox(cx - 22, by - 94, 44, 60, '#ffffff', '#c9c0b8', 1.5, 6)
+                    s += arrow(cx, by - 116, cx, by - 98, ACC2, 2) + text(cx, by - 122, 'togli i pelucchi', 12, 'middle', 700, ACC2)
+                    s += text(cx, by - 4, 'nastro adesivo', 11.5, weight=600, fill=MUTED)
+                elif i == 1:
+                    s += rbox(cx - 30, by - 120, 30, 80, '#f48fb1', '#c9c0b8', 1.5, 6) + rbox(cx, by - 120, 30, 80, '#9575cd', '#c9c0b8', 1.5, 6)
+                    s += text(cx, by - 20, 'si toccano al centro', 12, weight=700, fill=MUTED)
+                else:
+                    gid = uid('om')
+                    ext = ('<defs><linearGradient id="%s" x1="0" y1="1" x2="0" y2="0"><stop offset=".25" stop-color="#f48fb1"/>'
+                           '<stop offset=".75" stop-color="#9575cd"/></linearGradient></defs><rect x="%.1f" y="%.1f" width="60" height="130" fill="url(#%s)" clip-path="url(#CLIP)"/>') % (
+                        gid, cx - 30, by - 126, gid)
+                    if i == 2:
+                        ext = ('<rect x="%.1f" y="%.1f" width="60" height="70" fill="#9575cd" opacity=".75" clip-path="url(#CLIP)"/>' % (cx - 30, by - 126))
+                    s += nail_shape(cx, by, 52, 120, '#f8d7e3' if i == 2 else '#f48fb1', NAIL_S, 1.5, ext)
+                    if i == 2:
+                        for j in range(3):
+                            s += arrow(cx + 50 + j * 10, by - 140 + j * 6, cx + 40 + j * 10, by - 110 + j * 6, ACC2, 1.8)
+                    else:
+                        s += gloss(cx, by, 120, 0.9) + mini_lamp(cx + 68, y + 76, 0.34)
+            b += frame(x, y, pw, ph, lab, i + 1, body=s, tsize=13.5)
+    H = 58 + 2 * (ph + 40) - 10
+    return svg(W, H, arrow_defs() + b, 'Foil e ombré passo per passo')
+
+
+@figx('one-stroke-carico.svg')
+def os_carico():
+    W, H = 860, 350
+    b = T('Caricare il pennello one-stroke')
+    # 1
+    body = brush_flat(150, 196, 0, '#ffffff', '#e46f8f', 0.55, 1.2)
+    body += circ(108, 296, 14, '#ffffff', '#c9c0b8', 1.5) + circ(192, 296, 14, '#e46f8f', '#c2577a', 1.5)
+    body += arrow(114, 280, 132, 260, MUTED, 1.8) + arrow(186, 280, 168, 260, MUTED, 1.8)
+    b += frame(20, 58, 260, 270, 'Metà e metà', 1, body=body)
+    # 2
+    body = rbox(312, 236, 236, 64, '#ffffff', '#c9c0b8', 1.5, 8)
+    body += '<ellipse cx="430" cy="268" rx="70" ry="16" fill="url(#tav)"/>'
+    body += ('<defs><linearGradient id="tav" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#f3b3c6"/>'
+             '<stop offset="1" stop-color="#e46f8f"/></linearGradient></defs>')
+    body += brush_flat(430, 172, 0, '#ffffff', '#e46f8f', 0.6, 1.1)
+    body += '<line x1="360" y1="244" x2="500" y2="244" stroke="%s" stroke-width="2.4" marker-start="url(#ar)" marker-end="url(#ar)"/>' % ACC2
+    body += text(430, 316, 'sempre nello stesso punto', 13, weight=700, fill=MUTED)
+    b += frame(300, 58, 260, 270, 'Sfuma sulla tavolozza', 2, body=body)
+    # 3
+    body = brush_flat(656, 190, 0, '#ffffff', '#e46f8f', 0.75, 1.2)
+    body += '<line x1="692" y1="204" x2="692" y2="245" stroke="%s" stroke-width="1.8" marker-start="url(#ar)" marker-end="url(#ar)"/>' % ACC2
+    body += text(700, 230, '3/4', 15, 'start', 800, ACC2)
+    body += mark(660, 280, True, 12) + text(660, 310, '3/4 setole', 13, weight=800, fill=OK)
+    body += brush_flat(790, 200, 0, '#ffffff', '#e46f8f', 1.0, 1.0, ferrule_dirty=True)
+    body += circ(790, 192, 16, 'none', ERR, 2.2)
+    body += mark(790, 280, False, 12) + text(790, 310, 'mai nella ghiera', 13, weight=800, fill=ERR)
+    b += frame(580, 58, 260, 270, 'Quanto caricare', 3, body=body)
+    return svg(W, H, arrow_defs() + b, 'Caricare il pennello piatto per il one-stroke: due colori, sfumati sulla tavolozza, fino a 3/4 delle setole')
+
+
+@figx('one-stroke-fiore.svg')
+def os_fiore():
+    W, H = 960, 360
+    b = T('Petalo, fiore, foglia')
+    # 1 petalo in 3 fasi
+    body = ''
+    for k, (lab) in enumerate(['appoggia', 'premi', 'ruota']):
+        x = 50 + k * 100
+        if k == 0:
+            body += g(rbox(-18, -3, 36, 6, '#e46f8f', '#c2577a', 1, 2), x, 150)
+        elif k == 1:
+            body += g(rbox(-22, -10, 44, 20, '#e46f8f', '#c2577a', 1, 4), x, 150)
+        else:
+            body += petal(x - 16, 160, 50, 46, 24)
+            body += circ(x - 16, 160, 4, INK, 'none', 0)
+            body += curved_arrow(x + 12, 170, x + 22, 128, 18)
+        body += text(x, 200, lab, 13, weight=700)
+        if k < 2:
+            body += arrow(x + 30, 150, x + 62, 150, MUTED, 1.6)
+    body += text(150, 236, 'il puntino = perno fermo', 12.5, weight=600, fill=MUTED)
+    body += petal(150, 296, 0, 44, 26)
+    b += frame(20, 58, 300, 270, 'Petalo', 1, body=body)
+    # 2 fiore
+    body = ''
+    cx, cy = 480, 210
+    for k in range(5):
+        a = k * 72
+        body += petal(cx, cy, a, 58, 30)
+    for k in range(5):
+        a = math.radians(-90 + k * 72)
+        body += circ(cx + 76 * math.cos(a), cy + 76 * math.sin(a), 11, ACC, 'none', 0) + text(cx + 76 * math.cos(a), cy + 76 * math.sin(a) + 4.5, str(k + 1), 12, weight=800, fill='#fff')
+    for k in range(6):
+        a = math.radians(k * 60)
+        body += circ(cx + 8 * math.cos(a), cy + 8 * math.sin(a), 3.6, '#fbc02d', '#c49000', 1)
+    body += circ(cx, cy, 4, '#fbc02d', '#c49000', 1)
+    body += text(cx, 316, 'colore chiaro sempre verso l\'esterno', 13, weight=700, fill=MUTED)
+    b += frame(330, 58, 300, 270, 'Fiore a 5 petali', 2, body=body)
+    # 3 foglia
+    body = leaf(760, 280, 50, 120, 30)
+    body += P('M720,250 Q780,190 860,150', 'none', ACC2, 2, ' stroke-dasharray="5 4" marker-end="url(#ar)"')
+    body += P('M864,146 q12,-6 8,-16 q-6,-8 -14,0', 'none', ACC2, 2.2)
+    body += text(800, 118, 'torsione = punta', 13, weight=800, fill=ACC2)
+    body += text(780, 316, 'premi, scivola, alleggerisci', 13, weight=700, fill=MUTED)
+    b += frame(640, 58, 300, 270, 'Foglia', 3, body=body)
+    b += text(480, 348, 'Allenati su carta prima che sul tip.', 14, weight=700, fill=ACC2)
+    return svg(W, H, arrow_defs() + b, 'One-stroke: petalo, fiore a cinque petali e foglia, passo per passo')
+
+
+@figx('incapsulato-zone.svg')
+def incaps():
+    W, H = 860, 380
+    b = T('Incapsulato: dove sì, dove no')
+    # vista dall'alto con zone
+    body = ''
+    cx, by = 150, 344
+    zones = ''
+    zones += '<rect x="%.1f" y="%.1f" width="120" height="38" fill="#e46f6f" opacity=".75" clip-path="url(#CLIP)"/>' % (cx - 60, by - 30)
+    for sx in (-1, 1):
+        zones += '<rect x="%.1f" y="%.1f" width="12" height="230" fill="#e46f6f" opacity=".75" clip-path="url(#CLIP)"/>' % (cx + (sx * 46) - 6, by - 236)
+    zones += '<rect x="%.1f" y="%.1f" width="120" height="14" fill="#e46f6f" opacity=".75" clip-path="url(#CLIP)"/>' % (cx - 60, by - 236)
+    zones += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#5cb87a" stroke-width="14" fill="none" opacity=".8" clip-path="url(#CLIP)"/>' % (cx - 44, by - 130, cx, by - 160, cx + 44, by - 130)
+    zones += '<ellipse cx="%.1f" cy="%.1f" rx="24" ry="28" fill="#5cb87a" opacity=".75" clip-path="url(#CLIP)"/>' % (cx, by - 80)
+    zones += '<ellipse cx="%.1f" cy="%.1f" rx="20" ry="22" fill="#5cb87a" opacity=".75" clip-path="url(#CLIP)"/>' % (cx, by - 200)
+    body += nail_shape(cx, by, 96, 236, '#f9e7ec', NAIL_S, 1.8, zones)
+    lx = 236
+    body += leader(cx + 4, by - 200, lx, 106, 'centro della punta: sì', 'start', 13, fill=OK)
+    body += leader(cx + 40, by - 136, lx, 152, 'smile line: sì', 'start', 13, fill=OK)
+    body += leader(cx + 20, by - 80, lx, 198, 'zona apex: sì', 'start', 13, fill=OK)
+    body += leader(cx + 30, by - 230, lx, 244, 'bordo: no', 'start', 13, fill=ERR)
+    body += leader(cx + 47, by - 40, lx, 278, 'lati: no', 'start', 13, fill=ERR)
+    body += leader(cx + 30, by - 10, lx, 312, 'cuticola: no', 'start', 13, fill=ERR)
+    b += frame(20, 58, 400, 300, 'Vista dall\'alto', body=body)
+    # sezione
+    body = ''
+    x0, x1, oy = 450, 820, 180
+    body += rbox(x0, oy, x1 - x0, 8, NAT, NAIL_S, 1, 3)
+    body += rbox(x0 + 10, oy - 6, x1 - x0 - 20, 6, CLEAR, CLEAR_S, 1, 2)
+    body += leader(x0 + 60, oy - 3, x0 + 20, oy + 34, 'piattaforma ≤ spessore di un tip', 'start', 12.5)
+    # fiore
+    for k in range(5):
+        a = math.radians(k * 72)
+        body += circ(620 + 10 * math.cos(a), oy - 12 + 4 * math.sin(a), 7, '#ec6f9b', '#a8325c', 1.2)
+    body += circ(620, oy - 12, 3.5, '#fbc02d', 'none', 0)
+    body += leader(626, oy - 12, 690, 214, 'decorazione', 'start', 12.5)
+    # strato sopra con apex
+    body += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (x0 + 10, oy - 6, 560, oy - 52, 620, oy - 52, 720, oy - 52, x1 - 10, oy - 10, x1 - 10, oy - 6),
+              CLEAR, CLEAR_S, 1.4, ' opacity=".85"')
+    body += circ(620, oy - 51, 4, ACC2, 'none', 0)
+    body += leader(620, oy - 51, 660, 108, 'apex sopra il decoro', 'start', 13)
+    body += mark(820, 90, True, 12)
+    # mini ✗
+    body += rbox(460, 250, 370, 96, '#fff', ERR, 1.5, 12)
+    body += nail_shape(520, 336, 40, 76, '#f9e7ec', NAIL_S, 1.4)
+    body += circ(540, 296, 7, '#f48fb1', '#c2577a', 1) + circ(546, 288, 6, '#f48fb1', '#c2577a', 1)
+    body += circ(543, 293, 14, 'none', ERR, 2)
+    body += mark(810, 272, False, 11)
+    body += text(570, 290, 'decorazione che sporge dal lato:', 13, 'start', 700, ERR)
+    body += text(570, 310, 'la capsula resta aperta = lifting', 13, 'start', 700, ERR)
+    body += text(570, 330, 'rifila prima di coprire', 13, 'start', 600, MUTED)
+    b += frame(440, 58, 400, 300, 'In sezione', body=body)
+    return svg(W, H, arrow_defs() + b, 'Dove incapsulare: nelle zone spesse (smile line, apex, centro della punta), mai alla cuticola, ai lati o sul bordo')
+
+
+@figx('gara-postazione.svg')
+def gara_post():
+    W, H = 900, 400
+    b = T('Il tavolo di gara (vista dall\'alto)')
+    b += rbox(40, 70, 600, 270, '#f3ece4', '#a89a88', 2.5, 10)
+    # lato modella
+    b += rbox(250, 342, 180, 40, '#e8ddf3', '#8a7d9e', 1.5, 12) + text(340, 367, 'lato modella', 13, weight=700, fill='#5d4f78')
+    b += rbox(450, 344, 110, 34, '#fff', ACC, 2, 6) + text(505, 366, 'Modella n. 12', 12.5, weight=800, fill=ACC2)
+    # poggiabraccio
+    b += rbox(280, 270, 120, 46, '#d9c4b0', '#a8907a', 1.5, 20) + text(340, 298, 'poggiabraccio', 12, weight=700, fill='#6b5543')
+    # lampada UV/LED
+    b += rbox(440, 250, 110, 70, '#f4f1f8', '#8a7d9e', 2, 14) + text(495, 290, 'lampada UV/LED', 12, weight=700, fill='#6b4fa0')
+    # lampada da tavolo
+    b += circ(90, 120, 26, '#fff7cf', '#d9b44a', 2) + text(90, 162, 'lampada', 12, weight=600, fill=MUTED)
+    # prodotti etichettati
+    for k in range(5):
+        bx = 150 + k * 44
+        b += rbox(bx, 96, 32, 46, ['#f2c6d2', '#ffffff', '#d9eef5', '#e46f8f', '#f3d27a'][k], '#7d6a70', 1.5, 6)
+        b += rbox(bx + 4, 112, 24, 14, '#fff', '#7d6a70', 0.8, 2)
+    b += text(250, 162, 'prodotti con etichetta originale', 12.5, weight=700, fill=OK)
+    b += mark(372, 118, True, 10)
+    # scatola tip
+    b += rbox(410, 88, 140, 74, '#fff', '#7d6a70', 2, 6)
+    for k in range(1, 5):
+        b += ln(410 + k * 28, 92, 410 + k * 28, 158, '#c9c0b8', 1.2)
+    b += text(480, 180, 'tip in scatola, ≥ 10 per misura', 12.5, weight=700, fill=INK)
+    # cartine
+    b += g(form_flat(0, 0, 70, 50, tab=False, grid=True), 590, 120, 0, 0.8)
+    b += text(588, 200, 'cartine intatte', 12, weight=600, fill=MUTED)
+    # timer
+    b += phone_cal(110, 258, 0.9) + text(110, 310, 'timer', 12, weight=600, fill=MUTED)
+    b += text(110, 326, '(se permesso)', 11.5, weight=600, fill=MUTED)
+    # cestino accanto
+    b += P('M672,260 L732,260 L726,330 L678,330 Z', '#eee8e4', '#8a7d74', 2) + rbox(666, 250, 72, 12, '#8a7d74', 'none', 0, 3)
+    b += text(702, 352, 'cestino!', 14, weight=800, fill=ACC2)
+    b += text(702, 368, 'accanto al tavolo', 11.5, weight=600, fill=MUTED)
+    # fuori dal tavolo: no
+    b += rbox(660, 70, 220, 160, RED_BG, ERR, 1.5, 12)
+    b += text(770, 94, 'lontano dal tavolo', 13.5, weight=800, fill=ERR)
+    items = [('borsa', 690), ('giacca', 760), ('carrello', 830)]
+    b += P('M672,150 L708,150 L712,190 L668,190 Z', '#c9a27e', '#8a6d4f', 1.5) + P('M680,150 Q690,132 700,150', 'none', '#8a6d4f', 2)
+    b += P('M744,130 L776,130 L784,194 L736,194 Z', '#7fa9c4', '#4f7a96', 1.5)
+    b += rbox(806, 140, 48, 40, '#ddd', '#888', 1.5, 4) + circ(814, 188, 5, '#555', 'none', 0) + circ(846, 188, 5, '#555', 'none', 0)
+    for (t, x) in items:
+        b += text(x, 214, t, 12, weight=700) + ln(x - 22, 140, x + 22, 194, ERR, 3)
+    return svg(W, H, b, 'Il tavolo di gara visto dall\'alto: prodotti etichettati, scatola tip, cestino accanto, niente borse')
+
+
+@figx('gara-piano-allenamento.svg')
+def gara_piano():
+    W, H = 920, 300
+    b = T('12 settimane verso la gara')
+    blocks = [('Sett. 1', 'regolamento e kit', 0, 1, '#f9d7e1'), ('Sett. 1–4', 'una mano a settimana, foto', 0, 4, '#f2b8c9'),
+              ('Sett. 5–8', 'allena i punti deboli', 4, 8, '#e88aa6'), ('Sett. 9–12', 'simulazioni −10 min', 8, 12, '#c2577a')]
+    x0, x1 = 40, 820
+    wk = (x1 - x0) / 12
+    b += ln(x0, 200, x1 + 40, 200, MUTED, 2)
+    for k in range(13):
+        b += ln(x0 + k * wk, 194, x0 + k * wk, 206, MUTED, 1.5)
+        if k < 12:
+            b += text(x0 + (k + 0.5) * wk, 222, str(k + 1), 12, weight=600, fill=MUTED)
+    b += text(x0, 244, 'settimane', 12, 'start', 600, MUTED)
+    for k, (t, sub, a, z, col) in enumerate(blocks):
+        y = 70 if k == 0 else 110
+        xa, xz = x0 + a * wk + 2, x0 + z * wk - 2
+        if k == 0:
+            y = 60
+        h = 48 if k else 40
+        b += rbox(xa, y + (0 if k else 0), xz - xa, h, col, 'none', 0, 10)
+        tc = '#fff' if k >= 2 else INK
+        if k == 0:
+            b += text(xa + 6, y + 25, t, 13, 'start', 800, tc)
+            b += text(xz + 12, y + 25, 'regolamento, scheda punteggi e lista del kit', 13, 'start', 700, INK)
+        else:
+            b += text(xa + 10, y + 20, t, 14, 'start', 800, tc) + ftext(xa + 10, y + 39, sub, 12.5, xz - xa - 50, 'start', 600, tc)
+    # icone
+    b += P('M%.1f,%.1f l0,-26 l20,7 l-20,7' % (x1 + 30, 200), '#d64545', '#4b3a40', 2)
+    b += text(x1 + 30, 226, 'Gara', 14, weight=800, fill=ERR)
+    b += strip(40, 254, 780, 34, 'Ultima settimana: niente prodotti nuovi; controlla le unghie della modella', 'info', 13.5)
+    return svg(W, H, b, 'Piano di allenamento indicativo di 12 settimane verso una gara')
+
+
+@figx('gara-punteggio.svg')
+def gara_punti():
+    W, H = 900, 440
+    b = T('Dove sono i punti (French Twist 3 forme, 240 pt)')
+    data = [('G1 Smile line', 15, 'a'), ('G2 Lunghezza', 15, 'a'), ('G3 Curva C + apex', 30, 's'), ('G4 Spessore + convesso/concavo', 30, 's'),
+            ('G5 Forma', 15, 'a'), ('G6 Archi e linee laterali', 30, 's'), ('G7 Decoro, colore, creatività', 45, 'a'),
+            ('G8 Cuticola + lucentezza', 18, 'e'), ('G9 Aderenza + superficie', 18, 'a'), ('G10 Applicazione + letto', 24, 'a')]
+    col = {'a': '#d9c3cb', 's': ACC2, 'e': OK}
+    x0, sc = 290, 8.4
+    for k, (t, v, c) in enumerate(data):
+        y = 66 + k * 30
+        b += text(x0 - 12, y + 16, t, 13.5, 'end', 700 if c != 'a' else 600, INK)
+        b += rbox(x0, y + 3, v * sc, 20, col[c], 'none', 0, 4)
+        b += text(x0 + v * sc + 8, y + 18, str(v), 14, 'start', 800, col[c] if c != 'a' else MUTED)
+    for v in (0, 15, 30, 45):
+        b += ln(x0 + v * sc, 62, x0 + v * sc, 366, '#ead9d5', 1, ' stroke-dasharray="3 3"')
+    # legenda
+    b += rbox(700, 70, 180, 112, PANEL, rx=12)
+    b += rbox(714, 86, 16, 16, ACC2, rx=3) + text(738, 99, 'struttura = 90 pt', 13, 'start', 800, ACC2)
+    b += rbox(714, 116, 16, 16, OK, rx=3) + text(738, 129, 'punti "facili"', 13, 'start', 800, OK)
+    b += rbox(714, 146, 16, 16, '#d9c3cb', rx=3) + text(738, 159, 'altri criteri', 13, 'start', 600, MUTED)
+    b += text(880, 420, 'Fonte: scheda Nailympia 2026', 12, 'end', 600, MUTED)
+    b += text(20, 400, 'Ogni barra = punti assegnati da un giudice (10 giudici). Leggi sempre la scheda della tua categoria.', 13, 'start', 600, INK)
+    return svg(W, H, b, 'I punti della scheda French Twist 3-Shape Challenge 2026, giudice per giudice')
+
+
+@figx('gara-viste-giudice.svg')
+def gara_viste():
+    labels = ['Dall\'alto', 'Di profilo', 'A tunnel', 'Cuticola (lente)', 'Come la vede la modella']
+    subs = ['forma, lati, simmetria', 'apex, archi, niente gobbe', 'curva C, "hair line"', 'nessuno scalino o taglio', 'forma uniforme anche così']
+    pw, ph = 176, 262
+    W = 20 + 5 * pw + 4 * 12 + 20
+    b = T('Le 5 viste del giudice')
+    for i, lab in enumerate(labels):
+        x = 20 + i * (pw + 12)
+        cx = x + pw / 2
+        s = ''
+        if i == 0:
+            f, p = finger_nail(cx, 230, hw=26, nail_len=60, free_len=50, shape='squoval', smile=8, finger_len=40, lunula=False, plate='#f2c6d2')
+            s += f
+        elif i == 1:
+            sp, pp = side_profile(x + 24, 180, w=140, stress=0.55, apex=0.42, apex_h=18, tip_h=4, root_h=2, gap=4, product='#f2c6d2')
+            s += sp + circ(pp['ax'], pp['ah'], 4.5, ACC2, 'none', 0)
+        elif i == 2:
+            s += tip_view(cx, 170, w=120, curve=28, th=6, fill='#f2c6d2')
+            s += leader(cx + 50, 160, cx + 20, 112, 'hair line', 'middle', 12.5)
+        elif i == 3:
+            f, p = finger_nail(cx - 10, 250, hw=30, nail_len=80, free_len=20, shape='squoval', smile=8, finger_len=30, lunula=False, plate='#f2c6d2')
+            s += f + magnifier(cx - 10, 224, 22)
+        else:
+            # mano vista dalla modella: dita verso l'osservatore (in basso), unghie di 4 dita
+            s += hand_back(cx + 4, 278, 0.7, SKIN, ['#f2c6d2'] * 5)
+        b += frame(x, 58, pw, ph, lab, i + 1, body=s, sub=subs[i], subcol=MUTED, tsize=13)
+    return svg(W, 58 + ph + 18, arrow_defs() + b, 'Le cinque viste del giudice: dall\'alto, di profilo, a tunnel, la cuticola, il punto di vista della modella')
 
 
 def main():
