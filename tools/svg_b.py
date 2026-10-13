@@ -113,6 +113,22 @@ def frame(x, y, w, h, title, num=None, ok=None, sub=None, sub2=None, body='', su
     return s
 
 
+def callout(px, py, lx, ly, label, anchor='start', size=13, fill=INK, weight=700, sub=None):
+    """Richiamo pulito: pallino sul punto (px, py), linea che si ferma al bordo del testo (lx, ly = linea di base)."""
+    if anchor == 'middle':
+        ey = ly + 5 if py > ly else ly - size - 1
+        ex = lx
+    else:
+        ex = lx - 5 if anchor == 'start' else lx + 5
+        ey = ly - size * 0.36
+    s = ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.3"/>'
+         '<circle cx="%.1f" cy="%.1f" r="3.5" fill="%s" stroke="#fff" stroke-width="1"/>' % (px, py, ex, ey, MUTED, px, py, ACC2))
+    s += text(lx, ly, label, size, anchor, weight, fill)
+    if sub:
+        s += text(lx, ly + size + 3, sub, 12, anchor, 400, MUTED)
+    return s
+
+
 def stop_sign(x, y, r=14):
     return ('<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" stroke="%s" stroke-width="%.1f"/>'
             '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="%.1f"/>'
@@ -242,44 +258,105 @@ def cuticle_section(x, y, w, cut=True, flap=False):
     return s, dict(ex=ex, fold_x=ex + 38)
 
 
-# ---------------------------------------------------------------- strumenti aggiuntivi
+# ---------------------------------------------------------------- strumenti realistici (varianti locali)
+# Stessa firma delle primitive di gen_svg (che restano invariate per gli altri file): qui le ridefiniamo
+# con più dettaglio (grana, ghiera, setole, zigrinatura) solo per le figure del gruppo B.
+def _g(x, y, ang, s, body):
+    return '<g transform="translate(%.1f,%.1f) rotate(%.1f)%s">%s</g>' % (x, y, ang, (' scale(%.2f)' % s) if s != 1 else '', body)
+
+
+def tool_file(x, y, ang=0, l=150, w=22, c1='#8a7d74', c2='#d9cfc6', grit=None):
+    """Lima a due facce vista leggermente di taglio: faccia c1 sopra, c2 sotto, anima chiara, grana visibile.
+    (x, y) = centro della lima."""
+    g = grit or ('bGritC' if w >= 18 else 'bGritF')
+    c = uid('fl')
+    r = w * 0.48
+    out = 'M%.1f,%.1f h%.1f a%.1f,%.1f 0 0 1 0,%.1f h%.1f a%.1f,%.1f 0 0 1 0,%.1f Z' % (
+        -l / 2 + r, -w / 2, l - 2 * r, r, w / 2, w, -(l - 2 * r), r, w / 2, -w)
+    s = '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (c, out)
+    s += '<path d="%s" fill="#efe7de"/>' % out
+    s += '<g clip-path="url(#%s)">' % c
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (-l / 2, -w / 2, l, w / 2 - 0.9, c1)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)"/>' % (-l / 2, -w / 2, l, w / 2 - 0.9, g)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (-l / 2, 0.9, l, w / 2, c2)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)"/>' % (-l / 2, 0.9, l, w / 2, g)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="1.2" fill="#fff" opacity=".35"/>' % (-l / 2, -w / 2 + 1, l)
+    s += '</g><path d="%s" fill="none" stroke="#6d6058" stroke-width=".9" stroke-opacity=".7"/>' % out
+    return _g(x, y, ang, 1, s)
+
+
+def tool_pusher(x, y, ang=0, l=150):
+    """Spingicuticole in acciaio: paletta a cucchiaio in (x, y) (estremità a -24), manico zigrinato verso +x."""
+    s = '<rect x="14" y="-4.5" width="%.1f" height="9" rx="4.5" fill="#9aa3ad" stroke="#5d666f" stroke-width=".7"/>' % (l - 14)
+    s += '<rect x="%.1f" y="-4.5" width="%.1f" height="9" fill="url(#bKnurl)"/>' % (14 + l * 0.22, l * 0.5)
+    s += '<rect x="%.1f" y="-4.5" width="1.6" height="9" fill="#5d666f"/><rect x="%.1f" y="-4.5" width="1.6" height="9" fill="#5d666f"/>' % (
+        14 + l * 0.22, 14 + l * 0.72)
+    s += '<line x1="16" y1="-2.4" x2="%.1f" y2="-2.4" stroke="#fff" stroke-width="1.2" opacity=".55" stroke-linecap="round"/>' % (l - 2)
+    s += '<path d="M0,-2.2 L16,-3.4 L16,3.4 L0,2.2 Z" fill="#9aa3ad" stroke="#5d666f" stroke-width=".7"/>'
+    s += ('<path d="M1,-2.6 C-6,-4 -14,-11 -21,-10.5 Q-27,0 -21,10.5 C-14,11 -6,4 1,2.6 Z" fill="#9aa3ad" stroke="#4f5860" stroke-width=".9"/>'
+          '<path d="M-4,-3 C-10,-6 -16,-8 -20,-7" fill="none" stroke="#fff" stroke-width="1.2" opacity=".7" stroke-linecap="round"/>')
+    return _g(x, y, ang, 1, s)
+
+
+def tool_brush(x, y, ang=0, l=140, bristle=ACC):
+    """Pennello: setole (punta a circa -18) con ciuffo e fibre, ghiera metallica, manico laccato affusolato."""
+    hl = l + 4
+    s = ('<path d="M22,-5 L%.1f,-3.4 Q%.1f,0 %.1f,3.4 L22,5 Z" fill="url(#bHandle)"/>' % (22 + hl, 26 + hl, 22 + hl))
+    s += '<line x1="26" y1="-2.6" x2="%.1f" y2="-1.6" stroke="#fff" stroke-width="1.1" opacity=".35" stroke-linecap="round"/>' % (16 + hl)
+    s += ('<path d="M8,-6 L24,-5.6 L24,5.6 L8,6 Z" fill="url(#bFerrule)" stroke="#7d868f" stroke-width=".6"/>'
+          '<path d="M12,-6 v12 M15,-5.9 v11.8" stroke="#7d868f" stroke-width=".8"/>')
+    s += ('<path d="M9,-5.6 C2,-6.4 -8,-5.6 -15,-2.2 Q-20,0 -15,2.2 C-8,5.6 2,6.4 9,5.6 Z" fill="%s" stroke="%s" stroke-opacity=".35" stroke-width=".8"/>'
+          % (bristle, INK))
+    s += ('<path d="M8,-3 L-10,-1.6 M8,0 L-14,0 M8,3 L-10,1.6" stroke="#fff" stroke-width=".7" opacity=".45"/>'
+          '<path d="M8,-4.6 L-6,-3.6" stroke="%s" stroke-opacity=".25" stroke-width=".7"/>' % INK)
+    return _g(x, y, ang, 1, s)
+
+
 def tool_curette(x, y, ang=0, l=130):
-    """Curette: punta (cucchiaino) in (x, y), manico verso +x prima della rotazione."""
-    return ('<g transform="translate(%.1f,%.1f) rotate(%.1f)"><rect x="14" y="-4" width="%d" height="8" rx="4" fill="%s"/>'
-            '<path d="M16,-3 L4,-2 Q-6,-6 -10,0 Q-6,6 4,2 L16,3 Z" fill="%s" stroke="#5d666f" stroke-width="1"/></g>'
-            % (x, y, ang, l, GREY, GREY_D))
+    """Curette: cucchiaino affilato in (x, y), manico zigrinato verso +x."""
+    s = '<rect x="14" y="-4.5" width="%d" height="9" rx="4.5" fill="#9aa3ad" stroke="#5d666f" stroke-width=".7"/>' % l
+    s += '<rect x="%.1f" y="-4.5" width="%.1f" height="9" fill="url(#bKnurl)"/>' % (14 + l * 0.25, l * 0.5)
+    s += '<line x1="16" y1="-2.4" x2="%.1f" y2="-2.4" stroke="#fff" stroke-width="1.2" opacity=".55" stroke-linecap="round"/>' % (l + 10)
+    s += ('<path d="M16,-2.6 L4,-1.8 Q-4,-6.5 -10,-1.5 Q-11,0 -10,1.5 Q-4,6.5 4,1.8 L16,2.6 Z" fill="#9aa3ad" stroke="#4f5860" stroke-width=".9"/>'
+          '<path d="M-8,-1 Q-3,-4 2,-1.6" fill="none" stroke="#fff" stroke-width="1" opacity=".7"/>')
+    return _g(x, y, ang, 1, s)
 
 
 def tool_nipper(x, y, ang=0, s=1.0):
-    """Tronchesina: becco in (x, y), manici verso +x."""
-    return ('<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.2f)">'
-            '<path d="M0,0 L22,-7 L30,-3 L8,2 Z" fill="%s"/><path d="M0,1 L22,9 L30,5 L8,0 Z" fill="%s"/>'
-            '<circle cx="30" cy="1" r="5" fill="%s"/>'
-            '<path d="M32,-3 Q70,-26 110,-24 L112,-17 Q74,-16 34,3 Z" fill="%s"/>'
-            '<path d="M32,5 Q70,28 110,26 L112,19 Q74,18 34,0 Z" fill="%s"/></g>'
-            % (x, y, ang, s, GREY, GREY_D, GREY_D, GREY, GREY_D))
+    """Tronchesina per cuticole: becco affilato in (x, y), snodo, molla doppia, manici verso +x."""
+    half = ('<path d="M0,-0.6 Q8,-8 24,-8.5 L31,-4 L8,-0.6 Z" fill="F1" stroke="#4f5860" stroke-width=".8"/>'
+            '<path d="M34,-3 Q60,-22 108,-21 Q115,-19 113,-14 Q74,-12 37,4 Z" fill="F1" stroke="#4f5860" stroke-width=".8"/>'
+            '<path d="M40,-6 Q70,-18 106,-17.5" fill="none" stroke="#fff" stroke-width="1.1" opacity=".5"/>')
+    b = half.replace('F1', '#9aa3ad')
+    b += '<g transform="scale(1,-1)">%s</g>' % half.replace('F1', '#6f7983')
+    b += '<path d="M44,-7 C60,-4 60,4 44,7 M48,-8 C66,-4 66,4 48,8" fill="none" stroke="#c9d0d7" stroke-width="1.8"/>'
+    b += '<circle cx="31" cy="0" r="6.5" fill="#6f7983" stroke="#4f5860"/><circle cx="31" cy="0" r="2.2" fill="#e3e8ec"/>'
+    b += '<line x1="2" y1="0" x2="26" y2="0" stroke="#e8edf2" stroke-width="1"/>'
+    return _g(x, y, ang, s, b)
 
 
 def tool_tipcutter(x, y, ang=0, s=1.0):
-    """Tagliatip: lama dritta in (x, y)."""
-    return ('<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.2f)">'
-            '<rect x="-6" y="-30" width="12" height="60" rx="3" fill="%s"/>'
-            '<rect x="-2" y="-30" width="3" height="60" fill="#e8edf2"/>'
-            '<path d="M6,-26 L60,-34 L64,-24 L10,-12 Z" fill="%s"/>'
-            '<path d="M6,26 L60,34 L64,24 L10,12 Z" fill="%s"/>'
-            '<path d="M58,-26 q10,26 0,52" stroke="%s" stroke-width="3" fill="none"/></g>'
-            % (x, y, ang, s, GREY_D, GREY, GREY, MUTED))
+    """Tagliatip a ghigliottina visto dall'alto: lama dritta lungo l'asse y passante per (x, y), manici verso +x."""
+    b = ('<path d="M10,-22 L84,-30 Q94,-30 94,-22 L94,-18 L16,-8 Z" fill="url(#bGrip)" stroke="#8e3b5a" stroke-width=".8"/>'
+         '<path d="M10,22 L84,30 Q94,30 94,22 L94,18 L16,8 Z" fill="url(#bGrip)" stroke="#8e3b5a" stroke-width=".8"/>'
+         '<path d="M20,-6 C34,-2 34,2 20,6" fill="none" stroke="#c9d0d7" stroke-width="2"/>')
+    b += '<rect x="-9" y="-34" width="26" height="68" rx="7" fill="#9aa3ad" stroke="#4f5860" stroke-width=".9"/>'
+    b += '<rect x="-4" y="-29" width="7" height="58" rx="2" fill="#3d454c"/>'
+    b += '<line x1="-0.5" y1="-28" x2="-0.5" y2="28" stroke="#e8edf2" stroke-width="1.6"/>'
+    b += '<circle cx="10" cy="-26" r="2.4" fill="#e3e8ec" stroke="#4f5860" stroke-width=".6"/><circle cx="10" cy="26" r="2.4" fill="#e3e8ec" stroke="#4f5860" stroke-width=".6"/>'
+    return _g(x, y, ang, s, b)
 
 
 def tool_scissors(x, y, ang=0, s=1.0):
-    """Forbicine: punte in (x, y), anelli verso +x."""
-    return ('<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.2f)">'
-            '<path d="M0,-2 L36,-6 L38,0 Z" fill="%s"/><path d="M0,2 L36,6 L38,0 Z" fill="%s"/>'
-            '<circle cx="37" cy="0" r="3" fill="%s"/>'
-            '<path d="M38,-4 L52,-12" stroke="%s" stroke-width="4"/><path d="M38,4 L52,12" stroke="%s" stroke-width="4"/>'
-            '<circle cx="60" cy="-15" r="9" fill="none" stroke="%s" stroke-width="4"/>'
-            '<circle cx="60" cy="15" r="9" fill="none" stroke="%s" stroke-width="4"/></g>'
-            % (x, y, ang, s, GREY, GREY_D, INK, ACC2, ACC2, ACC2, ACC2))
+    """Forbicine da cuticole: lame sottili e curve con punte in (x, y), anelli verso +x."""
+    blade = ('<path d="M0,-0.4 Q16,-6.5 36,-5.5 L38,-1 Q18,-2 0,-0.4 Z" fill="F1" stroke="#4f5860" stroke-width=".7"/>'
+             '<path d="M39,-3 Q46,-8 51,-12" stroke="F1" stroke-width="4.2" stroke-linecap="round" fill="none"/>'
+             '<ellipse cx="60" cy="-15" rx="10" ry="8" fill="none" stroke="F1" stroke-width="4"/>'
+             '<ellipse cx="60" cy="-15" rx="10" ry="8" fill="none" stroke="#4f5860" stroke-width=".7" stroke-opacity=".6"/>')
+    b = blade.replace('F1', '#9aa3ad')
+    b += '<g transform="scale(1,-1)">%s</g>' % blade.replace('F1', '#6f7983')
+    b += '<circle cx="38" cy="0" r="3.2" fill="#e3e8ec" stroke="#4f5860" stroke-width=".7"/>'
+    return _g(x, y, ang, s, b)
 
 
 def tool_pencil(x, y, ang=0, l=110):
@@ -289,14 +366,31 @@ def tool_pencil(x, y, ang=0, l=110):
             '<rect x="%d" y="-6" width="12" height="12" rx="2" fill="#e88a9c"/></g>' % (x, y, ang, INK, l, 16 + l))
 
 
-def bottle(cx, yb, liquid='#cfe6f7', label='', w=40, h=56):
-    """Flaconcino con tappo-pennello; yb = base."""
-    s = ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="9" fill="#fff" stroke="%s" stroke-width="1.6"/>'
-         % (cx - w / 2, yb - h, w, h, MUTED))
-    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="6" fill="%s"/>' % (cx - w / 2 + 4, yb - h * 0.62, w - 8, h * 0.62 - 4, liquid)
-    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="%s"/>' % (cx - w * 0.22, yb - h - 26, w * 0.44, 26, INK)
+def bottle(cx, yb, liquid='#cfe6f7', label='', w=40, h=56, cap=True):
+    """Flacone in vetro con spalle arrotondate, liquido, riflesso ed etichetta; tappo nero zigrinato. yb = base."""
+    x0, x1, yt = cx - w / 2, cx + w / 2, yb - h
+    sh = min(10, h * 0.2)
+    body = ('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f '
+            'L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z' % (
+                x0, yb - 6, x0, yb, x0 + 6, yb, x1 - 6, yb, x1, yb, x1, yb - 6, x1, yt + sh, x1, yt, x1 - sh, yt,
+                x0 + sh, yt, x0, yt, x0, yt + sh))
+    c = uid('bt')
+    s = '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (c, body)
+    s += '<path d="%s" fill="url(#bGlass)"/>' % body
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" clip-path="url(#%s)"/>' % (x0, yb - h * 0.66, w, h, liquid, c)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="2" fill="#fff" opacity=".6" clip-path="url(#%s)"/>' % (x0, yb - h * 0.66, w, c)
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="2" fill="#fff" opacity=".7"/>' % (x0 + w * 0.14, yt + 6, max(3, w * 0.09), h - 14)
+    s += '<path d="%s" fill="none" stroke="%s" stroke-width="1.5"/>' % (body, '#8d8a96')
+    if cap:
+        cw = w * 0.46
+        s += '<rect x="%.1f" y="%.1f" width="%.1f" height="5" fill="#cfd5db" stroke="#8d8a96" stroke-width=".8"/>' % (cx - cw / 2 - 2, yt - 5, cw + 4)
+        s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="url(#bHandle)"/>' % (cx - cw / 2, yt - 5 - h * 0.48, cw, h * 0.48)
+        for k in range(1, 4):
+            xx = cx - cw / 2 + k * cw / 4
+            s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#fff" stroke-opacity=".18" stroke-width="1"/>' % (xx, yt - 3 - h * 0.48, xx, yt - 7)
     if label:
-        s += text(cx, yb - h * 0.25, label, 12, weight=800, fill=INK)
+        s += '<rect x="%.1f" y="%.1f" width="%.1f" height="18" rx="4" fill="#fff" opacity=".9"/>' % (cx - w * 0.38, yb - h * 0.36 - 12, w * 0.76)
+        s += text(cx, yb - h * 0.36 + 1.5, label, 12, weight=800, fill=INK)
     return s
 
 
@@ -306,12 +400,17 @@ def drop_c(cx, cy, col, stroke=None, s=1.0):
 
 
 def desk_lamp(x, y, s=1.0):
-    """Lampada da tavolo; (x, y) = centro della testa (luce verso destra/basso)."""
+    """Lampada da tavolo a braccio snodato; (x, y) = centro della testa (luce verso destra/basso)."""
     return ('<g transform="translate(%.1f,%.1f) scale(%.2f)">'
-            '<rect x="-48" y="96" width="44" height="8" rx="4" fill="%s"/>'
-            '<path d="M-26,96 L-36,40 L0,0" stroke="%s" stroke-width="5" fill="none" stroke-linecap="round"/>'
-            '<path d="M-10,-14 L24,-6 L16,24 Z" fill="%s"/><circle cx="16" cy="10" r="5" fill="%s"/></g>'
-            % (x, y, s, INK, MUTED, ACC2, LIGHT))
+            '<ellipse cx="-26" cy="100" rx="24" ry="5" fill="#000" opacity=".12"/>'
+            '<rect x="-48" y="92" width="44" height="9" rx="4.5" fill="url(#bHandle)"/>'
+            '<path d="M-26,94 L-38,42 L-4,2" stroke="#8d969f" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+            '<circle cx="-38" cy="42" r="4" fill="#6f7983"/><circle cx="-26" cy="94" r="3.5" fill="#6f7983"/>'
+            '<path d="M-12,-16 L26,-6 Q22,14 14,26 Z" fill="%s" stroke="#6b2a44" stroke-width="1"/>'
+            '<path d="M-8,-11 L20,-4" stroke="#fff" stroke-width="1.6" opacity=".45" stroke-linecap="round"/>'
+            '<ellipse cx="20" cy="10" rx="5" ry="15" transform="rotate(-18 20 10)" fill="%s"/>'
+            '<ellipse cx="20" cy="10" rx="2.5" ry="9" transform="rotate(-18 20 10)" fill="#fff8d6"/></g>'
+            % (x, y, s, ACC2, LIGHT))
 
 
 def rays(x0, y0, x1, y1, n=4, dx=0, dy=22, col=LIGHT):
@@ -687,44 +786,80 @@ def primers():
     return svg(W, H, b, 'Sezione al microscopio: il primer acido incide la lamina, quello senza acido fa da biadesivo')
 
 
+def cap_brush(x, y, ang=0, s=1.0, bristle='#f4e3a4'):
+    """Pennellino del flacone (tappo-pennello): punta delle setole in (x, y), tappo verso +x."""
+    b = ('<rect x="40" y="-9" width="44" height="18" rx="3" fill="url(#bHandle)"/>'
+         '<path d="M50,-8 v16 M60,-8 v16 M70,-8 v16" stroke="#fff" stroke-opacity=".16" stroke-width="1.2"/>'
+         '<rect x="12" y="-1.8" width="30" height="3.6" fill="#e9edf1" stroke="#9aa3ad" stroke-width=".6"/>'
+         '<path d="M14,-3.6 C6,-4 -2,-3 -6,-1 Q-8,0 -6,1 C-2,3 6,4 14,3.6 Z" fill="%s" stroke="%s" stroke-opacity=".4" stroke-width=".7"/>'
+         '<path d="M12,-1.4 L-3,-0.4 M12,1.4 L-3,0.4" stroke="#fff" stroke-width=".6" opacity=".6"/>' % (bristle, INK))
+    return _g(x, y, ang, s, b)
+
+
+def nail_inset(p, d=7, top=None):
+    """Sagoma della lamina ristretta di d px (margine dalla pelle) per mostrare dove va il prodotto."""
+    cx, yc, hw = p['cx'], p['y_c'], p['hw']
+    yt = top if top is not None else p['y_t'] + d + 4
+    r = hw - d
+    return ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z'
+            % (cx - r, yt + r * 0.5, cx - r, yc - 34 - d * 0.4, cx, yc + 10 - d * 1.6, cx + r, yc - 34 - d * 0.4,
+               cx + r, yt + r * 0.5, cx + r, yt, cx, yt, cx - r, yt, cx - r, yt + r * 0.5))
+
+
 @figx('primer-quantita.svg')
 def primer_amount():
     W, H = 940, 330
     b = ''
-    # 1 scarica il pennello
+    # 1 scarica il pennello sul collo del flacone
     x = 20
-    body = bottle(x + 110, 270, '#f4e3a4', 'primer', 70, 96)
-    body = body.replace('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="%s"/>' % (x + 110 - 15.4, 270 - 96 - 26, 30.8, 26, INK), '')
-    body += '<rect x="%d" y="%d" width="40" height="12" rx="3" fill="#fff" stroke="%s" stroke-width="1.6"/>' % (x + 90, 270 - 108, MUTED)
-    body += tool_brush(x + 128, 154, -60, 90, '#f4e3a4')
-    body += arrow(x + 150, 128, x + 168, 150)
-    body += drop_c(x + 112, 186, '#e7c95a', s=0.7) + drop_c(x + 124, 204, '#e7c95a', s=0.55)
+    bx, byb = x + 104, 258
+    body = bottle(bx, byb, '#f4e3a4', 'primer', 76, 100, cap=False)
+    nk = byb - 100 - 12
+    body += ('<rect x="%d" y="%d" width="34" height="12" rx="2" fill="url(#bGlass)" stroke="#8d8a96" stroke-width="1.4"/>'
+             % (bx - 17, nk))
+    body += cap_brush(bx + 15, nk - 3, -40, 1.3)
+    body += drop_c(bx + 8, nk + 30, '#e7c95a', s=0.6) + drop_c(bx + 2, nk + 50, '#e7c95a', s=0.5)
+    body += ('<path d="M%d,%d q-6,26 -26,34" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>'
+             % (bx + 52, nk - 12, ACC2))
+    body += text(x + 190, nk + 32, 'strofina', 13, 'start', 700, ACC2)
+    body += text(x + 190, nk + 48, 'sul bordo', 13, 'start', 700, ACC2)
     b += frame(x, 20, 290, 290, 'Scarica il pennello', 1, sub='quasi asciutto', body=body, subcol=INK)
-    # 2 giusto
+    # 2 giusto: velo sottile solo sulla lamina, margine dalla pelle
     x = 324
-    extra = ''
-    cx, yc = x + 130, 250
-    f, p = top_finger(cx, yc, hw=46, nail_len=150, free_len=14, finger_len=10)
-    prim = ('<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Z" fill="#f6e39a" opacity=".75" stroke="#d9b44a" stroke-width="1.2"/>'
-            % (cx - 32, yc - 142, cx - 32, yc - 70, cx, yc - 40, cx + 32, yc - 70, cx + 32, yc - 142))
-    body = f + prim
-    body += dim(cx, yc - 40, cx, yc - 5, '', 'right')
-    body += dashed(cx + 4, yc - 22, x + 200, yc - 60, MUTED, 1, '3 3')
-    body += text(x + 204, yc - 70, '≥ 1 mm', 14, 'start', 800, ACC2)
-    body += text(x + 204, yc - 52, 'dalla pelle', 12.5, 'start', 600, ACC2)
+    cx, yc = x + 122, 240
+    f, p = top_finger(cx, yc, hw=44, nail_len=136, free_len=14, finger_len=0)
+    body = f
+    shape = nail_inset(p, 8)
+    body += '<path d="%s" fill="#f6dc7a" fill-opacity=".55" stroke="#c9a54a" stroke-width="1.4" stroke-dasharray="5 3"/>' % shape
+    body += cap_brush(cx + 8, yc - 100, -50, 1.25)
+    body += dim(cx, yc - 32, cx, yc - 3, '', 'right')
+    body += callout(cx + 2, yc - 18, x + 214, yc - 66, '≥ 1 mm', 'start', 14, ACC2, 800)
+    body += text(x + 214, yc - 48, 'dalla pelle', 12.5, 'start', 600, ACC2)
     b += frame(x, 20, 290, 290, 'Solo sulla lamina', 2, ok=True, sub='piccoli tocchi, lontano dalla pelle', body=body)
-    # 3 troppo
+    # 3 troppo: il primer allaga cuticola e solchi
     x = 628
-    cx = x + 145
-    yc = 250
-    f, p = top_finger(cx, yc, hw=46, nail_len=150, free_len=14, finger_len=10)
-    flood = ('<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="#f2b45a" opacity=".7"/>'
-             % (cx - 62, yc - 160, cx - 64, yc - 30, cx, yc + 26, cx + 64, yc - 30, cx + 62, yc - 160, cx, yc - 170, cx - 62, yc - 160))
-    body = f + flood + drop_c(cx - 66, yc - 8, '#f2b45a') + drop_c(cx + 68, yc - 20, '#f2b45a')
-    body += leader(cx + 60, yc - 40, x + 250, yc - 170, 'sulla pelle', 'middle', 13, fill=ERR)
+    cx, yc = x + 130, 240
+    f, p = top_finger(cx, yc, hw=44, nail_len=136, free_len=14, finger_len=0)
+    hw = 44
+    flood = ('M%d,%d C%d,%d %d,%d %d,%d C%d,%d %d,%d %d,%d C%d,%d %d,%d %d,%d C%d,%d %d,%d %d,%d '
+             'C%d,%d %d,%d %d,%d L%d,%d Q%d,%d %d,%d Z'
+             % (cx - hw - 10, yc - 140,
+                cx - hw - 14, yc - 110, cx - hw - 8, yc - 70, cx - hw - 16, yc - 30,
+                cx - hw - 6, yc + 6, cx - 20, yc + 20, cx, yc + 14,
+                cx + 18, yc + 24, cx + hw + 4, yc + 4, cx + hw + 14, yc - 26,
+                cx + hw + 8, yc - 70, cx + hw + 16, yc - 108, cx + hw + 10, yc - 140,
+                cx + hw + 6, yc - 146, cx + hw - 6, yc - 152, cx + hw - 12, yc - 152,
+                cx - hw + 12, yc - 152, cx - hw - 4, yc - 152, cx - hw - 10, yc - 140))
+    body = f
+    body += '<path d="%s" fill="#f2b45a" fill-opacity=".55" stroke="#d98b2b" stroke-width="1.4"/>' % flood
+    body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".55"/>'
+             % (cx - 26, yc - 140, cx - 32, yc - 90, cx - 26, yc - 50))
+    body += drop_c(cx - hw - 14, yc + 4, '#f2b45a', '#d98b2b') + drop_c(cx + hw + 14, yc - 6, '#f2b45a', '#d98b2b')
+    body += callout(cx + hw + 12, yc - 30, x + 244, yc - 104, 'sulla', 'middle', 13, ERR)
+    body += text(x + 244, yc - 88, 'pelle', 13, 'middle', 700, ERR)
     b += frame(x, 20, 290, 290, 'Troppo primer', ok=False, sub='meno adesione, pelle a rischio', body=body)
-    return svg(W, H, arrow_defs() + b, 'La quantità giusta di primer: pennello quasi asciutto, solo sulla lamina, lontano dalla pelle')
-
+    return svg(W, H, arrow_defs() + b, 'La quantità giusta di primer: pennello scaricato sul bordo del flacone, velo solo sulla lamina '
+               'lontano dalla pelle; errore: primer che allaga cuticola e solchi')
 
 
 # ================================================================= MODULO TIP
@@ -742,7 +877,9 @@ def tip_top(cx, ys, hw, L, well, op=1.0, hatch=True, ang=0, stop=True, outline=T
     body = ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z'
             % (cx - hw, ys + well, cx - hw, yt + hw * 0.5, cx - hw, yt, cx, yt, cx + hw, yt, cx + hw, yt + hw * 0.5,
                cx + hw, ys + well, cx, ys + well + 26, cx - hw, ys + well))
-    s = '<path d="%s" fill="%s" fill-opacity="%.2f" stroke="%s" stroke-width="1.6"/>' % (body, TIPC, op, outline)
+    s = '<path d="%s" fill="url(#bTipG)" fill-opacity="%.2f" stroke="%s" stroke-width="1.6"/>' % (body, op, outline)
+    s += ('<path d="M%.1f,%.1f L%.1f,%.1f" stroke="#fff" stroke-width="%.1f" stroke-linecap="round" opacity="%.2f"/>'
+          % (cx - hw * 0.5, yt + 10, cx - hw * 0.5, ys + well * 0.6, hw * 0.16, 0.75 * op))
     if hatch and well > 0:
         c = uid('t')
         s += '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (c, body)
@@ -759,7 +896,7 @@ def tip_side(x, y, ang=0, well=46, L=120, glue=False):
     t = ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" '
          'fill="%s" stroke="%s" stroke-width="1.5"/>'
          % (x - well, y - 1, x - well, y - 3.5, x, y - 5, x + L * 0.6, y - 6, x + L, y - 2, x + L, y + 4,
-            x + L * 0.6, y + 2, x, y + 6, x, y, x - well, y - 1, TIPC, TIP_S))
+            x + L * 0.6, y + 2, x, y + 6, x, y, x - well, y - 1, 'url(#bTipV)', TIP_S))
     if glue:
         t += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#5aa9dc" stroke-width="3" fill="none" stroke-linecap="round"/>' % (
             x - well + 6, y + 1, x - well / 2, y + 3, x - 4, y + 1)
@@ -784,32 +921,36 @@ def tip_anat():
     W, H = 760, 370
     b = hatch_defs()
     b += text(20, 38, 'Com\'è fatto un tip', 20, 'start', 800, ACC2)
-    cx, ys = 120, 230
-    b += tip_top(cx, ys, 50, 160, 70)
-    b += leader(cx - 12, ys + 40, 230, 262, 'Incavo (well)', 'start', 14)
-    b += leader(cx + 30, ys, 230, 222, 'Punto d\'arresto', 'start', 14)
-    b += leader(cx + 22, ys + 60, 230, 300, 'Zona di contatto', 'start', 14)
-    b += text(236, 318, '(sotto l\'incavo)', 12.5, 'start', fill=MUTED)
-    b += leader(cx + 10, ys - 90, 230, 130, 'Corpo del tip', 'start', 14)
-    b += text(120, 60, 'dall\'alto', 13, weight=700, fill=MUTED)
-    # vista di profilo
-    b += '<rect x="400" y="64" width="340" height="250" rx="16" fill="%s"/>' % PANEL
-    b += text(570, 92, 'di profilo', 13, weight=700, fill=MUTED)
-    t = ('<path d="M430,176 L430,172 L540,168 L540,160 Q640,158 720,172 L720,180 Q640,170 548,176 L540,184 L540,178 Z" '
-         'fill="%s" stroke="%s" stroke-width="1.8"/>' % (TIPC, TIP_S))
-    b += t
-    b += '<rect x="430" y="178" width="110" height="9" fill="url(#%s)"/>' % HATCH_ID
-    b += '<rect x="430" y="178" width="110" height="9" fill="none" stroke="%s" stroke-dasharray="3 3"/>' % MUTED
-    b += arrow(600, 222, 545, 186)
-    b += mtext(604, 236, ['gradino: si appoggia', 'al bordo libero'], 12.5, 'start', 600)
-    b += leader(480, 172, 470, 130, 'incavo sottile', 'middle', 13)
-    b += leader(484, 186, 470, 222, 'zona di contatto', 'middle', 12.5)
-    # curva a C
-    b += ('<path d="M424,294 Q464,262 504,294" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>' % TIP_S)
-    b += text(516, 284, 'Curva a C', 13, 'start', 700)
-    b += text(516, 300, '(vista dalla punta)', 12, 'start', fill=MUTED)
-    b += text(W / 2, 352, 'L\'incavo copre al massimo metà unghia.', 15, weight=800, fill=ACC2)
-    return svg(W, H, arrow_defs() + b, 'Le parti del tip: incavo, punto d\'arresto, zona di contatto, corpo e curva a C')
+    cx, ys = 112, 236
+    b += text(cx, 64, 'dall\'alto', 13, weight=700, fill=MUTED)
+    b += tip_top(cx, ys, 48, 156, 70)
+    b += leader(cx + 8, ys - 90, 212, 128, 'Corpo del tip', 'start', 14)
+    b += leader(cx + 34, ys, 212, 218, 'Punto d\'arresto', 'start', 14)
+    b += leader(cx - 6, ys + 36, 212, 262, 'Incavo (well)', 'start', 14)
+    # vista di profilo (ingrandita)
+    b += '<rect x="370" y="56" width="370" height="270" rx="16" fill="%s"/>' % PANEL
+    b += text(555, 84, 'di profilo (ingrandito)', 13, weight=700, fill=MUTED)
+    sc, ox, oy = 2.2, 516, 160
+    prof = ('<path d="M-54,0 L-54,-1.6 Q-30,-3.2 0,-4.2 Q50,-5.4 96,-1.4 L96,3.6 Q50,6.8 2,6 L0,6 L0,0.4 Z" '
+            'fill="url(#bTipV)" stroke="%s" stroke-width="0.7" stroke-linejoin="round"/>'
+            '<path d="M-40,-1.6 Q0,-3 50,-3.6 Q76,-3 92,-0.8" fill="none" stroke="#fff" stroke-width=".7" opacity=".9"/>'
+            '<rect x="-54" y="0.2" width="54" height="2.6" fill="url(#%s)"/>'
+            '<rect x="-54" y="0.2" width="54" height="2.6" fill="none" stroke="%s" stroke-width=".5" stroke-dasharray="1.5 1.5"/>'
+            % (TIP_S, HATCH_ID, MUTED))
+    b += scaled(ox, oy, sc, prof)
+    b += callout(ox - 70, oy - 5, 440, 120, 'incavo sottile', 'middle', 13)
+    b += callout(ox - 40, oy + 4, 450, 216, 'zona di contatto', 'middle', 13, sub='(si incolla sull\'unghia)')
+    b += '<circle cx="%.1f" cy="%.1f" r="9" fill="none" stroke="%s" stroke-width="2"/>' % (ox, oy + 6, ACC2)
+    b += callout(ox + 6, oy + 13, 626, 216, 'gradino d\'arresto', 'middle', 13, sub='tocca il bordo libero')
+    b += callout(ox + 120, oy - 7, 680, 120, 'corpo', 'middle', 13)
+    # curva a C vista dalla punta
+    ccx, ccy = 470, 300
+    b += ('<path d="M%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="url(#bTipV)" stroke="%s" stroke-width="1.4" stroke-linejoin="round"/>'
+          % (ccx - 48, ccy, ccx, ccy - 50, ccx + 48, ccy, ccx + 43, ccy + 2, ccx, ccy - 42, ccx - 43, ccy + 2, TIP_S))
+    b += text(530, 292, 'Curva a C', 13.5, 'start', 800)
+    b += text(530, 309, '(vista dalla punta)', 12, 'start', fill=MUTED)
+    b += text(W / 2, 356, 'L\'incavo copre al massimo metà unghia.', 15, weight=800, fill=ACC2)
+    return svg(W, H, arrow_defs() + b, 'Le parti del tip: corpo, punto d\'arresto, incavo e zona di contatto; profilo ingrandito e curva a C')
 
 
 @figx('tip-misura-errori.svg')
@@ -883,44 +1024,76 @@ def tip_fit():
     return svg(W, H, arrow_defs() + b, 'Adattare il tip: limare i lati e accorciare l\'incavo a metà unghia')
 
 
+def press_finger(x, y, s=1.0):
+    """Dito dell'operatrice di profilo che preme dall'alto: polpastrello in (x, y), unghia sul lato destro."""
+    b = ('<path d="M-17,-92 L-17,-22 Q-17,0 2,0 Q19,0 19,-20 L19,-92 Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
+         '<path d="M17,-50 Q23,-49 23,-38 L22,-14 Q21,-6 16,-4 L16,-50 Z" fill="%s" stroke="%s" stroke-width="1.2"/>'
+         % (SKIN, SKIN_D, NAIL, NAIL_S))
+    return '<g transform="translate(%.1f,%.1f) scale(%.2f)">%s</g>' % (x, y, s, b)
+
+
+def glue_tip(ang, glue=False, bubble=False):
+    """Scena locale: dito di profilo con bordo libero che termina in (0,0) e tip con l'arresto in (0,0)."""
+    s = finger_side(-100, 0, L=86, free=14)
+    t = ('<path d="M-54,0 L-54,-1.6 Q-30,-3.2 0,-4.2 Q60,-5.4 116,-1 L116,4 Q60,6.8 2,6 L0,6 L0,0.4 Z" '
+         'fill="url(#bTipV)" stroke="%s" stroke-width="1.3" stroke-linejoin="round"/>'
+         '<path d="M-40,-1.6 Q0,-3 60,-3.6 Q90,-3 110,-0.4" fill="none" stroke="#fff" stroke-width="1.2" opacity=".9"/>' % TIP_S)
+    if glue:
+        for gx in (-44, -32, -20, -9):
+            t += '<ellipse cx="%d" cy="1.2" rx="4.2" ry="2.4" fill="#8fc6ea" stroke="#3d8fc6" stroke-width=".8"/>' % gx
+    if bubble:
+        t += '<ellipse cx="-26" cy="-0.6" rx="10" ry="2.4" fill="#fff" stroke="#3d8fc6" stroke-width="1.2"/>'
+    s += rot(ang, 0, 0, t) if ang else t
+    return s
+
+
 @figx('tip-incollaggio-45.svg')
 def tip_glue():
     W, H = 940, 310
     b = ''
     T = ['Appoggia a 45°', 'Abbassa lentamente', 'Tieni fermo']
+    sc = 1.45
     for i, t in enumerate(T):
         x = 20 + i * 228
-        fx, fy = x + 34, 190
-        body = finger_side(fx, fy, L=82, free=14)
-        sx = fx + 96
-        ang = [42, 18, 0][i]
-        body += tip_side(sx, fy + 1, ang, glue=(i == 0))
+        ox, oy = x + 112, 168
+
+        def P(px, py):
+            return ox + px * sc, oy + py * sc
+        ang = [45, 22, 0][i]
+        body = scaled(ox, oy, sc, glue_tip(ang, glue=(i == 0)))
         if i == 0:
-            body += dashed(sx, fy + 1, sx + 80, fy + 1, MUTED, 1.2, '4 4')
-            body += arc_angle(sx, fy + 1, 40, 0, 42, '45°', lx=sx + 58, ly=fy + 36)
-            body += leader(sx - 24, fy - 30, sx - 70, fy - 80, 'colla', 'end', 13)
+            body += dashed(ox, oy, x + 214, oy, MUTED, 1.2, '4 4')
+            body += arc_angle(ox, oy, 54, 0, 45, '', ACC2)
+            body += text(x + 196, oy + 34, '45°', 15, 'middle', 800, ACC2)
+            gx, gy = P(-30 * 0.707, -30 * 0.707)
+            body += leader(gx + 2, gy + 2, x + 150, 98, 'colla nell\'incavo', 'middle', 13)
+            body += leader(ox, oy, x + 62, 232, 'arresto sul bordo', 'middle', 12.5)
         elif i == 1:
-            body += ('<path d="M%.1f,%.1f A70,70 0 0 0 %.1f,%.1f" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>'
-                     % (sx + 52, fy + 52, sx + 70, fy + 12, ACC2))
+            ex, ey = P(-54 * math.cos(math.radians(22)), -54 * math.sin(math.radians(22)))
+            body += ('<path d="M%.1f,%.1f A%.1f,%.1f 0 0 0 %.1f,%.1f" fill="none" stroke="%s" stroke-width="2.4" marker-end="url(#ar)"/>'
+                     % (ex - 6, ey - 16, 54 * sc + 10, 54 * sc + 10, ox - 54 * sc - 4, oy - 12, ACC2))
             for k in range(3):
-                body += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" stroke="#5aa9dc" stroke-width="1.4"/>' % (sx - 52 - k * 12, fy - 10 - k * 10, 4 - k * 0.6)
-            body += arrow(sx - 50, fy - 30, sx - 92, fy - 62)
-            body += text(sx - 70, fy - 72, 'aria fuori', 13, 'middle', 700, ACC2)
+                body += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" stroke="#3d8fc6" stroke-width="1.4"/>' % (
+                    ox - 30 - k * 16, oy - 6 - k * 14, 4.2 - k * 0.8)
+            body += text(x + 60, 90, 'l\'aria esce', 13, 'middle', 700, ACC2)
+            body += text(x + 60, 106, 'dal retro', 13, 'middle', 700, ACC2)
         else:
-            body += thumb(sx - 24, fy - 30, 180, 0.8)
-            body += timer(x + 118, 82, '5–10 s')
+            body += press_finger(ox - 34, oy - 7, 1.0)
+            body += arrow(ox - 64, oy - 70, ox - 64, oy - 30, ACC2, 2) + arrow(ox - 4, oy - 70, ox - 4, oy - 30, ACC2, 2)
+            body += timer(x + 152, 86, '')
+            body += text(x + 152, 122, '5–10 s', 14, 'middle', 800, ACC2)
         b += frame(x, 20, 216, 270, t, i + 1, body=body)
     # riquadro errore
     x = 704
-    fx, fy = x + 40, 180
-    body = finger_side(fx, fy, L=70, free=14)
-    sx = fx + 84
-    body += tip_side(sx, fy - 3, 0)
-    body += '<ellipse cx="%.1f" cy="%.1f" rx="13" ry="3" fill="#fff" stroke="#5aa9dc" stroke-width="1.4"/>' % (sx - 22, fy - 2)
-    body += arrow(sx - 10, fy - 70, sx - 10, fy - 20)
-    body += leader(sx - 22, fy - 2, sx + 10, fy + 50, 'bolla', 'start', 13, fill=ERR)
-    b += frame(x, 20, 216, 270, 'Appoggiato piatto', ok=False, sub='giù di colpo = bolle', body=body)
-    return svg(W, H, arrow_defs() + b, 'Incollare il tip: appoggio a 45 gradi, discesa lenta, tenuta 5–10 secondi; errore: tip appoggiato di colpo')
+    ox, oy = x + 112, 168
+    body = scaled(ox, oy, sc, glue_tip(0, bubble=True))
+    body += arrow(ox - 40, oy - 82, ox - 40, oy - 20, ERR, 2.4)
+    body += arrow(ox + 50, oy - 82, ox + 50, oy - 20, ERR, 2.4)
+    body += text(ox + 5, oy - 92, 'giù di colpo', 13, 'middle', 700, ERR)
+    body += leader(ox - 38, oy - 1, x + 70, 228, 'bolla d\'aria', 'middle', 13, fill=ERR)
+    b += frame(x, 20, 216, 270, 'Appoggiato piatto', ok=False, sub='bolle = sollevamento', body=body)
+    return svg(W, H, arrow_defs() + b, 'Incollare il tip: arresto contro il bordo libero a 45 gradi, discesa lenta che fa uscire l\'aria, '
+               'pressione per 5–10 secondi; errore: tip appoggiato piatto di colpo che intrappola una bolla')
 
 
 @figx('tip-errori-applicazione.svg')
@@ -963,18 +1136,23 @@ def tip_cut():
     b = hatch_defs()
     # 1 taglio perpendicolare
     x = 20
-    cx, yc = x + 130, 312
+    cx, yc = x + 150, 336
     body = ''
-    f, p = top_finger(cx, yc, hw=38, nail_len=100, free_len=6, finger_len=20)
+    f, p = top_finger(cx, yc, hw=38, nail_len=96, free_len=6, finger_len=20)
     body += f
     ys = p['y_s'] - 4
-    body += tip_top(cx, ys, 41, 120, 45, op=0.6, hatch=False)
-    cut = ys - 70
-    body += dashed(cx - 66, cut, cx + 66, cut, ERR, 2, '7 5')
+    body += tip_top(cx, ys, 41, 136, 45, op=0.7, hatch=False)
+    cut = ys - 62
+    fin = cut + 17
+    yt = ys - 136
+    body += dashed(cx - 50, cut, cx + 62, cut, ERR, 2, '7 5')
+    body += dashed(cx - 50, fin, cx + 62, fin, OK, 1.8, '4 4')
     body += tool_tipcutter(cx, cut, -90, 1.0)
-    body += dim(cx + 60, cut, cx + 60, cut + 20, '', 'left')
-    body += mtext(cx + 72, cut + 18, ['+1–2 mm', 'per limare'], 12.5, 'start', 700, ACC2)
-    body += text(cx - 72, cut + 4, 'taglio', 12.5, 'end', 700, ERR)
+    body += text(cx - 56, cut + 4, 'taglio', 13, 'end', 800, ERR)
+    body += text(cx - 56, fin + 6, 'forma finale', 12.5, 'end', 700, OK)
+    body += dim(cx + 70, cut, cx + 70, fin, '', 'left')
+    body += text(cx + 80, cut - 2, '+1–2 mm', 13, 'start', 800, ACC2)
+    body += text(cx + 80, fin + 8, 'per limare', 12.5, 'start', 700, ACC2)
     b += frame(x, 20, 350, 290, 'Taglio perpendicolare', ok=True, body=body)
     # 2 lunghezza
     x = 390
@@ -1059,7 +1237,7 @@ def overlay_profile(ox, oy, L=170, free=26, ext=130, apex_h=28, prod=True, apex_
     xb = xn + ext            # punta
     if tip:
         s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
-              % (xn - 40, oy - 1, xn, oy - 2, xn + ext * 0.6, oy - 1, xb, oy + 3, xb, oy + 7, xn, oy + 6, TIPC, TIP_S))
+              % (xn - 40, oy - 1, xn, oy - 2, xn + ext * 0.6, oy - 1, xb, oy + 3, xb, oy + 7, xn, oy + 6, 'url(#bTipV)', TIP_S))
     pts = {}
     if prod:
         xa = ox + 14
@@ -1067,11 +1245,13 @@ def overlay_profile(ox, oy, L=170, free=26, ext=130, apex_h=28, prod=True, apex_
         top = 'M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (
             xa, oy - 1, (xa + ax) / 2, oy - apex_h, ax, oy - apex_h, (ax + xb) / 2 + 20, oy - apex_h, xb, oy - 4)
         if tip:
-            s += '<path d="%s L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.6" opacity=".92"/>' % (
-                top, xb, oy - 1, xa, oy - 1, PROD, PROD_S)
+            s += '<path d="%s L%.1f,%.1f L%.1f,%.1f Z" fill="url(#bProdV)" stroke="%s" stroke-width="1.6" opacity=".95"/>' % (
+                top, xb, oy - 1, xa, oy - 1, PROD_S)
         else:
-            s += '<path d="%s L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.6" opacity=".92"/>' % (
-                top, xb, oy + 5, xn, oy + 6, xn, oy - 1, xa, oy - 1, PROD, PROD_S)
+            s += '<path d="%s L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="url(#bProdV)" stroke="%s" stroke-width="1.6" opacity=".95"/>' % (
+                top, xb, oy + 5, xn, oy + 6, xn, oy - 1, xa, oy - 1, PROD_S)
+        s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".85"/>'
+              % ((xa + ax) / 2, oy - apex_h * 0.72, ax, oy - apex_h - 1 + 4, (ax + xb) / 2 + 10, oy - apex_h * 0.78))
         pts = dict(xa=xa, ax=ax, ah=oy - apex_h)
     pts.update(xe=xe, xn=xn, xb=xb, oy=oy, ox=ox)
     return s, pts
@@ -1150,105 +1330,170 @@ def tip_gel_steps():
 
 # ================================================================= MODULO CARTINA
 def form_shape(cx, ys, w=80, h=130, hole=46, hole_d=48, grid=True, center=True, notch=None, cut_tab=False):
-    """Cartina vista dall'alto: ys = altezza del bordo libero; foro verso il basso."""
+    """Cartina adesiva vista dall'alto: ys = altezza del bordo libero; foro verso il basso.
+    Carta sfumata con angoli arrotondati, archi-guida stampati, righello laterale e asse centrale."""
+    r = 12
+    yb = ys + 36
+    top = 'M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f' % (
+        cx - w, yb, cx - w, ys - h + r, cx - w, ys - h, cx - w + r, ys - h, cx + w - r, ys - h, cx + w, ys - h, cx + w, ys - h + r, cx + w, yb)
     if cut_tab:
-        d = 'M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (
-            cx - w, ys + 36, cx - w, ys - h, cx + w, ys - h, cx + w, ys + 36, cx + hole, ys + 36, cx + hole, ys) + \
-            ' M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (cx + hole, ys, cx - hole, ys, cx - hole, ys + 36, cx + hole, ys + 36)
-        d = 'M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (
-            cx - w, ys + 36, cx - w, ys - h, cx + w, ys - h, cx + w, ys + 36, cx + hole, ys + 36, cx + hole, ys, cx - hole, ys, cx - hole, ys + 36)
+        d = top + ' L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z' % (cx + hole, yb, cx + hole, ys, cx - hole, ys, cx - hole, yb)
     else:
         nd = notch if notch else 0
-        d = ('M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f A%.1f,%.1f 0 0 0 %.1f,%.1f Z'
-             % (cx - w, ys + 36, cx - w, ys - h, cx + w, ys - h, cx + w, ys + 36, cx + hole, ys + 36, hole, hole_d + nd, cx - hole, ys + 36))
-    s = '<path d="%s" fill="%s" stroke="%s" stroke-width="1.4"/>' % (d, FORM, FORM_S)
+        d = top + ' L%.1f,%.1f A%.1f,%.1f 0 0 0 %.1f,%.1f Z' % (cx + hole, yb, hole, hole_d + nd, cx - hole, yb)
+    c = uid('fm')
+    s = '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (c, d)
+    s += '<path d="%s" fill="url(#bForm)" stroke="%s" stroke-width="1.4" filter="url(#nxShS)"/>' % (d, FORM_S)
+    p = ''
     if grid:
-        for k in range(1, 5):
-            yy = ys - k * 26 + 6
-            if yy > ys - h + 4:
-                s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s"/>' % (cx - w + 8, yy, cx + w - 8, yy, FORM_S)
+        for k in range(1, 6):
+            yy = ys - k * 24 + 4
+            if yy > ys - h + 8:
+                p += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.1"/>'
+                      % (cx - w + 18, yy + 5, cx, yy - 7, cx + w - 18, yy + 5, '#c9ae4e'))
+        yy = ys + 30
+        while yy > ys - h + 6:
+            big = int(round((ys + 30 - yy) / 6)) % 4 == 0
+            ln = 9 if big else 5
+            p += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#b39639" stroke-width="1"/>' % (cx - w, yy, cx - w + ln, yy)
+            p += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#b39639" stroke-width="1"/>' % (cx + w, yy, cx + w - ln, yy)
+            yy -= 6
     if center:
-        s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-dasharray="4 4" stroke-width="1.4"/>' % (cx, ys - h, cx, ys - 8, ACC2)
+        p += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-dasharray="4 4" stroke-width="1.4"/>' % (cx, ys - h, cx, ys - 8, ACC2)
+    s += '<g clip-path="url(#%s)">%s</g>' % (c, p)
     return s
 
 
 def form_side(x, y, ang, L=120):
     """Cartina di profilo: parte dal bordo libero (x, y) verso destra, inclinata di ang (gradi, + = verso il basso)."""
-    return rot(ang, x, y, '<rect x="%.1f" y="%.1f" width="%.1f" height="5" rx="2" fill="%s" stroke="%s"/>' % (x - 6, y + 5, L, FORM, FORM_S))
+    return rot(ang, x, y, '<rect x="%.1f" y="%.1f" width="%.1f" height="5" rx="2" fill="url(#bForm)" stroke="%s"/>'
+               '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#fff" stroke-width="1" opacity=".7"/>'
+               % (x - 6, y + 5, L, FORM_S, x - 4, y + 6.2, x + L - 8, y + 6.2))
+
+
+def pill(x, y, s, size=13, fill=ACC2, anchor='middle'):
+    """Etichetta su fondo bianco arrotondato (leggibile sopra disegni)."""
+    w = len(s) * size * 0.58 + 12
+    x0 = x - w / 2 if anchor == 'middle' else (x - 6 if anchor == 'start' else x - w + 6)
+    return ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="#fff" opacity=".92"/>' % (x0, y - size - 1, w, size + 8, (size + 8) / 2)
+            + text(x, y + 1, s, size, anchor, 700, fill))
+
+
+def finger_under(cx, ytop, w=76, L=200):
+    """Dito visto dal basso (palmo): polpastrello con impronta e piega dell'articolazione."""
+    s = ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="%s" stroke="%s" stroke-width="1.5"/>'
+         % (cx - w / 2, ytop, w, L, w / 2, SKIN, SKIN_D))
+    pc = ytop + w * 0.62
+    for k in range(4):
+        r = 8 + k * 6
+        s += ('<path d="M%.1f,%.1f A%.1f,%.1f 0 0 1 %.1f,%.1f" fill="none" stroke="%s" stroke-width="1" opacity=".45"/>'
+              % (cx - r, pc + 10, r, r * 0.9, cx + r, pc + 10, SKIN_D))
+    return s, pc
 
 
 @figx('cartina-step.svg')
 def form_steps():
     W, H = 940, 340
     b = ''
-    T = [('Stacca e curva', ''), ('Adatta l\'apertura', ''), ('Infila in asse', 'niente spazi'), ('Chiudi le alette', '')]
+    T = [('Stacca e curva', ''), ('Adatta l\'apertura', ''), ('Infila in asse', 'niente spazi'), ('Chiudi le alette', 'vista dal basso')]
     for i, (t, sub) in enumerate(T):
         x = 20 + i * 228
         cx = x + 108
         body = ''
         if i == 0:
-            body += ('<path d="M%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
-                     % (cx - 70, 200, cx, 170, cx + 70, 200, cx + 70, 110, cx, 80, cx - 70, 110, FORM, FORM_S))
-            for k in range(1, 4):
-                body += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s"/>' % (cx - 62, 110 + k * 22, cx, 80 + k * 22, cx + 62, 110 + k * 22, FORM_S)
-            body += dashed(cx, 84, cx, 168, ACC2, 1.4, '4 4')
-            body += thumb(cx - 74, 156, 90, 0.9) + thumb(cx + 74, 156, -90, 0.9)
-            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>'
-                     % (cx - 60, 250, cx, 222, cx + 60, 250, ACC2))
-            body += text(cx, 272, 'curva come l\'unghia', 12.5, 'middle', 600, ACC2)
+            # foglio di supporto + cartina che si stacca con l'angolo arricciato
+            body += '<rect x="%d" y="70" width="120" height="100" rx="8" fill="#eef1f4" stroke="#b8c0c8" stroke-width="1.2"/>' % (cx - 82)
+            body += '<rect x="%d" y="76" width="108" height="88" rx="6" fill="none" stroke="#cfd5db" stroke-dasharray="3 3"/>' % (cx - 76)
+            body += rot(-14, cx - 10, 120, form_shape(cx + 4, 128, 46, 50, 22, 18, grid=True, center=False))
+            body += ('<path d="M%d,%d L%d,%d L%d,%d Z" fill="#fff" stroke="%s" stroke-width="1.2"/>' % (cx + 44, 92, cx + 58, 120, cx + 30, 108, FORM_S))
+            body += ('<path d="M%d,%d q20,-24 40,-10" fill="none" stroke="%s" stroke-width="2" marker-end="url(#ar)"/>' % (cx + 50, 84, ACC2))
+            body += text(cx + 84, 104, 'stacca', 12.5, 'middle', 700, ACC2)
+            # curva a C vista dalla punta
+            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="9" stroke-linecap="round"/>'
+                     % (cx - 50, 246, cx, 186, cx + 50, 246, FORM_S))
+            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="#f6e7a8" stroke-width="6" stroke-linecap="round"/>'
+                     % (cx - 50, 246, cx, 186, cx + 50, 246))
+            body += arrow(cx - 76, 214, cx - 58, 236, ACC2, 2) + arrow(cx + 76, 214, cx + 58, 236, ACC2, 2)
+            body += text(cx, 278, 'curva come l\'unghia', 12.5, 'middle', 700, ACC2)
         elif i == 1:
-            body += form_shape(cx, 170, 80, 110, 40, 30)
-            body += ('<path d="M%d,%d A%d,%d 0 0 0 %d,%d" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>'
-                     % (cx + 50, 206, 50, 46, cx - 50, 206, ERR))
-            body += tool_scissors(cx + 40, 180, -35, 0.9)
-            body += text(cx, 268, 'segui il bordo libero', 12.5, 'middle', 600, ACC2)
+            body += form_shape(cx, 190, 80, 112, 40, 30)
+            body += ('<path d="M%d,%d A%d,%d 0 0 0 %d,%d" fill="none" stroke="%s" stroke-width="2.2" stroke-dasharray="6 4"/>'
+                     % (cx + 52, 226, 52, 50, cx - 52, 226, ERR))
+            body += tool_scissors(cx + 44, 202, -62, 0.95)
+            body += text(cx, 270, 'segui il bordo libero', 12.5, 'middle', 700, ACC2)
         elif i == 2:
-            yc = 262
-            f, p = top_finger(cx, yc, hw=32, nail_len=100, free_len=6, finger_len=8)
+            yc = 252
+            f, p = top_finger(cx, yc, hw=30, nail_len=92, free_len=6, finger_len=0)
             ys = p['y_s'] - 6
-            body += form_shape(cx, ys, 84, 96, 34, 40, center=False)
+            body += form_shape(cx, ys, 84, 84, 32, 40, center=False)
             body += f
-            body += dashed(cx, ys - 120, cx, yc + 20, ACC2, 1.8, '6 4')
-            body += text(cx + 46, ys - 40, 'asse', 12.5, 'start', 700, ACC2)
+            body += dashed(cx, 74, cx, yc + 26, ACC2, 1.8, '6 4')
+            body += pill(cx + 48, 104, 'asse', 12.5)
         else:
-            # vista dal basso del polpastrello
-            body += '<rect x="%d" y="64" width="80" height="196" rx="38" fill="%s" stroke="%s" stroke-width="1.5"/>' % (cx - 40, SKIN, SKIN_D)
-            body += '<path d="M%d,214 q20,6 40,0 M%d,224 q20,6 40,0" stroke="%s" stroke-width="1.5" fill="none"/>' % (cx - 20, cx - 20, SKIN_D)
-            body += ('<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="%s" stroke="%s" stroke-width="1.4" opacity=".96"/>'
-                     % (cx - 92, 84, cx - 40, 70, cx + 22, 130, cx - 30, 146, FORM, FORM_S))
-            body += ('<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="%s" stroke="%s" stroke-width="1.4" opacity=".96"/>'
-                     % (cx + 92, 84, cx + 40, 70, cx - 22, 130, cx + 30, 146, FORM, FORM_S))
-            body += text(cx, 172, 'unisci sotto il', 12.5, 'middle', 700, ACC2)
-            body += text(cx, 188, 'polpastrello', 12.5, 'middle', 700, ACC2)
-            body += mark(cx + 62, 219, False, 11)
-            body += text(cx, 280, 'non sulla nocca', 12.5, 'middle', 700, ERR)
-            sub = 'vista dal basso'
+            # vista dal basso: le alette si chiudono sotto il polpastrello, non sull'articolazione
+            fu, pc = finger_under(cx, 84, 74, 260)
+            body += form_shape(cx, 84 + 16, 70, 34, 30, 22, grid=False, center=False)
+            body += fu
+            for sx in (-1, 1):
+                body += ('<path d="M%d,%d C%d,%d %d,%d %d,%d L%d,%d C%d,%d %d,%d %d,%d Z" fill="url(#bForm)" stroke="%s" stroke-width="1.3"/>'
+                         % (cx + sx * 74, 104, cx + sx * 50, 112, cx + sx * 24, 130, cx - sx * 14, 160,
+                            cx - sx * 4, 176, cx + sx * 26, 150, cx + sx * 52, 134, cx + sx * 74, 130, FORM_S))
+            body += mark(cx + 60, 160, True, 11)
+            body += ('<path d="M%d,%d q%d,6 %d,0 M%d,%d q%d,6 %d,0" fill="none" stroke="%s" stroke-width="1.5"/>'
+                     % (cx - 30, 236, 30, 60, cx - 30, 244, 30, 60, SKIN_D))
+            body += mark(cx + 60, 240, False, 11)
+            body += pill(cx, 204, 'sotto il polpastrello', 12, OK)
+            body += pill(cx, 272, 'non sulla nocca', 12.5, ERR)
+            body += pill(cx, 300, 'vista dal basso', 12.5, INK)
+            sub = None
         b += frame(x, 20, 216, 300, t, i + 1, sub=sub, body=body, subcol=INK)
-    return svg(W, H, arrow_defs() + b, 'Posizionare la cartina in quattro passaggi: curva, apertura, asse, alette')
+    return svg(W, H, arrow_defs() + b, 'Posizionare la cartina in quattro passaggi: staccala e curvala, adatta l\'apertura, infilala in asse '
+               'sotto il bordo libero, chiudi le alette sotto il polpastrello')
 
 
 @figx('cartina-livello.svg')
 def form_level():
     W, H = 940, 310
     b = ''
-    T = [('Troppo bassa', False, 14, 'l\'allungamento cade'), ('In livello', True, 0, 'prosegue la lamina'),
-         ('Troppo alta', False, -14, 'punta all\'insù (ski-jump)')]
+    T = [('Troppo bassa', False, 12, 'l\'allungamento cade'), ('In livello', True, 0, 'prosegue la lamina'),
+         ('Troppo alta', False, -12, 'punta all\'insù (ski-jump)')]
+    sc = 1.25
     for i, (t, ok, ang, sub) in enumerate(T):
         x = 20 + i * 304
-        fx, fy = x + 70, 160
-        body = finger_side(fx, fy, L=110, free=8)
-        sx = fx + 118
-        body += form_side(sx - 4, fy + 1, ang, 140)
-        body += dashed(fx + 20, fy + 1, x + 290, fy + 1, OK, 1.8, '7 5')
+        ox, oy = x + 128, 150          # fine del letto (punto di stress) in coordinate del pannello
+        L = 100
+        g = finger_side(-L, 0, L=L, free=8)
+        # parte posteriore della cartina che avvolge il polpastrello
+        back = 'M-2,7 C22,9 30,40 14,70'
+        g += '<path d="%s" fill="none" stroke="%s" stroke-width="6.5" stroke-linecap="round"/>' % (back, FORM_S)
+        g += '<path d="%s" fill="none" stroke="#f6e7a8" stroke-width="4.5" stroke-linecap="round"/>' % back
+        # linguetta della cartina + allungamento che ci verrà costruito sopra
+        front = ('<path d="M-4,6 L124,6 L124,10.5 L-4,10.5 Z" fill="url(#bForm)" stroke="%s" stroke-width=".9"/>'
+                 '<path d="M8,6 L116,6 L116,-2 Q60,-6 8,-2 Z" fill="%s" fill-opacity=".45" stroke="%s" stroke-width="1" stroke-dasharray="3 2"/>'
+                 % (FORM_S, PROD, PROD_S))
+        g += rot(ang, 8, 6, front) if ang else front
+        body = scaled(ox, oy, sc, g)
+        body += dashed(ox - 100 * sc, oy + 1, x + 290, oy + 1, OK, 1.8, '7 5')
         if ang:
-            body += arrow(x + 250, fy + 1, x + 250, fy + 1 + (36 if ang > 0 else -36), ERR, 2)
+            ex = ox + 112 * sc
+            body += arrow(ex, oy + 1, ex, oy + 1 + (32 if ang > 0 else -32), ERR, 2.2)
+        if i == 1:
+            body += callout(ox + 60 * sc, oy - 2 * sc, ox + 50, oy - 50, 'allungamento', 'middle', 12.5, '#41708a')
+            body += callout(ox + 90 * sc, oy + 9 * sc, ox + 92, oy + 54, 'cartina', 'middle', 12.5)
         b += frame(x, 20, 290, 270, t, ok=ok, sub=sub, body=body)
-    return svg(W, H, arrow_defs() + b, 'Livello della cartina di profilo: troppo bassa, in livello, troppo alta')
+    b += text(20, 302, 'Linea tratteggiata verde = prolungamento della lamina naturale.', 12.5, 'start', 600, MUTED, 'italic')
+    return svg(W, H + 14, arrow_defs() + b, 'Livello della cartina di profilo: troppo bassa (l\'allungamento cade), in livello (prosegue la lamina), '
+               'troppo alta (punta all\'insù)')
+
+
+def ghost(svgs, op=0.5):
+    """Disegno 'in trasparenza' (dito sotto la cartina, per mostrare dove va a toccare)."""
+    return '<g opacity="%.2f">%s</g>' % (op, svgs)
 
 
 @figx('cartina-adattata.svg')
 def form_adapt():
-    W, H = 940, 370
+    W, H = 940, 330
     b = ''
     T = [('Unghia corta', 'linguetta dritta'), ('Unghia larga', 'allarga il foro'), ('Iponichio lungo', 'incavo più profondo'),
          ('Unghia curva', 'piega di più')]
@@ -1257,34 +1502,50 @@ def form_adapt():
         cx = x + 108
         body = ''
         if i == 0:
-            body += form_shape(cx, 200, 84, 120, 36, 0, cut_tab=True)
-            body += '<rect x="%d" y="200" width="72" height="60" fill="%s" opacity=".55" stroke="%s" stroke-dasharray="4 3"/>' % (cx - 36, NAIL, NAIL_S)
-            body += text(cx, 236, 'unghia', 12.5, 'middle', 700, ACC2)
-            body += leader(cx + 30, 200, cx + 60, 100, 'bordo dritto', 'middle', 12.5)
+            ys = 172
+            body += form_shape(cx, ys, 84, 100, 30, 0, cut_tab=True, center=False)
+            f, p = top_finger(cx, ys + 72, hw=30, nail_len=70, free_len=2, shape='quadrata', finger_len=0)
+            body += ghost(f, 0.55)
+            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="3"/>' % (cx - 30, ys, cx + 30, ys, OK)
+            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.3"/>' % (cx + 20, ys, cx + 40, ys - 34, MUTED)
+            body += '<circle cx="%d" cy="%d" r="3.5" fill="%s" stroke="#fff"/>' % (cx + 20, ys, ACC2)
+            body += pill(cx + 40, ys - 40, 'bordo dritto', 13, OK)
         elif i == 1:
-            body += form_shape(cx, 200, 84, 120, 56, 46)
+            ys = 172
+            body += form_shape(cx, ys, 84, 100, 48, 40, center=False)
             body += ('<path d="M%d,%d A%d,%d 0 0 0 %d,%d" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>'
-                     % (cx + 40, 236, 40, 40, cx - 40, 236, MUTED))
-            body += ('<path d="M%d,%d A%d,%d 0 0 0 %d,%d" fill="%s" fill-opacity=".45" stroke="%s" stroke-width="1.5"/>'
-                     % (cx + 56, 236, 56, 46, cx - 56, 236, NAIL, NAIL_S))
-            body += arrow(cx - 30, 222, cx - 52, 222, ACC2, 1.6) + arrow(cx + 30, 222, cx + 52, 222, ACC2, 1.6)
-            body += tool_scissors(cx + 62, 150, -30, 0.7)
+                     % (cx + 34, ys + 36, 34, 34, cx - 34, ys + 36, MUTED))
+            f, p = top_finger(cx, ys + 80, hw=42, nail_len=70, free_len=8, finger_len=0)
+            body += ghost(f, 0.55)
+            body += arrow(cx - 24, ys + 18, cx - 50, ys + 18, ACC2, 2) + arrow(cx + 24, ys + 18, cx + 50, ys + 18, ACC2, 2)
+            body += tool_scissors(cx + 60, ys - 30, -60, 0.8)
+            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.3"/>' % (cx - 24, ys + 12, cx - 40, ys - 34, MUTED)
+            body += pill(cx - 40, ys - 40, 'foro originale', 12, MUTED)
         elif i == 2:
-            body += form_shape(cx, 200, 84, 120, 44, 46, notch=34)
+            ys = 156
+            body += form_shape(cx, ys, 84, 92, 36, 44, notch=30, center=False)
             body += ('<path d="M%d,%d A%d,%d 0 0 0 %d,%d" fill="none" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>'
-                     % (cx + 44, 236, 44, 46, cx - 44, 236, MUTED))
-            body += '<ellipse cx="%d" cy="%d" rx="30" ry="16" fill="#d96f86" opacity=".7"/>' % (cx, 190)
-            body += leader(cx + 18, 186, cx + 64, 120, 'iponichio', 'middle', 12.5)
+                     % (cx + 36, ys + 36, 36, 44, cx - 36, ys + 36, MUTED))
+            f, p = top_finger(cx, ys + 96, hw=32, nail_len=74, free_len=18, finger_len=0)
+            hypo = '<ellipse cx="%d" cy="%d" rx="26" ry="11" fill="#e0708c" opacity=".75"/>' % (cx, p['y_s'] - 6)
+            body += ghost(f, 0.55) + hypo
+            body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.3"/>' % (cx + 14, p['y_s'] - 8, cx + 46, ys - 46, MUTED)
+            body += '<circle cx="%d" cy="%d" r="3.5" fill="%s" stroke="#fff"/>' % (cx + 14, p['y_s'] - 8, ACC2)
+            body += pill(cx + 46, ys - 52, 'iponichio', 13)
         else:
-            cy = 200
+            cy = 196
             body += finger_front(cx, cy, 50, 34)
-            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="8" stroke-linecap="round"/>'
-                     % (cx - 66, cy + 16, cx, cy - 2 * 34 + 2, cx + 66, cy + 16, FORM))
-            body += leader(cx - 30, cy - 24, cx - 60, 140, 'unghia', 'middle', 12.5)
-            body += text(cx, 106, 'vista dalla punta', 12.5, 'middle', 600, MUTED)
-            body += leader(cx + 50, cy + 2, cx + 70, 140, 'cartina', 'middle', 12.5)
+            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="9" stroke-linecap="round"/>'
+                     % (cx - 64, cy + 16, cx, cy - 2 * 34 + 2, cx + 64, cy + 16, FORM_S))
+            body += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="#f6e7a8" stroke-width="6" stroke-linecap="round"/>'
+                     % (cx - 64, cy + 16, cx, cy - 2 * 34 + 2, cx + 64, cy + 16))
+            body += arrow(cx - 84, cy - 14, cx - 70, cy + 8, ACC2, 2) + arrow(cx + 84, cy - 14, cx + 70, cy + 8, ACC2, 2)
+            body += callout(cx - 26, cy - 36, cx - 50, 116, 'unghia', 'middle', 13)
+            body += callout(cx + 44, cy - 6, cx + 56, 116, 'cartina', 'middle', 13)
+            body += text(cx, 276, 'vista dalla punta', 12.5, 'middle', 600, MUTED, 'italic')
         b += frame(x, 20, 216, 290, t, sub=sub, body=body, subcol=INK)
-    return svg(W, H - 40, arrow_defs() + b, 'Quattro modi di adattare la cartina: unghia corta, larga, iponichio lungo, unghia curva')
+    return svg(W, H, arrow_defs() + b, 'Quattro modi di adattare la cartina: linguetta dritta per l\'unghia corta, foro più largo, '
+               'incavo più profondo per l\'iponichio lungo, cartina più piegata per l\'unghia curva')
 
 
 @figx('cartina-ritaglio-step.svg')
@@ -1458,9 +1719,11 @@ def ccurve_pct():
     return svg(W, H, b, 'Curva a C del 30, 40 e 50 per cento di un cerchio')
 
 
-def c_arc(cx, cy, hw=80, k=38, crack=False, col=PROD, stroke=PROD_S):
-    s = ('<path d="M%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="%s" stroke="%s" stroke-width="1.6"/>'
+def c_arc(cx, cy, hw=80, k=38, crack=False, col='url(#bProdV)', stroke=PROD_S):
+    s = ('<path d="M%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="%s" stroke="%s" stroke-width="1.6" stroke-linejoin="round"/>'
          % (cx - hw, cy, cx, cy - 2 * k - 20, cx + hw, cy, cx + hw - 8, cy + 2, cx, cy - 2 * k + 6, cx - hw + 8, cy + 2, col, stroke))
+    s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/>'
+          % (cx - hw * 0.6, cy - k * 0.9 - 6, cx - hw * 0.25, cy - 2 * k * 0.86 - 6, cx, cy - k - 12))
     if crack:
         s += '<path d="M%d,%d l6,-8 l-4,-6 l7,-8" fill="none" stroke="%s" stroke-width="2.4"/>' % (cx + hw - 16, cy - 4, ERR)
     return s
@@ -1553,41 +1816,77 @@ def gel_zone1():
 
 
 def dappen(cx, yb, liquid=True, powder=False):
-    s = ('<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="#f4f1f8" stroke="%s" stroke-width="2"/>'
-         % (cx - 44, yb - 60, cx + 44, yb - 60, cx + 30, yb, cx - 30, yb, MUTED))
+    """Bicchierino dappen in vetro spesso, con monomero o polvere; yb = base."""
+    s = '<ellipse cx="%d" cy="%d" rx="40" ry="6" fill="#000" opacity=".1"/>' % (cx, yb + 2)
+    s += ('<path d="M%d,%d L%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="url(#bGlass)" stroke="#8d8a96" stroke-width="1.6"/>'
+          % (cx - 46, yb - 62, cx + 46, yb - 62, cx + 34, yb - 4, cx + 33, yb, cx + 28, yb, cx - 28, yb, cx - 33, yb, cx - 34, yb - 4))
+    s += '<ellipse cx="%d" cy="%d" rx="46" ry="7" fill="#f7f9fb" stroke="#8d8a96" stroke-width="1.4"/>' % (cx, yb - 62)
     if liquid:
-        s += '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="#cfe6f7"/>' % (cx - 39, yb - 44, cx + 39, yb - 44, cx + 28, yb - 4, cx - 28, yb - 4)
+        s += '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="#cfe6f7" opacity=".9"/>' % (cx - 40, yb - 42, cx + 40, yb - 42, cx + 29, yb - 10, cx - 29, yb - 10)
+        s += '<ellipse cx="%d" cy="%d" rx="40" ry="5" fill="#e6f3fb" stroke="#9cc7e2" stroke-width="1"/>' % (cx, yb - 42)
     if powder:
-        s += '<path d="M%d,%d Q%d,%d %d,%d L%d,%d L%d,%d Z" fill="#ffffff" stroke="#ddd"/>' % (
-            cx - 40, yb - 44, cx, yb - 56, cx + 40, yb - 44, cx + 28, yb - 4, cx - 28, yb - 4)
-        s += dust(cx, yb - 30, 10, 18, '#e2d8dc')
+        s += '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="#fbf7f8"/>' % (cx - 40, yb - 44, cx + 40, yb - 44, cx + 29, yb - 10, cx - 29, yb - 10)
+        s += ('<path d="M%d,%d Q%d,%d %d,%d Q%d,%d %d,%d" fill="#ffffff" stroke="#e2d8dc" stroke-width="1.2"/>'
+              % (cx - 41, yb - 44, cx - 10, yb - 60, cx + 10, yb - 52, cx + 30, yb - 46, cx + 41, yb - 44))
+        s += dust(cx, yb - 32, 10, 18, '#e8dfe3')
+    s += '<path d="M%d,%d L%d,%d" stroke="#fff" stroke-width="3" opacity=".8" stroke-linecap="round"/>' % (cx - 36, yb - 52, cx - 27, yb - 12)
     return s
+
+
+def acr_brush(x, y, ang=0, l=120, wet=False, s=1.0):
+    """Pennello da acrilico (kolinsky): punta delle setole in (x, y), ventre pieno, ghiera, manico verso +x."""
+    bc = '#e9dccb' if not wet else '#d8e8f4'
+    b = ('<path d="M50,-5.2 L%.1f,-3.6 Q%.1f,0 %.1f,3.6 L50,5.2 Z" fill="url(#bHandle)"/>' % (50 + l, 54 + l, 50 + l))
+    b += '<line x1="54" y1="-2.6" x2="%.1f" y2="-1.8" stroke="#fff" stroke-width="1.1" opacity=".35" stroke-linecap="round"/>' % (44 + l)
+    b += ('<path d="M33,-7 L52,-6 L52,6 L33,7 Z" fill="url(#bFerrule)" stroke="#7d868f" stroke-width=".6"/>'
+          '<path d="M38,-6.8 v13.6 M42,-6.6 v13.2" stroke="#7d868f" stroke-width=".9"/>')
+    b += ('<path d="M34,-6.6 C24,-9 12,-8 4,-3 Q0,0 4,3 C12,8 24,9 34,6.6 Z" fill="%s" stroke="#8a7a68" stroke-width=".8"/>' % bc)
+    b += ('<path d="M33,-3.6 C22,-4.6 12,-3.6 5,-1 M33,0 L3,0 M33,3.6 C22,4.6 12,3.6 5,1" fill="none" stroke="#fff" stroke-width=".7" opacity=".6"/>'
+          '<path d="M33,-5.4 C22,-7 12,-6 6,-2.4" fill="none" stroke="#8a7a68" stroke-width=".6" opacity=".5"/>')
+    return _g(x, y, ang, s, b)
 
 
 @figx('acrilico-pennello-carico.svg')
 def acrylic_load():
     W, H = 940, 300
     b = ''
-    T = [('Immergi nel monomero', ''), ('Scarica sul bordo', ''), ('Tocca la polvere', ''), ('Perla pronta', 'lucida e bombata')]
+    T = [('Immergi nel monomero', ''), ('Scarica sul bordo', 'non deve gocciolare'), ('Tocca la polvere', 'si forma la perla'),
+         ('Perla pronta', 'lucida e bombata')]
     for i, (t, sub) in enumerate(T):
         x = 20 + i * 228
         cx = x + 100
         body = ''
         if i == 0:
-            body += dappen(cx, 240) + tool_brush(cx + 6, 200, -70, 90, '#f3eee6')
+            body += dappen(cx, 218)
+            body += acr_brush(cx - 4, 200, -66, 84, wet=True)
+            # superficie del liquido davanti alle setole
+            body += '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="#cfe6f7" opacity=".55"/>' % (cx - 40, 176, cx + 40, 176, cx + 29, 208, cx - 29, 208)
+            for k in range(3):
+                body += '<circle cx="%d" cy="%d" r="%.1f" fill="#fff" stroke="#9cc7e2"/>' % (cx + 6 + k * 7, 188 - k * 7, 2.6 - k * 0.5)
+            body += text(cx + 46, 122, 'solo le', 12.5, 'start', 700, ACC2)
+            body += text(cx + 46, 138, 'setole', 12.5, 'start', 700, ACC2)
         elif i == 1:
-            body += dappen(cx, 240) + tool_brush(cx + 54, 172, -30, 80, '#d8e8f4')
-            body += drop_c(cx + 30, 196, '#86bfe0', s=0.7)
-            body += arrow(cx + 90, 140, cx + 64, 168)
+            body += dappen(cx, 218)
+            body += acr_brush(cx + 40, 154, -36, 110, wet=True)
+            body += drop_c(cx + 34, 180, '#86bfe0', '#3d8fc6', s=0.8)
+            body += ('<path d="M%d,%d q-4,18 -26,22" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>' % (cx + 64, 112, ACC2))
+            body += text(cx + 20, 104, 'strofina', 12.5, 'middle', 700, ACC2)
         elif i == 2:
-            body += dappen(cx, 240, liquid=False, powder=True) + tool_brush(cx + 24, 172, -50, 90, '#d8e8f4')
+            body += dappen(cx, 218, liquid=False, powder=True)
+            body += acr_brush(cx + 6, 164, -44, 110, wet=True)
+            body += bead(cx + 2, 168, 9, '#ffffff', '#c9b8bf')
+            body += ('<path d="M%d,%d q-30,-4 -38,22" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>' % (cx - 4, 118, ACC2))
+            body += text(cx - 50, 108, 'trascina', 12.5, 'middle', 700, ACC2)
         else:
-            body += tool_brush(cx + 10, 170, -20, 110, '#f3eee6')
-            body += bead(cx - 12, 166, 18, '#ffffff', NAIL_S)
+            body += acr_brush(cx - 6, 176, -24, 130, wet=True)
+            body += bead(cx - 18, 182, 17, '#ffffff', '#c9b8bf')
+            body += ('<ellipse cx="%d" cy="%d" rx="6" ry="3.5" fill="#fff"/>' % (cx - 24, 174))
             body += timer(x + 40, 92, '3–5 s')
+            body += text(cx + 8, 226, 'né secca né colante', 12.5, 'middle', 600, MUTED, 'italic')
         b += frame(x, 20, 216, 250, t, i + 1, sub=sub or None, body=body, subcol=INK)
     b += text(W / 2, 292, 'Guanti, aspiratore, niente monomero sulla pelle.', 14, weight=700, fill=ERR)
-    return svg(W, H + 6, b, 'Come si carica il pennello per l\'acrilico: immergi, scarica, tocca la polvere, perla pronta')
+    return svg(W, H + 6, arrow_defs() + b, 'Come si carica il pennello per l\'acrilico: immergi nel monomero, scarica sul bordo, '
+               'tocca la polvere, perla pronta lucida e bombata')
 
 
 @figx('perla-zone-acrilico.svg')
@@ -1802,16 +2101,42 @@ def ballerina_steps():
                  'Ballerina: lati che si restringono e punta dritta', oks=(None, None, True))
 
 
-def op_hand_file(cx, cy):
-    """Mano dell'operatrice che tiene la lima (vista di lato, schematica)."""
-    st = 'fill="%s" stroke="%s" stroke-width="1.5"' % (SKIN, SKIN_D)
-    s = '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" %s/>' % (cx - 170, cy + 70, cx - 110, cy + 20, cx - 80, cy + 60, cx - 150, cy + 112, st)
-    s += '<ellipse cx="%d" cy="%d" rx="62" ry="38" transform="rotate(-18 %d %d)" %s/>' % (cx - 78, cy + 14, cx - 78, cy + 14, st)
-    s += '<rect x="%d" y="%d" width="74" height="20" rx="10" transform="rotate(-6 %d %d)" %s/>' % (cx - 62, cy + 10, cx - 62, cy + 20, st)
-    s += tool_file(cx + 30, cy, 0, 230, 20)
-    for k in range(3):
-        s += '<rect x="%d" y="%d" width="%d" height="18" rx="9" %s/>' % (cx - 96 + k * 8, cy - 24 - k * 3, 100 - k * 14, st)
-    s += '<ellipse cx="%d" cy="%d" rx="14" ry="10" %s/>' % (cx + 8, cy - 14, st)
+def op_hand_file(gx, gy):
+    """Mano dell'operatrice di lato che tiene la lima: indice sopra, pollice sotto, polso morbido.
+    (gx, gy) = punto della lima tra indice e pollice (asse della lima). Tinta unica per evitare giunture visibili."""
+    HC, HD = '#f2cab2', '#e6b79c'
+    ln = 'fill="none" stroke="%s" stroke-width="1.5" stroke-linecap="round"' % SKIN_D
+
+    def P(*pts):
+        return ' '.join('%.1f,%.1f' % (gx + pts[k], gy + pts[k + 1]) for k in range(0, len(pts), 2))
+    # avambraccio
+    s = '<path d="M%s L%s Q%s %s L%s L%s Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
+        P(-236, 160), P(-160, 40), P(-148, 26), P(-124, 32), P(-100, 90), P(-170, 180), HC, SKIN_D)
+    # medio (dietro), base nascosta dal dorso
+    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.4"/>' % (
+        P(-80, -36), P(-50, -32), P(-24, -26), P(-2, -21), P(10, -17), P(4, -10), P(-20, -9), P(-48, -10), P(-80, -12), HD, SKIN_D)
+    # dorso della mano
+    s += ('<path d="M%s C%s %s %s C%s %s %s L%s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
+          % (P(-156, 44), P(-170, -6), P(-126, -50), P(-76, -50), P(-48, -50), P(-30, -40), P(-20, -28),
+             P(-28, 22), P(-46, 52), P(-104, 74), P(-140, 64), HC, SKIN_D))
+    s += '<path d="M%s Q%s %s" %s opacity=".55"/>' % (P(-120, -30), P(-96, -42), P(-70, -40), ln)
+    s += tool_file(gx + 70, gy, 0, 240, 20)
+    # indice sopra la lima
+    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s Z" fill="%s"/>' % (
+        P(-96, -44), P(-56, -50), P(-12, -36), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-34, -13), P(-70, -20), P(-96, -20), HC)
+    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s" %s/>' % (
+        P(-40, -44), P(-22, -40), P(0, -32), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-16, -12), P(-24, -13), P(-30, -14), ln)
+    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
+        P(6, -31), P(22, -31), P(30, -22), P(25, -20), P(16, -26), P(6, -26), NAIL, NAIL_S)
+    s += '<path d="M%s q4,6 2,13 M%s q4,6 2,13" fill="none" stroke="%s" stroke-width="1.1" opacity=".6"/>' % (
+        P(-30, -40), P(-24, -39), SKIN_D)
+    # pollice sotto la lima
+    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s"/>' % (
+        P(-96, 30), P(-56, 16), P(-22, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-50, 50), P(-96, 60), HC)
+    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s" %s/>' % (
+        P(-40, 15), P(-24, 11), P(-10, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-30, 42), P(-44, 47), ln)
+    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
+        P(-6, 30), P(8, 28), P(13, 20), P(9, 18), P(2, 25), P(-8, 26), NAIL, NAIL_S)
     return s
 
 
@@ -1819,34 +2144,38 @@ def op_hand_file(cx, cy):
 def file_grip():
     W, H = 760, 350
     b = ''
-    body = op_hand_file(x := 20 + 190, 150)
-    body += leader(x - 20, 124, x + 40, 84, 'presa leggera', 'start', 13.5)
-    body += leader(x - 120, 200, x - 70, 262, 'polso morbido', 'start', 13.5)
-    body += arrow(x + 70, 196, x + 150, 196, MUTED, 1.6, True)
-    body += text(x + 110, 220, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
+    gx, gy = 180, 164
+    body = op_hand_file(gx, gy)
+    body += callout(gx + 14, gy - 30, gx + 40, 92, 'indice sopra: presa leggera', 'middle', 13.5)
+    body += callout(gx + 4, gy + 22, gx + 76, gy + 74, 'pollice sotto', 'start', 13.5)
+    body += callout(gx - 124, gy + 60, gx - 60, 286, 'polso morbido', 'start', 13.5)
+    body += arrow(gx + 130, gy + 40, gx + 180, gy + 40, MUTED, 1.8, True)
+    body += text(gx + 155, gy + 30, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
     b += frame(20, 20, 350, 310, 'La lima', 1, body=body)
     # 2 dito della cliente
     x = 390
-    cx, yc = x + 130, 230
-    body = '<rect x="%d" y="%d" width="190" height="60" rx="20" fill="#e9dff2" stroke="#b9a6cf"/>' % (cx - 95, yc + 10)
-    body += text(cx + 40, yc + 62, 'supporto', 12.5, 'middle', 700, '#6b4fa0')
-    f, p = top_finger(cx, yc, hw=34, nail_len=110, free_len=40, shape='squoval', finger_len=40)
+    cx, yc = x + 130, 236
+    body = '<rect x="%d" y="%d" width="200" height="56" rx="22" fill="#e9dff2" stroke="#b9a6cf"/>' % (cx - 100, yc + 18)
+    body += text(cx + 50, yc + 64, 'supporto', 12.5, 'middle', 700, '#6b4fa0')
+    f, p = top_finger(cx, yc, hw=32, nail_len=104, free_len=36, shape='squoval', finger_len=40)
     body += f
-    for sx in (-1, 1):
-        body += '<ellipse cx="%d" cy="%d" rx="20" ry="30" fill="%s" stroke="%s" stroke-width="1.5"/>' % (cx + sx * 66, yc - 20, '#efc0a4', SKIN_D)
-    body += arrow(cx - 70, yc - 54, cx - 82, yc - 80, ACC2, 1.8)
-    body += leader(cx + 70, yc - 20, cx + 116, yc - 34, 'tieni', 'start', 12.5)
-    body += text(cx + 122, yc - 13, 'ai lati', 12.5, 'start', 600)
-    body += text(cx - 82, yc - 104, 'tira la pelle', 12.5, 'middle', 700, ACC2)
-    body += text(cx - 82, yc - 88, 'del solco', 12.5, 'middle', 700, ACC2)
+    body += thumb(cx - 56, yc - 36, 90, 0.85) + thumb(cx + 56, yc - 36, -90, 0.85)
+    body += arrow(cx - 52, yc - 70, cx - 70, yc - 96, ACC2, 2)
+    body += text(cx - 78, yc - 132, 'tira la pelle', 12.5, 'middle', 700, ACC2)
+    body += text(cx - 78, yc - 116, 'del solco', 12.5, 'middle', 700, ACC2)
+    body += callout(cx + 70, yc - 40, cx + 88, yc - 104, 'tieni', 'middle', 12.5)
+    body += text(cx + 88, yc - 120, '', 12)
+    body += text(cx + 88, yc - 88 + 0, '', 12)
     # riquadro errore
-    body += '<rect x="%d" y="70" width="84" height="104" rx="10" fill="#fff"/>' % (x + 252)
+    body += '<rect x="%d" y="64" width="84" height="132" rx="10" fill="#fff"/>' % (x + 254)
     g, _ = top_finger(0, 0, hw=34, nail_len=90, free_len=20, finger_len=10)
     g += '<ellipse cx="6" cy="-60" rx="28" ry="32" fill="#efc0a4" stroke="%s" stroke-width="1.5"/>' % SKIN_D
-    body += scaled(x + 294, 160, 0.55, g)
-    body += mark(x + 322, 86, False, 10)
+    body += scaled(x + 296, 152, 0.55, g)
+    body += mark(x + 324, 80, False, 10)
+    body += text(x + 296, 182, 'non sopra', 12, 'middle', 700, ERR)
+    body += text(x + 296, 216, 'l\'unghia', 12, 'middle', 700, ERR)
     b += frame(x, 20, 350, 310, 'Il dito della cliente', 2, body=body)
-    return svg(W, H, arrow_defs() + b, 'Presa della lima e del dito della cliente durante la limatura')
+    return svg(W, H, arrow_defs() + b, 'Presa della lima (indice sopra, pollice sotto, polso morbido) e presa del dito della cliente ai lati')
 
 
 @figx('limatura-sequenza.svg')
