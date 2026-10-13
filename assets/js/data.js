@@ -330,210 +330,851 @@ ${B('tip', 'Consiglio d\'acquisto', 'Scegli un sistema completo di un solo produ
     },
     /* ------------------------------------------------------------------ 5 */
     {
-      id: 'preparazione', summary: ["Igiene → cuticola → pterigio → opacizza → polvere → disidratante → primer.", "Opacizzare non significa assottigliare.", "Primer: poco prodotto, solo sulla lamina, mai sulla pelle.", "Dopo il disidratante non toccare più la lamina."], n: 5, level: 'base', title: 'Preparazione dell\'unghia',
+      id: 'preparazione', summary: ['Igiene → consulenza → cuticola → opacizza → polvere → disidratante → primer.', 'Si rimuove solo la cuticola (pelle morta sulla lamina); il vero pterigio non si tocca.', 'Opacizzare = togliere la lucidità con grana 180–240, non assottigliare.', 'Primer: pennello quasi asciutto, solo sulla lamina, ad almeno 1 mm dalla pelle.', 'Dopo il disidratante non toccare più la lamina.'], n: 5, level: 'base', title: 'Preparazione dell\'unghia',
       desc: 'Il passaggio che decide se la ricostruzione tiene o si solleva.',
       lessons: [
         {
-          id: 'passaggi', videos: [{"id": "tyZfOTu6T70", "title": "Nail prep: passaggi di preparazione unghie", "channel": "Proglow Italia", "lang": "IT"}], simple: "Prima di costruire, l'unghia va pulita, asciutta e leggermente ruvida: così il prodotto \"si aggrappa\".", title: 'I passaggi della preparazione', min: 7,
+          id: 'passaggi', videos: [{"id": "tyZfOTu6T70", "title": "Nail prep: passaggi di preparazione unghie", "channel": "Proglow Italia", "lang": "IT"}], simple: 'Prima di costruire, l\'unghia deve essere sana, pulita, senza pellicine, leggermente ruvida e senza grasso: così il prodotto si "aggrappa" e non si solleva.', title: 'I passaggi della preparazione', min: 12,
           html: `
-<p>La preparazione è la <strong>prima causa</strong> di tenuta o di sollevamento. Va fatta con calma, ogni volta.</p>
-${F('preparazione.svg', 'Preparazione in sei passaggi.')}
+<p>La preparazione è la parte <strong>meno spettacolare</strong> del lavoro, ma è quella che decide se la ricostruzione dura tre settimane o si solleva dopo tre giorni. Quasi tutti i sollevamenti (<em>lifting</em>) nascono qui: una pellicina dimenticata, un po' di polvere, un velo di sebo.</p>
+<p>L'obiettivo è semplice: ottenere una lamina <strong>sana, pulita, asciutta e leggermente opaca</strong>, senza averla assottigliata e senza aver ferito la pelle.</p>
+<h2>I nemici dell'adesione</h2>
+<table>
+<tr><th>Nemico</th><th>Da dove viene</th><th>Come si elimina</th></tr>
+<tr><td><strong>Pelle morta (cuticola)</strong> sulla lamina</td><td>Si stacca dall'eponichio e "viaggia" sull'unghia mentre cresce</td><td>Arretrare e rimuovere con spingicuticole/curette</td></tr>
+<tr><td><strong>Lucidità</strong></td><td>La superficie naturale della lamina è liscia</td><td>Opacizzare con grana fine (180–240)</td></tr>
+<tr><td><strong>Polvere</strong></td><td>Limatura</td><td>Pennello pulito, poi salvietta che non lascia pelucchi</td></tr>
+<tr><td><strong>Sebo e umidità</strong></td><td>La pelle produce olio di continuo; l'unghia contiene acqua</td><td>Disidratante, e niente dita sulla lamina dopo</td></tr>
+<tr><td><strong>Residui di olio o crema</strong></td><td>Prodotti della cliente o della manicure</td><td>Lavaggio mani con sapone non grasso prima di iniziare</td></tr>
+</table>
+<h2>La sequenza completa</h2>
+${F('prep-sequenza-perche.svg', 'Ogni passaggio ha un perché: saltarne uno rovina quelli dopo.')}
 <ol class="steps">
-<li><strong>Igienizza</strong> le tue mani e quelle della cliente; consulenza e analisi dell'unghia.</li>
-<li><strong>Arretra la cuticola</strong> con lo spingicuticole, delicatamente.</li>
-<li><strong>Rimuovi il pterigio</strong>, la pellicina morta aderente alla lamina.</li>
-<li><strong>Opacizza</strong> leggermente con grana 180–240: togli solo la lucidità, non assottigliare.</li>
-<li><strong>Elimina la polvere</strong> con un pennello pulito.</li>
-<li><strong>Disidratante</strong> e poi <strong>primer</strong> (vedi lezione successiva).</li>
+<li><strong>Igiene</strong>: lava e igienizza le tue mani e quelle della cliente; usa strumenti sterilizzati e lime nuove. <em>Perché</em>: lavori vicino alla pelle e ai tessuti vivi; un graffio con uno strumento sporco può infettarsi.</li>
+<li><strong>Consulenza e controllo</strong>: guarda unghie e pelle. Se vedi arrossamenti, gonfiori, pus, macchie verdi, distacco della lamina o segni di micosi <strong>non lavorare</strong> e consiglia un medico. <em>Perché</em>: la ricostruzione chiude e nasconde il problema e può peggiorarlo.</li>
+<li><strong>Togli il vecchio prodotto</strong> (smalto, semipermanente) e accorcia il bordo libero se serve, con grana 180–240. <em>Perché</em>: si costruisce solo su lamina pulita; un bordo libero troppo lungo fa da leva.</li>
+<li><strong>Arretra la cuticola</strong> con lo spingicuticole tenuto quasi piatto, senza forza. <em>Perché</em>: libera la lamina e ti mostra dove finisce la pelle viva.</li>
+<li><strong>Rimuovi la cuticola</strong> (la pellicina morta rimasta attaccata alla lamina) con la curette o con lo spingicuticole a lama piatta. Taglia con la tronchesina solo le pellicine già staccate. <em>Perché</em>: il prodotto steso sulla pelle morta si stacca insieme a lei.</li>
+<li><strong>Opacizza</strong> tutta la lamina con grana fine (180–240), con leggerezza, finché non resta nessuna zona lucida. <em>Perché</em>: la superficie leggermente ruvida offre più presa; ma la lamina non va assottigliata.</li>
+<li><strong>Elimina la polvere</strong> con un pennello pulito e passa una salvietta senza pelucchi con il disidratante/cleaner. <em>Perché</em>: la polvere resta intrappolata sotto il prodotto e crea bolle e sollevamenti.</li>
+<li><strong>Disidratante</strong> su tutta la lamina. <em>Perché</em>: toglie sebo e umidità superficiale.</li>
+<li><strong>Primer</strong> (se il tuo sistema lo prevede): pochissimo, solo sulla lamina. Poi parti subito con la base o il prodotto.</li>
 </ol>
-${F('cuticola.svg', 'Nella zona cuticolare si arretra e si rimuove solo la pelle morta.')}
-${B('warn', 'Da non fare', 'Non toccare la lamina con le dita dopo il disidratante: il sebo della pelle riduce l\'adesione.')}
+${B('info', 'Che cosa cambia tra gel e acrilico?', 'La sequenza è la stessa. Cambiano il tipo di primer (vedi lezione "Disidratante e primer") e a volte la grana suggerita dal produttore: alcuni marchi indicano 150 con pressione minima, altri 180 o 240. Segui sempre le istruzioni del tuo sistema.')}
+<h2>Quanto tempo ci vuole?</h2>
+<p>All'inizio una preparazione completa su 10 dita può richiedere 30–40 minuti. Con la pratica scende a 10–15 minuti. Non cercare la velocità prima della precisione: un passaggio saltato oggi è un refill anticipato domani.</p>
+<h2>Errori frequenti</h2>
+${F('prep-errori.svg', 'Quattro errori di preparazione che causano sollevamenti.')}
+<table>
+<tr><th>Errore</th><th>Cosa succede</th><th>Come evitarlo</th></tr>
+<tr><td>Pellicina residua vicino alla cuticola o nei solchi</td><td>Sollevamento alla base già nei primi giorni</td><td>Controlla con luce radente prima di continuare</td></tr>
+<tr><td>Lamina limata troppo (zone sottili, "solchi")</td><td>Unghia flessibile, dolore, picco di calore in lampada</td><td>Grana fine, pochi passaggi leggeri, nessuna pressione</td></tr>
+<tr><td>Polvere lasciata nei solchi laterali</td><td>Bolle e distacchi ai lati</td><td>Pennello + salvietta, guardando anche i lati</td></tr>
+<tr><td>Dita sulla lamina dopo il disidratante</td><td>Il sebo rovina l'adesione</td><td>Tieni il dito della cliente per i lati, mai sopra</td></tr>
+<tr><td>Preparare tutte e 10 le unghie e lavorare piano</td><td>Nel frattempo l'unghia si "riumidifica"</td><td>Da principiante: prepara e costruisci una mano alla volta</td></tr>
+</table>
+${B('warn', 'Da non fare', 'Non toccare la lamina con le dita dopo il disidratante: il sebo della pelle riduce l\'adesione. Se succede, ripassa il disidratante.')}
+${B('danger', 'Pelle viva', 'Eponichio, pieghe laterali e iponichio sono vivi: non si tagliano e non si limano. Un taglio è una porta aperta per le infezioni.')}
+${B('tip', 'Il test della luce radente', 'Inclina il dito sotto la lampada da tavolo: le zone ancora lucide riflettono la luce, i residui di pellicina appaiono come un velo opaco e "sollevato" vicino alla cuticola.')}
 `,
-          sources: ['https://www.katiebarnesacademy.com/blogs/preparation/what-is-the-difference-between-acid-free-and-acid-based-nail-primer']
+          sources: ['https://www.nsinails.com.au/blogs/news/nail-preparation',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.katiebarnesacademy.com/blogs/preparation/what-is-the-difference-between-acid-free-and-acid-based-nail-primer',
+            'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians']
         },
         {
-          id: 'primer', videos: [{"id": "TFk5uRlLXdA", "title": "Liquidi di preparazione: nomi e differenze", "channel": "Accademia Nails", "lang": "IT"}], simple: "Il disidratante asciuga l'unghia, il primer fa da colla. Ne basta pochissimo.", title: 'Disidratante e primer', min: 5,
+          id: 'zona-cuticolare', simple: 'Spingi indietro la pelle con delicatezza, togli solo la pellicina morta che è rimasta sull\'unghia e lascia stare la pelle viva.', title: 'La zona cuticolare passo passo', min: 9,
           html: `
+<p>La zona cuticolare è il punto in cui iniziano quasi tutti i sollevamenti. Ed è anche la zona più delicata: lì sotto c'è la <strong>matrice</strong>, che produce l'unghia. Serve precisione, non forza.</p>
+<h2>Tre parole da non confondere</h2>
+<table>
+<tr><th>Termine</th><th>Che cos'è</th><th>Che cosa fai</th></tr>
+<tr><td><strong>Eponichio</strong></td><td>La piega di pelle <em>viva</em> alla base dell'unghia</td><td>La arretri con delicatezza. Non si taglia.</td></tr>
+<tr><td><strong>Cuticola</strong></td><td>Una pellicina <em>morta</em>, sottile e trasparente, che si stacca dall'eponichio e resta attaccata alla lamina</td><td>La rimuovi completamente dalla lamina.</td></tr>
+<tr><td><strong>Pterigio (vero)</strong></td><td>Una condizione <em>anomala</em>: la pelle si salda alla lamina e "avanza" con lei, spesso a forma di triangolo, dopo traumi, ustioni o malattie</td><td><strong>Non lo tocchi</strong>: niente taglio, niente lima. Consigli un medico (dermatologo).</td></tr>
+</table>
+${F('pterigio-vero.svg', 'Cuticola normale (si rimuove) e vero pterigio (non si tocca).')}
+${B('info', 'Attenzione ai nomi', 'Nei saloni italiani si sente spesso "togliere il pterigio" per dire "togliere la cuticola dalla lamina". Nei manuali professionali (Milady) però pterigio e cuticola sono due cose diverse: il vero pterigio è un disturbo e non è di competenza dell\'onicotecnica. In questo corso usiamo "cuticola" per la pellicina da togliere.')}
+<h2>Gli strumenti</h2>
 <ul>
-<li><strong>Disidratante (nail prep)</strong>: toglie umidità e sebo. Si applica <em>prima</em> del primer, non al suo posto.</li>
-<li><strong>Primer acido</strong>: "incide" la lamina. Indicato per acrilico e unghie difficili. Pochissimo prodotto, solo sulla lamina, mai ripetuto (la assottiglia).</li>
-<li><strong>Primer senza acido</strong>: funziona come un "biadesivo" tra lamina e prodotto. Indicato per gel e semipermanente. Anche qui poco prodotto: l'eccesso riduce l'adesione.</li>
+<li><strong>Spingicuticole</strong> (metallo, sterilizzato): una estremità piatta per arretrare, l'altra a lama/curette per sollevare la pellicina dalla lamina.</li>
+<li><strong>Bastoncino d'arancio</strong>: alternativa morbida, monouso.</li>
+<li><strong>Tronchesina per pellicine</strong>: solo per tagliare i pezzetti di pelle morta già staccati, mai la pelle viva.</li>
+<li><strong>Emolliente per cuticole</strong> (facoltativo): ammorbidisce. Va eliminato completamente prima di opacizzare, perché lascia residui.</li>
 </ul>
-${B('danger', 'Pelle', 'Il primer non deve mai toccare la pelle. Lascia asciugare secondo le istruzioni prima di procedere.')}
+<h2>Procedimento</h2>
+${F('cuticola-step.svg', 'Zona cuticolare in quattro passaggi.')}
+<ol class="steps">
+<li><strong>Arretra l'eponichio</strong>: spingicuticole a estremità piatta, tenuto <strong>quasi parallelo alla lamina</strong> (circa 30–45°), con piccoli movimenti circolari dal centro verso i lati. Nessuna forza. <em>Perché</em>: se tieni lo strumento dritto "graffi" la lamina e premi sulla matrice.</li>
+<li><strong>Solleva la cuticola</strong>: con la curette o con la lama dello spingicuticole, sempre piatta sulla lamina, "raschia" la pellicina trasparente da cuticola verso la punta. Lavora anche nei solchi laterali.</li>
+<li><strong>Taglia solo ciò che pende</strong>: con la tronchesina elimina le pellicine morte già staccate. Se sanguina, hai tagliato pelle viva.</li>
+<li><strong>Controlla</strong>: con luce radente non deve restare nessun velo opaco sulla lamina. Elimina ogni residuo di emolliente.</li>
+</ol>
+${B('tip', 'Asciutto o bagnato?', 'Per la ricostruzione molte formatrici preferiscono lavorare la cuticola "a secco" o con poco prodotto: l\'acqua entra nella lamina, la gonfia e poi, asciugando, può favorire i sollevamenti. Se usi acqua o emolliente, aspetta che l\'unghia sia ben asciutta e disidrata con cura.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Troppa forza</strong>: lascia solchi sulla lamina o, nel tempo, linee e deformazioni (pressione sulla matrice).</li>
+<li><strong>Tagliare l'eponichio</strong>: la pelle ricresce più spessa e dura e si rischiano infezioni.</li>
+<li><strong>Dimenticare i solchi laterali</strong>: il sollevamento parte spesso dagli angoli.</li>
+<li><strong>Lasciare l'emolliente</strong>: è oleoso e impedisce l'adesione.</li>
+</ul>
+${B('danger', 'Quando fermarsi', 'Pelle arrossata, gonfia, calda, dolorante o con pus (paronichia), oppure un vero pterigio: non lavorare e consiglia un medico.')}
 `,
-          sources: ['https://dilei.it/bellezza/primer-unghie-cos-e-e-a-cosa-serve/568373/']
+          sources: ['https://www.oregon.gov/oha/PH/HLO/Documents/Practice_Clarification_Nail_Pterygium.pdf',
+            'https://nailknowledge.org/?p=97772',
+            'https://www.nsinails.com.au/blogs/news/nail-preparation']
+        },
+        {
+          id: 'opacizzazione', simple: 'Con una lima fine togli solo la lucidità dell\'unghia, come quando si carteggia appena un mobile prima di verniciarlo. Non devi consumarla.', title: 'Opacizzare senza assottigliare', min: 7,
+          html: `
+<p>Opacizzare significa <strong>togliere la lucidità</strong> della lamina per creare una superficie con microscopici graffi dove il prodotto si possa "agganciare". Non significa togliere spessore.</p>
+<h2>Perché non bisogna assottigliare</h2>
+<ul>
+<li>La lamina <strong>protegge il letto ungueale dal calore</strong>: più è sottile, più la cliente sente il bruciore in lampada (picco di calore).</li>
+<li>Una lamina sottile <strong>si piega</strong>: il prodotto rigido sopra non la segue e si stacca.</li>
+<li>Lo spessore perso <strong>non si recupera</strong>: bisogna aspettare che l'unghia ricresca (mesi).</li>
+</ul>
+<h2>Quale grana</h2>
+<table>
+<tr><th>Grana</th><th>Uso sulla lamina naturale</th></tr>
+<tr><td>80–100</td><td><strong>Mai</strong>: solo sul prodotto artificiale</td></tr>
+<tr><td>150</td><td>Alcuni produttori la indicano per opacizzare, ma solo con pressione minima. Per una principiante è facile esagerare</td></tr>
+<tr><td><strong>180</strong></td><td>La scelta più diffusa per opacizzare e accorciare</td></tr>
+<tr><td>240 / buffer fine</td><td>Unghie sottili o sensibili; rifinitura</td></tr>
+</table>
+${B('info', 'Le fonti non sono tutte uguali', 'I marchi danno indicazioni diverse (da 150 a 240). Il punto comune è: grana fine, pressione leggera, pochi passaggi. Per iniziare usa 180 o 240.')}
+<h2>Dove opacizzare</h2>
+${F('opacizzazione-zone.svg', 'Le zone da non dimenticare: base, solchi laterali e bordo libero.')}
+<ol class="steps">
+<li><strong>Zona cuticolare</strong>: piccoli movimenti con l'estremità della lima o un buffer stretto, seguendo la curva della cuticola. Qui i sollevamenti sono più frequenti.</li>
+<li><strong>Lati</strong>: inclina leggermente la lima per raggiungere la lamina vicino ai solchi, senza limare la pelle.</li>
+<li><strong>Centro</strong>: movimenti leggeri dalla cuticola verso la punta, seguendo la curva dell'unghia.</li>
+<li><strong>Bordo libero</strong>: opacizza anche lo spessore del bordo; dovrà essere sigillato dal prodotto.</li>
+<li><strong>Controlla</strong> con luce radente: nessun punto lucido, nessuna striscia più profonda.</li>
+</ol>
+${F('opacizzazione-controllo.svg', 'Il controllo con la luce: lucida, opaca giusta, troppo limata.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Insistere sempre nello stesso punto</strong> (spesso al centro): crea una zona sottile.</li>
+<li><strong>Usare la lima "di forma" 100/180 per comodità</strong>: troppo aggressiva sulla lamina.</li>
+<li><strong>Dimenticare la base e i lati</strong>: proprio dove partono i sollevamenti.</li>
+<li><strong>Riutilizzare la lima</strong>: le lime in carta sono monouso; una lima consumata costringe a premere di più.</li>
+</ul>
+${B('warn', 'Segnali che hai limato troppo', 'La cliente sente caldo o dolore, vedi una zona più rosa o più trasparente, l\'unghia si piega premendo la punta. Fermati: su quella mano usa strati più sottili e polimerizzazioni con il metodo "flash and pull".')}
+`,
+          sources: ['https://www.nsinails.com.au/blogs/news/nail-preparation',
+            'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians',
+            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
+            'https://www.youngnails.com/blogs/news/how-to-use-nail-forms']
+        },
+        {
+          id: 'primer', videos: [{"id": "TFk5uRlLXdA", "title": "Liquidi di preparazione: nomi e differenze", "channel": "Accademia Nails", "lang": "IT"}], simple: 'Il disidratante asciuga l\'unghia e toglie il grasso; il primer fa da "ponte" tra unghia e prodotto. Ne basta pochissimo, solo sull\'unghia.', title: 'Disidratante e primer', min: 10,
+          html: `
+<p>Dopo l'opacizzazione la lamina è ruvida e pulita, ma contiene ancora un po' di <strong>umidità</strong> e di <strong>sebo</strong>. Qui entrano in gioco due liquidi diversi, che non si sostituiscono a vicenda.</p>
+<h2>Disidratante (nail prep, prep, cleanser)</h2>
+<ul>
+<li><strong>Che cosa fa</strong>: toglie sebo e umidità superficiale dalla lamina. Evapora in pochi secondi.</li>
+<li><strong>Come si usa</strong>: una passata su tutta la lamina, compresi lati e bordo libero, con pennellino o salvietta senza pelucchi.</li>
+<li><strong>Quando</strong>: dopo aver tolto la polvere, <em>prima</em> del primer o della base.</li>
+<li><strong>Segnale</strong>: l'unghia diventa leggermente biancastra/opaca. Se vedi strisce lucide, ripassa.</li>
+</ul>
+<h2>Primer: acido o senza acido?</h2>
+${F('primer-acido-vs-senza.svg', 'Sezione al microscopio: il primer acido incide, quello senza acido fa da biadesivo.')}
+<table>
+<tr><th></th><th>Primer acido</th><th>Primer senza acido (bonder)</th></tr>
+<tr><td><strong>Come funziona</strong></td><td>Contiene acido metacrilico: "incide" la superficie con microfori dove il prodotto si aggrappa</td><td>Fa da "nastro biadesivo" chimico tra lamina e prodotto; modifica per breve tempo il pH della lamina</td></tr>
+<tr><td><strong>Aspetto da asciutto</strong></td><td>Bianco gessoso, opaco</td><td>Resta leggermente appiccicoso (dipende dal marchio)</td></tr>
+<tr><td><strong>Quando si usa</strong></td><td>Acrilico tradizionale, unghie molto grasse o con sollevamenti ripetuti</td><td>Gel e uso quotidiano; spesso anche con l'acrilico moderno</td></tr>
+<tr><td><strong>Rischi</strong></td><td>Corrosivo: ustioni chimiche su pelle e occhi; ripetuto assottiglia la lamina</td><td>Meno aggressivo, ma resta un prodotto con acrilati: mai sulla pelle</td></tr>
+<tr><td><strong>Tempi</strong></td><td>Applica il prodotto solo quando è asciutto (bianco gessoso)</td><td>Asciuga in circa 40–60 secondi; l'effetto cala dopo circa 20 minuti</td></tr>
+</table>
+<h2>Come si applica il primer</h2>
+${F('primer-quantita.svg', 'La quantità giusta: pennello quasi asciutto, piccoli tocchi, lontano dalla pelle.')}
+<ol class="steps">
+<li><strong>Scarica il pennello</strong> sul bordo del flacone: deve essere quasi asciutto.</li>
+<li><strong>Tocca la lamina</strong> al centro e distribuisci con piccoli tocchi, restando ad <strong>almeno 1 mm</strong> da cuticola e solchi laterali.</li>
+<li><strong>Solo sulla lamina naturale</strong>: non sul tip, non sulla pelle.</li>
+<li><strong>Lascia asciugare</strong> il tempo indicato dal produttore.</li>
+<li><strong>Una mano alla volta</strong>: se il lavoro su una mano dura più di 20 minuti circa, applica il primer senza acido mano per mano.</li>
+</ol>
+${B('warn', 'Più primer non vuol dire più tenuta', 'Un eccesso di primer forma uno strato che riduce l\'adesione invece di aumentarla. Se un\'unghia si solleva sempre, cerca prima la causa nella preparazione (pellicina, polvere, contatto con la pelle), non nel primer.')}
+<h2>Errori frequenti</h2>
+<table>
+<tr><th>Errore</th><th>Conseguenza</th></tr>
+<tr><td>Primer al posto del disidratante</td><td>Sebo e umidità restano: adesione scarsa</td></tr>
+<tr><td>Primer sulla pelle</td><td>Irritazione, ustione (acido), rischio di sensibilizzazione</td></tr>
+<tr><td>Primer sul tip</td><td>Può rovinare/crepare la plastica e non serve</td></tr>
+<tr><td>Più passate di primer acido</td><td>Lamina assottigliata e sensibile</td></tr>
+<tr><td>Flacone contaminato (pennello toccato su polvere o pelle)</td><td>Il prodotto funziona peggio: chiudi sempre il flacone</td></tr>
+<tr><td>Mescolare marchi diversi</td><td>Incompatibilità: segui un solo sistema</td></tr>
+</table>
+${B('danger', 'Pelle e occhi', 'Il primer non deve mai toccare la pelle. Se il primer acido finisce in un occhio, sciacqua subito con acqua corrente per almeno 15 minuti e rivolgiti a un medico. Lavora con occhiali di protezione.')}
+${B('info', 'Semipermanente', 'Molti sistemi di semipermanente non richiedono primer: la base ha già la funzione di aggancio. Usa il primer solo se il produttore lo prevede.')}
+`,
+          sources: ['https://www.katiebarnesacademy.com/blogs/preparation/what-is-the-difference-between-acid-free-and-acid-based-nail-primer',
+            'https://www.nsinails.com.au/blogs/news/nail-preparation',
+            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
+            'https://purespadirect.com/blogs/pure-spa-direct-blog/how-to-use-nail-primer-dehydrator-ndash-the-secret-weapons-for-flawless-long-lasting-nail-art']
         }
       ]
     },
     /* ------------------------------------------------------------------ 6 */
     {
-      id: 'tip', summary: ["Il tip copre da solco a solco: se in dubbio, misura più grande.", "Si appoggia a ~45° e si abbassa per far uscire l'aria.", "Si fonde solo la linea di contatto, mai l'unghia naturale.", "Sul tip si costruisce comunque l'apex in zona 2."], n: 6, level: 'inter', title: 'Ricostruzione su tip',
+      id: 'tip', summary: ['Il tip copre da solco a solco senza toccare la pelle: se sei tra due misure, prendi la più grande e lima i lati.', 'Incavo su non più di metà lamina; appoggio a ~45° e discesa lenta, tieni 5–10 s.', 'Taglia solo a colla asciutta; fondi solo la plastica con lima fine tenuta piatta.', 'Primer solo sull\'unghia naturale, mai sul tip.', 'Sul tip si costruisce comunque l\'apex in zona 2.'], n: 6, level: 'inter', title: 'Ricostruzione su tip',
       desc: 'Scegliere, applicare, tagliare e fondere il tip; copertura in gel.',
       lessons: [
         {
-          id: 'applicazione', videos: [{"id": "mCY3EVijhjw", "title": "Come applicare una tip dopo aver preparato l'unghia", "channel": "Naio Nails IT", "lang": "IT"}, {"id": "hJCElOAO23k", "title": "Ricostruzione unghie con tip in gel", "channel": "Mondo NAILS", "lang": "IT"}], title: 'Applicazione del tip', min: 7,
+          id: 'misura', simple: 'Il tip giusto è largo esattamente quanto l\'unghia, da un lato all\'altro, senza appoggiarsi sulla pelle.', title: 'Scegliere e adattare il tip', min: 8,
           html: `
-${F('tip-applicazione.svg', 'Applicazione del tip in quattro passaggi.')}
-<h2>Tipi di tip</h2>
+<p>Un tip sbagliato rovina tutto il lavoro: se è stretto lascia scoperti i lati e si crepa, se è largo preme sulle pieghe laterali, fa male e si solleva. Prima di incollare, si <strong>misura e si adatta</strong>.</p>
+<h2>Com'è fatto un tip</h2>
+${F('tip-anatomia.svg', 'Le parti del tip: incavo, punto d\'arresto, zona di contatto.')}
 <ul>
-<li><strong>Con incavo (well)</strong>: hanno una zona di appoggio da incollare sul bordo libero; poi va fusa.</li>
-<li><strong>A contatto (contact)</strong>: senza incavo, non serve fondere.</li>
+<li><strong>Incavo (well)</strong>: la parte più sottile, che si appoggia sull'unghia naturale e si incolla.</li>
+<li><strong>Punto d'arresto (stop)</strong>: il "gradino" che si appoggia contro il bordo libero.</li>
+<li><strong>Zona di contatto</strong>: tutta la superficie dell'incavo che tocca la lamina. È lì che si forma il legame.</li>
+<li><strong>Corpo del tip</strong>: la parte che crea l'allungamento.</li>
 </ul>
-${F('tip-tipi.svg', 'Tipi di tip e misure: lo 0 è il più largo.')}
-<h2>Procedimento</h2>
+<h2>Tipi di tip</h2>
+<table>
+<tr><th>Tipo</th><th>Caratteristiche</th><th>Quando</th></tr>
+<tr><td><strong>Incavo pieno (full well)</strong></td><td>Incavo lungo: massima superficie di contatto, più lavoro di fusione</td><td>Corsi ed esami; unghie normali</td></tr>
+<tr><td><strong>Mezzo incavo (half well)</strong></td><td>Incavo corto: meno plastica sulla lamina, si fonde più in fretta</td><td>Salone, quando si vuole velocità</td></tr>
+<tr><td><strong>A contatto / senza incavo</strong></td><td>Si appoggia di testa al bordo libero, niente da fondere</td><td>Con copertura scolpita, lavori veloci</td></tr>
+<tr><td><strong>Trasparente, naturale, bianco (french)</strong></td><td>Cambia solo il colore</td><td>Trasparente per cover/colore, bianco per french veloce</td></tr>
+</table>
+${F('tip-tipi.svg', 'Tipi di tip e scala delle misure.')}
+<h2>Le misure</h2>
+<p>I tip sono numerati di solito da <strong>0 (il più largo, pollice)</strong> a <strong>9 o 10 (il più stretto, mignolo)</strong>; alcuni marchi arrivano a 00–11. La larghezza in millimetri di ogni numero <strong>cambia da marca a marca</strong>: usa la tabella del tuo produttore. In genere una cliente usa 3–5 misure diverse e le due mani non sono identiche.</p>
+<h2>Come misurare</h2>
 <ol class="steps">
-<li><strong>Misura</strong>: il tip deve coprire l'unghia da solco laterale a solco laterale. Se sei tra due misure, scegli la più grande e lima i lati.</li>
-<li><strong>Incolla</strong> con poca colla nell'incavo, appoggia sul bordo libero a circa 45° e abbassa lentamente per far uscire l'aria. Tieni premuto qualche secondo.</li>
-<li><strong>Taglia</strong> con il tagliatip alla lunghezza desiderata.</li>
-<li><strong>Fondi</strong> la linea di contatto con la lima finché non si vede più il gradino, <strong>senza limare l'unghia naturale</strong>.</li>
+<li><strong>Prova a secco</strong>, senza colla, appoggiando il tip sul bordo libero.</li>
+<li><strong>Guarda dall'alto</strong>: i bordi del tip devono arrivare esattamente ai solchi laterali, da solco a solco.</li>
+<li><strong>Guarda dal davanti</strong>: la curva del tip deve seguire quella dell'unghia. Un'unghia molto curva spesso richiede una misura in più.</li>
+<li><strong>Se sei tra due misure</strong>, scegli la più grande e lima i lati del tip <em>prima</em> di incollarlo, finché combacia.</li>
+<li><strong>Prepara tutti e 10 i tip in ordine</strong> sul tavolo (da pollice a mignolo) prima di iniziare a incollare.</li>
 </ol>
-${B('tip', 'Controllo', 'Guarda il tip di profilo e dal davanti: deve essere in asse con il dito e senza bolle sotto.')}
+${F('tip-misura-errori.svg', 'Troppo stretto, giusto, troppo largo: vista frontale.')}
+<h2>Adattare il tip</h2>
+${F('tip-adattare.svg', 'Come adattare un tip: lati e incavo.')}
+<ul>
+<li><strong>Lati troppo larghi</strong>: lima la plastica del tip ai lati, seguendo la sua curva, mai la pelle della cliente.</li>
+<li><strong>Incavo troppo lungo</strong>: l'incavo non dovrebbe coprire <strong>più di metà della lamina</strong>. Accorcialo con lima o forbicine, dando una forma che segua la curva della cuticola.</li>
+<li><strong>Unghia corta o morsicata</strong>: preferisci un tip a mezzo incavo o accorcia molto l'incavo; valuta in alternativa la cartina.</li>
+</ul>
+${B('info', 'Più grande o più piccolo?', 'La maggior parte delle guide consiglia la misura più grande da limare ai lati. Alcuni manuali d\'esame preferiscono la più piccola: il punto in comune è che il tip finale deve essere largo come l\'unghia e non deve mai poggiare sulla pelle.')}
+${B('warn', 'Mai forzare', 'Un tip troppo stretto "aperto a forza" tende a tornare alla sua forma e tira la lamina: crepe ai lati e sollevamenti.')}
 `,
-          sources: []
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/nail-tips-application',
+            'https://open-exam-prep.com/study-guides/wa-nail-technician/tips-wraps-sculpting/nail-tips',
+            'https://evernail.shop/en/blogs/contents/howtomeasurenailtipsize']
         },
         {
-          id: 'copertura', title: 'Costruzione in gel sul tip', min: 6,
+          id: 'applicazione', videos: [{"id": "mCY3EVijhjw", "title": "Come applicare una tip dopo aver preparato l'unghia", "channel": "Naio Nails IT", "lang": "IT"}, {"id": "hJCElOAO23k", "title": "Ricostruzione unghie con tip in gel", "channel": "Mondo NAILS", "lang": "IT"}], simple: 'Un velo di colla nell\'incavo, appoggi il tip inclinato contro il bordo dell\'unghia e lo abbassi piano, come si chiude una porta: così l\'aria esce e non restano bolle.', title: 'Applicazione del tip', min: 10,
           html: `
+${F('tip-applicazione.svg', 'Applicazione del tip in quattro passaggi.')}
+<p>Il tip è un'unghia di plastica preformata (spesso in ABS) che si incolla sul bordo libero per creare la lunghezza. Da solo è fragile: va <strong>sempre coperto</strong> con gel, acrilico o fibra.</p>
+<h2>Prima di iniziare</h2>
+<ul>
+<li>Preparazione completa dell'unghia (cuticola, opacizzazione, polvere, disidratante). <strong>Non mettere olio</strong>.</li>
+<li>Bordo libero corto e regolare: il punto d'arresto del tip deve appoggiarsi su un bordo dritto.</li>
+<li>Tip già misurati e adattati, disposti in ordine.</li>
+<li>Colla per tip (cianoacrilato, a pennellino o a beccuccio) o gel adesivo, secondo il sistema.</li>
+</ul>
+<h2>Procedimento</h2>
+${F('tip-incollaggio-45.svg', 'Il movimento "a porta che si chiude": dall\'appoggio a 45° alla discesa lenta.')}
 <ol class="steps">
-<li>Disidratante e primer sulla sola unghia naturale.</li>
-<li>Base sottile su unghia e tip, polimerizza.</li>
-<li>Costruttore: una prima passata sottile, poi la "perla" di gel al centro per costruire l'<strong>apex</strong> in zona 2.</li>
-<li>Lascia livellare qualche secondo; capovolgi la mano un istante per far scorrere il gel verso l'apex, poi polimerizza.</li>
-<li>Sigilla il bordo libero a ogni strato.</li>
-<li>Limatura, forma, cleaner e top.</li>
+<li><strong>Colla</strong>: un velo sottile nell'incavo (e, se il produttore lo indica, un velo sul bordo libero). Riempi l'incavo senza fare gocce. <em>Perché</em>: troppa colla intrappola aria, cola sulla pelle e indebolisce il legame.</li>
+<li><strong>Appoggio a circa 45°</strong>: porta il punto d'arresto contro il bordo libero, con il tip inclinato.</li>
+<li><strong>Abbassa lentamente</strong>: "fai rotolare" il tip verso la lamina; la colla avanza e spinge fuori l'aria. <em>Perché</em>: se lo appoggi piatto subito, la colla si chiude su tutti i lati e restano bolle.</li>
+<li><strong>Tieni fermo 5–10 secondi</strong> con pressione leggera e uniforme, controllando l'asse. Non muoverlo per "provare" se tiene.</li>
+<li><strong>Controlla</strong>: dall'alto (in asse con il dito), dal davanti (curva uguale all'unghia), in trasparenza (niente bolle chiare sotto l'incavo).</li>
+<li><strong>Elimina subito</strong> eventuale colla sui lati con un bastoncino, prima che indurisca.</li>
 </ol>
-${F('zone-costruzione.svg', 'Le tre zone: sottile alla cuticola, struttura in zona 2, sottile in punta.')}
+${B('tip', 'Ordine di lavoro', 'Incolla tutti i tip di una mano, poi passa al taglio e alla fusione: la colla ha il tempo di indurire bene.')}
+<h2>Che cosa controllare</h2>
+<table>
+<tr><th>Controllo</th><th>Giusto</th><th>Sbagliato</th></tr>
+<tr><td>Larghezza</td><td>Da solco a solco</td><td>Lati scoperti o tip sulla pelle</td></tr>
+<tr><td>Asse</td><td>Prosegue la linea del dito</td><td>Ruotato verso il pollice o verso il mignolo</td></tr>
+<tr><td>Profilo</td><td>Prosegue la lamina, né in su né in giù</td><td>Punta che "scende" o "sale"</td></tr>
+<tr><td>Bolle</td><td>Nessuna</td><td>Macchie chiare sotto l'incavo</td></tr>
+</table>
+${F('tip-errori-applicazione.svg', 'Tre errori di applicazione: bolla, fuori asse, inclinato.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Bolla sotto l'incavo</strong>: il tip va tolto (ammorbidendo con acetone, mai a strappo) e riapplicato. Una bolla diventa un sollevamento e un punto dove si raccoglie umidità.</li>
+<li><strong>Tip storto</strong>: si nota sempre di più man mano che allunghi. Correggilo subito.</li>
+<li><strong>Colla sulla pelle</strong>: non tirare; ammorbidisci e rimuovi con delicatezza.</li>
+</ul>
+${B('danger', 'Mai a strappo', 'Un tip incollato non si toglie mai facendo leva o strappando: si strappano anche strati di lamina.')}
 `,
-          sources: []
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/nail-tips-application',
+            'https://open-exam-prep.com/study-guides/wa-nail-technician/tips-wraps-sculpting/nail-tips',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-tips']
+        },
+        {
+          id: 'fusione', simple: 'Tagli il tip alla lunghezza giusta e poi limi solo la plastica finché non senti più lo scalino: l\'unghia vera non si tocca.', title: 'Taglio e fusione del tip', min: 8,
+          html: `
+<h2>1. Il taglio</h2>
+${F('tip-taglio.svg', 'Il tagliatip: lama perpendicolare, taglio solo a colla asciutta.')}
+<ol class="steps">
+<li><strong>Aspetta che la colla sia indurita</strong>. <em>Perché</em>: tagliando con la colla fresca il tip si sposta e il legame si rompe.</li>
+<li><strong>Decidi la lunghezza</strong>: per una principiante e per l'uso quotidiano, il bordo libero finale non dovrebbe superare circa <strong>metà della lunghezza del letto ungueale</strong>.</li>
+<li><strong>Taglia</strong> con il tagliatip tenuto perpendicolare al tip, lasciando 1–2 mm in più per la limatura. Su tip molto curvi entra dai lati invece di schiacciare il centro.</li>
+<li><strong>Uniforma</strong>: taglia tutti i tip della mano alla stessa lunghezza, poi rifinisci con la lima.</li>
+</ol>
+<h2>2. La fusione (blending)</h2>
+<p>Fondere significa eliminare il <strong>gradino</strong> tra la fine dell'incavo e l'unghia naturale, così il prodotto passa sopra in modo liscio.</p>
+${F('tip-fusione-step.svg', 'Fusione in sezione: dal gradino alla superficie continua, senza toccare la lamina.')}
+<ol class="steps">
+<li><strong>Lima fine</strong> (180–240), tenuta <strong>piatta</strong> sulla linea di contatto, non di taglio.</li>
+<li><strong>Movimenti leggeri</strong> avanti e indietro solo sulla plastica dell'incavo, spostando sempre la lima. <em>Perché</em>: fermarsi in un punto crea un solco.</li>
+<li><strong>Controlla con il dito e con la luce</strong>: lo scalino non si deve sentire né vedere.</li>
+<li><strong>Opacizza tutto il tip</strong> leggermente, così la copertura aderisce anche sulla plastica.</li>
+<li><strong>Elimina la polvere</strong> e disidrata la parte naturale.</li>
+</ol>
+<table>
+<tr><th>Metodo</th><th>Pro</th><th>Contro</th></tr>
+<tr><td><strong>Lima fine</strong></td><td>Controllo totale, nessun solvente</td><td>Serve pratica per non toccare la lamina</td></tr>
+<tr><td><strong>Tip blender</strong> (liquido solvente)</td><td>Ammorbidisce la plastica e accelera la fusione</td><td>Solvente: può deformare o macchiare il tip; va usato pochissimo e solo sulla plastica</td></tr>
+<tr><td><strong>Tip a contatto</strong></td><td>Non c'è niente da fondere</td><td>Legame più piccolo; serve una copertura ben costruita</td></tr>
+</table>
+${B('danger', 'La regola d\'oro', 'Si lima solo la plastica. Limare l\'unghia naturale durante la fusione la rende sottile, flessibile e sensibile al calore: è uno degli errori più frequenti e dannosi.')}
+${B('warn', 'Il segno a "smile"', 'Se vedi una lunetta più chiara o più scavata dove finiva l\'incavo, hai limato la lamina. Fermati e non insistere su quel punto.')}
+`,
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/nail-tips-application',
+            'https://open-exam-prep.com/study-guides/wa-nail-technician/tips-wraps-sculpting/nail-tips',
+            'https://www.salongeek.com/threads/blending-with-file-or-tip-blender-liquid.61963/']
+        },
+        {
+          id: 'copertura', simple: 'Il tip da solo è fragile: lo copri con il gel e costruisci una piccola "gobba" (apex) sopra il punto in cui l\'unghia si stacca dal dito.', title: 'Costruzione in gel sul tip', min: 11,
+          html: `
+<p>Il tip dà la <strong>lunghezza</strong>, la copertura dà la <strong>resistenza</strong>. Senza struttura la plastica si piega e si spezza proprio sopra il punto di stress.</p>
+${F('tip-overlay-sezione.svg', 'Sezione: gel sottile alla cuticola, apex sopra il punto di stress, sottile in punta.')}
+<h2>Procedimento</h2>
+${F('tip-gel-step.svg', 'Copertura in gel sul tip in sei passaggi.')}
+<ol class="steps">
+<li><strong>Disidratante e primer</strong> solo sull'unghia naturale. <em>Perché</em>: il primer sul tip non serve e può rovinare la plastica.</li>
+<li><strong>Base sottile</strong> su unghia e tip, a circa 1 mm dalla pelle (mai a contatto), sigillando il bordo libero. Polimerizza per il tempo indicato.</li>
+<li><strong>Strato di aggancio</strong> (facoltativo, "slip layer"): un velo sottilissimo di costruttore su tutta l'unghia, non polimerizzato, aiuta la perla a scivolare.</li>
+<li><strong>Perla al centro</strong>: prendi una perla di costruttore, appoggiala in zona 2 (poco dietro la linea dove finiva l'unghia naturale), accompagnala verso la cuticola senza toccare la pelle e poi "falla galleggiare" verso la punta.</li>
+<li><strong>Capovolgi la mano</strong> della cliente per qualche secondo (da 5–10 secondi fino a circa 30, secondo la fluidità del gel): la gravità porta il gel verso il centro e forma l'apex. Riguarda di profilo e polimerizza.</li>
+<li><strong>Secondo strato</strong> se l'apex non è abbastanza alto o se l'unghia è lunga; sigilla ogni volta il bordo libero.</li>
+<li><strong>Rifinitura</strong>: cleaner sullo strato di dispersione, limatura (lunghezza, lati, punta, superficie), polvere via, top e polimerizzazione, olio.</li>
+</ol>
+<h2>Spessori indicativi</h2>
+<table>
+<tr><th>Zona</th><th>Spessore</th><th>Perché</th></tr>
+<tr><td>Zona 3 (cuticola)</td><td>Sottilissimo, "a filo"</td><td>Si fonde con l'unghia e non si vede il gradino quando ricresce</td></tr>
+<tr><td>Zona 2 (apex)</td><td>Il punto più spesso</td><td>Regge la leva della lunghezza</td></tr>
+<tr><td>Zona 1 (bordo)</td><td>Circa 1–1,5 mm, come una carta di credito</td><td>Più spesso si nota e si impiglia; più sottile si scheggia</td></tr>
+</table>
+${B('tip', 'Perla piccola, poi aggiungi', 'Meglio due perle piccole che una grande: una perla grande, capovolgendo la mano, può colare verso i lati o la pelle.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Copertura piatta</strong>: il tip si spezza dove finiva l'unghia naturale.</li>
+<li><strong>Apex troppo avanti</strong>: fa da leva e tende a staccare l'unghia.</li>
+<li><strong>Gel sulla pelle</strong>: sollevamenti e rischio di allergia. Pulisci prima di polimerizzare.</li>
+<li><strong>Bordo libero non sigillato</strong>: lo strato si stacca dalla punta.</li>
+<li><strong>Strati troppo spessi</strong>: picco di calore in lampada.</li>
+</ul>
+${B('warn', 'Controlla sempre di profilo', 'Prima di ogni polimerizzazione guarda la mano di lato: la linea deve salire dolcemente dalla cuticola, avere il punto più alto sopra il punto di stress e scendere verso la punta.')}
+`,
+          sources: ['https://www.ellisons.co.uk/blog/how-to-build-the-perfect-apex-with-the-gelbottle-inc',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.katiebarnesacademy.com/blogs/preparation/what-is-the-difference-between-acid-free-and-acid-based-nail-primer']
         }
       ]
     },
     /* ------------------------------------------------------------------ 7 */
     {
-      id: 'cartina', summary: ["Cartina a filo del bordo libero e in asse.", "Zona 3 sottile (≈1,5 mm dalla pelle), zona 2 apex, zona 1 sottile in punta.", "Apex sopra il punto di stress: controlla sempre di profilo.", "Curva a C: pinching senza dolore, seguendo la curva naturale."], n: 7, level: 'inter', title: 'Ricostruzione su cartina e apex',
+      id: 'cartina', summary: ['Cartina a filo del bordo libero, in asse e in livello (né in su né in giù).', 'Zona 3 sottile (≈1 mm dalla pelle, mai sulla pelle), zona 2 apex, zona 1 ≈1–1,5 mm in punta.', 'Apex sopra il punto di stress: più lunga l\'unghia, più conta. Controlla sempre di profilo.', 'Bordo libero al massimo circa metà del letto ungueale.', 'Curva a C: segue l\'unghia naturale; pinching mai doloroso.'], n: 7, level: 'inter', title: 'Ricostruzione su cartina e apex',
       desc: 'Posizionare la cartina, costruire le 3 zone, l\'apex e la curva a C.',
       lessons: [
         {
-          id: 'posizionamento', title: 'Posizionare la cartina', min: 5,
+          id: 'posizionamento', simple: 'La cartina è il "pavimento" su cui costruisci l\'allungamento: deve stare attaccata sotto l\'unghia, dritta e alla stessa altezza dell\'unghia.', title: 'Posizionare la cartina', min: 10,
           html: `
-${F('cartina.svg', 'Cartina corretta ed errori comuni.')}
-<ul>
-<li>La cartina va <strong>a filo</strong> del bordo libero, senza spazi.</li>
-<li>Deve essere <strong>in asse</strong> con il dito: guarda la mano dall'alto e di lato.</li>
-<li>Chiudi bene le alette sotto il polpastrello per mantenere la curva.</li>
-</ul>
+<p>Nella ricostruzione su cartina non c'è un tip: l'allungamento si costruisce "nel vuoto" sopra un supporto. La forma finale dipende moltissimo da come metti la cartina: <strong>una cartina storta dà un'unghia storta</strong>, e nessuna lima la raddrizza del tutto.</p>
+<h2>Tipi di cartina</h2>
+<table>
+<tr><th>Tipo</th><th>Caratteristiche</th></tr>
+<tr><td><strong>Cartine adesive monouso</strong> (carta o plastica)</td><td>Le più usate; hanno una griglia per misurare la lunghezza e una linea centrale. Si buttano dopo l'uso.</td></tr>
+<tr><td><strong>Cartine riutilizzabili</strong> (metallo, teflon, plastica rigida)</td><td>Rigide, curve; vanno pulite e disinfettate dopo ogni cliente. Più difficili da adattare.</td></tr>
+<tr><td><strong>Cartine per gel trasparenti</strong></td><td>Lasciano passare la luce della lampada anche da sotto.</td></tr>
+</table>
+<h2>Procedimento</h2>
+${F('cartina-step.svg', 'Posizionare la cartina in quattro passaggi.')}
+<ol class="steps">
+<li><strong>Accorcia e prepara</strong> il bordo libero naturale: corto e regolare (lascia un piccolo bordo bianco se c'è). <em>Perché</em>: un bordo irregolare lascia spazi tra unghia e cartina.</li>
+<li><strong>Stacca la cartina</strong> e piegala leggermente tra le dita per darle una curva simile a quella dell'unghia (curva a C).</li>
+<li><strong>Adatta l'apertura</strong>: se il foro non segue la forma del bordo libero, ritaglialo con le forbicine.</li>
+<li><strong>Infila</strong> la cartina sotto il bordo libero finché tocca l'unghia <strong>senza spazi</strong>, ma senza spingerla dentro l'iponichio (la pelle sotto l'unghia). <em>Perché</em>: spinta troppo fa male e ferisce un tessuto vivo.</li>
+<li><strong>Allinea</strong> la linea centrale della cartina con il centro del dito, guardando dall'alto.</li>
+<li><strong>Controlla il livello</strong> di profilo: la cartina deve continuare la linea della lamina, né verso il basso né verso l'alto.</li>
+<li><strong>Chiudi le alette</strong>: prima unisci le due alette sotto il polpastrello, poi fai aderire i lati ai <em>lati</em> del dito, senza avvolgere tutta la falange. <em>Perché</em>: se attacchi tutto alla nocca, quando il dito si piega la cartina si stacca.</li>
+</ol>
+<h2>I tre controlli</h2>
+${F('cartina.svg', 'Dall\'alto: cartina corretta, spazio sotto il bordo, fuori asse.')}
+${F('cartina-livello.svg', 'Di profilo: cartina troppo bassa, giusta, troppo alta.')}
+<table>
+<tr><th>Vista</th><th>Che cosa guardi</th><th>Se è sbagliata</th></tr>
+<tr><td><strong>Dall'alto</strong></td><td>Linea centrale della cartina = asse del dito; nessuno spazio tra bordo libero e cartina</td><td>Unghia storta; prodotto che cola sotto il bordo</td></tr>
+<tr><td><strong>Di profilo</strong></td><td>La cartina prosegue la lamina in linea retta</td><td>Troppo bassa: allungamento che "cade". Troppo alta: punta all'insù (ski-jump)</td></tr>
+<tr><td><strong>Dal davanti</strong></td><td>Curva della cartina simile alla curva dell'unghia, simmetrica</td><td>Curva a C storta o piatta</td></tr>
+</table>
+${B('tip', 'Come correggere', 'Per raddrizzare una cartina non staccarla tutta: muovi le alette nella direzione della correzione. Le scanalature (linee di crescita) della lamina sono una guida migliore del bordo libero, che può essere irregolare.')}
 ${B('warn', 'Errore classico', 'Uno spazio tra cartina e bordo libero fa colare il prodotto sotto l\'unghia: crea sollevamenti e un "gradino" difficile da correggere.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Cartina ruotata verso il pollice</strong>: è l'errore più comune su anulare e mignolo. Guarda la mano dall'alto con le dita dritte.</li>
+<li><strong>Alette chiuse in modo diverso</strong>: curva asimmetrica.</li>
+<li><strong>Cartina spinta contro la pelle</strong>: dolore e prodotto steso male.</li>
+<li><strong>Bordo libero non preparato</strong>: polvere e sebo anche sotto il bordo impediscono la saldatura.</li>
+</ul>
 `,
-          sources: []
+          sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.youngnails.com/blogs/news/how-to-use-nail-forms',
+            'https://www.nailpro.com/how-to-customize-nail-forms/']
         },
         {
-          id: 'zone-apex', videos: [{"id": "Tx3lwXOS0L0", "title": "Do's and Don'ts of Apex Structure", "channel": "YoungNailsInc", "lang": "EN"}, {"id": "PD1qHAO3cvk", "title": "How to Build the Perfect Apex", "channel": "Liz Means Business", "lang": "EN"}], simple: "Immagina un ponte: dove l'unghia lascia il dito (punto di stress) serve il pilastro più alto, cioè l'apex.", title: 'Le tre zone e l\'apex', min: 8,
+          id: 'adattare-cartina', simple: 'Non tutte le unghie sono uguali: a volte devi ritagliare la cartina perché si appoggi bene, senza spazi e senza far male.', title: 'Adattare la cartina alle unghie difficili', min: 8,
           html: `
+<p>La cartina standard è pensata per un'unghia "media": bordo libero regolare, curva normale, iponichio normale. Quando l'unghia è diversa, la cartina va <strong>tagliata su misura</strong>. Lo scopo resta sempre lo stesso: niente spazi, in asse, in livello, senza dolore.</p>
+${F('cartina-adattata.svg', 'Quattro modi di ritagliare la cartina.')}
+<table>
+<tr><th>Situazione</th><th>Problema</th><th>Come adattare</th></tr>
+<tr><td><strong>Unghia corta o morsicata</strong> (bordo dritto, niente bordo libero)</td><td>L'apertura curva della cartina lascia spazi ai lati</td><td>Taglia a metà la linguetta centrale e applicala dritta sotto il bordo; in alternativa ritaglia un'apertura dritta</td></tr>
+<tr><td><strong>Unghia quadrata e larga</strong></td><td>Il foro è troppo stretto</td><td>Allarga l'apertura con le forbicine; per unghie molto larghe alcune formatrici usano due cartine unite</td></tr>
+<tr><td><strong>Iponichio lungo</strong> (pelle che arriva sotto il bordo)</td><td>La cartina preme sulla pelle: dolore sulla linea del sorriso</td><td>Ritaglia un incavo curvo più profondo nel punto di contatto, così la cartina appoggia senza premere</td></tr>
+<tr><td><strong>Unghia a pinza</strong> (molto curva)</td><td>La cartina resta più piatta dell'unghia</td><td>Piega di più la cartina prima di applicarla; segui la curva naturale, non forzarla ad aprirsi</td></tr>
+<tr><td><strong>Ski-jump</strong> (punta che sale)</td><td>Seguendo il bordo, l'allungamento salirebbe</td><td>Segui le linee di crescita della lamina e posiziona la cartina un po' più in basso del bordo, per correggere il profilo</td></tr>
+<tr><td><strong>Unghia che scende</strong> (bordo che punta in basso)</td><td>L'allungamento cadrebbe</td><td>Porta la cartina in linea con la lamina (non con il bordo), riempiendo l'eventuale spazio sotto con prodotto in più passaggi sottili</td></tr>
+</table>
+${F('cartina-ritaglio-step.svg', 'Esempio passo-passo: ritagliare l\'incavo per un iponichio lungo.')}
+<ol class="steps">
+<li><strong>Prova a secco</strong> la cartina e chiedi alla cliente se sente pressione.</li>
+<li><strong>Segna</strong> con una matita dove la cartina tocca la pelle.</li>
+<li><strong>Ritaglia</strong> una piccola curva in più in quel punto, poco per volta.</li>
+<li><strong>Riprova</strong> finché la cartina tocca il bordo libero senza premere.</li>
+<li><strong>Chiudi</strong> le alette e fai i tre controlli (alto, profilo, fronte).</li>
+</ol>
+${B('info', 'Quando la cartina non basta', 'Su unghie molto morsicate o con letto ungueale molto corto, a volte serve prima ricostruire il letto (vedi modulo "Onicofagia e unghie difficili"). Non promettere lunghezze che l\'unghia non può reggere.')}
+${B('danger', 'Il dolore è un segnale', 'Se la cliente sente dolore con la cartina, è troppo spinta o preme su pelle viva. Togli e adatta: costruire sopra un punto doloroso non è mai accettabile.')}
+`,
+          sources: ['https://www.youngnails.com/blogs/news/how-to-use-nail-forms',
+            'https://www.salongeek.com/threads/fitting-forms-with-high-hyponychium-advice-please.329807/',
+            'https://www.nailpro.com/how-to-customize-nail-forms/',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms']
+        },
+        {
+          id: 'zone-apex', videos: [{"id": "Tx3lwXOS0L0", "title": "Do's and Don'ts of Apex Structure", "channel": "YoungNailsInc", "lang": "EN"}, {"id": "PD1qHAO3cvk", "title": "How to Build the Perfect Apex", "channel": "Liz Means Business", "lang": "EN"}], simple: 'Immagina un ponte: dove l\'unghia lascia il dito (punto di stress) serve il pilastro più alto, cioè l\'apex. Alla base e in punta il prodotto è sottile.', title: 'Le tre zone e l\'apex', min: 11,
+          html: `
+<p>Un'unghia allungata funziona come una <strong>leva</strong>: ogni volta che la punta urta qualcosa, la forza si scarica nel punto in cui l'unghia si stacca dal dito, il <strong>punto di stress</strong>. Per questo la ricostruzione non ha lo stesso spessore ovunque: è divisa in tre zone.</p>
 ${F('zone-costruzione.svg', 'Le tre zone di costruzione.')}
+<h2>Le tre zone</h2>
+<table>
+<tr><th>Zona</th><th>Dove</th><th>Spessore</th><th>Perché</th></tr>
+<tr><td><strong>Zona 1</strong> – bordo libero</td><td>Dall'allungamento fino alla linea del sorriso</td><td>Sottile e uniforme: circa 1–1,5 mm (come una carta di credito)</td><td>Più spesso si impiglia e sembra finto; più sottile si scheggia</td></tr>
+<tr><td><strong>Zona 2</strong> – apex</td><td>Centro dell'unghia, sopra il punto di stress</td><td>La parte più spessa</td><td>Regge la leva della lunghezza</td></tr>
+<tr><td><strong>Zona 3</strong> – zona cuticolare</td><td>Vicino a cuticola e solchi laterali</td><td>Sottilissima, sfumata "a zero"</td><td>Il prodotto deve fondersi con la lamina e non toccare mai la pelle</td></tr>
+</table>
+${F('zone-spessori-sezione.svg', 'Sezione longitudinale e trasversale: dove il prodotto è spesso e dove è sottile.')}
+<h2>Il margine dalla pelle</h2>
+<p>In zona 3 il prodotto si ferma a <strong>circa 1 mm</strong> da cuticola e solchi laterali (le fonti indicano da 0,5 a 1,5 mm; i manuali americani 1/16 di pollice, circa 1,6 mm) e non deve mai toccare la pelle. Questa sottile striscia di lamina scoperta non si vede a fine lavoro ma evita il contatto con la pelle, prima causa di sollevamenti e di allergie.</p>
+<h2>Dove sta esattamente l'apex</h2>
 <ul>
-<li><strong>Zona 1 – bordo libero</strong>: spessore moderato che si assottiglia verso la punta.</li>
-<li><strong>Zona 2 – apex</strong>: la parte più spessa, il "ponte" che regge la lunghezza. L'apex va costruito <strong>sopra il punto di stress</strong>.</li>
-<li><strong>Zona 3 – cuticola</strong>: sottilissima, con circa <strong>1,5 mm</strong> di margine dalla pelle.</li>
+<li>Dall'alto: al <strong>centro</strong> dell'unghia, tra i due lati.</li>
+<li>Di profilo: sopra il <strong>punto di stress</strong>, cioè all'incirca nel terzo posteriore-centrale dell'unghia intera (letto + allungamento).</li>
+<li>È un <strong>punto</strong> morbido, non una "fascia" spessa che attraversa tutta l'unghia.</li>
 </ul>
 ${F('apex-confronto.svg', 'Apex corretto e due errori tipici.')}
-${B('tip', 'Come controllarlo', 'Guarda l\'unghia di profilo: la linea deve salire dolcemente dalla cuticola, raggiungere il punto più alto sopra il punto di stress e scendere verso la punta. Guarda anche dal davanti: lo spessore deve essere uniforme da lato a lato.')}
+<table>
+<tr><th>Errore</th><th>Che cosa succede</th></tr>
+<tr><td><strong>Unghia piatta</strong> (nessun apex)</td><td>Si crepa o si spezza al centro, sulla linea del punto di stress</td></tr>
+<tr><td><strong>Apex troppo avanti</strong></td><td>Fa da leva: tende a staccare l'unghia dal letto</td></tr>
+<tr><td><strong>Apex troppo indietro / gobba alla cuticola</strong></td><td>Aspetto grosso, sollevamenti alla base, nessun sostegno dove serve</td></tr>
+<tr><td><strong>Apex spostato su un lato</strong></td><td>L'unghia si rompe sul lato più sottile</td></tr>
+</table>
+<h2>Come controllarlo</h2>
+${F('apex-controllo-viste.svg', 'Controllo dell\'apex da tre punti di vista.')}
+<ol class="steps">
+<li><strong>Di profilo</strong>: la linea sale dolcemente dalla cuticola, raggiunge il punto più alto sopra il punto di stress e scende in modo regolare verso la punta.</li>
+<li><strong>Dal davanti</strong> (guardando la punta verso di te): lo spessore è uguale a destra e a sinistra, la curva è regolare.</li>
+<li><strong>Dall'alto, con luce</strong>: il riflesso della lampada scorre senza "salti" e mostra il punto più alto al centro.</li>
+<li><strong>Dal basso</strong>: il bordo libero è sottile e uniforme.</li>
+</ol>
+${B('tip', 'Il trucco del riflesso', 'Ruota lentamente il dito sotto la lampada: una striscia di luce continua e regolare indica una superficie ben costruita; una luce che si spezza indica avvallamenti o gobbe.')}
 `,
-          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails']
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/']
         },
         {
-          id: 'curva-c', simple: "Guardando l'unghia dalla punta deve sembrare un piccolo arco, come una \"C\" sdraiata.", title: 'La curva a C (pinching)', min: 5,
+          id: 'proporzioni', simple: 'Più lunga è l\'unghia, più forte deve essere la struttura. Per un risultato equilibrato, la punta non dovrebbe superare circa metà della lunghezza del letto.', title: 'Lunghezza e proporzioni', min: 7,
+          html: `
+<p>Prima di costruire si decide la <strong>lunghezza</strong>. Non è solo una questione di gusto: la lunghezza cambia la leva sul punto di stress e quindi la struttura necessaria.</p>
+<h2>La regola della metà</h2>
+${F('lunghezza-proporzioni.svg', 'Proporzioni: bordo libero fino a circa metà del letto ungueale.')}
+<ul>
+<li>Misura il <strong>letto ungueale</strong> (la parte rosa, dalla cuticola alla linea del sorriso).</li>
+<li>Per un'unghia equilibrata e resistente, il <strong>bordo libero</strong> (la parte che sporge) non dovrebbe superare circa <strong>metà</strong> di questa lunghezza.</li>
+<li>Alcune formatrici preferiscono circa <strong>un terzo</strong> per un aspetto più naturale, soprattutto nel french con bianco molto acceso.</li>
+<li>Su letti ungueali corti si può "allungare il letto" con gel/polvere cover rosa, invece di aggiungere bianco.</li>
+</ul>
+${B('info', 'Regole, non leggi', 'Le fonti professionali indicano un massimo di metà letto, alcune di un terzo. Nelle gare e negli stili "moda" le lunghezze possono essere molto maggiori, ma richiedono strutture e apex più importanti.')}
+<h2>Più lunghezza = più struttura</h2>
+${F('apex-lunghezza.svg', 'Unghia corta e unghia lunga: l\'apex cresce e resta sopra il punto di stress.')}
+<table>
+<tr><th>Lunghezza</th><th>Struttura</th><th>Adatta a</th></tr>
+<tr><td>Corta (bordo ≤ 1/3 del letto)</td><td>Apex leggero, quasi naturale</td><td>Chi lavora molto con le mani, prime clienti</td></tr>
+<tr><td>Media (circa 1/2 del letto)</td><td>Apex ben visibile di profilo</td><td>Uso quotidiano in salone</td></tr>
+<tr><td>Lunga (oltre 1/2)</td><td>Apex alto, curva a C più marcata</td><td>Clienti abituate, eventi, gare</td></tr>
+</table>
+<h2>Come decidere con la cliente</h2>
+<ol class="steps">
+<li><strong>Chiedi</strong> che lavoro fa, se usa tastiera o attrezzi, se fa sport.</li>
+<li><strong>Guarda il letto ungueale</strong>: corto, lungo, morsicato?</li>
+<li><strong>Proponi</strong> una lunghezza di partenza prudente: si può allungare al refill successivo.</li>
+<li><strong>Segna</strong> la lunghezza sulla griglia della cartina, uguale per tutte le dita (il pollice può essere leggermente più lungo e il mignolo leggermente più corto, a parità di aspetto).</li>
+</ol>
+${B('warn', 'Prima volta', 'Alla prima ricostruzione la cliente non è abituata: una lunghezza eccessiva aumenta il rischio di urti, rotture e traumi al letto ungueale.')}
+`,
+          sources: ['https://www.salongeek.com/threads/choosing-the-correct-length-for-balance-and-beauty.11417/',
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/',
+            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails']
+        },
+        {
+          id: 'curva-c', simple: 'Guardando l\'unghia dalla punta deve sembrare un piccolo arco, come una "C" sdraiata. Un arco regge più di una lastra piatta.', title: 'La curva a C (pinching)', min: 9,
           html: `
 ${F('curva-c.svg', 'La curva a C vista dal bordo libero.')}
-<p>La curva a C è la curvatura trasversale della ricostruzione vista dalla punta. Dà resistenza e un aspetto naturale.</p>
-<ul>
-<li><strong>Acrilico</strong>: si "pizzica" mentre il prodotto non è ancora del tutto indurito.</li>
-<li><strong>Gel</strong>: si pizzica dopo una polimerizzazione breve (flash cure) di pochi secondi.</li>
-</ul>
-${B('danger', 'Mai dolore', 'Il pinching non deve far male né staccare la lamina dal letto. Non esiste una percentuale di curva valida per tutti: si segue la curva naturale della cliente.')}
-`,
-          sources: []
-        },
-        {
-          id: 'tutorial-gel', videos: [{"id": "ilkQqQbeCQQ", "title": "Ricostruzione unghie con cartine e gel: ogni passaggio spiegato", "channel": "Valeriya Nails", "lang": "IT"}, {"id": "jOJjB8vjEg0", "title": "Sculpting Gel Nails – Step by Step", "channel": "Nail Career Education", "lang": "EN"}], title: 'Tutorial completo: gel su cartina', min: 10,
-          html: `
-<p>Questo tutorial mette insieme tutto ciò che hai studiato: preparazione, cartina, tre zone, apex e rifinitura. Esercitati prima su una mano da allenamento.</p>
-${F('tut-gel-cartina.svg', 'Ricostruzione in gel su cartina in otto passaggi.')}
+<p>La curva a C è la curvatura <strong>trasversale</strong> della ricostruzione, cioè da un lato all'altro, vista dalla punta. Come un foglio di carta che, piegato ad arco, regge un peso che da piatto non reggerebbe, la curva dà <strong>resistenza laterale</strong> e un aspetto naturale e slanciato.</p>
+<h2>Quanta curva?</h2>
+<p>La curva si misura spesso come <strong>percentuale di un cerchio</strong>: 50% = mezzo cerchio.</p>
+${F('curva-c-percentuali.svg', 'Curva a C espressa in percentuale di cerchio.')}
+<table>
+<tr><th>Curva</th><th>Dove si usa</th></tr>
+<tr><td>Bassa (circa 25–35%)</td><td>Unghie naturalmente piatte, unghie corte</td></tr>
+<tr><td>Media (circa 35–45%)</td><td>Uso quotidiano in salone</td></tr>
+<tr><td>Alta (circa 50–55%)</td><td>Gare, unghie lunghe</td></tr>
+</table>
+${B('info', 'Valori indicativi', 'Le guide d\'esame americane citano circa 35–45% per il lavoro in salone; le riviste di settore indicano circa 50–55% per le gare. Non esiste un valore valido per tutti: si parte sempre dalla curva naturale della cliente e si cerca che sia uguale su tutte e dieci le unghie.')}
+<h2>Tre modi per ottenere la curva</h2>
 <ol class="steps">
-<li><strong>Prepara</strong>: igiene, cuticola e pterigio, opacizzazione 180–240, polvere via, disidratante e primer.</li>
-<li><strong>Cartina</strong>: a filo del bordo libero, in asse, alette chiuse.</li>
-<li><strong>Base</strong>: uno strato sottile su tutta la lamina, senza toccare la pelle. Polimerizza.</li>
-<li><strong>Zona 1</strong>: con il costruttore disegna l'allungamento sulla cartina, sottile e alla lunghezza voluta; polimerizza brevemente.</li>
-<li><strong>Zona 2</strong>: appoggia una perla di gel al centro e accompagnala verso i lati e verso la cuticola, lasciando circa 1,5 mm di margine.</li>
-<li><strong>Capovolgi</strong> la mano per 5–10 secondi: il gel scorre verso l'apex. Controlla di profilo, poi polimerizza.</li>
-<li><strong>Togli la cartina</strong>, eventuale pinching dopo una flash cure, poi limatura: lunghezza, lati, punta, superficie.</li>
-<li><strong>Cleaner e top</strong>: sigilla anche il bordo libero; polimerizza e finisci con olio.</li>
+<li><strong>Con la cartina</strong>: dai la curva giusta alla cartina prima di costruire. È il metodo più sicuro per le principianti.</li>
+<li><strong>Con il prodotto</strong>: lati paralleli e spessore uniforme in sezione aiutano la curva.</li>
+<li><strong>Con il pinching</strong>: una pressione laterale controllata mentre il prodotto è ancora un po' morbido.</li>
 </ol>
-${F('zone-costruzione.svg', 'Controllo finale del profilo: sottile – spesso – sottile.')}
-${B('tip', 'Checklist finale', 'Profilo con apex sopra il punto di stress · curva a C regolare · zona cuticolare pulita · bordo libero sottile e sigillato · nessuna sbavatura sulla pelle.')}
+<h2>Pinching passo passo</h2>
+${F('curva-c-pinching-step.svg', 'Pinching: posizione delle dita, momento giusto, controllo frontale.')}
+<ol class="steps">
+<li><strong>Il momento</strong>: <em>acrilico</em> quando ha perso la lucidità ma è ancora leggermente morbido; <em>gel</em> dopo una polimerizzazione brevissima (flash cure, pochi secondi secondo il produttore), poi si completa la polimerizzazione.</li>
+<li><strong>Dove</strong>: pollici o pinzetta sui lati dell'allungamento, all'altezza del punto di stress o poco più avanti, mai sopra la lamina naturale.</li>
+<li><strong>Come</strong>: pressione uguale sui due lati, per pochi secondi, chiedendo alla cliente come si sente.</li>
+<li><strong>Controlla</strong> dal davanti: curva simmetrica, nessuna crepa ai lati.</li>
+</ol>
+${B('danger', 'Mai dolore', 'Il pinching non deve far male né staccare la lamina dal letto. Se la cliente sente dolore, smetti subito: una curva forzata su un\'unghia piatta può causare onicolisi.')}
+<h2>Errori frequenti</h2>
+<ul>
+<li><strong>Pinching troppo tardi</strong> (acrilico già duro): crepe sui lati.</li>
+<li><strong>Pressione diversa sui due lati</strong>: curva storta, unghia che "gira".</li>
+<li><strong>Pinching sul letto ungueale</strong>: dolore e rischio di distacco.</li>
+<li><strong>Curve diverse tra le dita</strong>: la mano sembra disordinata.</li>
+</ul>
+${B('tip', 'Strumenti', 'Esistono pinzette e "bastoncini per curva a C". Le pinze trasparenti sono preferibili con il gel perché lasciano passare la luce. In alcune gare le pinze sono vietate: controlla sempre il regolamento.')}
 `,
-          sources: []
+          sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
+            'https://www.nailpro.com/technique/article/21156099/competition-technique-how-to-pre-shape-a-c-curve',
+            'https://purespadirect.com/blogs/pure-spa-direct-blog/how-to-achieve-the-perfect-c-curve-using-professional-pinching-tools-a-nail-techs-guide-to-strength-style']
         },
         {
-          id: 'tutorial-acrilico', videos: [{"id": "yVuhQ9Nh43M", "title": "Tutorial applicazione acrilico", "channel": "Nail Couture Italia", "lang": "IT"}, {"id": "-xLyP7jYlMA", "title": "Come realizzare un allungamento in acrilico", "channel": "Nailover International", "lang": "IT"}], title: 'Tutorial completo: acrilico su cartina', min: 10,
+          id: 'tutorial-gel', videos: [{"id": "ilkQqQbeCQQ", "title": "Ricostruzione unghie con cartine e gel: ogni passaggio spiegato", "channel": "Valeriya Nails", "lang": "IT"}, {"id": "jOJjB8vjEg0", "title": "Sculpting Gel Nails – Step by Step", "channel": "Nail Career Education", "lang": "EN"}], simple: 'Prepari l\'unghia, metti la cartina, disegni la punta con il gel, costruisci l\'apex, togli la cartina e limi: un passaggio alla volta, con la lampada dopo ogni strato.', title: 'Tutorial completo: gel su cartina', min: 14,
           html: `
-<p>Con l'acrilico il prodotto indurisce all'aria: lavora con ordine e con la perla giusta. Indossa guanti in nitrile e accendi l'aspiratore.</p>
+<p>Questo tutorial mette insieme tutto ciò che hai studiato: preparazione, cartina, tre zone, apex e rifinitura. Esercitati prima su una mano da allenamento. I tempi di polimerizzazione dipendono dal tuo gel e dalla tua lampada: <strong>usa sempre quelli del produttore</strong>.</p>
+${F('tut-gel-cartina.svg', 'Ricostruzione in gel su cartina in otto passaggi.')}
+<h2>Materiale</h2>
+<ul>
+<li>Lime 180/240 e 100/180, buffer, pennello per polveri, spingicuticole</li>
+<li>Disidratante, primer, base, gel costruttore (trasparente, rosa o cover), top, cleaner, olio</li>
+<li>Cartine, pennello piatto o ovale per gel, lampada abbinata al gel</li>
+<li>Guanti in nitrile, salviette senza pelucchi</li>
+</ul>
+<h2>Procedimento</h2>
+<ol class="steps">
+<li><strong>Prepara</strong>: igiene, cuticola, opacizzazione 180–240, polvere via, disidratante e primer solo sulla lamina.</li>
+<li><strong>Cartina</strong>: a filo del bordo libero, in asse e in livello, alette chiuse. Fai i tre controlli.</li>
+<li><strong>Base</strong>: uno strato sottile su tutta la lamina e sul bordo libero, a circa 1 mm dalla pelle. Polimerizza.</li>
+<li><strong>Zona 1 – disegna la punta</strong> (vedi figura sotto): con poco costruttore traccia l'allungamento sulla cartina, sottile, con i lati dritti e paralleli che proseguono i solchi laterali, alla lunghezza scelta. Polimerizza brevemente (o completamente, secondo il produttore). <em>Perché</em>: la punta sottile e già indurita fa da "pavimento" per lo strato strutturale.</li>
+<li><strong>Zona 2 – la perla</strong>: appoggia una perla di gel al centro, sopra il punto di stress. Accompagnala verso la cuticola fermandoti a circa 1 mm dalla pelle, poi verso la punta e i lati senza premere.</li>
+<li><strong>Capovolgi</strong> la mano per alcuni secondi (circa 5–10; fino a 30 con gel densi): il gel scorre verso l'apex. Rigira la mano, controlla di profilo e dal davanti, poi polimerizza.</li>
+<li><strong>Se serve</strong>, ripeti con una seconda perla piccola per alzare l'apex.</li>
+<li><strong>Togli la cartina</strong>: apri le alette, stringi leggermente la cartina e sfilala verso il basso. Se vuoi più curva, fai il pinching dopo un flash cure (prima della polimerizzazione completa dello strato strutturale).</li>
+<li><strong>Cleaner</strong> sullo strato di dispersione, poi <strong>limatura</strong>: lunghezza, lati, punta, superficie, sotto il bordo libero (vedi modulo "Limatura e forme").</li>
+<li><strong>Top</strong>: steso sottile, sigillando anche il bordo libero; polimerizza, cleaner se il top non è "no-wipe", olio sulle cuticole.</li>
+</ol>
+${F('tut-gel-zona1.svg', 'Zona 1 in gel: lati dritti che proseguono i solchi, lunghezza segnata sulla griglia.')}
+${F('tut-gel-flip.svg', 'Il "capovolgimento": la gravità porta il gel verso l\'apex.')}
+${F('zone-spessori-sezione.svg', 'Controllo finale: sottile alla cuticola, spesso sull\'apex, sottile in punta.')}
+<h2>Problemi durante il lavoro</h2>
+<table>
+<tr><th>Problema</th><th>Causa probabile</th><th>Rimedio</th></tr>
+<tr><td>Il gel cola nei solchi</td><td>Perla troppo grande o gel troppo fluido; mano capovolta troppo a lungo</td><td>Perle più piccole; pulisci con un pennello prima della lampada</td></tr>
+<tr><td>Bruciore in lampada</td><td>Strato spesso, lamina sottile</td><td>Togli la mano qualche secondo e rientra ("flash and pull"); strati più sottili</td></tr>
+<tr><td>Allungamento storto dopo aver tolto la cartina</td><td>Cartina fuori asse</td><td>Correggi in limatura; la prossima volta controlla dall'alto</td></tr>
+<tr><td>Bolle</td><td>Pennello agitato o gel mescolato con forza</td><td>Movimenti lenti, gel a temperatura ambiente</td></tr>
+</table>
+${B('tip', 'Checklist finale', 'Profilo con apex sopra il punto di stress · curva a C regolare · zona cuticolare pulita e sottile · bordo libero sottile (≈1–1,5 mm) e sigillato · lati dritti · nessuna sbavatura sulla pelle.')}
+`,
+          sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.ellisons.co.uk/blog/how-to-build-the-perfect-apex-with-the-gelbottle-inc',
+            'https://www.nsinails.com.au/blogs/news/nail-preparation']
+        },
+        {
+          id: 'tutorial-acrilico', videos: [{"id": "yVuhQ9Nh43M", "title": "Tutorial applicazione acrilico", "channel": "Nail Couture Italia", "lang": "IT"}, {"id": "-xLyP7jYlMA", "title": "Come realizzare un allungamento in acrilico", "channel": "Nailover International", "lang": "IT"}], simple: 'Con l\'acrilico mescoli un liquido e una polvere con il pennello: si forma una pallina (perla) che indurisce all\'aria. Lavori zona per zona: punta, centro, base.', title: 'Tutorial completo: acrilico su cartina', min: 14,
+          html: `
+<p>Con l'acrilico il prodotto indurisce all'aria: lavora con ordine e con la perla giusta. Indossa guanti in nitrile, occhiali e accendi l'aspiratore. Usa solo monomeri <strong>EMA</strong> professionali (mai MMA).</p>
+<h2>La perla: il rapporto liquido/polvere</h2>
 ${F('perla-acrilico.svg', 'Prima di iniziare: controlla la consistenza della perla.')}
+<table>
+<tr><th>Perla</th><th>Rapporto liquido : polvere</th><th>Comportamento</th></tr>
+<tr><td><strong>Asciutta</strong></td><td>circa 1 : 1</td><td>Granulosa, opaca, difficile da stendere; indurisce troppo in fretta; fragile e si solleva</td></tr>
+<tr><td><strong>Media</strong> ✓</td><td>circa 1,5 : 1</td><td>Lucida, bombata, resta "a cupola" sul pennello per qualche secondo; si lavora bene</td></tr>
+<tr><td><strong>Bagnata</strong></td><td>circa 2 : 1</td><td>Cola nei solchi e verso la cuticola, si ritira (shrinkage), aumenta il rischio di sensibilizzazione</td></tr>
+</table>
+${B('info', 'Dipende dal sistema', 'Il rapporto 1,5 : 1 è un riferimento per molti sistemi EMA, non una legge: ogni marchio formula il suo monomero per un certo rapporto. Leggi le istruzioni del produttore.')}
+<h2>Procedimento</h2>
 ${F('tut-acrilico.svg', 'Ricostruzione in acrilico su cartina in sei passaggi.')}
 <ol class="steps">
-<li><strong>Zona 1</strong>: appoggia una perla (bianca per il french o trasparente/rosa) sulla cartina, all'altezza del bordo libero.</li>
-<li><strong>Picchietta e modella</strong> con il ventre del pennello per dare forma e lunghezza; per il french disegna la smile line.</li>
-<li><strong>Zona 2</strong>: perla al centro, sopra il punto di stress, e fondila verso la zona 1.</li>
-<li><strong>Zona 3</strong>: perla piccola e più umida, stesa sottilissima, a circa 1,5 mm dalla pelle.</li>
-<li><strong>Pinching</strong> quando il prodotto è ancora leggermente morbido.</li>
-<li><strong>Lima e rifinisci</strong>: controlla l'apex di profilo, leviga e sigilla.</li>
+<li><strong>Prepara</strong> l'unghia e posiziona la cartina (vedi lezioni precedenti). Primer solo sulla lamina; se è acido, aspetta che sia bianco gessoso.</li>
+<li><strong>Zona 1</strong>: immergi il pennello nel monomero, scaricalo sul bordo del dappen, tocca la polvere (bianca per il french, trasparente o rosa per il naturale) e appoggia la perla sulla cartina all'altezza del bordo libero.</li>
+<li><strong>Modella la punta</strong> con il ventre del pennello, picchiettando e accarezzando: lunghezza, lati dritti e paralleli, spessore uniforme. Per il french disegna la smile line con la punta del pennello.</li>
+<li><strong>Zona 2</strong>: perla media al centro, sopra il punto di stress. Fondila verso la zona 1 e verso i lati: qui costruisci l'apex.</li>
+<li><strong>Zona 3</strong>: perla piccola e leggermente più umida, stesa sottilissima verso la cuticola, fermandoti a circa 1 mm dalla pelle e dai solchi.</li>
+<li><strong>Pinching</strong> quando il prodotto ha perso la lucidità ma è ancora leggermente morbido.</li>
+<li><strong>Verifica l'indurimento</strong>: battendo con il manico del pennello devi sentire un "click" secco.</li>
+<li><strong>Togli la cartina</strong> e <strong>lima</strong>: lunghezza, lati, punta, superficie; controlla l'apex di profilo. Leviga, togli la polvere, top o lucidatura, olio.</li>
 </ol>
-${B('warn', 'Pulizia del pennello', 'Pulisci il pennello nel monomero e asciugalo su carta tra una perla e l\'altra; non toccare mai il monomero con la pelle.')}
+${F('acrilico-pennello-carico.svg', 'Come si carica il pennello: immergi, scarica, tocca la polvere, aspetta la perla.')}
+${F('perla-zone-acrilico.svg', 'Dove appoggiare le tre perle e quanto devono essere grandi.')}
+${B('warn', 'Pulizia del pennello', 'Pulisci il pennello nel monomero e asciugalo su carta tra una perla e l\'altra; non toccare mai il monomero con la pelle. Il monomero usato va eliminato secondo le istruzioni, non rimesso nel flacone.')}
+<h2>Errori frequenti</h2>
+<table>
+<tr><th>Errore</th><th>Conseguenza</th><th>Correzione</th></tr>
+<tr><td>Perla bagnata in zona 3</td><td>Cola sulla cuticola: sollevamento e rischio di allergia</td><td>Perla più asciutta, scarica il pennello</td></tr>
+<tr><td>Perla asciutta in zona 1</td><td>Bolle, opacità, punta fragile</td><td>Più monomero nel pennello</td></tr>
+<tr><td>Prodotto sulla pelle o sulla cuticola</td><td>Sollevamento in pochi giorni</td><td>Rimuovi subito con il pennello pulito, prima che indurisca</td></tr>
+<tr><td>Apex piatto o troppo avanti</td><td>Crepa al centro o leva sul letto</td><td>Perla di zona 2 centrata sopra il punto di stress</td></tr>
+<tr><td>Troppo prodotto in una volta su unghia sottile</td><td>Calore durante l'indurimento</td><td>Perle più piccole, lavoro per strati</td></tr>
+</table>
 `,
-          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails']
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails',
+            'https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://nsinails.com.au/blogs/news/mix-ratio-l-p',
+            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/understanding-acrylic-chemistry-mix-ratio']
         }
       ]
     },
     /* ------------------------------------------------------------------ 8 */
     {
-      id: 'limatura', summary: ["Squoval: tra le forme più resistenti; mandorla: slancia il dito.", "Lati paralleli al solco, punta dai lati verso il centro.", "Movimento in una sola direzione, niente \"sega\".", "Controlla da 4 punti di vista: alto, profilo, fronte, sotto."], n: 8, level: 'inter', title: 'Limatura e forme',
+      id: 'limatura', summary: ['Squoval: tra le forme più resistenti; mandorla: slancia il dito.', 'Ordine: lunghezza → lati → punta → superficie → sotto il bordo → rifinitura.', 'Lati dritti e paralleli; punta dai lati verso il centro, in una sola direzione.', 'Unghia naturale: grana 180–240; 100/180 solo sul prodotto.', 'Controlla da 4 punti di vista: alto, profilo, fronte, sotto.'], n: 8, level: 'inter', title: 'Limatura e forme',
       desc: 'Le forme dell\'unghia e la tecnica di limatura per un risultato pulito.',
       lessons: [
         {
-          id: 'forme', videos: [{"id": "a4NPD2HqrRc", "title": "Limatura: forma quadrata, mandorla e squoval", "channel": "Aerrenails", "lang": "IT"}, {"id": "z3OaoVY-jAM", "title": "Limatura ovale delle unghie", "channel": "Accademia Nails", "lang": "IT"}], title: 'Le forme dell\'unghia', min: 6,
+          id: 'forme', videos: [{"id": "a4NPD2HqrRc", "title": "Limatura: forma quadrata, mandorla e squoval", "channel": "Aerrenails", "lang": "IT"}, {"id": "z3OaoVY-jAM", "title": "Limatura ovale delle unghie", "channel": "Accademia Nails", "lang": "IT"}], simple: 'La forma si sceglie con la cliente guardando le sue dita e il suo stile di vita: più la forma è appuntita, più è delicata.', title: 'Le forme dell\'unghia', min: 10,
           html: `
 ${F('forme.svg', 'Le forme principali.')}
+<p>La forma dell'unghia si decide <strong>prima</strong> di costruire: cambia come metti la cartina, dove fai l'apex e come limi. Una buona forma è <strong>simmetrica</strong>, adatta al dito e alle abitudini della cliente.</p>
+<h2>Le forme principali</h2>
 <table>
-<tr><th>Forma</th><th>Caratteristiche</th><th>Consigliata per</th></tr>
-<tr><td>Quadrata</td><td>Lati paralleli, angoli netti. Visivamente accorcia il dito.</td><td>Dita lunghe e sottili</td></tr>
-<tr><td>Squoval</td><td>Quadrata con angoli smussati. Tra le più resistenti.</td><td>Quasi tutte; chi usa molto le mani</td></tr>
-<tr><td>Tonda</td><td>Segue la curva del polpastrello.</td><td>Unghie corte, uomini, sport</td></tr>
-<tr><td>Ovale</td><td>Arrotondata e allungata.</td><td>Effetto elegante, dita corte</td></tr>
-<tr><td>Mandorla</td><td>Lati convergenti, punta arrotondata. Slancia molto il dito.</td><td>Dita corte o larghe</td></tr>
-<tr><td>Stiletto</td><td>A punta.</td><td>Look deciso; richiede lunghezza e struttura</td></tr>
-<tr><td>Ballerina / coffin</td><td>Rastremata con punta piatta.</td><td>Lunghezze medio-lunghe</td></tr>
-<tr><td>Lipstick</td><td>Taglio obliquo come un rossetto.</td><td>Look moda</td></tr>
+<tr><th>Forma</th><th>Com'è</th><th>Effetto sul dito</th><th>Resistenza</th><th>Consigliata per</th></tr>
+<tr><td>Quadrata</td><td>Lati paralleli, punta dritta, angoli netti</td><td>Accorcia e allarga visivamente</td><td>Buona al centro, angoli che si impigliano e si scheggiano</td><td>Dita lunghe e sottili</td></tr>
+<tr><td>Squoval</td><td>Quadrata con angoli smussati</td><td>Neutro</td><td>Tra le più resistenti</td><td>Quasi tutte; chi usa molto le mani</td></tr>
+<tr><td>Tonda</td><td>Segue la curva del polpastrello</td><td>Naturale</td><td>Molto pratica: pochi punti che si impigliano</td><td>Unghie corte, uomini, sport</td></tr>
+<tr><td>Ovale</td><td>Lati paralleli che si chiudono in un arco morbido</td><td>Allunga leggermente</td><td>Buona</td><td>Effetto elegante, dita corte</td></tr>
+<tr><td>Mandorla</td><td>Lati che convergono, punta arrotondata più stretta dell'ovale</td><td>Slancia molto</td><td>Media: la punta è più stretta</td><td>Dita corte o larghe</td></tr>
+<tr><td>Stiletto</td><td>Lati dritti che si incontrano a punta</td><td>Molto slanciante</td><td>La più delicata</td><td>Look deciso; richiede lunghezza e struttura</td></tr>
+<tr><td>Ballerina / coffin</td><td>Lati che si restringono, punta piatta</td><td>Slancia</td><td>Media; richiede lunghezza</td><td>Lunghezze medio-lunghe</td></tr>
+<tr><td>Lipstick</td><td>Punta tagliata in obliquo come un rossetto</td><td>Moda</td><td>Media</td><td>Look moda</td></tr>
+<tr><td>Edge</td><td>Base quadrata con una cresta centrale e angoli appuntiti</td><td>Moda, scultoreo</td><td>Delicata; tecnica avanzata</td><td>Gare, look moda</td></tr>
 </table>
+${B('info', 'Nomi che cambiano', 'Alcune forme hanno descrizioni diverse a seconda delle fonti (per esempio la lipstick o la differenza tra ovale e mandorla). Quando una cliente chiede una forma "di moda", fatti mostrare una foto.')}
+<h2>Come scegliere con la cliente</h2>
+${F('forme-scelta-dita.svg', 'La stessa forma su dita diverse: come cambia l\'effetto.')}
+<ol class="steps">
+<li><strong>Abitudini</strong>: lavora con le mani, usa la tastiera, fa sport? Più è attiva, più conviene squoval, tonda o ovale corta.</li>
+<li><strong>Dita</strong>: dita corte o larghe si slanciano con ovale e mandorla; dita lunghe e sottili stanno bene anche quadrate.</li>
+<li><strong>Cuticola</strong>: molte formatrici consigliano di riprendere la forma della cuticola nella punta (cuticola tonda → punta tonda/ovale; cuticola squadrata → squoval).</li>
+<li><strong>Letto ungueale</strong>: forme a punta (mandorla, stiletto, ballerina) richiedono lunghezza; su letti corti diventano fragili.</li>
+<li><strong>Prima volta</strong>: proponi una forma semplice; si può cambiare al refill.</li>
+</ol>
+${F('forme-resistenza.svg', 'Dalla più resistente alla più delicata.')}
 <h2>Esempio: ottenere una mandorla</h2>
 ${F('forme-limatura-step.svg', 'Dalla quadrata alla mandorla in quattro passaggi.')}
 ${B('tip', 'Scegli con la cliente', 'Considera lavoro, abitudini e forma del letto ungueale: una stiletto lunga non è adatta a chi lavora molto con le mani.')}
+${B('warn', 'Le forme si costruiscono, non solo si limano', 'Una forma riesce bene se la prepari già con la cartina e con il prodotto (lati dritti, apex al posto giusto). La lima rifinisce: se il prodotto è stato messo male, limando assottigli i punti sbagliati.')}
 `,
-          sources: ['https://www.my-personaltrainer.it/bellezza/qual-e-la-forma-di-unghie-che-slancia-le-dita-e-resiste-davvero-agli-urti-senza-spezzarsi.html']
+          sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
+            'https://www.makeup.com/your-nail-shape-guide',
+            'https://www.livethatglow.com/nail-shape-guide/',
+            'https://www.my-personaltrainer.it/bellezza/qual-e-la-forma-di-unghie-che-slancia-le-dita-e-resiste-davvero-agli-urti-senza-spezzarsi.html']
         },
         {
-          id: 'tecnica', videos: [{"id": "UGpcsTGXAUI", "title": "Sculpting Gel Nails – Advanced Filing", "channel": "Nail Career Education", "lang": "EN"}], title: 'Tecnica di limatura', min: 6,
+          id: 'forme-step', simple: 'Quasi tutte le forme partono da una quadrata: prima fai lati dritti e punta dritta, poi togli gli angoli quanto serve per arrivare alla forma voluta.', title: 'Limare le forme passo passo', min: 12,
           html: `
-${F('limatura-direzioni.svg', 'Direzioni di limatura.')}
+<p>Il metodo più semplice per una principiante è <strong>partire sempre da una base quadrata</strong>, con lati dritti e paralleli e la punta dritta. Da lì, togliendo gli angoli in modo diverso, si arriva a tutte le altre forme.</p>
+${B('tip', 'Prima di iniziare', 'Segna il centro della punta con un puntino (pennarello o una goccia di gel polimerizzata): è il riferimento per la simmetria. Lavora con lima 100/180 sul prodotto e rifinisci con 180.')}
+<h2>La base: la quadrata</h2>
+${F('quadrata-step.svg', 'La quadrata: punta dritta, lati paralleli, angoli netti.')}
 <ol class="steps">
-<li><strong>Lunghezza</strong>: accorcia con grana 100/180 tenendo la lima perpendicolare alla punta.</li>
-<li><strong>Lati</strong>: lima parallela al solco laterale, senza entrare nel solco.</li>
-<li><strong>Punta</strong>: dai lati verso il centro, sempre nella stessa direzione.</li>
-<li><strong>Superficie</strong>: movimenti lunghi dalla cuticola verso la punta, seguendo la curva; controlla l'apex di profilo.</li>
-<li><strong>Sotto il bordo libero</strong>: pulisci con la lima inclinata.</li>
-<li><strong>Rifinitura</strong>: buffer, polvere via, cleaner e top.</li>
+<li><strong>Punta</strong>: lima perfettamente dritta, perpendicolare all'asse del dito, guardando dall'alto.</li>
+<li><strong>Lati</strong>: lima tenuta piatta e parallela al solco laterale; i due lati devono essere paralleli tra loro e proseguire i solchi.</li>
+<li><strong>Arco inferiore</strong>: gira il dito di lato e controlla che la linea sotto l'allungamento sia dritta, senza "pance".</li>
+<li><strong>Angoli</strong>: netti e uguali.</li>
 </ol>
-${B('warn', 'Controlla da 4 punti di vista', 'Dall\'alto (simmetria), di profilo (apex), dal davanti (curva a C) e dal basso (pulizia del bordo).')}
+<h2>Squoval</h2>
+<ol class="steps">
+<li>Parti dalla quadrata.</li>
+<li>Inclina la lima <strong>sotto ogni angolo</strong> e con 2–3 passate leggere smussalo.</li>
+<li>Controlla che i due angoli abbiano la stessa curva.</li>
+</ol>
+<h2>Ovale e tonda</h2>
+${F('ovale-step.svg', 'Ovale: dai lati verso il centro, seguendo la curva della cuticola.')}
+<ol class="steps">
+<li>Parti dalla quadrata, con il puntino al centro.</li>
+<li>Tieni la lima a circa <strong>45°</strong> rispetto alla punta e lima <strong>da un lato verso il centro</strong>, in una sola direzione.</li>
+<li>Ripeti dall'altro lato con lo stesso numero di passate.</li>
+<li>Arrotonda la punta: per la <em>tonda</em> segui la curva del polpastrello e resta corta; per l'<em>ovale</em> lascia i lati paralleli più lunghi e chiudi con un arco morbido, specchio della cuticola.</li>
+</ol>
+<h2>Mandorla e stiletto</h2>
+${F('stiletto-step.svg', 'Mandorla e stiletto: lati che convergono sull\'asse.')}
+<ol class="steps">
+<li>Parti dalla quadrata e traccia l'asse centrale.</li>
+<li>Lima un lato in diagonale verso il puntino centrale, poi l'altro con <strong>lo stesso angolo</strong>.</li>
+<li><strong>Mandorla</strong>: arrotonda la punta, che resta più stretta di un'ovale.</li>
+<li><strong>Stiletto</strong>: continua finché i lati si incontrano a punta; tieni i lati dritti, non "a pancia". Gira il dito di lato e mantieni dritto anche l'arco inferiore.</li>
+</ol>
+<h2>Ballerina (coffin)</h2>
+${F('ballerina-step.svg', 'Ballerina: lati che si restringono e punta dritta.')}
+<ol class="steps">
+<li>Parti da una quadrata lunga.</li>
+<li>Lima i due lati in diagonale verso il centro, come per una stiletto, ma <strong>fermati prima</strong>.</li>
+<li>Taglia la punta dritta, perpendicolare all'asse, con lima tenuta a 90°.</li>
+<li>Controlla: lati uguali, punta centrata, angoli netti e uguali.</li>
+</ol>
+${B('info', 'La forma dipende anche dal profilo', 'Nelle forme a punta (mandorla, stiletto, ballerina) l\'arco superiore deve scendere dritto dall\'apex alla punta: limare solo dall\'alto senza guardare il profilo crea punte deboli.')}
+<h2>Errori frequenti</h2>
+<table>
+<tr><th>Errore</th><th>Causa</th><th>Correzione</th></tr>
+<tr><td>Punta spostata da un lato</td><td>Un lato limato più dell'altro</td><td>Usa il puntino al centro; conta le passate</td></tr>
+<tr><td>Lati "a pancia"</td><td>Lima inclinata o che ruota</td><td>Lima piatta, polso fermo</td></tr>
+<tr><td>Forme diverse sulle 10 dita</td><td>Nessun confronto</td><td>Allinea le dita e guarda la mano intera ogni 2–3 unghie</td></tr>
+<tr><td>Stiletto che si spezza</td><td>Punta troppo sottile, arco inferiore limato</td><td>Mantieni spessore verso la punta; costruisci la forma già con il prodotto</td></tr>
+</table>
 `,
-          sources: []
+          sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
+            'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians',
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-filing-different-nail-shapes/']
+        },
+        {
+          id: 'tecnica', videos: [{"id": "UGpcsTGXAUI", "title": "Sculpting Gel Nails – Advanced Filing", "channel": "Nail Career Education", "lang": "EN"}], simple: 'Lima sempre nello stesso ordine: lunghezza, lati, punta, superficie, sotto il bordo. Movimenti leggeri, in una direzione, senza segare.', title: 'Tecnica di limatura', min: 11,
+          html: `
+<p>La limatura trasforma una costruzione "grezza" in un'unghia pulita e simmetrica. Ma la lima non fa miracoli: se la struttura è sbagliata, limando si assottigliano i punti deboli. Lavora con <strong>ordine</strong>, <strong>leggerezza</strong> e controlla spesso.</p>
+<h2>Come tenere lima e dito</h2>
+${F('lima-presa.svg', 'Presa della lima e del dito della cliente.')}
+<ul>
+<li><strong>La lima</strong>: tienila con pollice da un lato e due-tre dita dall'altro, senza stringere; il polso resta morbido. Il movimento parte dal braccio, non solo dalle dita.</li>
+<li><strong>Il dito della cliente</strong>: tienilo tra pollice e indice ai lati, sotto la prima falange, senza toccare la superficie dell'unghia. Con il pollice puoi tirare leggermente indietro la pelle del solco laterale per vedere meglio dove limi.</li>
+<li><strong>Il supporto</strong>: il polso della cliente appoggia su un cuscinetto, così né tu né lei sostenete il peso della mano.</li>
+</ul>
+<h2>Quale lima per cosa</h2>
+<table>
+<tr><th>Lima</th><th>Uso</th></tr>
+<tr><td>100/180</td><td>Accorciare e dare forma al <strong>prodotto</strong></td></tr>
+<tr><td>180</td><td>Rifinire forma e superficie, "lucidare" la struttura</td></tr>
+<tr><td>180/240 – buffer</td><td>Levigare prima del top; lavorare vicino alla pelle</td></tr>
+<tr><td>Mai</td><td>Grane 80–100 sull'unghia naturale</td></tr>
+</table>
+<h2>La sequenza</h2>
+${F('limatura-sequenza.svg', 'La sequenza di limatura in sei passaggi.')}
+<ol class="steps">
+<li><strong>Lunghezza</strong>: accorcia con 100/180 tenendo la lima perpendicolare alla punta. Porta tutte le unghie alla lunghezza decisa prima di fare la forma. <em>Perché</em>: la forma si decide sulla lunghezza finale.</li>
+<li><strong>Lati</strong>: lima piatta e parallela al solco laterale, dalla punta verso la base, senza entrare nel solco. I due lati devono essere dritti, paralleli e uguali.</li>
+<li><strong>Punta</strong>: forma la punta (vedi "Limare le forme passo passo"), dai lati verso il centro, sempre nella stessa direzione.</li>
+<li><strong>Superficie</strong>: movimenti lunghi e leggeri dalla zona cuticolare verso la punta, seguendo la curva come se "rotolassi" la lima da un lato all'altro. Rendi sottile la zona 3, mantieni l'apex, assottiglia la zona 1. Controlla di profilo.</li>
+<li><strong>Zona cuticolare</strong>: con la parte stretta della lima o un buffer, sfuma il prodotto fino a renderlo invisibile, senza toccare la pelle.</li>
+<li><strong>Sotto il bordo libero</strong>: pulisci con la lima inclinata, togliendo sbavature e residui.</li>
+<li><strong>Rifinitura</strong>: buffer, polvere via con pennello, cleaner e top.</li>
+</ol>
+${F('limatura-direzioni.svg', 'Direzioni di limatura: lati, punta, superficie.')}
+<h2>Perché "in una direzione"</h2>
+<ul>
+<li>Il movimento a "sega" (avanti e indietro veloce) <strong>scalda</strong> per attrito e sul bordo naturale tende a sfibrare e aprire gli strati.</li>
+<li>Una direzione sola dà <strong>più controllo</strong>: sai sempre quanto stai togliendo e da che parte.</li>
+<li>Sul prodotto artificiale si possono usare movimenti avanti-indietro controllati, ma sempre <strong>leggeri</strong> e con la lima in movimento.</li>
+</ul>
+${F('limatura-arco-profilo.svg', 'Profilo: arco superiore dall\'apex alla punta, arco inferiore dritto.')}
+<h2>Errori frequenti</h2>
+<table>
+<tr><th>Errore</th><th>Conseguenza</th><th>Come evitarlo</th></tr>
+<tr><td>Limare dentro il solco</td><td>Pelle tagliata, dolore, infezioni</td><td>Tira indietro la pelle con il pollice e tieni la lima parallela</td></tr>
+<tr><td>Lima inclinata sui lati</td><td>Lati obliqui, unghia che sembra larga o storta</td><td>Lima piatta; controlla dal davanti</td></tr>
+<tr><td>Limare troppo l'apex</td><td>Unghia piatta: si rompe</td><td>Controlla il profilo ogni poche passate</td></tr>
+<tr><td>Premere troppo</td><td>Calore, fastidio, solchi</td><td>Lascia lavorare la grana; cambia lima se è consumata</td></tr>
+<tr><td>Dimenticare sotto il bordo</td><td>Sbavature visibili e taglienti</td><td>Ultimo controllo dal basso</td></tr>
+</table>
+${B('warn', 'Controlla da 4 punti di vista', 'Dall\'alto (simmetria), di profilo (apex), dal davanti (curva a C) e dal basso (pulizia del bordo). Vedi la lezione "Controllo finale e simmetria".')}
+${B('info', 'Postura', 'Schiena appoggiata, spalle rilassate, piano di lavoro all\'altezza dei gomiti e luce buona: ogni ora alzati, muovi polsi e collo. La limatura manuale è un movimento ripetitivo: proteggi le tue mani.')}
+`,
+          sources: ['https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-file-different-nail-shapes',
+            'https://www.homeofnailart.com/blogs/knowledge-hub/mastering-the-art-of-nail-filing-a-comprehensive-guide-for-professional-nail-technicians',
+            'https://open-exam-prep.com/study-guides/pa-nail-technician/manicure-pedicure-foundations/manicure-pedicure-procedures',
+            'https://www.katiebarnesacademy.com/blogs/allergies-and-nail-tech-protection/why-how-to-take-care-of-yourself-at-the-nail-desk']
+        },
+        {
+          id: 'controllo-simmetria', simple: 'Prima di mettere il top guarda ogni unghia da quattro lati e poi tutta la mano insieme: le unghie devono sembrare "sorelle".', title: 'Controllo finale e simmetria', min: 8,
+          html: `
+<p>Il controllo finale è ciò che separa un lavoro "fatto" da un lavoro "ben fatto". È lo stesso controllo che fanno i giudici nelle gare: <strong>struttura, simmetria, pulizia, uniformità</strong>.</p>
+<h2>I quattro punti di vista</h2>
+${F('controllo-4-viste.svg', 'Le quattro viste del controllo finale.')}
+<table>
+<tr><th>Vista</th><th>Come guardi</th><th>Che cosa controlli</th></tr>
+<tr><td><strong>Dall'alto</strong></td><td>Dito dritto, verso di te</td><td>Lati dritti e paralleli, forma simmetrica, punta centrata, zona cuticolare pulita</td></tr>
+<tr><td><strong>Di profilo</strong></td><td>Dito girato di lato, all'altezza degli occhi</td><td>Apex sopra il punto di stress, nessuna gobba alla base, arco inferiore dritto</td></tr>
+<tr><td><strong>Dal davanti</strong></td><td>Punta dell'unghia verso i tuoi occhi</td><td>Curva a C regolare e simmetrica, spessore uguale ai lati</td></tr>
+<tr><td><strong>Dal basso</strong></td><td>Palmo verso l'alto</td><td>Bordo pulito, niente sbavature, spessore uniforme, lati dritti</td></tr>
+</table>
+<h2>La simmetria con l'asse</h2>
+${F('simmetria-asse.svg', 'L\'asse del dito: punta centrata e lati uguali.')}
+<ol class="steps">
+<li><strong>Immagina una linea</strong> che parte dal centro della cuticola e prosegue lungo il dito.</li>
+<li><strong>La punta</strong> (o il centro della punta) deve cadere su quella linea.</li>
+<li><strong>I due lati</strong> devono essere a uguale distanza dalla linea, come immagini allo specchio.</li>
+<li><strong>Se un lato è più largo</strong>, lima solo quel lato, poche passate alla volta, e ricontrolla.</li>
+</ol>
+<h2>Uniformità della mano</h2>
+${F('mano-uniformita.svg', 'Le dieci unghie devono avere lunghezza, forma e curva coerenti.')}
+<ul>
+<li><strong>Lunghezza</strong>: l'aspetto deve essere uniforme; il pollice può essere un po' più lungo, il mignolo un po' più corto.</li>
+<li><strong>Forma</strong>: la stessa su tutte le dita, con la stessa "apertura" degli angoli o della punta.</li>
+<li><strong>Curva a C</strong>: simile su tutte, guardando le dita affiancate dalla punta.</li>
+<li><strong>Smile line</strong> (se french): stessa altezza e profondità.</li>
+</ul>
+${B('tip', 'Il trucco del pugno', 'Chiedi alla cliente di chiudere la mano a pugno con le unghie verso di te: vedi tutte le punte allineate e scopri subito curve e lunghezze diverse.')}
+<h2>Checklist prima del top</h2>
+<ol class="steps">
+<li>Nessuna polvere nei solchi e sotto il bordo.</li>
+<li>Zona cuticolare sfumata, nessun gradino al tatto.</li>
+<li>Nessun prodotto sulla pelle.</li>
+<li>Superficie liscia: passa il polpastrello, non devi sentire righe.</li>
+<li>Le quattro viste sono corrette su tutte le dita.</li>
+</ol>
+${B('warn', 'Non correggere con il top', 'Il top è sottile e lucido: mette in risalto i difetti invece di nasconderli. Correggi con la lima prima.')}
+`,
+          sources: ['https://open-exam-prep.com/study-guides/ks-nail-technician/nail-enhancements/nail-sculpting-forms',
+            'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/',
+            'https://www.scratchmagazine.co.uk/wp-content/uploads/2026/01/Nailympia-2026-Scoresheet_French-Twist-3-shape-challenge.pdf']
         }
       ]
     },
@@ -1132,11 +1773,11 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
       steps: ['Lima i lati con la lima parallela al solco.', 'Lima la punta dai lati verso il centro.', 'Leviga la superficie con movimenti lunghi dalla base alla punta.', 'Rifinisci sotto il bordo libero.'],
       checks: ['Non ho mai limato dentro il solco', 'Ho usato movimenti in una sola direzione', 'La superficie è liscia al tatto', 'Il bordo è pulito sotto'],
       mistakes: ['Inclinare la lima creando lati obliqui', 'Premere troppo'] },
-    { id: 'es-prep', imgs: ['cuticola.svg'], module: 'preparazione', level: 'base', title: 'Preparazione completa su 10 dita', time: '40 min', img: 'preparazione.svg', caption: 'I sei passaggi della preparazione.',
+    { id: 'es-prep', module: 'preparazione', level: 'base', title: 'Preparazione completa su 10 dita', time: '40 min', img: 'prep-sequenza-perche.svg', caption: 'La sequenza della preparazione, ogni passaggio con il suo perché.', imgs: ['cuticola-step.svg', 'prep-errori.svg'],
       goal: 'Eseguire la preparazione in modo ordinato e ripetibile.',
       materials: ['Mano da allenamento o modella', 'Spingicuticole', 'Lima 180/240', 'Pennello per polveri', 'Disidratante e primer'],
-      steps: ['Segui i 6 passaggi su ogni dito, nello stesso ordine.', 'Cronometra il tempo totale.', 'Controlla con una luce radente che non resti pellicina sulla lamina.', 'Ripeti cercando di ridurre il tempo senza saltare passaggi.'],
-      checks: ['Nessun residuo di pterigio', 'Lamina opaca in modo uniforme ma non assottigliata', 'Primer solo sulla lamina, mai sulla pelle', 'Tempo sotto i 30 minuti'],
+      steps: ['Segui la sequenza su ogni dito, sempre nello stesso ordine.', 'Cronometra il tempo totale.', 'Controlla con una luce radente che non resti pellicina sulla lamina.', 'Ripeti cercando di ridurre il tempo senza saltare passaggi.'],
+      checks: ['Nessun residuo di cuticola sulla lamina', 'Lamina opaca in modo uniforme ma non assottigliata', 'Primer solo sulla lamina, mai sulla pelle', 'Tempo sotto i 30 minuti'],
       mistakes: ['Toccare la lamina con le dita dopo il disidratante', 'Troppo primer'] },
     { id: 'es-perla', imgs: ['tut-acrilico.svg'], module: 'sistemi', level: 'inter', title: 'Allenati sulla perla di acrilico', time: '30 min', img: 'perla-acrilico.svg', caption: 'Bagnata, media, asciutta.',
       goal: 'Riconoscere e riprodurre il rapporto liquido/polvere corretto.',
@@ -1156,11 +1797,11 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
       steps: ['Posiziona la cartina su ogni dito.', 'Controlla dall\'alto l\'asse e di lato il contatto con il bordo libero.', 'Togli e riposiziona finché è perfetta.', 'Fotografa le dieci cartine e confrontale.'],
       checks: ['Nessuno spazio sotto il bordo libero', 'Asse allineato al dito', 'Alette chiuse sotto il polpastrello', 'Curva della cartina coerente con l\'unghia'],
       mistakes: ['Cartina troppo bassa', 'Cartina ruotata verso il pollice'] },
-    { id: 'es-apex', imgs: ['tut-gel-cartina.svg'], module: 'cartina', level: 'inter', title: 'Costruisci l\'apex in gel', time: '60 min', img: 'zone-costruzione.svg', caption: 'Zona 3 sottile, zona 2 struttura, zona 1 sottile.',
+    { id: 'es-apex', module: 'cartina', level: 'inter', title: 'Costruisci l\'apex in gel', time: '60 min', img: 'zone-costruzione.svg', caption: 'Zona 3 sottile, zona 2 struttura, zona 1 sottile.', imgs: ['tut-gel-cartina.svg', 'zone-spessori-sezione.svg'],
       goal: 'Costruire una struttura con apex sopra il punto di stress.',
       materials: ['Tip o cartina su mano da allenamento', 'Gel costruttore', 'Pennello per gel', 'Lampada'],
       steps: ['Stendi una base sottile e polimerizza.', 'Metti una perla di gel in zona 2 e accompagnala verso le zone 1 e 3.', 'Capovolgi la mano qualche secondo per far scendere il gel verso l\'apex, poi polimerizza.', 'Lima e controlla di profilo.'],
-      checks: ['Apex sopra il punto di stress', 'Zona cuticolare sottile e a 1,5 mm dalla pelle', 'Punta sottile e uniforme', 'Spessore uguale da lato a lato'],
+      checks: ['Apex sopra il punto di stress', 'Zona cuticolare sottile e a circa 1 mm dalla pelle', 'Punta sottile e uniforme', 'Spessore uguale da lato a lato'],
       mistakes: ['Gobba alla cuticola', 'Unghia piatta senza struttura'] },
     { id: 'es-curva-c', module: 'cartina', level: 'avanz', title: 'Curva a C con pinching', time: '45 min', img: 'curva-c.svg', caption: 'Curve bassa, media, alta.',
       goal: 'Ottenere una curva a C regolare senza stressare l\'unghia.',
@@ -1215,7 +1856,31 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
       materials: ['Scheda cliente stampata', 'Una persona che faccia la cliente'],
       steps: ['Chiedi dati, consenso privacy e informazioni di salute.', 'Valuta l\'unghia e le abitudini.', 'Proponi sistema, forma e lunghezza spiegando il perché.', 'Spiega i consigli post-trattamento e fissa il refill.'],
       checks: ['Ho chiesto di allergie e farmaci', 'Ho valutato le controindicazioni', 'Ho motivato la scelta del sistema', 'Ho dato i consigli post-trattamento'],
-      mistakes: ['Saltare le domande sulla salute', 'Accettare una lunghezza non adatta alle abitudini della cliente'] }
+      mistakes: ['Saltare le domande sulla salute', 'Accettare una lunghezza non adatta alle abitudini della cliente'] },
+    { id: 'es-luce-radente', module: 'preparazione', level: 'base', title: 'Il controllo con la luce radente', time: '25 min', img: 'cuticola-step.svg', caption: 'Arretra, solleva, taglia solo ciò che pende, controlla.', imgs: ['opacizzazione-controllo.svg', 'pterigio-vero.svg'],
+      goal: 'Imparare a vedere pellicine residue e zone lucide prima di costruire.',
+      materials: ['Mano da allenamento con unghie naturali o modella', 'Spingicuticole e curette sterilizzati', 'Lima 180/240 nuova', 'Lampada da tavolo orientabile', 'Pennello per polveri', 'Pennarello lavabile'],
+      steps: ['Lavora la zona cuticolare su 5 dita seguendo i 4 passaggi.', 'Opacizza solo metà di ogni unghia (sinistra) e lascia l\'altra lucida.', 'Inclina la lampada a luce radente e confronta le due metà: impara a riconoscere il riflesso.', 'Segna con il pennarello ogni residuo di pellicina che vedi, poi eliminalo e ricontrolla.', 'Completa l\'opacizzazione e ricontrolla tutte le unghie.'],
+      checks: ['Distinguo a colpo d\'occhio lucido e opaco', 'Nessun residuo nei solchi laterali', 'Nessuna zona più sottile o rosata', 'Non ho mai tagliato pelle viva'],
+      mistakes: ['Controllare solo dall\'alto, con luce diretta', 'Opacizzare insistendo al centro'] },
+    { id: 'es-tip-misura', module: 'tip', level: 'base', title: 'Misura e adatta i tip per 10 dita', time: '30 min', img: 'tip-anatomia.svg', caption: 'Incavo, punto d\'arresto, zona di contatto.', imgs: ['tip-misura-errori.svg', 'tip-adattare.svg'],
+      goal: 'Scegliere la misura giusta per ogni dito e adattare lati e incavo senza colla.',
+      materials: ['Mano da allenamento o la tua mano', 'Scatola di tip con misure 0–9', 'Lima 180', 'Forbicine o lima per accorciare l\'incavo', 'Foglio e penna'],
+      steps: ['Prova a secco ogni misura sul pollice partendo dalla più larga e scendi finché il tip copre esattamente da solco a solco.', 'Ripeti per tutte le 10 dita e annota i numeri su un foglio (mano destra e sinistra).', 'Su almeno 3 dita prendi la misura più grande e lima i lati del tip finché combacia.', 'Accorcia gli incavi che superano metà unghia.', 'Disponi i tip in ordine sul tavolo come se dovessi incollarli.'],
+      checks: ['Ogni tip copre da solco a solco senza toccare la pelle', 'La curva del tip segue quella dell\'unghia (vista frontale)', 'Nessun incavo oltre metà lamina', 'Ho annotato le misure delle due mani'],
+      mistakes: ['Scegliere un tip stretto e allargarlo a forza', 'Limare la pelle invece del tip'] },
+    { id: 'es-cartina-adattata', module: 'cartina', level: 'inter', title: 'Cartine su misura', time: '30 min', img: 'cartina-adattata.svg', caption: 'Unghia corta, larga, iponichio lungo, unghia curva.', imgs: ['cartina-livello.svg', 'cartina-ritaglio-step.svg'],
+      goal: 'Adattare la cartina a unghie diverse mantenendola a filo, in asse e in livello.',
+      materials: ['Cartine adesive', 'Forbicine', 'Matita', 'Mano da allenamento con tip tagliati a lunghezze diverse', 'Specchietto o telefono per foto di profilo'],
+      steps: ['Prepara 4 dita della mano da allenamento: un bordo cortissimo e dritto, uno largo e quadrato, uno molto curvo, uno normale.', 'Adatta una cartina per ciascuno seguendo la tavola.', 'Fotografa ogni dito dall\'alto, di profilo e dal davanti.', 'Confronta le foto con la tavola del livello e correggi spostando le alette.'],
+      checks: ['Nessuno spazio tra bordo e cartina', 'Linea centrale in asse con il dito', 'Di profilo la cartina prosegue la lamina', 'Alette chiuse sotto il polpastrello e sui lati'],
+      mistakes: ['Ritagliare troppo in una volta sola', 'Staccare tutta la cartina invece di correggere con le alette'] },
+    { id: 'es-simmetria', module: 'limatura', level: 'inter', title: 'Controllo da 4 viste su una mano intera', time: '40 min', img: 'controllo-4-viste.svg', caption: 'Alto, profilo, fronte, sotto.', imgs: ['simmetria-asse.svg', 'mano-uniformita.svg'],
+      goal: 'Ottenere 5 unghie uguali tra loro e simmetriche, controllandole da quattro punti di vista.',
+      materials: ['Mano da allenamento con 5 tip o ricostruzioni', 'Lime 100/180 e 180', 'Buffer', 'Pennarello lavabile', 'Telefono per foto'],
+      steps: ['Segna con il pennarello l\'asse e il centro della punta di ogni unghia.', 'Porta tutte le unghie alla stessa lunghezza, poi lima la forma ovale seguendo la sequenza.', 'Fotografa ogni unghia dall\'alto, di profilo, dal davanti e dal basso.', 'Fotografa la mano intera e la mano "a pugno" vista dalle punte.', 'Correggi i difetti trovati e rifai le foto.'],
+      checks: ['Punte centrate sull\'asse', 'Lati dritti e paralleli', 'Arco inferiore dritto su tutte', 'Curve a C simili guardando le punte affiancate'],
+      mistakes: ['Correggere un lato senza ricontrollare l\'altro', 'Guardare solo dall\'alto'] }
   ];
 
   /* ==================================================================== QUIZ
@@ -1288,32 +1953,56 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
       { q: 'Perché la punta della fresa deve restare in movimento?', o: ['Per lucidare meglio', 'Per evitare calore da attrito e solchi', 'Per consumare meno', 'Non è necessario'], a: 1, e: 'Fermarsi in un punto scalda e scava.' }
     ],
     preparazione: [
-      { q: 'Qual è la prima causa di sollevamento?', o: ['La lampada', 'Una preparazione non accurata', 'Il colore', 'La forma'], a: 1, e: 'Pterigio, sebo e umidità sono i nemici dell\'adesione.' },
+      { q: 'Qual è la prima causa di sollevamento?', o: ['La lampada', 'Una preparazione non accurata', 'Il colore', 'La forma'], a: 1, e: 'Pellicine residue (cuticola), polvere, sebo e umidità sono i nemici dell\'adesione.' },
       { q: 'L\'opacizzazione dell\'unghia naturale serve a…', o: ['Assottigliarla', 'Togliere la lucidità', 'Accorciarla', 'Sbiancarla'], a: 1, e: 'Si toglie solo la lucidità, mai spessore.' },
       { q: 'L\'ordine corretto è…', o: ['Primer → disidratante', 'Disidratante → primer', 'Solo primer', 'Top → primer'], a: 1, e: 'Prima si disidrata, poi si applica il primer.' },
       { q: 'Il primer acido è indicato soprattutto per…', o: ['Semipermanente', 'Acrilico e unghie difficili', 'Top coat', 'Rimozione'], a: 1, e: 'Va usato in quantità minima e solo sulla lamina.' },
-      { q: 'Dopo il disidratante…', o: ['Tocco la lamina per controllare', 'Non tocco più la lamina con le dita', 'Lavo le mani della cliente', 'Applico olio'], a: 1, e: 'Il sebo delle dita riduce l\'adesione.' }
+      { q: 'Dopo il disidratante…', o: ['Tocco la lamina per controllare', 'Non tocco più la lamina con le dita', 'Lavo le mani della cliente', 'Applico olio'], a: 1, e: 'Il sebo delle dita riduce l\'adesione.' },
+      { q: 'Il vero pterigio è…', o: ['La pellicina morta da togliere sempre', 'Una condizione anomala in cui la pelle si salda alla lamina: non si tocca', 'Il bordo libero', 'Un tipo di primer'], a: 1, e: 'Cuticola e pterigio non sono la stessa cosa: il vero pterigio va indirizzato al medico.' },
+      { q: 'Con quale angolo tieni lo spingicuticole per arretrare l\'eponichio?', o: ['Dritto, a 90° sulla lamina', 'Quasi piatto, circa 30–45°', 'Capovolto', 'Non importa'], a: 1, e: 'Uno strumento dritto graffia la lamina e preme sulla matrice.' },
+      { q: 'Quale grana NON si usa mai sulla lamina naturale?', o: ['240', '180', '100', 'Buffer fine'], a: 2, e: 'Le grane 80–100 servono solo per il prodotto artificiale.' },
+      { q: 'Come deve essere il pennello del primer prima di applicarlo?', o: ['Ben carico', 'Quasi asciutto', 'Bagnato di acetone', 'Pulito con olio'], a: 1, e: 'L\'eccesso di primer riduce l\'adesione e rischia di toccare la pelle.' },
+      { q: 'Il primer senza acido si applica…', o: ['Su lamina e tip', 'Solo sulla lamina naturale, ad almeno 1 mm dalla pelle', 'Sulla pelle intorno per proteggerla', 'Dopo la base'], a: 1, e: 'Mai su tip e pelle; poi si parte con base o prodotto.' },
+      { q: 'Il primer acido è pronto per il prodotto quando…', o: ['È ancora bagnato e lucido', 'È asciutto e appare bianco gessoso', 'Dopo un giorno', 'Dopo il top'], a: 1, e: 'Si lavora sul primer acido asciutto.' }
     ],
     tip: [
       { q: 'Come scegli la misura del tip?', o: ['Il più piccolo possibile', 'Deve coprire da solco a solco', 'Sempre la misura 5', 'In base al colore'], a: 1, e: 'Se sei tra due misure scegli la più grande e lima i lati.' },
       { q: 'Con quale angolo si appoggia il tip?', o: ['90°', 'Circa 45°, poi si abbassa', '0°, piatto subito', '180°'], a: 1, e: 'Abbassandolo lentamente l\'aria esce e non si formano bolle.' },
       { q: 'Durante il blending del tip…', o: ['Limo anche l\'unghia naturale', 'Fondo solo la linea di contatto del tip', 'Uso la grana 80 sulla lamina', 'Uso acetone'], a: 1, e: 'Non si lima l\'unghia naturale.' },
-      { q: 'I tip "a contatto"…', o: ['Hanno un incavo da fondere', 'Non hanno incavo e non vanno fusi', 'Si applicano senza colla', 'Sono solo per i piedi'], a: 1, e: 'Non c\'è zona d\'incavo da fondere.' }
+      { q: 'I tip "a contatto"…', o: ['Hanno un incavo da fondere', 'Non hanno incavo e non vanno fusi', 'Si applicano senza colla', 'Sono solo per i piedi'], a: 1, e: 'Non c\'è zona d\'incavo da fondere.' },
+      { q: 'Quanto può coprire al massimo l\'incavo del tip?', o: ['Tutta la lamina fino alla cuticola', 'Circa metà della lamina', 'Solo 1 mm', 'Non importa'], a: 1, e: 'Se l\'incavo è più lungo si accorcia prima di incollare.' },
+      { q: 'Per quanto tempo tieni premuto il tip dopo averlo abbassato?', o: ['Non serve tenerlo', 'Circa 5–10 secondi, fermo', '2 minuti', 'Finché la cliente sente caldo'], a: 1, e: 'Muoverlo mentre la colla indurisce indebolisce il legame.' },
+      { q: 'Quando si taglia il tip?', o: ['Prima di incollarlo, sempre', 'Quando la colla è indurita', 'Mentre la colla è ancora liquida', 'Dopo il top'], a: 1, e: 'A colla fresca il tip si sposta e il legame si rompe.' },
+      { q: 'Come tieni la lima durante la fusione?', o: ['Di taglio, premendo', 'Piatta, solo sulla plastica, in movimento', 'Ferma su un punto', 'Sulla pelle'], a: 1, e: 'Ferma o di taglio crea solchi; sulla lamina la assottiglia.' },
+      { q: 'Dove applichi il primer in una ricostruzione su tip?', o: ['Su tutto il tip', 'Solo sulla lamina naturale', 'Sulla pelle', 'Non si usa mai'], a: 1, e: 'Sul tip non serve e può rovinare la plastica.' },
+      { q: 'Che cosa indica una macchia chiara sotto l\'incavo dopo l\'incollaggio?', o: ['Una bolla d\'aria: il tip va riapplicato', 'Che la colla è perfetta', 'Una micosi', 'Il punto di stress'], a: 0, e: 'Una bolla diventa un sollevamento.' }
     ],
     cartina: [
       { q: 'Dove va costruito l\'apex?', o: ['Alla cuticola', 'Sopra il punto di stress', 'Sulla punta', 'Ovunque'], a: 1, e: 'In zona 2, sopra il punto di stress.' },
-      { q: 'Quanto margine lasci dalla pelle in zona cuticolare?', o: ['Nessuno', 'Circa 1,5 mm', '5 mm', '1 cm'], a: 1, e: 'Circa 1,5 mm evita contatto con la pelle e sollevamenti.' },
+      { q: 'Quanto margine lasci dalla pelle in zona cuticolare?', o: ['Nessuno', 'Circa 1 mm', '5 mm', '1 cm'], a: 1, e: 'Circa 1 mm (le fonti indicano 0,5–1,5 mm): il prodotto non deve mai toccare la pelle.' },
       { q: 'Cosa succede se la cartina lascia uno spazio sotto il bordo libero?', o: ['Niente', 'Il prodotto cola sotto e crea sollevamenti', 'L\'unghia è più robusta', 'Si polimerizza prima'], a: 1, e: 'La cartina va a filo del bordo libero.' },
       { q: 'Una ricostruzione piatta, senza apex…', o: ['È più naturale e resistente', 'Si rompe facilmente', 'Non si solleva mai', 'Dura di più'], a: 1, e: 'Senza struttura non regge la lunghezza.' },
       { q: 'Quando si pizzica il gel per la curva a C?', o: ['Prima di stenderlo', 'Dopo una breve polimerizzazione (flash cure)', 'Dopo il top', 'Mai'], a: 1, e: 'Per l\'acrilico invece mentre non è del tutto indurito.' },
-      { q: 'La zona 3 deve essere…', o: ['La più spessa', 'Sottilissima', 'Bianca', 'Lucida'], a: 1, e: 'Sottile in zona cuticolare, struttura in zona 2.' }
+      { q: 'La zona 3 deve essere…', o: ['La più spessa', 'Sottilissima', 'Bianca', 'Lucida'], a: 1, e: 'Sottile in zona cuticolare, struttura in zona 2.' },
+      { q: 'Di profilo, la cartina corretta…', o: ['È inclinata verso il basso', 'Prosegue in linea la lamina naturale', 'È inclinata verso l\'alto', 'È verticale'], a: 1, e: 'Verso il basso l\'allungamento cade, verso l\'alto si ottiene uno ski-jump.' },
+      { q: 'Le alette della cartina si fissano…', o: ['Avvolgendo tutta la nocca', 'Unendole sotto il polpastrello e sui lati del dito', 'Sopra l\'unghia', 'Non si fissano'], a: 1, e: 'Sulla nocca si staccano quando il dito si piega.' },
+      { q: 'Una cliente con iponichio lungo sente dolore con la cartina. Cosa fai?', o: ['Spingo di più', 'Ritaglio un incavo più profondo nel punto di contatto', 'Continuo comunque', 'Uso un primer acido'], a: 1, e: 'La cartina deve toccare il bordo libero senza premere sulla pelle viva.' },
+      { q: 'Quanto è spesso, indicativamente, il bordo libero finito?', o: ['Come un foglio di carta', 'Circa 1–1,5 mm, come una carta di credito', '5 mm', 'Non conta'], a: 1, e: 'Più spesso si impiglia, più sottile si scheggia.' },
+      { q: 'Una perla di acrilico media ha un rapporto liquido/polvere di circa…', o: ['1 : 1', '1,5 : 1', '3 : 1', '1 : 3'], a: 1, e: '1 : 1 è asciutta, 2 : 1 bagnata; il valore esatto dipende dal sistema.' },
+      { q: 'Per un risultato equilibrato il bordo libero non dovrebbe superare circa…', o: ['Il doppio del letto ungueale', 'Metà della lunghezza del letto ungueale', '1 mm', 'La lunghezza del dito'], a: 1, e: 'Più lunghezza significa più leva sul punto di stress.' }
     ],
     limatura: [
       { q: 'Quale forma è considerata tra le più resistenti?', o: ['Stiletto', 'Squoval', 'Lipstick', 'Ballerina'], a: 1, e: 'Gli angoli smussati riducono il rischio di rotture.' },
       { q: 'Quale forma slancia di più il dito?', o: ['Quadrata', 'Mandorla', 'Tonda', 'Squoval'], a: 1, e: 'I lati convergenti allungano visivamente il dito.' },
       { q: 'Come si limano i lati?', o: ['Con la lima parallela al solco laterale', 'Entrando nel solco', 'Con la grana 80', 'In diagonale'], a: 0, e: 'Senza entrare nel solco.' },
       { q: 'Il movimento corretto della lima è…', o: ['Avanti e indietro veloce', 'In una sola direzione', 'Circolare con forza', 'Casuale'], a: 1, e: 'Il movimento a "sega" scalda e sfibra.' },
-      { q: 'Da quanti punti di vista controlli la ricostruzione?', o: ['Solo dall\'alto', 'Alto, profilo, fronte e sotto', 'Solo di profilo', 'Non serve controllare'], a: 1, e: 'Simmetria, apex, curva a C e pulizia del bordo.' }
+      { q: 'Da quanti punti di vista controlli la ricostruzione?', o: ['Solo dall\'alto', 'Alto, profilo, fronte e sotto', 'Solo di profilo', 'Non serve controllare'], a: 1, e: 'Simmetria, apex, curva a C e pulizia del bordo.' },
+      { q: 'In quale ordine si lima una ricostruzione?', o: ['Superficie, punta, lunghezza, lati', 'Lunghezza, lati, punta, superficie, sotto il bordo', 'Solo superficie', 'Punta, cuticola, lunghezza'], a: 1, e: 'La forma si decide sulla lunghezza finale; la superficie si rifinisce dopo.' },
+      { q: 'Da dove si parte per ottenere quasi tutte le forme?', o: ['Da una stiletto', 'Da una base quadrata con lati paralleli', 'Da una forma tonda', 'Dalla lipstick'], a: 1, e: 'Togliendo gli angoli in modo diverso si arriva alle altre forme.' },
+      { q: 'Come si tiene il dito della cliente durante la limatura?', o: ['Con un dito appoggiato sull\'unghia', 'Ai lati della prima falange, senza toccare la superficie', 'Per la punta dell\'unghia', 'Non si tiene'], a: 1, e: 'Toccare la superficie lascia sebo e impedisce di vedere.' },
+      { q: 'Per la ballerina (coffin)…', o: ['I lati si allargano verso la punta', 'I lati si restringono e la punta è dritta', 'La punta è tonda', 'È una quadrata corta'], a: 1, e: 'Si restringe come una stiletto ma ci si ferma prima e si taglia la punta dritta.' },
+      { q: 'Perché si segna un puntino al centro della punta prima di limare?', o: ['Per decorare', 'Come riferimento per la simmetria', 'Per il primer', 'Per misurare la grana'], a: 1, e: 'La punta deve cadere sull\'asse del dito.' },
+      { q: 'Il top può correggere piccoli difetti di limatura?', o: ['Sì, li nasconde', 'No: il top lucido li mette in risalto', 'Solo sui lati', 'Solo con due strati'], a: 1, e: 'Si corregge con la lima prima del top.' }
     ],
     decorazioni: [
       { q: 'Una buona smile line è…', o: ['Asimmetrica', 'Simmetrica e con la stessa profondità sui lati', 'Piatta', 'Sfumata'], a: 1, e: 'Simmetria e nettezza sono i criteri principali.' },
@@ -1376,7 +2065,7 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
     { t: 'Cartina (form)', d: 'Supporto adesivo posizionato sotto il bordo libero per costruire l\'allungamento.' },
     { t: 'Cleaner', d: 'Liquido che rimuove lo strato di dispersione del gel.' },
     { t: 'Curva a C', d: 'Curvatura trasversale della ricostruzione vista dal bordo libero.' },
-    { t: 'Cuticola', d: 'Pellicina morta che aderisce alla lamina; va rimossa.' },
+    { t: 'Cuticola', d: 'Pellicina morta che si stacca dall\'eponichio e aderisce alla lamina; va rimossa. L\'eponichio, invece, è pelle viva e non si taglia.' },
     { t: 'Disidratante', d: 'Prodotto che toglie umidità e sebo dalla lamina prima del primer.' },
     { t: 'Dotting', d: 'Tecnica di nail art a puntini con il dotter.' },
     { t: 'EMA', d: 'Etil metacrilato: monomero standard dell\'acrilico per unghie.' },
@@ -1402,7 +2091,7 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
     { t: 'Pinching', d: 'Pressione laterale per creare la curva a C.' },
     { t: 'Polygel', d: 'Pasta ibrida tra acrilico e gel che si modella con slip solution e indurisce in lampada.' },
     { t: 'Primer', d: 'Promotore di adesione: acido (incide la lamina) o senza acido (effetto biadesivo).' },
-    { t: 'Pterigio', d: 'Pellicina che aderisce alla lamina e va rimossa per evitare sollevamenti.' },
+    { t: 'Pterigio', d: 'Condizione anomala in cui la pelle (eponichio) si salda alla lamina e avanza con lei. Non si taglia né si spinge: si indirizza al medico. Da non confondere con la cuticola.' },
     { t: 'Punto di stress', d: 'Zona in cui il bordo libero si stacca dal letto ungueale.' },
     { t: 'Refill', d: 'Riempimento della ricrescita ogni 3–4 settimane, con riequilibrio della struttura.' },
     { t: 'SCIA', d: 'Segnalazione certificata di inizio attività da presentare al Comune/SUAP.' },
@@ -1415,7 +2104,36 @@ ${B('warn', 'Prima regola', 'Le regole cambiano per sede e per anno: leggi sempr
     { t: 'Striping', d: 'Tecnica di nail art a linee con pennello sottile.' },
     { t: 'Tip', d: 'Unghia artificiale preformata da incollare sul bordo libero.' },
     { t: 'TPO', d: 'Fotoiniziatore vietato nei cosmetici UE dal 1° settembre 2025 (Reg. 2025/877).' },
-    { t: 'Zone 1-2-3', d: 'Bordo libero (1), apex/struttura (2) e zona cuticolare (3) della ricostruzione.' }
+    { t: 'Zone 1-2-3', d: 'Bordo libero (1), apex/struttura (2) e zona cuticolare (3) della ricostruzione.' },
+    { t: 'Curette', d: 'Strumento a cucchiaino affilato con cui si solleva la cuticola dalla lamina, tenuto piatto.' },
+    { t: 'Spingicuticole', d: 'Strumento metallico con un\'estremità piatta per arretrare l\'eponichio e una a lama per sollevare la cuticola.' },
+    { t: 'Opacizzazione', d: 'Rimozione della sola lucidità della lamina con grana fine (180–240) per migliorare l\'adesione, senza assottigliare.' },
+    { t: 'Luce radente', d: 'Luce che arriva molto inclinata sulla superficie: evidenzia zone lucide, pellicine e avvallamenti.' },
+    { t: 'Bonder', d: 'Altro nome del primer senza acido: promotore di adesione con effetto biadesivo.' },
+    { t: 'Acido metacrilico', d: 'Componente del primer acido: incide la lamina ed è corrosivo per pelle e occhi.' },
+    { t: 'Emolliente per cuticole', d: 'Prodotto che ammorbidisce la pelle morta; va eliminato del tutto prima di opacizzare.' },
+    { t: 'Incavo (well)', d: 'Parte sottile del tip che si incolla sull\'unghia naturale; non dovrebbe coprire più di metà lamina.' },
+    { t: 'Punto d\'arresto (stop)', d: 'Gradino del tip che si appoggia contro il bordo libero naturale.' },
+    { t: 'Zona di contatto', d: 'Superficie del tip che tocca la lamina e forma il legame con la colla.' },
+    { t: 'Cianoacrilato', d: 'La colla per tip: indurisce in pochi secondi a contatto con l\'umidità.' },
+    { t: 'Tagliatip', d: 'Tronchesino a lama dritta per accorciare il tip senza crepare la plastica.' },
+    { t: 'Tip blender', d: 'Solvente che ammorbidisce la plastica del tip per facilitare la fusione; si usa pochissimo e solo sul tip.' },
+    { t: 'ABS', d: 'Plastica rigida con cui sono fatti molti tip.' },
+    { t: 'Slip layer', d: 'Velo sottilissimo di gel non polimerizzato su cui la perla di costruttore scivola meglio.' },
+    { t: 'Livello della cartina', d: 'Allineamento della cartina con la lamina vista di profilo: né verso il basso né verso l\'alto.' },
+    { t: 'Linee di crescita', d: 'Sottili scanalature longitudinali della lamina: guida per allineare cartina e allungamento.' },
+    { t: 'Rapporto liquido/polvere', d: 'Proporzione tra monomero e polimero nella perla di acrilico; media circa 1,5 : 1.' },
+    { t: 'Dappen', d: 'Piccolo contenitore con coperchio per il monomero durante il lavoro in acrilico.' },
+    { t: 'Linea del sorriso naturale', d: 'Il confine tra letto ungueale rosa e bordo libero bianco dell\'unghia naturale.' },
+    { t: 'Letto ungueale (lunghezza)', d: 'Distanza tra cuticola e linea del sorriso: riferimento per decidere la lunghezza dell\'allungamento.' },
+    { t: 'Arco superiore', d: 'Linea del profilo dell\'unghia dall\'apex alla punta.' },
+    { t: 'Arco inferiore', d: 'Linea sotto l\'allungamento vista di profilo; deve essere dritta, senza "pance".' },
+    { t: 'Lati paralleli', d: 'I due lati dell\'allungamento dritti e alla stessa distanza dall\'asse, in prosecuzione dei solchi laterali.' },
+    { t: 'Asse del dito', d: 'Linea immaginaria dal centro della cuticola lungo il dito: riferimento per la simmetria.' },
+    { t: 'Ballerina (coffin)', d: 'Forma con lati che si restringono e punta dritta.' },
+    { t: 'Mandorla', d: 'Forma con lati convergenti e punta arrotondata più stretta dell\'ovale.' },
+    { t: 'Stiletto', d: 'Forma a punta con lati dritti; la più delicata.' },
+    { t: 'Buffer', d: 'Blocchetto o lima morbida a grana fine per levigare la superficie.' }
   ];
 
   // esercizi ordinati secondo l'ordine dei moduli

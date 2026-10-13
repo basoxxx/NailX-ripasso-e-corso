@@ -336,7 +336,7 @@ def zones():
     b += leader(ax, oy - 34, ax - 40, 300, 'Apex: punto più alto', 'end')
     b += leader(xs, oy + 3, xs + 30, 330, 'Punto di stress (sotto l\'apex)', 'start')
     b += arrow(xa - 18, oy - 16, xa, oy - 16, MUTED, 1.5, True)
-    b += text(xa - 24, oy - 30, '≈1,5 mm dalla pelle', 13, 'end', 600, MUTED)
+    b += text(xa - 24, oy - 30, '≈1 mm dalla pelle', 13, 'end', 600, MUTED)
     b += text(40, 40, 'Le 3 zone della ricostruzione', 20, 'start', 800, ACC2)
     return svg(860, 380, arrow_defs() + b, 'Le tre zone di costruzione e l\'apex')
 
@@ -426,7 +426,7 @@ def bits():
     items = [('Cilindro', ['superficie,', 'accorciare'], '<rect x="-14" y="-50" width="28" height="50" rx="3"/>'),
              ('Cil. sicurezza', ['bordo liscio:', 'lati e cuticola'], '<rect x="-14" y="-50" width="28" height="50" rx="12"/>'),
              ('Cono', ['sotto il bordo', 'libero, lati'], '<path d="M-14,0 L-3,-56 L3,-56 L14,0 Z"/>'),
-             ('Fiamma', ['zona cuticolare,', 'pterigio'], '<path d="M-9,0 C-14,-20 -6,-44 0,-58 C6,-44 14,-20 9,0 Z"/>'),
+             ('Fiamma', ['zona cuticolare,', 'cuticola'], '<path d="M-9,0 C-14,-20 -6,-44 0,-58 C6,-44 14,-20 9,0 Z"/>'),
              ('Pallina', ['pulizia cuticole', 'e solchi'], '<circle cx="0" cy="-12" r="12"/>'),
              ('Mandrino', ['con rullino', 'abrasivo monouso'], '<rect x="-15" y="-46" width="30" height="46" rx="4" fill="#cdb79e"/>')]
     for i, (n, sub, shape) in enumerate(items):
@@ -460,7 +460,7 @@ def bits():
 @fig('preparazione.svg')
 def prep():
     b = ''
-    titles = ['Igienizza mani e strumenti', 'Arretra la cuticola', 'Rimuovi il pterigio',
+    titles = ['Igienizza mani e strumenti', 'Arretra la cuticola', 'Rimuovi la cuticola',
               'Opacizza (grana 180–240)', 'Elimina la polvere', 'Disidratante + primer']
     for i, t in enumerate(titles):
         col, row = i % 3, i // 3
@@ -709,7 +709,7 @@ def lifting():
     b += f
     b += leader(180, 360, 330, 360, 'Sollevamento in zona cuticola')
     b += leader(222, 330, 330, 300, 'Sollevamento laterale')
-    causes = ['Cuticola/pterigio non rimossi', 'Olio o umidità sulla lamina', 'Disidratante o primer saltati',
+    causes = ['Cuticola non rimossa', 'Olio o umidità sulla lamina', 'Disidratante o primer saltati',
               'Prodotto a contatto con la pelle', 'Bordo libero non sigillato', 'Perla troppo bagnata o asciutta',
               'Refill fatto in ritardo', 'Polimerizzazione incompleta']
     b += text(560, 95, 'Cause più frequenti', 16, 'start', 800)
@@ -1021,7 +1021,7 @@ def tut_acr():
                 s += bead(cx, yb - 22, 11, '#f9dbe4')
                 s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.6" stroke-dasharray="3 3" fill="none"/>' % (
                     cx - 30, yb - 30, cx, yb - 48, cx + 30, yb - 30, ERR)
-                s += text(cx, y + 64, '≈1,5 mm dalla pelle', 12.5, weight=700, fill=ERR)
+                s += text(cx, y + 64, '≈1 mm dalla pelle', 12.5, weight=700, fill=ERR)
         elif i == 4:
             s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="12" stroke-linecap="round"/>' % (
                 cx - 70, y + 170, cx, y + 90, cx + 70, y + 170, ACC)
@@ -1135,7 +1135,7 @@ def tut_fibra():
             s += '<rect x="%d" y="%d" width="90" height="120" fill="#f8f2e6" stroke="#cdbb9c"/>' % (cx - 45, y + 80)
             s += ''.join('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#cdbb9c"/>' % (cx - 45, y + 80 + k * 10, cx + 45, y + 80 + k * 10) for k in range(12))
             s += '<path d="M%d,%d Q%d,%d %d,%d" stroke="%s" stroke-width="2" stroke-dasharray="5 4" fill="none"/>' % (cx - 30, y + 190, cx, y + 70, cx + 30, y + 190, ERR)
-            s += text(cx, y + 230, 'a forma dell\'unghia,', 12.5, fill=MUTED) + text(cx, y + 248, '≈1,5 mm dalla pelle', 12.5, fill=MUTED)
+            s += text(cx, y + 230, 'a forma dell\'unghia,', 12.5, fill=MUTED) + text(cx, y + 248, '≈1 mm dalla pelle', 12.5, fill=MUTED)
             return s
         plate = '#f7d3dd'
         f, p = finger_nail(cx, yb, hw=32, nail_len=110, free_len=40, shape='squoval', finger_len=10, plate=plate, free=plate, extra=mesh if i < 3 else '', lunula=False)
@@ -1208,7 +1208,7 @@ def shape_steps():
 @fig('cuticola.svg')
 def cuticle():
     b = text(20, 38, 'Zona cuticolare: cosa si tocca e cosa no', 20, 'start', 800, ACC2)
-    for k, (t, ok) in enumerate([('Arretra l\'eponichio con delicatezza', True), ('Rimuovi il pterigio dalla lamina', True), ('Non tagliare la pelle viva', False)]):
+    for k, (t, ok) in enumerate([('Arretra l\'eponichio con delicatezza', True), ('Rimuovi la cuticola dalla lamina', True), ('Non tagliare la pelle viva', False)]):
         x = 20 + k * 300
         b += panel(x, 60, 285, 270, t if len(t) < 30 else t)
         b += mark(x + 258, 120, ok)
