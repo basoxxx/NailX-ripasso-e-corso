@@ -2905,6 +2905,7 @@ ${F('lifting-mappa.svg', 'Mappa del sollevamento: il punto in cui si stacca sugg
 <tr><td><strong>Su 1–2 dita</strong></td><td>Abitudini (pollice, indice) o struttura di quelle unghie</td><td>Chiedi delle abitudini; rinforza la struttura</td></tr>
 </table>
 ${B('info', 'Cuticola e pterigio non sono la stessa cosa', 'La cuticola è la pellicina morta che si stacca dalla lamina durante la preparazione. Il pterigio è un\'alterazione: la pelle cresce e aderisce sulla lamina. Il pterigio non si rimuove: si indirizza la cliente al medico.')}
+<div class="box deep"><strong class="t">Approfondimento: perché l'acqua stacca il prodotto</strong> <p>La lamina non è un materiale fermo: contiene normalmente circa il 15–18% di acqua. In ammollo ne assorbe molta già in circa un minuto e può arrivare al 25–30%. L'acqua si infila tra gli strati di cheratina, li allontana e la lamina si gonfia e cambia forma.</p> <p>Se applichi il prodotto su una lamina gonfia, quando l'unghia si asciuga e torna alla sua forma il rivestimento resta "tirato" su una superficie che si è ristretta: compaiono crepe, scheggiature e sollevamenti. Le lamine sottili e flessibili sono le più colpite; quelle spesse e sane quasi non ne risentono. Un normale lavaggio delle mani (circa 20 secondi) invece non crea problemi.</p> <ul><li>Prima di una ricostruzione lavora <strong>a secco</strong>: niente ammollo.</li> <li>Se la cliente arriva dalla piscina o ha appena lavato i piatti, aspetta qualche minuto prima di applicare.</li> <li>Mani spesso in acqua + lamina sottile = scegli un prodotto più flessibile e strati sottili.</li></ul></div>
 <h2>Il margine dalla pelle</h2>
 ${F('lifting-margine.svg', 'Margine corretto: circa 1 mm di unghia libera tra prodotto e pelle, anche sui lati.')}
 <p>Il prodotto deve fermarsi <strong>un filo prima della pelle</strong>: circa <strong>1 mm</strong> dalla cuticola e dai solchi laterali (le fonti di settore indicano da 0,5 a 1,5 mm). <em>Perché</em>: il prodotto che tocca la pelle non aderisce e non polimerizza bene; quando la pelle si muove, crea una "leva" che stacca il bordo. In più aumenta il rischio di allergia.</p>
@@ -2917,6 +2918,7 @@ ${F('lifting-margine.svg', 'Margine corretto: circa 1 mm di unghia libera tra pr
 <tr><td><strong>Struttura</strong></td><td>Apex nel posto sbagliato, lunghezza eccessiva, refill in ritardo</td></tr>
 <tr><td><strong>Cliente</strong></td><td>Mani spesso in acqua, sudorazione, unghie usate come attrezzi, unghie mangiate o "pizzicate"</td></tr>
 </table>
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Martina torna dopo 10 giorni: su tre dita il gel si è staccato <strong>al centro</strong>, a "bolla", ma i bordi alla cuticola e ai lati sono ancora sigillati.</p> <p><strong>Ragionamento.</strong> Centro staccato e bordi integri: il margine dalla pelle non è il problema. Le ipotesi principali sono due: un urto o una pressione (anche senza sollevamenti visibili ai bordi, un colpo può separare il prodotto dalla lamina) oppure una lamina molto flessibile che si piega mentre il prodotto rigido non la segue. Con l'acrilico va aggiunta una perla troppo bagnata: asciugando, il prodotto si ritira e "tira" verso l'alto.</p> <p><strong>Domande da fare:</strong> lavori alla tastiera? Apri lattine o scatole con le unghie? Hai preso un colpo?</p> <p><strong>Soluzione.</strong> Lima via tutto il prodotto staccato e controlla sotto: umidità, macchie verdi o bianche vanno fatte vedere al medico. Se la lamina è sana, ricostruisci con un prodotto più flessibile e una lunghezza minore, e annota il caso sulla scheda.</p></div>
 <h2>Cosa fare quando la cliente torna con un sollevamento</h2>
 <ol class="steps">
 <li>Guarda <strong>dove</strong> si stacca e su <strong>quante</strong> dita (tabella sopra).</li>
@@ -2928,12 +2930,13 @@ ${F('lifting-margine.svg', 'Margine corretto: circa 1 mm di unghia libera tra pr
 </ol>
 ${B('danger', 'Mai coprire un sollevamento', 'Sotto il sollevamento restano acqua e batteri: coprirlo può portare a infezioni. Va eliminato tutto.')}
 ${B('tip', 'Prima di dare la colpa al prodotto', 'Se il problema capita a una o due clienti, chiedi delle abitudini. Se capita a molte, rivedi la tua preparazione e fotografa i lavori di profilo.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong> <p>Tre errori di preparazione che non si vedono a occhio nudo:</p> <ul><li><strong>Ricontaminazione.</strong> Una lamina perfetta si sporca di nuovo se lavori lentamente, se la cliente si tocca viso o capelli, se una cartina scivola. Prepara e applica <strong>una mano alla volta</strong>.</li> <li><strong>Troppa opacizzazione.</strong> La lamina è spessa in media circa 0,38 mm. Togliere troppo materiale la rende instabile e più sensibile al calore. Serve solo togliere la lucentezza.</li> <li><strong>Troppo primer.</strong> Un primer "abbondante" allaga la lamina, non aumenta l'adesione e aumenta il rischio di irritazioni e allergie. Usa la quantità indicata dal produttore e usa primer e base dello stesso sistema.</li></ul> <p>Infine: un sollevamento tagliato con la tronchesina crea un nuovo punto di distacco. Si lima, sempre.</p></div>
 `,
           sources: ['https://nailknowledge.org/?p=49737',
             'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown',
             'https://www.design4nails.co.uk/?p=285413',
             'https://semilac.co.uk/blogs/news/gel-lifting-and-yellowing-root-causes-and-salon-floor-fixes',
-            'https://purespadirect.com/blogs/pure-spa-direct-blog/gel-polish-lifting-troubleshooting-20-causes-prep-lamps-products-and-client-habits-a-nail-tech-39-s-guide-to-perfect-manicures']
+            'https://purespadirect.com/blogs/pure-spa-direct-blog/gel-polish-lifting-troubleshooting-20-causes-prep-lamps-products-and-client-habits-a-nail-tech-39-s-guide-to-perfect-manicures', 'https://nailknowledge.org/blog/water-vs-waterless-manicures']
         },
         {
           id: 'calore-rotture', simple: "Le unghie si rompono quasi sempre dove manca la struttura. Il gel, indurendo, scalda: strati sottili, lamina non assottigliata e mano fuori dalla lampada qualche secondo evitano il bruciore.", title: 'Rotture e picchi di calore', min: 13,
@@ -2950,6 +2953,7 @@ ${F('rotture-mappa.svg', 'Dove si rompe l\'unghia e perché: zona di stress, ang
 </table>
 ${F('apex-confronto.svg', 'Apex corretto ed errato a confronto.')}
 ${B('tip', 'Lunghezza e abitudini', 'Più l\'unghia è lunga, più forza arriva sul punto di stress. Per chi usa molto le mani, una lunghezza corta e una forma squoval o tonda durano di più.')}
+<div class="box deep"><strong class="t">Approfondimento: perché l'apex protegge</strong> <p>Il bordo libero funziona come una <strong>leva</strong>: una forza sulla punta (un urto, una pressione) fa piegare l'unghia soprattutto nel punto in cui il bordo lascia il dito. Più l'unghia è lunga, più la leva è forte.</p> <p>L'apex mette lo spessore proprio sopra quella zona. Un arco costruito bene sale in modo graduale dalla cuticola all'apex e poi scende o va dritto verso la punta: così bordo libero e lati possono restare sottili come una carta di credito senza rompersi. Una struttura troppo piatta, invece, si crepa nella zona di stress e lungo i lati.</p> <ul><li>Un tip troppo piccolo indebolisce i lati: meglio un tip più largo, poi stretto con la lima.</li> <li>Riparare una crepa con un "grumo" di prodotto non basta: la flessione si concentra lì e l'unghia si rompe di nuovo. Lima fino a eliminare la crepa e ricostruisci l'apex.</li> <li>L'apex si sposta con la crescita: per questo il refill puntuale è parte della riparazione.</li></ul></div>
 <h2>Picco di calore (heat spike)</h2>
 <p>La polimerizzazione è una reazione <strong>esotermica</strong>: ogni legame che si forma libera un pochino di calore. Su un'unghia si formano milioni di legami in pochi secondi, e il calore si somma. Il letto ungueale comincia a sentire dolore già intorno ai <strong>46 °C</strong>.</p>
 ${F('picco-calore-cause.svg', 'Perché scotta: strato spesso, lamina assottigliata, lampada troppo veloce o gel non abbinato.')}
@@ -2961,6 +2965,7 @@ ${F('picco-calore-cause.svg', 'Perché scotta: strato spesso, lamina assottiglia
 <li><strong>Acrilico</strong>: polvere e liquido non abbinati; prodotti a presa rapida in un ambiente caldo.</li>
 <li><strong>Formulazioni</strong> poco testate.</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: perché "entrare piano" in lampada riduce il calore</strong> <p>Il calore dipende da <strong>quanto velocemente</strong> avvengono le reazioni. Se la mano entra lentamente in lampada, o resta per qualche secondo appena fuori dall'apertura, al prodotto arriva meno luce UV: la reazione parte più piano e il calore si distribuisce nel tempo. È come il flash di una macchina fotografica: più sei lontana, meno luce ti arriva. Le lampade con modalità <em>low heat</em> fanno la stessa cosa in automatico, con un avvio a bassa potenza.</p> <p><strong>Attenzione:</strong> dopo una partenza "morbida" la mano va rimessa in posizione normale per tutto il tempo di polimerizzazione indicato. Un gel non polimerizzato del tutto si rovina prima e aumenta il rischio di allergia.</p> <p>Anche i gel <em>no-wipe</em> (senza strato appiccicoso) tendono a scaldare di più: con questi prodotti gli strati sottili sono ancora più importanti.</p></div>
 <h2>Le soluzioni</h2>
 <ol class="steps">
 <li><strong>Strati sottili</strong>, soprattutto con builder e colori scuri.</li>
@@ -2971,11 +2976,12 @@ ${F('picco-calore-cause.svg', 'Perché scotta: strato spesso, lamina assottiglia
 </ol>
 ${F('lampada-posizione.svg', 'Flash and pull: uscire qualche secondo dalla lampada tiene il calore sotto la soglia di bruciore.')}
 ${B('danger', 'Unghia "bruciata"', 'Picchi di calore ripetuti e limatura eccessiva possono danneggiare il letto ungueale (onicolisi, cioè distacco dell\'unghia dal letto, e infezioni). Se la cliente ha dolore persistente, fermati, rimuovi il prodotto e consiglia il medico.')}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Giulia dice che "brucia solo il pollice, e solo al refill". Alla prima applicazione non sentiva niente.</p> <p><strong>Ragionamento.</strong> Il pollice ha la superficie più grande e riceve più prodotto. Al refill, per riportare l'apex al suo posto si tende a stendere il builder in un unico strato spesso. In più la zona di ricrescita è lamina naturale, forse assottigliata dalla preparazione o da una rimozione precedente. D'estate il problema peggiora: con il caldo il gel è più fluido e i picchi di calore sono più frequenti.</p> <p><strong>Soluzione.</strong></p> <ul><li>Costruisci l'apex in <strong>due passate sottili</strong>, polimerizzando tra una e l'altra.</li> <li>Polimerizza il pollice da solo, partendo con la modalità low heat o con la mano appena fuori dalla lampada.</li> <li>Sulla ricrescita: solo opacizzazione leggera, niente lime grosse.</li> <li>Annota sulla scheda "pollice sensibile al calore": al prossimo refill parti già così.</li></ul></div>
 `,
           sources: ['https://nailknowledge.org/?p=44956',
             'https://scratchmagazine.co.uk/feature/heat-spikes-in-gel-nail-services-why-they-happen-how-to-avoid-them',
             'https://www.nsinails.com.au/blogs/news/understand-nail-damages-heat-spikes-lifting-issues',
-            'https://nailknowledge.org/blog/uv-curing-why-thin-layers-matter-for-perfect-nails']
+            'https://nailknowledge.org/blog/uv-curing-why-thin-layers-matter-for-perfect-nails', 'https://www.scratchmagazine.co.uk/blog/simply-salon-nails-perfecting-proper-nail-structure/', 'https://purenails.co.uk/blogs/news/why-cracks-can-appear-in-gel-polish', 'https://www.nailpro.com/technique/article/21156901/how-to-create-durable-nails-with-perfect-structure', 'https://www.scratchmagazine.co.uk/feature/heat-spikes-in-gel-nail-services-why-they-happen-how-to-avoid-them', 'https://nailknowledge.org/nail-knowledge-base/inhibition-layer-and-no-cleanse-gels', 'https://twentypro.co.uk/blogs/news/how-to-work-with-gel-products-in-extreme-temperatures']
         },
         {
           id: 'difetti', simple: "Quasi tutti i difetti di superficie nascono da strati troppo spessi, polimerizzazione incompleta o prodotti e lampade non abbinati. Strati sottili e il sistema giusto risolvono la maggior parte dei problemi.", title: 'Bolle, grinze, ingiallimento', min: 13,
@@ -2984,6 +2990,7 @@ ${F('problemi.svg', 'Riconosci il difetto.')}
 <h2>Perché la luce non arriva in fondo</h2>
 <p>La lampada indurisce il gel dall'alto verso il basso. I <strong>pigmenti</strong> (soprattutto colori scuri, bianco e glitter) fanno da <strong>ombrello</strong>: la superficie riceve tanta luce, gli strati sotto poca. Se lo strato è spesso, sopra si forma una "pelle" dura e sotto resta gel liquido. Allungare il tempo in lampada spesso <strong>non basta</strong>: la soluzione è lo strato sottile.</p>
 ${F('grinze-sezione.svg', 'Grinza in sezione: superficie dura sopra, gel liquido sotto; con strati sottili la luce arriva in fondo.')}
+<div class="box deep"><strong class="t">Approfondimento: lo strato appiccicoso</strong> <p>Dopo la lampada molti gel lasciano una pellicola appiccicosa: è lo <strong>strato di inibizione</strong>. Si forma perché l'ossigeno dell'aria blocca le estremità delle catene che stanno crescendo in superficie. Lì le catene restano corte e lo strato è polimerizzato meno della metà; sotto, dove l'ossigeno non arriva, il gel indurisce normalmente.</p> <ul><li>Un gel che polimerizza in fretta lascia uno strato più sottile; una lampada debole o con lampadine da cambiare lo rende più spesso.</li> <li>I gel <em>no-wipe</em> sono formulati per non lasciare questo strato. In cambio possono scaldare di più, diventare più rigidi con il tempo e contenere ingredienti che irritano la pelle più facilmente.</li> <li>Lo strato appiccicoso è gel non indurito: non va toccato con la pelle. Toglilo con un dischetto con il retro in plastica o con i guanti, non con un batuffolo imbevuto tenuto tra le dita.</li></ul></div>
 <h2>Tabella dei difetti</h2>
 <table>
 <tr><th>Difetto</th><th>Come si riconosce</th><th>Cause</th><th>Soluzione</th></tr>
@@ -2996,6 +3003,7 @@ ${F('grinze-sezione.svg', 'Grinza in sezione: superficie dura sopra, gel liquido
 </table>
 ${F('ingiallimento-cause.svg', 'Le cause più comuni dell\'ingiallimento.')}
 ${B('tip', 'Ingiallito subito o dopo settimane?', 'Se il giallo compare subito dopo il servizio, cerca la causa nel prodotto o nella lampada. Se compare dopo qualche settimana, chiedi delle abitudini: sole, fumo, creme, prodotti per la casa.')}
+<div class="box deep"><strong class="t">Approfondimento: viscosità, temperatura e bolle</strong> <p>La <strong>viscosità</strong> è la resistenza di un liquido a scorrere. Un gel normale ha circa 25.000–100.000 centipoise (cP); molti builder circa 350.000 cP, alcuni fino a 1.000.000. Più il gel è denso, più trattiene l'aria che ci entra mescolando o premendo il pennello.</p> <p>Il gel è <strong>tissotropico</strong>: mentre lo lavori diventa più fluido, quando ti fermi torna denso. La temperatura cambia tutto:</p> <table><tr><th>Ambiente</th><th>Cosa succede</th><th>Cosa fare</th></tr> <tr><td>Freddo</td><td>Gel rigido, non si autolivella, trattiene bolle</td><td>Scalda il flacone tra le mani o in un panno caldo e umido</td></tr> <tr><td>Caldo</td><td>Gel troppo fluido, invade cuticola e lati; più picchi di calore</td><td>Strati più sottili; stanza fresca; tende contro il sole</td></tr></table> <p>Mai microonde, termosifone o acqua bollente: i gel sono infiammabili. Non metterli nemmeno in frigo: il raffreddamento brusco può alterare la formula. Conservali al fresco e al buio.</p></div>
 <h2>Reazioni allergiche: riconoscerle</h2>
 <p>Il contatto ripetuto della pelle con prodotto <strong>non polimerizzato</strong> può causare una <strong>dermatite allergica da contatto</strong>. Segnali tipici: prurito, rossore, gonfiore o vescicole intorno all'unghia o sui polpastrelli; a volte compare anche su viso e palpebre (toccati con le dita).</p>
 <ol class="steps">
@@ -3005,13 +3013,14 @@ ${B('tip', 'Ingiallito subito o dopo settimane?', 'Se il giallo compare subito d
 <li>Rivedi la tua tecnica: prodotto sulla pelle, polimerizzazione incompleta, polvere di limatura non polimerizzata.</li>
 </ol>
 ${B('danger', 'Anche tu sei a rischio', 'L\'operatrice tocca prodotti liquidi ogni giorno: guanti in nitrile, niente contatto con la pelle, salviette e pennelli sporchi chiusi in un contenitore. Un\'allergia agli acrilati è per sempre.')}
+<div class="box deep"><strong class="t">Approfondimento: HEMA e la regola europea</strong> <p>Il sensibilizzante più frequente nei prodotti per unghie è l'<strong>HEMA</strong> (2-idrossietil metacrilato). In uno studio portoghese su 230 persone con allergia agli acrilati (onicotecniche e clienti) il test era positivo all'HEMA nel 90% dei casi, e spesso anche ad altri acrilati simili. In Europa, tra le persone sottoposte a patch test nel 2019–2020, circa il 2,3% è risultato positivo all'HEMA.</p> <p>Per questo il Regolamento UE 2020/1682 ha stabilito che i prodotti per unghie con HEMA o di-HEMA TMHDC devono riportare <strong>"solo per uso professionale"</strong> e <strong>"può provocare una reazione allergica"</strong>, con applicazione dal 2021.</p> <ul><li>In consulenza chiedi sempre se la cliente usa kit di gel o semipermanente a casa: è una fonte frequente di sensibilizzazione.</li> <li>"HEMA free" non vuol dire "senza acrilati": chi è già allergica può reagire anche ad altri.</li></ul></div>
 `,
           sources: ['https://nailknowledge.org/blog/gel-polish-curing',
             'https://nailknowledge.org/blog/uv-curing-why-thin-layers-matter-for-perfect-nails',
             'https://nailknowledge.org/?p=147555',
             'https://support.pinkgellac.com/hc/en-nl/articles/24253249294098-Why-is-my-gel-polish-wrinkling-or-bubbling-and-how-can-I-prevent-this',
             'https://www.scratchmagazine.co.uk/feature/causes-of-bubbles-in-lp-gel-nail-enhancements',
-            'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown']
+            'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown', 'https://nailknowledge.org/nail-knowledge-base/inhibition-layer-and-no-cleanse-gels', 'https://www.scratchmagazine.co.uk/feature/gel-nails-why-you-need-to-know-about-viscosity/', 'https://twentypro.co.uk/blogs/news/how-to-work-with-gel-products-in-extreme-temperatures', 'https://eur-lex.europa.eu/eli/reg/2020/1682/oj/eng', 'https://repositorio.hospitaldebraga.pt/entities/publication/cc5b7169-4a9d-434b-b973-a05002cb696e', 'https://www.mdedge.com/content/tackling-acrylate-allergy-sticky-truth']
         },
         {
           id: 'diagnosi', simple: "Quando qualcosa va storto, non cambiare subito prodotto. Fai cinque domande: dove, quante dita, quando, cosa ho fatto, cosa ha fatto la cliente. La risposta è quasi sempre lì.", title: 'Metodo di diagnosi: dal difetto alla causa', min: 8,
@@ -3026,6 +3035,7 @@ ${F('diagnosi-flusso.svg', 'Le cinque domande della diagnosi.')}
 <li><strong>Cosa ho fatto?</strong> Rileggi la scheda: prodotti, lotti, tempi, lampada, eventuali novità nel tuo protocollo.</li>
 <li><strong>Cosa ha fatto la cliente?</strong> Lavori, acqua, sport, botte, farmaci nuovi, gravidanza, unghie mangiate o "pizzicate".</li>
 </ol>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong> <p>Quando i problemi compaiono "all'improvviso" su molte clienti, cerca cosa è cambiato nel tuo lavoro. Tre controlli che isolano la causa:</p> <ol><li><strong>Prova su cartina.</strong> Stendi il prodotto sospetto su una cartina con lo spessore di sempre, polimerizza e controlla che sia duro anche sotto. Se resta morbido, il problema è la coppia gel–lampada (o le lampadine).</li> <li><strong>Lotto contro lotto.</strong> Se hai aperto un flacone nuovo, prova vecchio e nuovo sulla stessa cliente, uno per mano. La scheda con i lotti serve proprio a questo.</li> <li><strong>Una sola variabile.</strong> Se il problema è su una o due clienti, chiedi cosa fanno con le mani durante la giornata, anche le cose che sembrano irrilevanti. Se è su molte, rivedi la tua procedura passo per passo e cerca il passaggio saltato o cambiato.</li></ol> <p>Distingui sempre l'incidente singolo (un colpo durante le pulizie) dal problema che si ripete.</p></div>
 <h2>Esempi guidati</h2>
 <table>
 <tr><th>Situazione</th><th>Ragionamento</th><th>Probabile causa</th></tr>
@@ -3037,9 +3047,12 @@ ${F('diagnosi-flusso.svg', 'Le cinque domande della diagnosi.')}
 ${F('diagnosi-scheda.svg', 'Una riga di scheda per ogni difetto: data, dito, dove, quando, causa probabile, correzione.')}
 ${B('tip', 'Una correzione alla volta', 'Se cambi tre cose insieme non saprai mai quale ha funzionato. Cambia una cosa, annota, guarda il risultato al refill successivo.')}
 ${B('info', 'Le foto sono il tuo archivio', 'Fotografa ogni lavoro dall\'alto e di profilo, alla fine del servizio e al refill. Confrontando le foto vedi dove si è spostato l\'apex e dove nascono i problemi.')}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Una cliente torna dopo 4 settimane con una <strong>macchia verde</strong> sotto il gel dell'anulare. Ammette di aver incollato a casa un angolo che si era alzato.</p> <p><strong>Che cos'è.</strong> Non è muffa, come si sente dire spesso. Il colore verde è tipico della <em>sindrome dell'unghia verde</em>, un'infezione da batteri (<em>Pseudomonas aeruginosa</em>) che producono pigmenti verdi. Questi batteri crescono nell'umido: lo spazio sotto un prodotto sollevato è l'ambiente ideale. Spesso c'era già un piccolo distacco, un trauma o un problema dell'unghia.</p> <p><strong>Cosa fai.</strong></p> <ul><li>Rimuovi il prodotto senza coprire nulla e senza limare la lamina sotto la macchia.</li> <li>Consiglia il medico; riprendi il servizio solo con l'unghia guarita.</li> <li>Strumenti a sterilizzare, lima e buffer usati nel cestino.</li> <li>Annota sulla scheda: data, dito, sollevamento incollato a casa. Al biglietto dei consigli aggiungi: "mai colla su un'unghia sollevata".</li></ul></div>
+<div class="box warn"><strong class="t">Quando il difetto non dipende da te</strong> <p>Alcuni segni sembrano "difetti di lavorazione" ma possono indicare un problema di salute. Non è compito tuo fare la diagnosi, ma devi saperli notare:</p> <ul><li><strong>Puntini a ditale</strong> (pitting) sulla lamina, <strong>macchie giallo-rosate</strong> sotto l'unghia ("a goccia d'olio") e distacco dal letto: possono essere segni di psoriasi ungueale. Nelle casistiche il pitting è il segno più frequente sulle mani.</li> <li>La psoriasi viene spesso scambiata per una micosi, e le due possono esserci insieme (in circa il 18–30% dei casi secondo una revisione).</li> <li>Nella psoriasi un trauma può far comparire nuove lesioni (fenomeno di Koebner): una preparazione aggressiva può peggiorare la situazione.</li></ul> <p>Se vedi questi segni su più unghie, non coprire per "nascondere": consiglia il dermatologo e annota sulla scheda.</p></div>
+<h3>Bianco gessoso dopo la rimozione: due possibilità</h3> <table><tr><th></th><th>Granulazioni di cheratina</th><th>Micosi bianca superficiale</th></tr> <tr><td>Quando compare</td><td>Subito dopo aver tolto smalto o gel</td><td>Anche su unghie mai smaltate</td></tr> <tr><td>Dove</td><td>Solo sulle unghie che avevano il prodotto</td><td>Può passare ad altre unghie, spesso con piede d'atleta</td></tr> <tr><td>Aspetto</td><td>Macchie bianche ruvide, in superficie</td><td>Tende ad allargarsi, a ispessire, a sbriciolarsi</td></tr> <tr><td>Evoluzione</td><td>Migliora in settimane, con pausa e olio</td><td>Progredisce</td></tr></table> <p>Le granulazioni nascono quando il prodotto, aderendo agli strati più superficiali della lamina, li porta via durante una rimozione energica. Solo un esame (raschiato o coltura) distingue con certezza le due cose: nel dubbio, niente copertura e consiglio del medico o del podologo.</p>
 `,
           sources: ['https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown',
-            'https://nailknowledge.org/?p=49737']
+            'https://nailknowledge.org/?p=49737', 'https://mdedge.com/content/green-thumbnail', 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11047019', 'https://emjreviews.com/wp-content/uploads/2025/01/Nail-Psoriasis-A-Narrative-Review-of-Manifestations-Diagnosis-and-Management.pdf', 'https://doaj.org/article/bf2d5743b618496cbde01a29ede64169', 'https://www.michiganfootdoctors.com/white-toenails-from-nail-polish/']
         }
       ]
     },
@@ -3062,6 +3075,7 @@ ${F('consulenza-flusso.svg', 'La consulenza in cinque fasi.')}
 <li><strong>Accordo</strong>: servizio, durata, prezzo, data del refill, consigli post-trattamento. Annota tutto.</li>
 </ol>
 ${F('scheda-cliente.svg', 'Esempio di scheda cliente.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong> <p>Le domande chiuse ("Hai allergie?") ricevono risposte veloci e incomplete. Le domande <strong>aperte</strong> fanno emergere le informazioni utili:</p> <ul><li>"Raccontami una tua giornata tipo: cosa fai con le mani?"</li> <li>"Hai mai avuto prurito, rossore o gonfiore dopo un servizio alle unghie, anche anni fa?"</li> <li>"Fai gel o semipermanente a casa con un kit?" (molte persone si sensibilizzano proprio così; per legge i prodotti con HEMA sono "solo per uso professionale").</li> <li>"Come sono andate le tue ultime ricostruzioni? Dove si staccavano?"</li></ul> <p>Chiedi anche le cose che alla cliente sembrano irrilevanti: lavori di casa, sport, hobby, strumenti musicali. Spesso la causa di un problema futuro è lì.</p></div>
 <h2>Cosa scrivere nella scheda</h2>
 <table>
 <tr><th>Sezione</th><th>Contenuto</th><th>Perché</th></tr>
@@ -3072,6 +3086,7 @@ ${F('scheda-cliente.svg', 'Esempio di scheda cliente.')}
 <tr><td>Note</td><td>Sollevamenti, rotture, reazioni, consigli dati, servizi rifiutati e motivo</td><td>Diagnosi e tutela professionale</td></tr>
 <tr><td>Consensi</td><td>Firme e date</td><td>Prova di ciò che la cliente ha accettato</td></tr>
 </table>
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Laura, cliente da due anni, dice che inizierà la chemioterapia e vuole "tenere le unghie in ordine".</p> <p><strong>Cosa sapere.</strong> Alcuni farmaci antitumorali, in particolare i taxani, causano spesso alterazioni delle unghie (secondo una meta-analisi, circa il 35–44% dei pazienti): distacco dal letto, fragilità, infezioni intorno all'unghia. Le revisioni mediche raccomandano di evitare traumi ripetuti da manicure e unghie artificiali; una fonte dermatologica consiglia di rimuovere gel e ricostruzioni durante la terapia.</p> <p><strong>Cosa fai.</strong></p> <ul><li>Proponi di rimuovere la ricostruzione con delicatezza e di passare a unghie corte, tagliate dritte.</li> <li>Niente taglio delle cuticole, niente remover con acetone; olio e crema ogni giorno.</li> <li>Qualsiasi altro servizio solo dopo aver chiesto al team oncologico.</li> <li>Annota sulla scheda la terapia, la data e i consigli dati.</li></ul> <p>Rinunciare alla ricostruzione non vuol dire perdere la cliente: una manicure delicata e la tua attenzione in un momento difficile creano un legame forte.</p></div>
 <h2>Privacy: la scheda contiene dati sulla salute</h2>
 <p>Allergie, farmaci, gravidanza o patologie sono <strong>dati relativi alla salute</strong>: per il Regolamento europeo (GDPR, art. 9) sono "categorie particolari" e si possono trattare solo in casi precisi, tra cui il <strong>consenso esplicito</strong> della persona.</p>
 ${F('consensi-separati.svg', 'Informativa e consensi separati: tre fogli, tre firme.')}
@@ -3082,10 +3097,11 @@ ${F('consensi-separati.svg', 'Informativa e consensi separati: tre fogli, tre fi
 <li><strong>Conservazione</strong>: schede cartacee in un armadio chiuso; file digitali protetti da password. Conserva i dati solo per il tempo indicato nell'informativa.</li>
 <li><strong>Registro dei trattamenti</strong> (art. 30 GDPR): secondo commenti al Regolamento e alle FAQ del Garante, è dovuto anche dalle piccole attività che trattano dati sulla salute dei clienti (per esempio estetiste). Verifica con un consulente.</li>
 </ul>
-${B('warn', 'Foto e social: casi reali', 'Nel 2024 il Garante privacy ha sanzionato con 8.000 euro un centro di medicina estetica per un video su Instagram che mostrava un paziente senza un consenso specifico. Nel 2026 la Cassazione (ord. n. 25117) ha dato ragione a una cliente fotografata in un centro estetico dopo che aveva negato il consenso. Regola pratica: niente foto senza un consenso separato, e mai volti o tatuaggi riconoscibili senza autorizzazione.')}
+${B('warn', 'Foto e social: casi reali', 'Nel 2024 il Garante privacy ha sanzionato con 8.000 euro un centro di medicina estetica per un video su Instagram che mostrava un paziente senza un consenso specifico. Nel 2026 la Cassazione (ord. n. 25117, caso di foto scattate a una cliente in un centro estetico) ha chiarito che il consenso non si ricava dalla firma di un contratto o di un piano dei trattamenti: deve essere specifico, libero e ben distinguibile, e tocca al centro dimostrarlo. Regola pratica: niente foto senza un consenso separato, e mai volti o tatuaggi riconoscibili senza autorizzazione.')}
 <h2>Consenso informato al servizio</h2>
 <p>Non abbiamo trovato una norma nazionale che imponga all'onicotecnica un modulo specifico di "consenso informato". È però <strong>buona prassi</strong>: spiega per iscritto rischi e limiti (possibili allergie, sollevamenti, necessità di refill, rimozione in salone) e fai firmare. In ambito estetico i giudici chiedono informazioni <strong>personalizzate</strong>, non frasi generiche.</p>
 ${B('danger', 'Quando dire di no', 'Infezioni, micosi sospette, ferite aperte, unghia staccata dal letto, reazione allergica in corso: il servizio si rifiuta, si spiega il perché, si consiglia il medico e si annota sulla scheda.')}
+<div class="box warn"><strong class="t">Cliente già allergica agli acrilati</strong> <p>Se la cliente racconta una reazione passata (vescicole, prurito, gonfiore intorno all'unghia o sulle palpebre) o ha un patch test positivo, <strong>non proporre</strong> gel, semipermanente, acrilico o polygel, nemmeno "HEMA free".</p> <ul><li>L'allergia agli acrilati non passa: ogni nuova esposizione può dare reazioni più forti.</li> <li>Nello studio portoghese su 230 casi, oltre all'HEMA molte persone reagivano anche ad altri acrilati (per esempio l'HPMA, positivo nel 64%): cambiare marchio non basta.</li> <li>Un'alternativa è lo smalto tradizionale, ma solo dopo il parere del dermatologo.</li></ul> <p>Scrivi sulla scheda l'allergia, la fonte dell'informazione (racconto o referto) e i servizi che hai sconsigliato. Ricorda alla cliente di segnalarla anche ad altri professionisti: gli acrilati si trovano anche in materiali dentali e medici.</p></div>
 `,
           sources: ['https://www.garanteprivacy.it/garante/doc.jsp?ID=9983210',
             'https://www.eutekne.info/Sezioni/Art_1121522_il_consenso_al_trattamento_dei_dati_non_necessari_all_esecuzione.aspx',
@@ -3093,7 +3109,7 @@ ${B('danger', 'Quando dire di no', 'Infezioni, micosi sospette, ferite aperte, u
             'https://www.garanteprivacy.it/it/registro-delle-attivita-di-trattamento',
             'https://www.studiocataldi.it/articoli/40267-registro-attivita-di-trattamento-chi-deve-redigerlo.asp',
             'https://www.studiocataldi.it/articoli/46336-consenso-informato-piu-stringente-per-i-trattamenti-estetici.asp',
-            'https://www.noze.it/insights/gdpr-dati-sanitari-art9/']
+            'https://www.noze.it/insights/gdpr-dati-sanitari-art9/', 'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown', 'https://eur-lex.europa.eu/eli/reg/2020/1682/oj/eng', 'https://altmeyers.org/en/dermatology/chemotherapy-and-nails-156029', 'https://www.em-consulte.com/article/1742394/figures/nail-toxicity-associated-with-anticancer-agents', 'https://pmc.ncbi.nlm.nih.gov/articles/9262963', 'https://repositorio.hospitaldebraga.pt/entities/publication/cc5b7169-4a9d-434b-b973-a05002cb696e', 'https://www.mdedge.com/content/tackling-acrylate-allergy-sticky-truth']
         },
         {
           id: 'aftercare', simple: "Il lavoro dura di più se la cliente sa come trattarlo: olio ogni giorno, guanti per le pulizie, niente unghie usate come attrezzi, e torna in salone se qualcosa si stacca.", title: 'Consigli post-trattamento', min: 8,
@@ -3112,6 +3128,7 @@ ${F('aftercare-si-no.svg', 'Cosa fare e cosa evitare dopo il servizio.')}
 <tr><td><strong>Non usare solventi</strong> o remover con acetone sulle ricostruzioni</td><td>Opacizzano e ammorbidiscono il prodotto</td></tr>
 <tr><td><strong>Tornare subito</strong> in caso di sollevamenti, dolore, rossore, prurito o macchie</td><td>Prima si interviene, meno danni</td></tr>
 </table>
+<div class="box deep"><strong class="t">Approfondimento: perché l'olio funziona</strong> <p>Gli oli per cuticole, come jojoba o avocado, non arrivano in profondità nella lamina, ma con applicazioni ripetute entrano negli <strong>strati superficiali</strong>. Negli studi di Doug Schoon la vitamina E sciolta in questi oli è penetrata lentamente nella lamina, concentrandosi vicino alla superficie: l'olio fa da "veicolo".</p> <p>La lamina invece assorbe acqua molto in fretta e si gonfia; quando si asciuga si restringe. Questo "su e giù" continuo stressa l'adesione del prodotto, soprattutto alla cuticola.</p> <p><strong>In pratica:</strong> conta la <strong>regolarità</strong>, non la quantità. Una goccia al giorno, tutti i giorni, funziona meglio di tanto olio una volta alla settimana. Il momento più facile da ricordare: la sera, dopo l'ultima volta che ci si lava le mani.</p></div>
 <h2>Come spiegarli</h2>
 <ol class="steps">
 <li><strong>Alla fine del servizio</strong>, mentre la cliente guarda le unghie: è il momento in cui ascolta di più.</li>
@@ -3122,10 +3139,12 @@ ${F('aftercare-si-no.svg', 'Cosa fare e cosa evitare dopo il servizio.')}
 </ol>
 ${F('aftercare-cartoncino.svg', 'Esempio di biglietto post-trattamento: fronte e retro.')}
 ${B('tip', 'Vendi l\'olio, non solo il servizio', 'Proporre un olio per cuticole da usare a casa è utile alla cliente (il lavoro dura di più) e a te (meno riparazioni). Mostrale come applicarlo: una goccia alla base, poi massaggia.')}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Sara fa la parrucchiera. Le sue ricostruzioni si sollevano sempre alla cuticola dopo circa 10 giorni.</p> <p><strong>Ragionamento.</strong> Mani in acqua per ore, shampoo, prodotti chimici e il calore del phon: la lamina si gonfia e si asciuga molte volte al giorno, e la pelle intorno si secca. Il sollevamento parte dalla zona più sottile e più vicina alla pelle.</p> <p><strong>Il piano, scritto sul biglietto:</strong></p> <ul><li>Guanti in nitrile per colori, decolorazioni e lavaggi.</li> <li>Olio ogni sera, crema mani dopo il lavoro.</li> <li>Lunghezza corta e refill ogni 3 settimane invece di 4.</li></ul> <p><strong>Dalla tua parte:</strong> zona della cuticola sottilissima, margine di circa 1 mm, base o builder più flessibile. Al refill successivo confronta le foto: se il sollevamento è diminuito, sai che la strada è giusta.</p></div>
+<div class="box info"><strong class="t">"Le unghie devono respirare?" No</strong> <p>È una delle domande più frequenti. La lamina non respira: è fatta di cellule morte e non ha bisogno di aria. La matrice, cioè la parte viva che produce l'unghia, riceve l'ossigeno dal sangue. Anche sotto smalto e gel piccole molecole come acqua e ossigeno passano lentamente: l'unghia non "soffoca". Le scritte "traspirante" sugli smalti, secondo il chimico Doug Schoon, non sono dimostrate.</p> <p>Perché allora alcune clienti dicono di stare meglio dopo una pausa? Di solito perché in quel periodo usano l'olio e non subiscono rimozioni. Una pausa ha senso quando l'unghia cambia colore o spessore o appare danneggiata: allora si valuta, e si consiglia il medico se serve.</p> <p>Il vero danno quasi sempre viene da <strong>rimozioni fatte male</strong> (strappare, raschiare, limare la lamina), non dal prodotto in sé.</p></div>
 `,
           sources: ['https://booksolo.co/nailedbyalire/aftercare',
             'https://katiebarnesacademy.com/blogs/nail-structure-application/how-to-deal-with-nail-service-breakdown',
-            'https://nailknowledge.org/?p=49737']
+            'https://nailknowledge.org/?p=49737', 'https://nailknowledge.org/blog/2024/02/22', 'https://nailknowledge.org/blog/water-vs-waterless-manicures', 'https://nailknowledge.org/nail-knowledge-base/so-do-nails-breathe', 'https://nailknowledge.org/blog/do-nails-need-to-breathe', 'https://www.michiganfootdoctors.com/white-toenails-from-nail-polish/']
         },
         {
           id: 'portfolio-foto', simple: "Le foto dei tuoi lavori sono il tuo biglietto da visita e il tuo archivio per migliorare. Luce buona, sfondo semplice, cuticole pulite, colori veri. E mai pubblicare senza il consenso della cliente.", title: 'Fotografare i lavori e costruire il portfolio', min: 8,
@@ -3141,6 +3160,7 @@ ${F('foto-set.svg', 'Un set semplice: luce dalla finestra o luce fredda, sfondo 
 <tr><td><strong>Telefono</strong></td><td>Fotocamera normale (non quella dei social), messa a fuoco sulle unghie</td><td>Più controllo e qualità</td></tr>
 <tr><td><strong>Ritocco</strong></td><td>Solo luminosità, contrasto, ritaglio; niente filtri che cambiano il colore</td><td>La cliente deve ricevere ciò che vede in foto</td></tr>
 </table>
+<div class="box pro"><strong class="t">Consiglio da professionista</strong> <ul><li><strong>Temperatura colore.</strong> La luce del giorno è tra circa 5.000 e 6.200 K (kelvin). Sotto i 5.000 K i colori tirano al giallo-rosso, sopra diventano più freddi e azzurri. Quando compri una lampada, controlla i kelvin sulla confezione.</li> <li><strong>Più di una fonte di luce.</strong> Un anello luminoso da solo non basta: affiancalo a una finestra o a una lampada. La luce da più direzioni elimina le ombre che scuriscono i colori e spengono i glitter.</li> <li><strong>Il riflesso.</strong> L'anello luminoso disegna un cerchio sull'unghia che la fa sembrare più spessa. Inclinalo finché il riflesso diventa una linea sottile o un ovale allungato.</li> <li><strong>Il telefono.</strong> Pulisci l'obiettivo, non zoomare oltre 2x (meglio ritagliare dopo), tocca lo schermo per mettere a fuoco, niente flash.</li> <li><strong>Sole diretto e neon:</strong> evitali. Meglio lavorare all'ombra, con luce diffusa.</li></ul></div>
 <h2>Le angolazioni</h2>
 ${F('foto-angolazioni.svg', 'Dall\'alto, di profilo, a tunnel: tre foto per ogni lavoro.')}
 <ol class="steps">
@@ -3151,12 +3171,14 @@ ${F('foto-angolazioni.svg', 'Dall\'alto, di profilo, a tunnel: tre foto per ogni
 </ol>
 ${B('tip', 'Archivio per migliorare', 'Salva le foto di ogni cliente con data e nome della scheda. Al refill rifai le stesse foto: vedrai dove si è spostato l\'apex e dove nascono i sollevamenti.')}
 ${B('warn', 'Consenso prima di pubblicare', 'La foto non serve a eseguire il servizio: per pubblicarla serve un consenso separato e specifico della cliente, che può anche rifiutare. Evita volti, tatuaggi, anelli particolari o altri dettagli che la rendono riconoscibile se non ha autorizzato.')}
+<div class="box pro"><strong class="t">Consiglio da professionista</strong> <p>Per un portfolio riconoscibile, scegli <strong>una o due pose</strong> e ripetile in tutte le foto: l'insieme sembra più professionale, costruisci uno stile e la sessione dura meno.</p> <ul><li>Le clienti non sono modelle: guidale nella posizione. Se le dita non sono dritte, chiedi di tenere la mano intorno a un oggetto (per esempio il flacone del colore).</li> <li>Le luci a barra creano linee di luce sulle unghie: belle sui colori pieni, ma coprono i dettagli della nail art. Per la nail art è meglio una luce tonda e diffusa.</li> <li>Sul telefono puoi bloccare messa a fuoco ed esposizione tenendo premuto lo schermo (blocco AE/AF) e attivare la griglia per allineare le dita.</li> <li>Olio sì, ma poco e massaggiato: polvere o prodotto nelle cuticole rovinano anche il design più bello.</li></ul></div>
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Chiara riceve molte richieste di "unghie come in foto" che poi non riesce a replicare in un'ora di servizio.</p> <p><strong>Il problema.</strong> Il suo profilo mostra quasi solo lavori da gara e nail art complessa. Le clienti scelgono quello che vedono.</p> <p><strong>La soluzione.</strong></p> <ul><li>Pubblica soprattutto i lavori che vuoi vendere davvero: lunghezze portabili, colori di stagione, refill ben fatti.</li> <li>Nella didascalia scrivi il nome del servizio come compare nel tuo listino, così la richiesta arriva già "tradotta".</li> <li>Se hai il consenso, mostra percorsi "prima e dopo" (per esempio unghie rosicchiate): sono le foto che convincono di più chi ha un problema simile.</li> <li>Tieni le foto da gara in una sezione a parte: mostrano la tua tecnica, non il servizio standard.</li></ul></div>
 `,
           sources: ['https://www.scratchmagazine.co.uk/feature/nailfies-nail-tech-expert-photography-tips/',
             'https://www.scratchmagazine.co.uk/feature/simply-salon-nails-photographing-your-nail-work',
             'https://nailac.com.pl/gb/blog/porady/how-to-take-nail-photos-that-will-get-your-clients-attention-',
             'https://www.garanteprivacy.it/garante/doc.jsp?ID=9983210',
-            'https://www.quotidianopiu.it/dettaglio/16439364/consenso-alle-foto-in-centro-estetico-la-firma-non-basta']
+            'https://www.quotidianopiu.it/dettaglio/16439364/consenso-alle-foto-in-centro-estetico-la-firma-non-basta', 'https://www.scratchmagazine.co.uk/feature/5-steps-to-improve-your-nail-photos/', 'https://www.katiebarnesacademy.com/en-ie/blogs/katiebarnesblogs/how-to-improve-your-nail-photos']
         },
         {
           id: 'business', simple: "Il prezzo giusto non si copia: si calcola. Somma materiali, il valore del tuo tempo e le spese fisse, poi aggiungi un margine. Confronta con i prezzi della tua zona.", title: 'Prezzi, agenda e carriera', min: 13,
@@ -3181,6 +3203,7 @@ ${F('calcolo-prezzo.svg', 'Prezzo = materiali + tempo + spese fisse + margine.')
 </ol>
 ${B('info', 'Esempio di calcolo (numeri di fantasia)', 'Materiali 6 €; servizio di 1,5 ore; valore orario 15 € e spese fisse 8 € all\'ora. Prezzo minimo: 6 + 1,5 × (15 + 8) = 40,50 €. Se nella tua zona il servizio costa meno, devi diventare più veloce o ridurre le spese, non lavorare in perdita.')}
 ${B('warn', 'Le tasse e i contributi', 'Dal prezzo incassato vanno tolti imposte e contributi INPS (vedi la lezione sull\'apertura dell\'attività). Il "valore orario" che ti resta in tasca è più basso di quello che incassi.')}
+<div class="box pro"><strong class="t">Consiglio da professionista: come aumentare i prezzi</strong> <p>Rivedere il listino fa parte del lavoro: i costi salgono e la tua velocità e qualità migliorano. Le formatrici di settore suggeriscono:</p> <ul><li><strong>Preavviso di 3–4 settimane.</strong> Per esempio: annuncio all'inizio del mese, nuovi prezzi dal mese successivo. Puoi lasciare il vecchio prezzo agli appuntamenti già prenotati.</li> <li><strong>Messaggio breve e professionale:</strong> data di inizio, una frase sul motivo (costi e formazione), un grazie. Senza scusarti e senza lunghe giustificazioni.</li> <li><strong>Aumenti piccoli e regolari</strong> (alcune fonti indicano intorno al 10% o meno all'anno) pesano meno di un salto improvviso dopo anni.</li> <li>Un prezzo calcolato sui costi reali, come nel metodo sopra, ti dà sicurezza quando lo comunichi.</li></ul> <p>Le clienti scelgono anche per la qualità, la pulizia, la puntualità e il rapporto di fiducia, non solo per il prezzo.</p></div>
 <h2>Agenda e tempi</h2>
 ${F('agenda-tempi.svg', 'Agenda: tempi del servizio più consulenza, consigli e pulizia.')}
 <ul>
@@ -3190,6 +3213,8 @@ ${F('agenda-tempi.svg', 'Agenda: tempi del servizio più consulenza, consigli e 
 <li>Scrivi e comunica in anticipo le regole su <strong>ritardi e disdette</strong> (per esempio entro quante ore si può spostare l'appuntamento).</li>
 <li>Manda un <strong>promemoria</strong> il giorno prima: riduce le assenze.</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: disdette, caparra e acconto</strong> <p>Molti saloni chiedono un anticipo al momento della prenotazione per ridurre le assenze. I dati dei software gestionali (non studi indipendenti) parlano di forti riduzioni delle assenze con anticipo e promemoria. In Italia è importante chiamare le cose con il nome giusto:</p> <ul><li><strong>Caparra confirmatoria</strong> (art. 1385 del Codice civile): se la cliente non si presenta senza giustificato motivo, puoi trattenerla; se sei tu a non rispettare l'appuntamento, devi restituire il doppio.</li> <li><strong>Acconto</strong>: è un anticipo sul prezzo e va restituito se il servizio non viene eseguito.</li></ul> <p>Scrivi le regole in modo chiaro prima della prenotazione: importo, entro quante ore si può disdire senza perderlo, se diventa un buono per un'altra data. Le condizioni comunicate prima sono quelle che contano. Per un caso concreto, chiedi a un consulente o a un'associazione di categoria.</p></div>
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Elisa ha 60 clienti attive ma l'agenda è piena a ondate: una settimana esaurita, la successiva mezza vuota.</p> <p><strong>Diagnosi.</strong> Prenota il refill solo quando la cliente scrive. Così le clienti tornano in ritardo (con più sollevamenti e servizi più lunghi) e alcune spariscono.</p> <p><strong>Cosa cambia.</strong></p> <ul><li>Fissa il prossimo appuntamento <strong>prima che la cliente si alzi</strong>, proponendo due date.</li> <li>Misura per un mese quante clienti escono con il refill già prenotato. Alcuni software di settore indicano una media intorno al 40% e oltre il 60% nei saloni migliori: sono dati commerciali, usali solo come riferimento.</li> <li>Promemoria automatico il giorno prima.</li> <li>Lascia ogni settimana uno o due spazi liberi per riparazioni e clienti nuove.</li></ul> <p>Il refill puntuale aiuta la cliente (unghie più sane e stabili) e il tuo incasso, che diventa più prevedibile.</p></div>
 <h2>Percorsi professionali</h2>
 <table>
 <tr><th>Percorso</th><th>Cosa serve in più</th></tr>
@@ -3206,7 +3231,7 @@ ${F('gara-scheda.svg', 'In gara si giudicano struttura, simmetria, pulizia e smi
             'https://dilei.it/bellezza/cose-e-quanto-costa-il-refill-delle-unghie-in-gel/637264/',
             'https://www.arredamento.it/forum/viewtopic.php?p=300359',
             'https://www.youngnails.com/blogs/news/calculating-your-cost-per-nail-service',
-            'https://www.scratchmagazine.co.uk/news/nailympia-germany-2025-the-results/']
+            'https://www.scratchmagazine.co.uk/news/nailympia-germany-2025-the-results/', 'https://academy.thegelbottle.com/blog/how-to-update-your-prices-confidently-nail-business-pricing-guide-tgb-academy', 'https://ericasata.com/blogs/news/how-to-confidently-increase-your-prices-as-a-nail-artist', 'https://www.filodiritto.com/codici/codice-civile/capo-v-degli-effetti-del-contratto/art-1385', 'https://quifinanza.it/fisco-tasse/leggi/caparra-digitale-ristorante-restituzione/918141/', 'https://www.zenoti.com/en-uk/thecheckin/no-show-revenue-calculator', 'https://www.reservio.com/blog/tips/nail-salon-guide', 'https://schedulingkit.com/statistics/nail-salon-industry-statistics']
         },
         {
           id: 'apertura-fisco', simple: "Per lavorare in proprio servono la qualifica di estetista, la partita IVA, l'iscrizione come artigiana con i contributi INPS e la SCIA al Comune. I numeri cambiano ogni anno: verifica sempre con un commercialista.", title: 'Aprire l\'attività: partita IVA, INPS, SCIA, assicurazione', min: 12,
@@ -3222,6 +3247,7 @@ ${F('percorso-apertura.svg', 'Dalla qualifica alla prima cliente: i passaggi pri
 <li><strong>SCIA</strong> (Segnalazione certificata di inizio attività) allo <strong>SUAP</strong> del Comune, con i requisiti igienico-sanitari dei locali e il nome della responsabile tecnica qualificata.</li>
 <li><strong>Adempimenti pratici</strong>: incassi documentati (documento commerciale), pagamenti elettronici, informativa privacy, tariffe esposte se il Comune lo richiede, assicurazione.</li>
 </ol>
+<div class="box info"><strong class="t">POS e registratore telematico: la novità 2026</strong> <p>Dal 2026, per effetto della Legge di Bilancio 2025, gli strumenti di pagamento elettronico (POS) devono essere <strong>collegati al registratore telematico</strong>. Non è un cavo né un programma: è un'associazione che si fa online, nell'area riservata del portale dell'Agenzia delle Entrate. Per i POS attivati o cambiati dopo l'avvio ci sono scadenze periodiche (per esempio, per quelli di settembre 2026 il termine indicato è il 30 novembre 2026).</p> <p>Sulle sanzioni le fonti non sono d'accordo. Quando apri l'attività, o cambi POS o banca, chiedi al commercialista di fare subito l'associazione.</p></div>
 <h2>Esempio di regole comunali</h2>
 <p>Ogni Comune ha il suo regolamento. Quello di Piacenza (2025), per esempio:</p>
 <ul>
@@ -3241,6 +3267,7 @@ ${F('percorso-apertura.svg', 'Dalla qualifica alla prima cliente: i passaggi pri
 </table>
 ${F('forfettario-esempio.svg', 'Esempio: dagli incassi al reddito su cui si pagano contributi e imposta.')}
 ${B('info', 'Esempio semplificato', 'Incassi 30.000 €. Reddito forfettario = 30.000 × 67% = 20.100 €. Su questo si calcolano i contributi INPS; i contributi versati si deducono, e sul resto si paga l\'imposta del 5% o del 15%. Le spese reali (prodotti, affitto) NON si scaricano: sono già "comprese" nel 33% non tassato.')}
+<div class="box tip"><strong class="t">Il bollo da 2 euro</strong> <p>Chi è in regime forfettario non applica l'IVA. Per questo sulle <strong>fatture senza IVA di importo superiore a 77,47 €</strong> va applicata l'imposta di bollo di 2 € (DPR 642/1972). Con la fattura elettronica il bollo è "virtuale": si indica nel file e si paga con F24 o con addebito dal portale dell'Agenzia, con scadenze trimestrali.</p> <ul><li>Esempio: una ricostruzione da 90 € fatturata a una cliente supera la soglia, quindi serve il bollo.</li> <li>Se lo addebiti alla cliente, quei 2 € diventano un ricavo su cui si pagano imposta e contributi (interpello dell'Agenzia delle Entrate n. 428/2022).</li></ul> <p>Chiedi al commercialista come gestirlo con il tuo documento di incasso e con il tuo programma di fatturazione.</p></div>
 <h2>Contributi INPS artigiani (2026)</h2>
 <ul>
 <li>Si pagano <strong>contributi fissi</strong> su un reddito minimo (minimale) di <strong>18.808 €</strong>: circa <strong>4.521 € l'anno</strong>, in 4 rate, <strong>anche se guadagni meno</strong>.</li>
@@ -3249,6 +3276,7 @@ ${B('info', 'Esempio semplificato', 'Incassi 30.000 €. Reddito forfettario = 3
 <li>Per chi ha iniziato nel 2025 esiste una riduzione del 50% per 36 mesi (non cumulabile con quella del 35%); dalle fonti consultate non risulta estesa a chi apre nel 2026.</li>
 </ul>
 ${B('danger', 'Il primo anno', 'Molte principianti scoprono i contributi fissi solo alla prima scadenza. Metti da parte ogni mese una quota degli incassi per tasse e contributi.')}
+<div class="box case"><strong class="t">Caso pratico: quanto mettere da parte</strong> <p>Riprendiamo l'esempio con 30.000 € di incassi in regime forfettario (calcolo semplificato, senza riduzioni contributive).</p> <table><tr><th>Voce</th><th>Calcolo</th><th>Importo</th></tr> <tr><td>Reddito forfettario</td><td>30.000 × 67%</td><td>20.100 €</td></tr> <tr><td>Contributi INPS</td><td>4.521 fissi + 24% × (20.100 − 18.808)</td><td>circa 4.830 €</td></tr> <tr><td>Imposta al 5%</td><td>(20.100 − 4.830) × 5%</td><td>circa 760 €</td></tr> <tr><td>Imposta al 15%</td><td>(20.100 − 4.830) × 15%</td><td>circa 2.290 €</td></tr></table> <p>Totale: circa <strong>5.600 €</strong> (19% degli incassi) con l'imposta al 5%, circa <strong>7.100 €</strong> (24%) con il 15%. Una regola prudente è mettere da parte <strong>un quinto–un quarto di ogni incasso</strong> su un conto separato. Ricorda che i contributi fissi si pagano anche se incassi poco: nei primi mesi la percentuale reale è più alta. Fai verificare i numeri al commercialista.</p></div>
 <h2>Assicurazione RC</h2>
 <p>Non risulta un <strong>obbligo nazionale</strong> di assicurazione di responsabilità civile per l'estetista (l'obbligo generale riguarda i professionisti iscritti ad albi). Alcune Regioni, Comuni o associazioni di categoria possono richiederla. È comunque <strong>fortemente consigliata</strong>: copre i danni alle clienti (per esempio una reazione allergica o una lesione) e, in salone, i danni a terzi nei locali.</p>
 `,
@@ -3260,7 +3288,7 @@ ${B('danger', 'Il primo anno', 'Molte principianti scoprono i contributi fissi s
             'https://centrofiscale.com/regime-forfettario-2026-requisiti-aliquote/',
             'https://www.comune.piacenza.it/s3/5141/allegati/documenti-e-dati/atto-normativo/regolamenti/regolamenti-criteri-e-indirizziattivit-economiche-commercio-regolamenti/regolamento-acconciatore-estetista-tatuatore_approvato.pdf',
             'https://www.moneyside.app/it/learn/assicurazioni/assicurazione-rc-estetisti',
-            'https://www.money.it/rc-professionale-quando-e-obbligatoria-e-per-quali-lavoratori']
+            'https://www.money.it/rc-professionale-quando-e-obbligatoria-e-per-quali-lavoratori', 'https://quifinanza.it/fisco-tasse/pos-collegato-registratore-cassa-obbligo-sanzioni/960520/', 'https://www.agendadigitale.eu/documenti/collegamento-registratori-telematici-e-pos-ecco-le-nuove-regole/', 'https://www.money.it/pos-e-registratore-telematico-obbligo-mensile', 'https://www.fiscozen.it/guide/chi-paga-bollo-fatture-regime-forfettario/', 'https://www.fattureincloud.it/glossario/regime-forfettario/imposta-bollo/', 'https://copia.ordinepsicologi.piemonte.it/wp-content/uploads/2022/10/Focus-Forfettari-il-bollo-riaddebitato-al-cliente-costituisce-ricavo-tassato.pdf']
         }
       ]
     },
@@ -3288,6 +3316,7 @@ ${F("onicofagia-segni.svg", "Come si riconosce un'unghia rosicchiata: vista dall
 <li>Una <strong>banda scura longitudinale</strong> può comparire per il trauma sulla matrice. Una banda scura nuova va sempre fatta vedere al medico: non spetta a te dire da cosa dipende.</li>
 </ul>
 ${B("info", "Perché l'iponichio si alza", "L'iponichio è la pelle che sigilla lo spazio sotto il bordo libero. Quando la lamina manca, viene toccato e morso continuamente. Si ispessisce come una piccola callosità e si solleva sopra il livello della lamina. È pelle viva: non si taglia e non si lima. Si spinge solo delicatamente verso il basso con la cartina.")}
+<div class="box deep"><strong class="t">Approfondimento: morsa o "pizzicata"?</strong> <p>Non tutte le unghie rovinate sono morse. L'<strong>onicotillomania</strong> è l'abitudine di strappare o "pizzicare" l'unghia e la pelle intorno, con le dita o con strumenti (forbicine, lime). I segni sono diversi:</p> <table><tr><th>Onicofagia (morso)</th><th>Onicotillomania (pizzicare)</th></tr> <tr><td>Bordo corto e seghettato, cuticole assenti o strappate</td><td>Solchi trasversali paralleli al centro della lamina, spesso sui pollici ("deformità da tic")</td></tr> <tr><td>Colpisce soprattutto le mani</td><td>Lamina assottigliata, lunula più grande, pieghe arrossate o con crosticine</td></tr></table> <p>Perché ti interessa: chi pizzica lo fa spesso con l'altra mano, quindi il gel non basta. Lascia superfici lisce e senza bordi, e lavora sulla zona della cuticola con più cautela. Un'altra nota: mordere anche le unghie dei piedi è meno comune e può accompagnarsi ad altri disturbi; in questi casi il suggerimento del medico è ancora più importante.</p></div>
 <h2>Rischi per la salute</h2>
 <p>Mordere le unghie porta i batteri della bocca sulla pelle intorno all'unghia. Le complicanze descritte in letteratura sono:</p>
 <ul>
@@ -3306,6 +3335,7 @@ ${F("onicofagia-semaforo.svg", "Semaforo della valutazione: verde si lavora, gia
 <tr><td><strong>Rosso</strong></td><td>Ferite aperte o che sanguinano, gonfiore, calore, pus, dolore che non passa, lamina staccata dal letto (onicolisi), banda scura nuova, verruche.</td><td>Niente servizio. Spiega con calma il perché e consiglia il medico o il dermatologo.</td></tr>
 </table>
 ${B("danger", "Quando NON lavorare", "Ferite aperte, pellicine strappate che sanguinano, gonfiore, pus, dolore persistente o unghia staccata dal letto (onicolisi): rimanda la seduta e consiglia il dermatologo. Coprire un'infiammazione con il gel non la cura: la chiude sotto il prodotto e può peggiorarla.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Federica, 28 anni, porta la foto di unghie a mandorla lunghe 2 cm per il suo matrimonio, tra 6 settimane. Le sue unghie sono rosicchiate fino al letto, le pellicine sono strappate ma la pelle è chiusa.</p> <p><strong>Ragionamento.</strong> Semaforo verde per lavorare, ma il letto è corto: la regola dell'allungamento di circa 1/3 della lamina dice che 2 cm sono fuori portata. Una leva così lunga su una base piccola si stacca, e Federica non è abituata ad avere "qualcosa" sulla punta delle dita.</p> <p><strong>La proposta.</strong></p> <ul><li>Oggi: unghie corte e robuste, cover per allungare otticamente il letto.</li> <li>Controllo dopo 2 settimane, e un altro una settimana prima del matrimonio.</li> <li>Per il giorno delle nozze: forma a mandorla corta, colore chiaro coprente, eventualmente decori leggeri.</li></ul> <p>Mostrale foto di risultati simili. Una promessa realistica mantenuta vale più di un "sì" che si rompe prima della cerimonia.</p></div>
 <h2>Cosa valutare, passo per passo</h2>
 <ol class="steps">
 <li><strong>Parla con la cliente</strong>. Da quanto tempo si mangia le unghie? Lo fa ancora? Morde anche le pellicine? Lo fa di notte, quando è nervosa, quando si annoia? Che cosa si aspetta dal trattamento?</li>
@@ -3324,6 +3354,7 @@ ${B("danger", "Quando NON lavorare", "Ferite aperte, pellicine strappate che san
 <li>Non fare diagnosi e non dare giudizi. Frasi come "devi smettere" mettono a disagio. Meglio: "Lavoriamo insieme: io ti do unghie belle, tu provi a non morderle".</li>
 </ul>
 ${B("tip", "Una frase utile", "«Le tue unghie possono migliorare molto. Iniziamo corte e robuste, poi allunghiamo un po' alla volta mentre la tua unghia ricresce.» Dà fiducia e mette aspettative realistiche.")}
+<div class="box deep"><strong class="t">Approfondimento: cosa funziona davvero per smettere</strong> <ul><li><strong>Inversione dell'abitudine</strong> (habit reversal training): è il trattamento con più prove. In uno studio gli episodi di morso sono scesi da circa 10 a 0,3 al giorno, e il 40% delle persone ha smesso del tutto. Una revisione del 2025 su 21 studi la conferma come l'intervento più efficace.</li> <li><strong>Smalti amari</strong>: sono il rimedio più diffuso, ma le prove sono deboli. In uno studio i promemoria che non si possono togliere hanno avuto meno abbandoni (12%) dello smalto amaro (26%).</li> <li><strong>Farmaci</strong>: le prove sono scarse e spettano solo al medico.</li></ul> <p>Le revisioni dermatologiche dicono che la manicure professionale può aiutare le persone motivate e nasconde l'unghia rovinata mentre ricresce. Limare i bordi rotti riduce gli "appigli" che fanno partire il morso. Tu sei un aiuto concreto, ma la decisione di smettere resta della cliente.</p></div>
 <h2>Errori frequenti</h2>
 <ul>
 <li>Lavorare su una pellicina appena strappata "perché tanto si copre".</li>
@@ -3335,7 +3366,7 @@ ${B("tip", "Una frase utile", "«Le tue unghie possono migliorare molto. Iniziam
           sources: ['https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/',
             'https://www.my-personaltrainer.it/salute-benessere/onicofagia-conseguenze-terapia.html',
             'https://www.my-personaltrainer.it/salute/mangiarsi-le-unghie-perche-non-e-solo-un-vizio-e-quali-sono-i-rischi-per-la-salute.html',
-            'https://www.scratchmagazine.co.uk/blog/form-fitting-for-nail-biters']
+            'https://www.scratchmagazine.co.uk/blog/form-fitting-for-nail-biters', 'https://repositori.uvic-ucc.cat/handle/10854/180495']
         },
         {
           id: 'onicofagia-costruzione', title: 'Costruire su unghie rosicchiate', min: 18,
@@ -3354,6 +3385,7 @@ ${F("onicofagia.svg", "Ricostruzione su unghie rosicchiate in quattro passaggi."
 </table>
 <p>In questa lezione seguiamo la <strong>cartina</strong>, che è il metodo più adattabile per chi inizia.</p>
 ${F("onicofagia-cartina-adattata.svg", "Come rifilare la cartina: linguetta, taglio a U per l'iponichio, lati a 45°, cartina aderente che spinge giù la pelle.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: se scegli il tip</strong> <p>Sulle unghie rosicchiate il polpastrello è spesso gonfio e rialzato: un tip normale non si appoggia bene e la pelle lo spinge verso l'alto, così il tip si stacca in punta. Le tecniche usate dalle professioniste:</p> <ul><li>Usa tip <strong>con l'incavo</strong> (la zona di contatto) e rifilalo su misura, sia nell'incavo sia ai lati, finché il tip si "siede" sull'unghia senza fessure.</li> <li>Scegli forme <strong>tonde e di lunghezza moderata</strong>: punte e angoli sono più facili da afferrare con i denti.</li> <li>Se resta uno spazio sotto il tip, o se la pelle davanti all'unghia è gonfia o ferita, passa alla cartina o rimanda.</li></ul> <p>Il letto corto si nasconde con un cover rosa o "camouflage" steso in modo da portare la smile line dove la vuoi.</p></div>
 <h2>Adattare la cartina: il passaggio decisivo</h2>
 <p>Con una mangiatrice di unghie la cartina deve stare <strong>a filo del bordo</strong>, anche se il bordo quasi non c'è. Se resta uno spazio tra unghia e cartina, il prodotto cola sotto. Si forma uno scalino che è un punto debole e, in più, è un appiglio da mordere.</p>
 <ol class="steps">
@@ -3365,6 +3397,7 @@ ${F("onicofagia-cartina-adattata.svg", "Come rifilare la cartina: linguetta, tag
 </ol>
 ${B("warn", "Non deve fare male", "Tirare la cartina verso il basso serve ad abbassare la pelle, non a schiacciarla. Se la cliente sente dolore, allenta e rifila meglio la U. Il dolore è un segnale di pressione su tessuti vivi.")}
 ${F("onicofagia-step.svg", "Costruzione in sei passaggi: preparazione, cartina, cover, bordo, apex, limatura.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Su una cliente la cartina non entra: il cuscinetto di pelle davanti all'unghia è più alto della lamina e la lamina è quasi piatta, un po' concava.</p> <p><strong>Come procede una formatrice esperta.</strong></p> <ol><li>Taglia la parte superiore della linguetta della cartina.</li> <li>Rifila la cartina perché tocchi il bordo dell'unghia, e taglia una piccola "U" dove l'iponichio è più alto: toglie pressione dalla pelle.</li> <li>Fai scivolare la cartina sotto: spinge in basso il cuscinetto e diventa una base su cui costruire.</li> <li>Taglia i lati della cartina a circa 45° partendo dal solco laterale: si chiude meglio e la curva a C viene più regolare.</li></ol> <p>Se la lamina è concava, livellala prima con un velo sottile di builder: se la cartina è curva e l'unghia piatta resta uno spazio dove il prodotto cola sotto.</p> <p><strong>Limite:</strong> si lavora solo se la pelle intorno non è gonfia ed è integra.</p></div>
 <h2>La costruzione, passo per passo</h2>
 <ol class="steps">
 <li><strong>Prepara</strong> come sempre: igiene delle mani, cuticola (la pelle morta sulla lamina) arretrata e rimossa delicatamente senza tagli, opacizzazione leggera (non assottigliare una lamina già fragile), polvere via, disidratante, primer se previsto dal sistema.</li>
@@ -3378,6 +3411,7 @@ ${F("onicofagia-step.svg", "Costruzione in sei passaggi: preparazione, cartina, 
 ${B("info", "Cuticola e pterigio non sono la stessa cosa", "In preparazione togli solo la cuticola, cioè la pelle morta attaccata alla lamina. Lo pterigio invece è un'alterazione dell'unghia (una specie di cicatrice), non un sinonimo di cuticola: non si rimuove, si indirizza al medico.")}
 ${F("cover-letto.svg", "Il cover prolunga visivamente il letto ungueale.")}
 ${F("onicofagia-proporzioni.svg", "Proporzioni: allungamento al massimo circa 1/3 della lamina.")}
+<div class="box warn"><strong class="t">Lamina sottile, rischio calore più alto</strong> <p>Le unghie rosicchiate hanno spesso una lamina sottile e irregolare e un letto sensibile. Una lamina sana fa da "cuscinetto" tra il prodotto che scalda in lampada e il letto ungueale; se è sottile, il calore arriva quasi tutto. In più il cover e il builder coprono una superficie piccola, e si tende a stenderli spessi.</p> <ul><li>Cover e builder in strati sottili, polimerizzando tra uno e l'altro.</li> <li>Avvio morbido in lampada (modalità low heat, o mano appena fuori per qualche secondo), poi polimerizzazione completa.</li> <li>Avvisa prima la cliente: "Se senti caldo, togli la mano".</li></ul> <p>Una cliente che si brucia alla prima seduta difficilmente torna, e il percorso di recupero si ferma prima di iniziare.</p></div>
 <h2>Quanto allungare</h2>
 <p>Una formatrice professionale indica una regola semplice: l'allungamento non dovrebbe superare circa <strong>1/3 della lunghezza della lamina</strong>. A volte serve un po' di più solo per arrivare dove sarebbe il bordo naturale. Il motivo: una leva lunga su un'unghia piccola fa forza sulla lamina e sul letto, e la cliente non è abituata ad avere "qualcosa in più" sulla punta delle dita.</p>
 ${B("tip", "Niente bordi da mordicchiare", "La forma deve essere liscia e arrotondata, senza angoli vivi. Se lasci un bordo o uno scalino, la cliente può iniziare a «pizzicarlo» al posto di mordere: cambia l'abitudine, non il problema.")}
@@ -3401,7 +3435,7 @@ ${B("tip", "Niente bordi da mordicchiare", "La forma deve essere liscia e arroto
           sources: ['https://www.scratchmagazine.co.uk/blog/form-fitting-for-nail-biters',
             'https://silcare.com/en/blog/how-to-deal-with-a-clients-bitten-nails-step-by-step-reconstruction-of-bitten-nails-1716549279.html',
             'https://www.salongeek.com/threads/sculpting-bitten-nails.58468/',
-            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes']
+            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://www.salongeek.com/threads/help-my-first-nail-biter.67797/', 'https://www.bustle.com/life/best-fake-nails-for-nail-biters', 'https://nailknowledge.org/?p=49737', 'https://nailknowledge.org/?p=44956', 'https://www.scratchmagazine.co.uk/feature/heat-spikes-in-gel-nail-services-why-they-happen-how-to-avoid-them']
         },
         {
           id: 'onicofagia-percorso', title: 'Il percorso di recupero: refill, tempi e consigli', min: 12,
@@ -3412,6 +3446,7 @@ ${F("onicofagia-timeline.svg", "Linea del tempo indicativa del recupero: dalla p
 <h2>Quanto ci vuole</h2>
 <p>L'unghia della mano cresce in media <strong>circa 3,5 mm al mese</strong> (3,47 mm in uno studio su giovani adulti). Un'unghia completa, dalla cuticola al bordo, si rinnova in circa <strong>4–6 mesi</strong>. Per questo il recupero di un'unghia rosicchiata si misura in mesi, non in settimane.</p>
 ${B("info", "Il letto può restare corto", "Se la cliente si è mangiata le unghie per anni, una parte del letto ungueale può restare più corta per sempre. Anche smettendo di mordere, la lamina non sempre «riattacca» fino in fondo. Il cover servirà ancora per l'effetto ottico. Dillo con delicatezza, senza promesse.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: misura i progressi in millimetri</strong> <p>Con una crescita di circa 3,5 mm al mese, in 2 settimane la lamina avanza di circa 1,5–2 mm. È poco a occhio, ma si vede bene se lo misuri.</p> <ul><li>A ogni controllo misura con un righello o un calibro la distanza tra cuticola e <strong>linea onicodermica</strong> (dove la lamina si stacca dal letto) di due dita di riferimento, per esempio indice e anulare.</li> <li>Scrivi i numeri sulla scheda accanto alla foto.</li> <li>Mostra il grafico alla cliente: "Due mesi fa il tuo letto misurava 9 mm, oggi 11".</li></ul> <p>Tieni presenti i tempi lunghi: una fonte tecnica riporta un recupero che ha richiesto 11 mesi. Se a ogni seduta c'è un numero che sale, la cliente ha un motivo concreto per non mordere.</p></div>
 <h2>Appuntamenti: perché più ravvicinati all'inizio</h2>
 <ul>
 <li>Le ricostruzioni su unghie molto rosicchiate <strong>durano meno</strong> di quelle su unghie sane. La superficie di appoggio è piccola e la cliente può ancora "provare" a mordere.</li>
@@ -3419,6 +3454,7 @@ ${B("info", "Il letto può restare corto", "Se la cliente si è mangiata le ungh
 <li>Continua a vederla anche quando ha smesso di mordere: i controlli regolari aiutano a non ricominciare.</li>
 </ul>
 ${F("refill.svg", "Ricrescita e refill: il profilo prima e dopo il riequilibrio.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: proponi un percorso, non un servizio</strong> <p>Chi si mangia le unghie ha bisogno di appuntamenti più frequenti all'inizio e di continuare i controlli anche dopo aver smesso. Presentarlo come un <strong>percorso</strong> rende tutto più chiaro:</p> <ul><li>Prima seduta: consulenza, foto "prima", ricostruzione corta.</li> <li>Primi 2–3 mesi: controlli ravvicinati (circa ogni 2 settimane), più brevi di un refill completo.</li> <li>Poi refill normali ogni 3–4 settimane.</li></ul> <p>Scrivi sulla scheda e sul biglietto le date già fissate. Prezza i controlli brevi per il tempo reale che richiedono: la cliente sa in anticipo quanto spenderà e tu non lavori in perdita. Quando la cliente smette di mordere, festeggialo con una foto confronto: è anche la pubblicità più efficace (con il suo consenso).</p></div>
 <h2>Il refill su ex mangiatrice di unghie</h2>
 <ol class="steps">
 <li>Confronta con la foto della seduta precedente: il letto è cresciuto? Ci sono nuove ferite?</li>
@@ -3429,6 +3465,7 @@ ${F("refill.svg", "Ricrescita e refill: il profilo prima e dopo il riequilibrio.
 <li>Allunga il bordo libero <strong>poco alla volta</strong>, solo se la cliente si trova bene.</li>
 </ol>
 ${F("onicofagia-aftercare.svg", "Il kit dei consigli a casa: olio, limetta, guanti, refill puntuale.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Dopo due mesi senza problemi, Anna torna con tre unghie morse e una staccata: "È stato un periodo stressante, scusa".</p> <p><strong>Come rispondi.</strong> Niente rimproveri: le ricadute sono normali nelle abitudini ripetitive. Un tono giudicante la spingerebbe a non tornare più.</p> <p><strong>Cosa fai.</strong></p> <ul><li>Controlla la pelle: se ci sono ferite aperte, sistemi solo le unghie integre e rimandi le altre.</li> <li>Lima e leviga ogni bordo morso o scheggiato: niente appigli.</li> <li>Accorcia di nuovo dove serve; la lunghezza si riconquista.</li> <li>Rivedi con lei i momenti "a rischio" e fissa un controllo ravvicinato.</li></ul> <p>Se le ricadute sono frequenti o l'abitudine è legata all'ansia, ricordale con delicatezza che esistono percorsi efficaci, come l'inversione dell'abitudine, e che può parlarne con il medico.</p></div>
 <h2>Consigli a casa (aftercare)</h2>
 <table>
 <tr><th>Consiglio</th><th>Perché</th></tr>
@@ -3450,7 +3487,7 @@ ${B("tip", "Fai vedere i progressi", "Una foto ogni refill, sempre con la stessa
           sources: ['https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112380',
             'https://www.healthline.com/health/how-long-does-it-take-for-a-toenail-to-grow-back',
             'https://www.scratchmagazine.co.uk/blog/form-fitting-for-nail-biters',
-            'https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/']
+            'https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/', 'https://nailknowledge.org/?p=49737']
         },
         {
           id: 'unghie-difficili', title: 'Unghie a cucchiaio, ski-jump, a pinza, piatte', min: 16,
@@ -3477,10 +3514,12 @@ ${F("unghie-difficili.svg", "Quattro unghie difficili e la strategia di costruzi
 <tr><td><strong>Molto curva (a tubo)</strong></td><td>Dalla punta la C è quasi un mezzo cerchio.</td><td>La cartina fatica ad aderire ai lati.</td><td>Rifila la cartina ai lati, curva a C che segue quella naturale, niente pinching aggiuntivo.</td></tr>
 </table>
 ${F("cucchiaio-livellamento.svg", "Unghia a cucchiaio vista dalla punta: prima livelli la conca, poi costruisci.")}
+<div class="box deep"><strong class="t">Approfondimento: perché sulle lamine flessibili il prodotto rigido si stacca</strong> <p>Una lamina sottile e morbida si piega a ogni movimento delle dita. Un prodotto rigido non la segue: a ogni flessione l'adesione viene "strattonata", soprattutto ai bordi, finché si apre un varco. Le lamine sottili sono anche le più sensibili all'acqua: si gonfiano e si asciugano più delle lamine spesse, e questo aggiunge altro stress.</p> <ul><li>Scegli prodotti <strong>flessibili</strong> (rubber base, builder morbidi) e stendili sottili.</li> <li>Lunghezza contenuta: meno leva, meno flessione.</li> <li>Per le occasioni speciali, su lamine molto deboli, si può usare un gel trasparente rinforzato con fibre, sempre sottile.</li></ul> <p>Più spessore non risolve: aumenta la rigidità e quindi lo "strappo" alla base.</p></div>
 <h2>Unghia a cucchiaio: attenzione alla salute</h2>
 <p>La coilonichia può avere molte cause. La carenza di ferro (anemia) è tra le più note e più comuni; altre sono malattie della pelle come la psoriasi, problemi della tiroide, micosi, traumi ripetuti o il contatto frequente con solventi. Nei bambini piccoli può essere normale e scomparire con la crescita.</p>
 ${B("warn", "Comparsa recente? Medico", "Se la forma a cucchiaio è comparsa da poco, o la cliente è stanca e pallida, consiglia un controllo dal medico. Tu non fai diagnosi: segnali solo che vale la pena controllare.")}
 ${F("ski-jump-correzione.svg", "Ski-jump di profilo: a sinistra l'errore, al centro dove accorciare, a destra la correzione con cartina inclinata e zona 2 più piena.")}
+<div class="box info"><strong class="t">Unghia a pinza: quando è un segnale</strong> <p>L'unghia a pinza colpisce soprattutto gli alluci, molto più raramente le mani; secondo alcune stime riguarda circa lo 0,9% delle persone. Può essere ereditaria (di solito uguale sui due lati) oppure acquisita (spesso asimmetrica). Le forme acquisite sono state associate anche a malattie generali.</p> <p>Per te significa:</p> <ul><li>Una curva "a pinza" <strong>comparsa da poco</strong>, soprattutto su un solo dito o sulle mani, è un buon motivo per consigliare il medico.</li> <li>I bordi che premono nei solchi possono dare dolore, infiammazione e infezioni ripetute: in questo caso la cura è del podologo o del medico.</li> <li>I trattamenti conservativi spesso danno solo un miglioramento temporaneo: non promettere di "raddrizzare" l'unghia con la ricostruzione.</li></ul></div>
 <h2>Ski-jump: perché si accorcia prima</h2>
 <p>Se lasci il bordo naturale che sale, il tip o la cartina si appoggiano a quella salita e la seguono. Accorciando fino al punto in cui la lamina è ancora dritta, appoggi l'allungamento su una base in asse con il dito.</p>
 <ol class="steps">
@@ -3491,6 +3530,7 @@ ${F("ski-jump-correzione.svg", "Ski-jump di profilo: a sinistra l'errore, al cen
 </ol>
 <h2>La regola dell'apex</h2>
 ${B("tip", "Regola sull'apex", "Più l'allungamento è lungo, più l'apex si sposta verso la cuticola, ma senza creare una gobba. Un apex troppo avanti fa piegare il bordo libero verso il basso e lo indebolisce.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: la cartina segue la forma finale</strong> <table><tr><th>Forma</th><th>Cartina di profilo</th><th>Cartina dall'alto</th><th>Apex</th></tr> <tr><td>Quadrata, squoval</td><td>Dritta, in asse con il centro del dito</td><td>Aperta, lati paralleli</td><td>Al centro del letto allungato, poi dritto verso la punta</td></tr> <tr><td>Mandorla, ovale, stiletto</td><td>Leggermente verso il basso</td><td>Chiusa</td><td>A circa 1/3 del letto, poi in discesa verso la punta</td></tr> <tr><td>Ballerina, coffin</td><td>Dritta</td><td>Chiusa</td><td>A circa 1/3 del letto, poi dritto verso la punta</td></tr></table> <p>Nella ballerina si restringe solo l'allungamento: se limi i lati in diagonale anche sopra il letto, indebolisci la struttura. Evita anche di riempire troppo i lati: il peso in più aumenta lo stress e le rotture.</p></div>
 <h2>Errori frequenti</h2>
 <ul>
 <li>Seguire la conca del cucchiaio con la cartina.</li>
@@ -3502,7 +3542,7 @@ ${B("tip", "Regola sull'apex", "Più l'allungamento è lungo, più l'apex si spo
 `,
           sources: ['https://dermnetnz.org/cases/what-can-cause-these-flattened-nails', 'https://www.healthline.com/health/spoon-nails-koilonychia',
             'https://en.wikipedia.org/wiki/Pincer_nail',
-            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes']
+            'https://www.katiebarnesacademy.com/blogs/nail-structure-application/how-to-fit-nail-forms-to-different-nail-shapes', 'https://nailknowledge.org/?p=49737', 'https://nailknowledge.org/blog/water-vs-waterless-manicures']
         }
       ]
     },
@@ -3773,6 +3813,7 @@ ${F("piede-unghia-anatomia.svg", "L'unghia dell'alluce: più spessa, più curva,
 </table>
 <p>I dati di crescita vengono da uno studio su giovani adulti (3,47 mm/mese mani, 1,62 mm/mese piedi). Con l'età, in inverno e con alcune malattie la crescita rallenta. Un effetto pratico: il <strong>semipermanente sui piedi dura di più</strong> che sulle mani, perché la ricrescita si nota più tardi.</p>
 ${F("piede-taglio.svg", "Taglio corretto e velocità di crescita.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: fai il conto della ricrescita</strong> <p>Con circa 1,6 mm al mese puoi stimare quando un segno sparirà, e dirlo alla cliente prima che si preoccupi.</p> <ul><li>Un segno (una macchia, un'ammaccatura, un'impronta di rimozione) a 10 mm dalla punta dell'alluce uscirà in circa <strong>6 mesi</strong> (10 ÷ 1,6).</li> <li>Un segno alla base di un alluce lungo 20 mm ci metterà più di <strong>un anno</strong>.</li> <li>Sulle mani, con circa 3,5 mm al mese, lo stesso segno a 10 mm sparisce in meno di 3 mesi.</li></ul> <p>Annota la data e la distanza dalla cuticola sulla scheda, con una foto. Se il segno <strong>non avanza</strong> con la crescita, o si allarga, non è un normale segno da trauma: consiglia il medico.</p></div>
 <h2>Il taglio corretto</h2>
 <p>I dermatologi e i diabetologi danno la stessa indicazione: <strong>taglio dritto</strong>. Gli angoli si smussano appena con la lima, non si arrotondano con le forbici e non si scavano.</p>
 ${F("piede-taglio-step.svg", "Taglio passo per passo: ammorbidisci, taglia dritto a piccoli colpi, lima gli angoli, controlla la lunghezza.")}
@@ -3786,6 +3827,7 @@ ${F("piede-taglio-step.svg", "Taglio passo per passo: ammorbidisci, taglia dritt
 </ol>
 ${B("danger", "Non scavare i lati", "Scavare negli angoli o tagliarli «a V» lascia uno spuntone di unghia dentro il solco. Crescendo, lo spuntone entra nella pelle: è il modo più comune per creare un'unghia incarnita. Un angolo già dolente, arrossato o gonfio non si tocca: è competenza del podologo.")}
 ${F("scarpa-pressione.svg", "La scarpa conta: punta stretta (pressione sugli angoli) e punta comoda.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>La signora Rina, 79 anni, chiede di "sistemare" gli alluci: le unghie sono molto spesse, giallastre e difficili da tagliare.</p> <p><strong>Ragionamento.</strong> Non è "solo l'età". Un'unghia gialla, ispessita e friabile può essere una micosi; un'unghia spessissima e deformata è un'unghia ipertrofica, che per legge è competenza del podologo. In più a quest'età possono esserci diabete, problemi di circolazione o farmaci anticoagulanti.</p> <p><strong>Cosa fai.</strong></p> <ul><li>Anamnesi completa, anche se è una cliente abituale.</li> <li>Non assottigliare né tagliare con forza gli alluci spessi: consiglia il podologo, con un biglietto e un nome di riferimento.</li> <li>Sulle altre unghie sane puoi lavorare normalmente: ammorbidire, tagliare dritto a piccoli colpi, limare gli angoli.</li> <li>Niente colore sulle unghie sospette.</li></ul> <p>Così la cliente resta tua per la parte estetica, e riceve la cura giusta per il resto.</p></div>
 <h2>Perché le unghie si incarniscono</h2>
 <ul>
 <li><strong>Taglio sbagliato</strong>: troppo corto, arrotondato o scavato ai lati.</li>
@@ -3794,6 +3836,7 @@ ${F("scarpa-pressione.svg", "La scarpa conta: punta stretta (pressione sugli ang
 <li><strong>Forma dell'unghia</strong>: unghie molto curve o a pinza.</li>
 </ul>
 <p>Puoi dare consigli di prevenzione (taglio, scarpe comode). Il trattamento di un'unghia incarnita spetta al podologo o al medico.</p>
+<div class="box warn"><strong class="t">Unghia nera all'alluce: ematoma o altro?</strong> <p>Una macchia scura sotto l'unghia del piede è spesso un <strong>ematoma</strong>, cioè sangue dovuto a scarpe strette, corsa o urti. Di solito colpisce l'alluce (a volte entrambi), ha un bordo curvo e netto verso la base e <strong>si sposta in avanti</strong> mentre l'unghia cresce.</p> <p>Segnali che invece vanno fatti vedere subito al dermatologo:</p> <ul><li>una banda scura in lunghezza larga più di circa 3 mm, o che si allarga;</li> <li>colori diversi o bordi irregolari;</li> <li>pigmento che passa sulla pelle intorno all'unghia (segno di Hutchinson);</li> <li>un solo dito colpito, soprattutto pollice o alluce, senza un trauma ricordato;</li> <li>unghia che si rovina o sanguina.</li></ul> <p>Non coprirla con il colore: fotografala con la data e consiglia la visita. Solo il medico può fare la diagnosi.</p></div>
 <h2>Cuticole dei piedi</h2>
 <p>Come per le mani, la cuticola si arretra <strong>delicatamente</strong>, dopo averla ammorbidita. Si toglie solo la pelle morta sulla lamina. L'Accademia americana di dermatologia sconsiglia di tagliare le cuticole o di spingerle con forza: la cuticola è una barriera contro i germi.</p>
 <h2>Errori frequenti</h2>
@@ -3808,7 +3851,7 @@ ${F("scarpa-pressione.svg", "La scarpa conta: punta stretta (pressione sugli ang
             'https://www.aad.org/public/everyday-care/nail-care-secrets/basics/how-to-trim-nails',
             'https://aad.org/nail-care-secrets/manicure-pedicure-safety',
             'https://www.healthline.com/health/how-long-does-it-take-for-a-toenail-to-grow-back',
-            'https://www.quotidianosanita.it/scienza-e-farmaci/piede-diabetico-ecco-il-decalogo-della-sid-per-prevenirlo/']
+            'https://www.quotidianosanita.it/scienza-e-farmaci/piede-diabetico-ecco-il-decalogo-della-sid-per-prevenirlo/', 'https://cdn.enzyklopaedie-dermatologie.de/en/dermatology/subungual-melanoma-120192', 'https://actasdermo.org/en-is-hutchinson-s-sign-pathognomic-subungual-articulo-S1578219018301719', 'https://www.pulsetoday.co.uk/?p=15395', 'https://cislfp.it/wp-content/uploads/2018/10/d.-m.-666-1994-podologo.pdf', 'https://www.michiganfootdoctors.com/white-toenails-from-nail-polish/', 'https://iwgdfguidelines.org/wp-content/uploads/2019/05/02-IWGDF-prevention-guideline-2019.pdf']
         },
         {
           id: 'piedi-igiene', title: 'Igiene, micosi e piede diabetico', min: 16,
@@ -3835,6 +3878,7 @@ ${F("piede-segnali-stop.svg", "Segnali di STOP: quando non si lavora e si consig
 </table>
 ${B("danger", "Regola", "Mai coprire con gel o semipermanente un'unghia con sospetta micosi (gialla o bianca, ispessita, friabile, sollevata). Sospendi il servizio e consiglia medico o podologo. Coprirla non la cura, nasconde il problema e contamina gli strumenti.")}
 ${B("info", "Cosa dire alla cliente", "«Vedo un cambiamento nel colore e nello spessore dell'unghia. Non posso dirti cosa sia, ma è meglio farlo vedere al medico o al podologo prima di coprirla. Appena ti dà il via libera, ti aspetto.» Chiaro, gentile, senza diagnosi.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Valentina vuole il semipermanente rosso per le vacanze. Il suo alluce destro è giallastro, un po' spesso e friabile sul bordo. "Tanto con il colore non si vede".</p> <p><strong>Perché no.</strong> Gel e semipermanente sigillano la lamina: i podologi li considerano controindicati finché un'infezione da funghi non è guarita. Il colore non cura la micosi, la nasconde, e intanto il problema può peggiorare. Una ricerca del 2025 ha collegato l'uso frequente di cosmetici per unghie e i traumi ripetuti alle infezioni fungine, senza però dire che il gel ne sia la causa.</p> <p><strong>Cosa puoi proporre.</strong></p> <ul><li>Spiegazione gentile, senza diagnosi, e consiglio di andare dal podologo o dal medico.</li> <li>Una pedicure estetica di base su unghie e pelle sane, con strumenti monouso o sterilizzati e lima buttata subito.</li> <li>Un nuovo appuntamento quando avrà il via libera.</li></ul></div>
 <h2>Il pediluvio: dove si nascondono i germi</h2>
 <p>Nel 2000, in California, oltre 100 clienti di uno stesso salone hanno sviluppato foruncoli alle gambe dopo la pedicure. Erano causati da un micobatterio (<em>Mycobacterium fortuitum</em>) cresciuto nelle tubature delle vasche idromassaggio. In una successiva indagine dei CDC i micobatteri sono stati trovati in 29 vasche su 30 controllate in 18 saloni. Per questo oggi si preferiscono vaschette semplici, senza tubature, o con fodere monouso.</p>
 ${F("pediluvio-disinfezione.svg", "Pulizia e disinfezione della vaschetta dopo ogni cliente, con il registro.")}
@@ -3849,6 +3893,7 @@ ${F("pediluvio-disinfezione.svg", "Pulizia e disinfezione della vaschetta dopo o
 <li><strong>Registra</strong>: data, ora, iniziali di chi ha fatto la disinfezione.</li>
 </ol>
 ${B("tip", "Fodere monouso", "Le fodere usa e getta per vaschette si buttano dopo ogni cliente: non si lavano e non si riusano. La vaschetta sotto va comunque pulita.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: cosa non si può disinfettare</strong> <p>Lime in carta o spugna, buffer, pietra pomice, raspe abrasive non metalliche, spazzolini: sono materiali <strong>porosi</strong>. Lo sporco e i microrganismi entrano nei pori e nessun disinfettante li raggiunge davvero.</p> <ul><li>Il comitato di controllo della California considera questi oggetti monouso per ogni cliente, <strong>anche se sulla confezione c'è scritto "disinfettabile"</strong>, finché non ci saranno prove valide del contrario.</li> <li>Regole simili valgono in altri stati americani; dove sono più permissive, l'oggetto va comunque buttato se ha toccato sangue o pelle o unghie non sane.</li></ul> <p>In pratica: lima e buffer nuovi per ogni cliente (puoi regalarli a lei a fine servizio), strumenti in metallo puliti e sterilizzati. In Italia segui le regole della tua Regione e del tuo Comune, ma il principio è lo stesso.</p></div>
 <h2>Consigli alla cliente prima della pedicure</h2>
 <ul>
 <li><strong>Non radersi le gambe nelle 24 ore prima</strong>: i microtagli del rasoio sono porte d'ingresso per i germi. Lo raccomandano sia l'Accademia americana di dermatologia sia gli enti che controllano i saloni negli Stati Uniti. In uno studio, chi si era rasato prima della pedicure aveva più del doppio di probabilità di sviluppare i foruncoli da micobatteri.</li>
@@ -3868,6 +3913,7 @@ ${F("piede-diabetico-regole.svg", "Cliente con diabete: cosa fare e cosa evitare
 <tr><td>Strumenti sterilizzati o monouso</td><td>Prodotti callifughi</td></tr>
 </table>
 ${B("warn", "Il confine", "Gli esperti citati dalla stampa di settore sono d'accordo: una cliente con diabete può essere trattata in istituto se non ci sono infezioni, ulcere o neuropatia. Se ci sono, o se hai dubbi, il posto giusto è il podologo, che la SID raccomanda di informare sempre del diabete.")}
+<div class="box danger"><strong class="t">Un piccolo taglio non è mai piccolo</strong> <p>Nel 2019 a Treviso una donna di 82 anni è morta in ospedale per un'infezione partita, secondo la stampa locale, da un piccolo taglio all'alluce durante una normale pedicure. L'associazione dei podologi ha ricordato che questi casi non sono isolati, soprattutto nelle strutture per anziani.</p> <p>Le linee guida internazionali sul piede diabetico (IWGDF) indicano che vesciche, fessure (ragadi) ed emorragie sotto la pelle sono <strong>segni pre-ulcerativi</strong>: possono annunciare un'ulcera e vanno trattati subito da un professionista sanitario formato. Lo stesso vale per calli abbondanti, unghie incarnite o ispessite e micosi.</p> <ul><li>Su anziane e persone con diabete: niente lame, niente tagli delle pellicine, niente prodotti per calli.</li> <li>Se vedi uno di questi segni: ti fermi, lo annoti e consigli il podologo.</li></ul></div>
 <h2>Segnali da riferire alla cliente</h2>
 <p>Secondo Diabetes UK, una persona con diabete deve rivolgersi al medico se nota: formicolio o intorpidimento, bruciore, pelle lucida e liscia, perdita di peli su gambe e piedi, piedi gonfi, ferite che non guariscono, vesciche o tagli che si vedono ma non si sentono. Tu non diagnostichi: se noti qualcosa, consigli la visita.</p>
         `,
@@ -3878,7 +3924,7 @@ ${B("warn", "Il confine", "Gli esperti citati dalla stampa di settore sono d'acc
             'https://aad.org/nail-care-secrets/manicure-pedicure-safety',
             'https://www.quotidianosanita.it/scienza-e-farmaci/piede-diabetico-ecco-il-decalogo-della-sid-per-prevenirlo/',
             'https://www.scratchmagazine.co.uk/feature/pedicure-tips-nail-techs-clients-diabetes',
-            'https://ar.unmhealth.org/services/orthopaedics/_files/take-care-of-your-feet-for-a-lifetime-2-12-20-eng-812-1094.pdf']
+            'https://ar.unmhealth.org/services/orthopaedics/_files/take-care-of-your-feet-for-a-lifetime-2-12-20-eng-812-1094.pdf', 'https://www.barbercosmo.ca.gov/forms_pubs/publications/disinfect_nailfiles.pdf', 'https://www.law.cornell.edu/regulations/wyoming/033-10-Wyo-Code-R-SS-10-3', 'https://regulations.justia.com/states/maine/02/041/barbering-and-cosmetology-licensing-program/chapter-26/section-041-26-26-250', 'https://www.michiganfootdoctors.com/nail-polish-feet/', 'https://www.ynetnews.com/health_science/article/r1jz4spzgl', 'https://www.tanglewoodfootspecialists.com/faqs/can-i-polish-my-toenails-during-treatment-for-fungal-toenails.cfm', 'https://www.quotidianosanita.it/lettere-al-direttore/taglio-fatale-all-alluce-anziana-muore-dopo-la-pedicure-appello-dei-podologi-a-grillo/', 'https://iwgdfguidelines.org/wp-content/uploads/2019/05/02-IWGDF-prevention-guideline-2019.pdf']
         },
         {
           id: 'piedi-competenze', title: 'Pedicure estetica: protocollo e confini con il podologo', min: 13,
@@ -3893,9 +3939,11 @@ ${F("estetista-podologo.svg", "Chi fa cosa: estetista e podologo, con le frecce 
 <tr><td>Unghie</td><td>Piede sano: taglio, limatura, cuticole, semipermanente, piccoli ripristini estetici</td><td>Tratta "con metodi incruenti, ortesici ed idromassoterapici" callosità, unghie ipertrofiche, deformi e incarnite, piede doloroso</td></tr>
 <tr><td>Altro</td><td>Massaggio estetico, idratazione, levigatura della pelle secca</td><td>Su prescrizione medica: medicazione di ulcerazioni e verruche; assiste i pazienti a rischio (es. diabete); segnala al medico i casi sospetti</td></tr>
 </table>
+<div class="box deep"><strong class="t">Approfondimento: il criterio dei giudici è lo scopo</strong> <p>Non esiste una sentenza della Cassazione dedicata proprio alla pedicure, ma per i massaggi la Corte usa un criterio chiaro, utile anche per te. L'esercizio abusivo di una professione (art. 348 del Codice penale) c'è quando una prestazione ha uno <strong>scopo di cura</strong> di un problema di salute ed è svolta da chi non ha il titolo.</p> <ul><li>Cass. n. 50063/2015: condanna per massaggi a pagamento rivolti a disturbi reali (ernie, sciatica, distorsioni).</li> <li>Cass. n. 12539/2020: nessun reato per massaggi in spiaggia con solo scopo di benessere e relax.</li></ul> <p>Applicato alla pedicure: levigare la pelle secca del tallone per migliorarne l'aspetto è estetica; "togliere il callo che fa male" o "curare" un'unghia incarnita è cura. Fai attenzione anche alle parole del listino e dei social: scritte come "pedicure curativa" o "trattamento delle unghie incarnite" descrivono uno scopo di cura.</p></div>
 <h2>Calli, duroni e lame</h2>
 <p>Le <strong>callosità</strong> sono citate espressamente tra le competenze del podologo. Le linee guida sul piede diabetico raccomandano di non rimuoverle con prodotti chimici, cerotti o altre tecniche fai-da-te. La SID raccomanda di non tagliare i calli e di levigare l'ispessimento solo con pietra pomice.</p>
 ${B("warn", "In estetica: niente lame", "In una pedicure estetica la pelle ispessita si leviga con lime o raspe adatte, senza ferire. Lame e bisturi su calli e duroni non rientrano nel lavoro estetico. Prima di proporre qualsiasi trattamento sui calli, verifica il regolamento del tuo Comune e della tua Regione.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Un cliente di 60 anni, diabetico, chiede di "togliere quel callo sotto l'avampiede". Al centro del callo vedi un puntino scuro.</p> <p><strong>Ragionamento.</strong> Un puntino scuro dentro un callo può essere sangue sotto la pelle: per le linee guida sul piede diabetico è un segno che può precedere un'ulcera, e va trattato subito da un professionista sanitario. Le stesse linee guida dicono di non usare mai prodotti chimici o cerotti per togliere i calli.</p> <p><strong>Cosa fai.</strong></p> <ul><li>Non levighi quella zona e non usi alcun prodotto.</li> <li>Spieghi con calma: "Vedo un segno che è meglio far controllare dal podologo prima di trattare questa zona".</li> <li>Scrivi su un biglietto cosa hai visto e dove, con la data, e il contatto di un podologo.</li> <li>Puoi completare la parte estetica sul resto del piede, se la pelle è integra.</li></ul></div>
 <h2>Il protocollo di pedicure estetica</h2>
 ${F("pedicure-protocollo.svg", "Protocollo di pedicure estetica.")}
 <ol class="steps">
@@ -3911,6 +3959,7 @@ ${F("pedicure-protocollo.svg", "Protocollo di pedicure estetica.")}
 <li><strong>Riordino</strong>: strumenti a sterilizzare, monouso nei rifiuti, vaschetta disinfettata e registrata.</li>
 </ol>
 ${F("pedicure-postazione.svg", "La postazione di pedicure pronta: pulito da una parte, sporco dall'altra.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: chiedi del rischio, non solo della diagnosi</strong> <p>Molte persone con diabete non sanno di avere già una ridotta sensibilità ai piedi. Le linee guida IWGDF dividono le persone con diabete in classi di rischio (da 0 a 3) e raccomandano controlli dal medico o podologo da una volta l'anno (rischio molto basso) fino a ogni 1–3 mesi (rischio alto).</p> <p>In anamnesi aggiungi tre domande semplici:</p> <ul><li>"Il medico o il podologo le ha mai detto che ha i piedi a rischio?"</li> <li>"Ha mai avuto ferite o ulcere ai piedi, o interventi?"</li> <li>"Ogni quanto va dal podologo?"</li></ul> <p>Se la risposta è sì alle prime due, o se non è mai stata controllata, la pedicure estetica si limita al minimo e si consiglia una visita. Ricordale anche i consigli delle linee guida: mai a piedi nudi, nemmeno in casa, e controllo dei piedi ogni giorno.</p></div>
 <h2>Ricostruzione sui piedi</h2>
 <p>Solo piccoli <strong>ripristini estetici</strong> su unghia <strong>sana</strong>, per esempio un bordo spezzato da un trauma già guarito. Regole (prassi):</p>
 <ul>
@@ -3932,7 +3981,7 @@ ${B("tip", "Una rete di professionisti", "Tieni il contatto di un podologo della
             'https://www.normattiva.it/eli/id/1990/01/05/090G0009/CONSOLIDATED/20240920',
             'https://www.mo.camcom.it/sportello-genesi/sportello-genesi/modulistica/estetista-scheda-informativa',
             'https://iwgdfguidelines.org/wp-content/uploads/2019/05/02-IWGDF-prevention-guideline-2019.pdf',
-            'https://www.quotidianosanita.it/scienza-e-farmaci/piede-diabetico-ecco-il-decalogo-della-sid-per-prevenirlo/']
+            'https://www.quotidianosanita.it/scienza-e-farmaci/piede-diabetico-ecco-il-decalogo-della-sid-per-prevenirlo/', 'https://www.studiocataldi.it/articoli/38203-cassazione-il-massaggio-in-spiaggia-non-e-reato-abusivo-della-professione.asp', 'https://www.studiocataldi.it/articoli/20455-improvvisarsi-massaggiatore-a-scopo-terapeutico-e-reato.asp']
         },
         {
           id: 'piedi-semipermanente', title: 'Tutorial: semipermanente sui piedi', min: 12,
@@ -3946,6 +3995,7 @@ ${F("tut-semipermanente-piedi.svg", "Il semipermanente sui piedi in otto passagg
 <li>Cliente seduta comoda, piede appoggiato su un supporto stabile all'altezza giusta per te: lavorare piegata fa male alla schiena e peggiora la precisione.</li>
 <li>Lampada posizionabile per i piedi (molte lampade hanno il fondo rimovibile).</li>
 </ul>
+<div class="box tip"><strong class="t">Lampada e piedi</strong> <p>Sui piedi è più difficile posizionare bene la lampada e le dita piccole spesso restano in ombra. Controlla che <strong>tutte</strong> le unghie siano dentro il fascio di luce, compreso il mignolo, ed eventualmente polimerizzale in due tempi. Un gel che resta morbido su un dito piccolo dura meno e aumenta il rischio di allergia.</p> <p>Ricorda anche lo strato appiccicoso: sulle dita vicine è facile toccarlo con la pelle. Usa separadita monouso e toglilo con un dischetto senza strofinare sulla pelle.</p></div>
 <h2>Procedura</h2>
 <ol class="steps">
 <li><strong>Igiene e ispezione</strong> di unghie e pelle.</li>
@@ -3964,6 +4014,8 @@ ${F("piedi-errori-colore.svg", "Errori tipici: colore sulla pelle, bordo non sig
 <li>Sui piedi l'unghia cresce lentamente: il colore resta bello più a lungo che sulle mani. Il momento di rifarlo dipende dalla ricrescita visibile e dallo stato del colore.</li>
 <li>Rimozione come sulle mani: opacizza il top, acetone e stagnola, bastoncino senza fare leva. Non strappare: porta via strati di lamina.</li>
 </ul>
+<div class="box deep"><strong class="t">Approfondimento: le macchie bianche dopo l'estate</strong> <p>Togliendo il colore a fine estate si trovano spesso chiazze bianche, ruvide, "gessose". Spesso sono <strong>granulazioni di cheratina</strong>: il prodotto aderisce agli strati più superficiali della lamina e, con una rimozione energica (strappare, raschiare, acetone ripetuto), li porta via. La superficie diventa porosa e diffonde la luce: per questo appare bianca.</p> <ul><li>Non sono un'infezione e di solito spariscono con qualche settimana di pausa e olio quotidiano (da 2–3 settimane nei casi lievi a 2–3 mesi in quelli estesi).</li> <li>Prevenzione: base sotto il colore, rimozione con ammollo completo, mai strappare.</li> <li>Attenzione: una micosi bianca superficiale può sembrare simile. Se le macchie si allargano, l'unghia si ispessisce o compaiono su unghie mai smaltate, consiglia il podologo.</li></ul></div>
+<div class="box pro"><strong class="t">Consiglio da professionista: quando rifarlo</strong> <p>L'unghia del piede cresce circa 1,6 mm al mese: dopo 4 settimane la ricrescita è di circa 1,5 mm, dopo 8 settimane supera i 3 mm. Il colore regge a lungo, ma tenerlo troppo non conviene:</p> <ul><li>più a lungo resta, più il bordo libero si consuma e si scheggia;</li> <li>sotto un colore coprente non vedi cambiamenti come macchie, ispessimenti o distacchi.</li></ul> <p>Una prassi ragionevole è proporre il rifacimento ogni <strong>4–6 settimane</strong>, controllando ogni volta la lamina scoperta. Se la cliente vuole tenerlo di più, almeno a ogni rimozione osserva bene l'unghia con buona luce prima di rifare il colore.</p></div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Conseguenza</th><th>Rimedio</th></tr>
@@ -3975,7 +4027,7 @@ ${F("piedi-errori-colore.svg", "Errori tipici: colore sulla pelle, bordo non sig
         `,
           sources: ['https://www.aad.org/public/everyday-care/nail-care-secrets/basics/how-to-trim-nails',
             'https://aad.org/nail-care-secrets/manicure-pedicure-safety',
-            'https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112380']
+            'https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112380', 'https://www.michiganfootdoctors.com/white-toenails-from-nail-polish/', 'https://www.michiganfootdoctors.com/nail-polish-feet/', 'https://nailknowledge.org/nail-knowledge-base/inhibition-layer-and-no-cleanse-gels', 'https://nailknowledge.org/?p=49737']
         }
       ]
     },
@@ -4013,6 +4065,7 @@ ${F("chrome-step.svg", "Chrome in sei passaggi.")}
 </ol>
 ${B("info", "Appiccicoso o indurito?", "Le fonti non sono d'accordo: alcune applicano la polvere su un top non ancora completamente indurito o tiepido, altre su un top no-wipe polimerizzato. Per chi inizia il metodo più affidabile è il top no-wipe polimerizzato, come indicato da molti marchi. Prova sempre il tuo prodotto su un tip.")}
 ${F("cat-eye-magnete.svg", "Cat-eye: dove tieni il magnete decide il disegno.")}
+<div class="box deep"><strong class="t">Approfondimento: perché il chrome diventa uno specchio</strong> <p>Le polveri chrome sono di solito particelle metalliche finissime (spesso alluminio), a volte su base di vetro, colorate in vari toni. Uno specchio è una superficie in cui tutte le particelle riflettenti sono <strong>piatte e allineate</strong>: strofinando, le pieghi e le stendi sulla superficie liscia del top.</p> <ul><li>Se il top sotto ha avvallamenti o bolle, le particelle seguono quei difetti e lo specchio "si rompe".</li> <li>Un fondo scuro assorbe la luce che passa tra le particelle: il riflesso sembra più intenso. Su fondi chiari l'effetto è più debole.</li> <li>Le polveri con molti riempitivi (filler) riflettono meno: a parità di tecnica, una polvere più pura è più brillante.</li> <li>Le particelle restano in superficie e si consumano: senza top finale il chrome si toglie strofinando.</li></ul></div>
 <h2>Cat-eye (gel magnetico)</h2>
 <p>Il gel cat-eye contiene particelle metalliche. Un magnete le sposta finché il gel è fluido: dove si concentrano si forma una banda luminosa che sembra muoversi con la luce.</p>
 <ol class="steps">
@@ -4033,6 +4086,7 @@ ${F("cat-eye-magnete.svg", "Cat-eye: dove tieni il magnete decide il disegno.")}
 </table>
 ${B("tip", "Puoi rifare", "Se il disegno non ti piace e il gel è ancora fluido, ripassa il pennello e usa di nuovo il magnete. Tieni i magneti lontani da telefoni e carte.")}
 ${F("foil-ombre-step.svg", "Foil e ombré passo per passo.")}
+<div class="box deep"><strong class="t">Approfondimento: come funziona il magnete</strong> <p>Il gel cat-eye contiene minuscole particelle di <strong>ossido di ferro</strong>, metalliche e allungate. Senza magnete sono orientate a caso e la luce si disperde. Il campo del magnete le fa ruotare tutte nella stessa direzione: insieme diventano una piccola superficie riflettente dentro il gel. La lampada le "congela" in quella posizione.</p> <ul><li>Le particelle sono leggermente inclinate nel gel: per questo la linea sembra muoversi quando giri la mano, anche se in realtà è ferma.</li> <li>Particelle più fini danno un luccichio morbido; più grandi, una linea più netta e "drammatica".</li> <li>Magneti dritti danno una linea pulita; magneti curvi o a più poli creano onde, linee doppie o effetti a stella.</li> <li>Il gel deve restare fluido abbastanza a lungo: se è freddo e denso, le particelle si muovono male.</li></ul></div>
 <h2>Foil (lamina transfer)</h2>
 <ol class="steps">
 <li>Colore polimerizzato e liscio: il foil evidenzia ogni difetto.</li>
@@ -4046,6 +4100,7 @@ ${F("foil-ombre-step.svg", "Foil e ombré passo per passo.")}
 <li><strong>Con il pennello</strong> (più preciso): primo colore dalla cuticola a metà, secondo dalla punta verso il primo, poi sfuma con pennellate orizzontali leggere nella zona di incontro. Lampada. Ripeti con un secondo strato. Top.</li>
 <li><strong>Con la spugnetta</strong> (più facile): picchietta la spugna su un nastro adesivo per togliere i pelucchi, carica un velo di colore, picchietta dalla punta verso il centro. Lampada e ripeti. Top abbondante per lisciare.</li>
 </ul>
+<div class="box pro"><strong class="t">Consiglio da professionista: densità giusta per ogni effetto</strong> <p>La densità del gel decide quanto il disegno resta dove lo metti. Un gel molto fluido si autolivella: è perfetto per una sfumatura morbida, ma allarga le linee e rischia di toccare la pelle. Per linee nette (foil a strisce, smile line, decori) serve un gel <strong>più denso</strong>, ma non così denso da sembrare in rilievo.</p> <ul><li>Ombré morbido: colori fluidi, pennellate leggere, poco prodotto.</li> <li>Linee precise e bordi puliti alla cuticola: gel più denso o gel da pittura.</li> <li>Se il gel "scappa", non è sempre colpa della mano: cambia viscosità o fai un flash più breve tra un passaggio e l'altro.</li></ul> <p>Con il caldo i gel diventano più fluidi, con il freddo più densi: tienine conto prima di un servizio con molti dettagli.</p></div>
 <h2>Errori frequenti</h2>
 <table>
 <tr><th>Errore</th><th>Risultato</th><th>Correzione</th></tr>
@@ -4060,7 +4115,7 @@ ${F("foil-ombre-step.svg", "Foil e ombré passo per passo.")}
             'https://pinkgellac.com/blogs/news/how-to-use-cat-eye-gel-polish',
             'https://www.scratchmagazine.co.uk/nail_art/cat-eye-chrome-nail-art-tutorial/',
             'https://thegelbottle.com/blog/how-to-apply-nail-foils-on-gel-nails-in-5-steps/',
-            'https://www.youngnails.com/blogs/news/how-to-do-ombre-gel-polish-nails']
+            'https://www.youngnails.com/blogs/news/how-to-do-ombre-gel-polish-nails', 'https://fairyglamor.com/blogs/dip-acrylic-nail-powder-help/what-are-chrome-nails', 'https://mitty.com.au/products/shattered-plum', 'https://nailknowledge.org/?p=169165', 'https://www.scratchmagazine.co.uk/feature/gel-nails-why-you-need-to-know-about-viscosity/', 'https://twentypro.co.uk/blogs/news/how-to-work-with-gel-products-in-extreme-temperatures']
         },
         {
           id: 'one-stroke-3d', title: 'One-stroke, 3D e incapsulato', min: 15,
@@ -4094,6 +4149,7 @@ ${F("one-stroke-fiore.svg", "Petalo, fiore a cinque petali e foglia, passo per p
 <tr><td><strong>Foglia</strong></td><td>Parti sul filo, premi, scivola in avanti alleggerendo la pressione e fai una piccola <strong>torsione finale</strong>: crea la punta.</td></tr>
 </table>
 ${B("tip", "Allenati sulla carta", "Esercitati prima su carta o su tip, decine di volte. Impugna vicino alla ghiera e appoggia il mignolo per stabilizzare la mano. Rinforza il colore ripassando nello stesso punto, nella stessa direzione.")}
+<div class="box pro"><strong class="t">Consiglio da professionista: i pennelli per gel</strong> <p>Se dipingi one-stroke con il gel, il nemico è la <strong>luce</strong>. La luce del giorno contiene raggi UV: un pennello lasciato vicino a una finestra o alla lampada può polimerizzare il gel tra le setole.</p> <ul><li>Rimetti sempre il cappuccio e conserva i pennelli lontano da finestre e lampade, senza schiacciare le setole.</li> <li>Carica solo la parte che serve e tieni il gel lontano dalla ghiera.</li> <li>Se il gel nel pennello si è solo addensato, a volte si recupera lavorando un po' di gel fresco tra le setole. Se è indurito del tutto, toglierlo rovina i peli e la forma.</li></ul> <p>Con i colori acrilici per nail art (a base d'acqua) lascia asciugare bene la pittura prima di sigillare: il top va steso sottile, su colore asciutto al tatto.</p></div>
 <h2>3D</h2>
 <p>Il 3D sono decorazioni in rilievo: fiori, fiocchi, perle modellate.</p>
 <ul>
@@ -4103,6 +4159,7 @@ ${B("tip", "Allenati sulla carta", "Esercitati prima su carta o su tip, decine d
 </ul>
 ${B("warn", "Spessore e vita quotidiana", "Il 3D si rompe facilmente e può impigliarsi. Tienilo basso, su una o due unghie, ed evitalo per clienti con lavori manuali. In gara segui le regole della categoria: in alcune categorie il 3D o certi materiali sono vietati.")}
 ${F("incapsulato-zone.svg", "Dove incapsulare: nelle zone spesse (smile line, apex, centro della punta), mai alla cuticola, ai lati o sul bordo.")}
+<div class="box deep"><strong class="t">Approfondimento: la perla per il 3D in acrilico</strong> <p>Nel 3D la perla deve essere "giusta": né troppo bagnata, né troppo asciutta, e va lavorata in fretta, prima che l'acrilico indurisca. Molte tecniche partono da una perla <strong>un po' più asciutta</strong> del solito, perché tiene meglio la forma del petalo. Ma se il prodotto indurisce troppo presto, di solito è il pennello a essere troppo asciutto: tienilo leggermente umido di liquido.</p> <ul><li>Petali: una piccola perla tirata a goccia, poi la punta del pennello preme verso il basso e verso l'esterno al centro della goccia. Usa le ore di un orologio per distanziare i petali.</li> <li>Rose: una striscia di prodotto che si arrotola su se stessa quando ha iniziato a fare presa ma è ancora flessibile.</li> <li>Petali complessi: si possono modellare a parte e posizionare con il pennello inumidito di liquido.</li></ul> <p>Lavora con una buona ventilazione: con il 3D si sta a lungo vicino al monomero.</p></div>
 <h2>Incapsulato (embedding)</h2>
 <p>Incapsulare vuol dire chiudere una decorazione (glitter, fiori secchi, pizzo, foglia) tra due strati di prodotto trasparente. Il risultato è liscio al tatto, come vetro.</p>
 <ol class="steps">
@@ -4120,6 +4177,7 @@ ${F("incapsulato-zone.svg", "Dove incapsulare: nelle zone spesse (smile line, ap
 <li>Lima e lucida: superficie liscia, nessun bordo dell'oggetto al tatto.</li>
 </ol>
 ${B("info", "Gel o acrilico?", "Il gel dà il trasparente più limpido e fa sembrare la decorazione più profonda. L'acrilico la fa sembrare più vicina e piatta. Su unghie lunghe incapsulare è più facile perché c'è più superficie.")}
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Una sposa vuole fiori in rilievo su tutte e dieci le unghie, lunghezza media, e indosserà guanti di pizzo e un anello importante.</p> <p><strong>Ragionamento.</strong> Il 3D si impiglia nei tessuti, si rompe con gli urti e su dieci dita rende difficili anche gesti semplici. Il pizzo dei guanti e l'anello sono due punti di attrito sicuri.</p> <p><strong>La proposta.</strong></p> <ul><li>3D basso solo su uno o due accenti, per esempio l'anulare della mano senza fede o i pollici.</li> <li>Sulle altre unghie fiori secchi o pizzo <strong>incapsulati</strong>: stesso tema, superficie liscia.</li> <li>Prova i fiori o il pizzo su un tip qualche giorno prima: alcuni materiali perdono colore a contatto con gel o liquido.</li></ul> <p>Come riferimento per "basso": nelle gare Nailympia di Sicilia la categoria Stiletto ammette decori 3D solo sotto i 5 mm di altezza. Per la vita quotidiana, meglio ancora meno.</p></div>
 <h2>Errori frequenti</h2>
 <ul>
 <li>Pennello carico fino alla ghiera: colori impastati e pennello rovinato.</li>
@@ -4131,7 +4189,7 @@ ${B("info", "Gel o acrilico?", "Il gel dà il trasparente più limpido e fa semb
           sources: ['https://www.nailpro.com/technique/article/21155084/tips-on-one-stroke-painting',
             'https://www.scratchmagazine.co.uk/nail_art/one-stroke-petals-by-terry-burciaga/',
             'https://www.nailpro.com/technique/article/21156545/nail-art-tutorial-neon-one-stroke-flowers',
-            'https://www.scratchmagazine.co.uk/feature/how-to-ace-encapsulation-in-lp-gel-nails']
+            'https://www.scratchmagazine.co.uk/feature/how-to-ace-encapsulation-in-lp-gel-nails', 'https://www.katiebarnesacademy.com/blogs/brushes/why-does-gel-cure-inside-my-nail-art-brush', 'https://www.katiebarnesacademy.com/blogs/brushes/how-should-you-clean-gel-nail-brushes', 'https://www.salongeek.com/threads/sealing-nail-art.85539/', 'https://www.nailpro.com/3d-flower/', 'https://www.cosmeticsandtoiletries.com/home/article/22933935/mastering-acrylic-flowers-elevating-your-nail-art-with-realistic-details', 'https://www.scratchmagazine.co.uk/nail_art/how-to-create-a-3d-flower-nail-design', 'https://www.nailympia.com/sicily/rules/']
         },
         {
           id: 'gare', title: 'Prepararsi a una gara', min: 16,
@@ -4174,6 +4232,7 @@ ${F("gara-postazione.svg", "La postazione di gara: prodotti etichettati, scatola
 </table>
 <p>Ogni categoria ha poi regole sue. Esempi: in alcune categorie sono vietati semipermanente, bianco "a pennarello", strumenti per la smile line, adesivi, top opaco o glitter. Nella categoria Sculptured di NAILPRO si usano solo rosa, trasparente e bianco, senza cover, con la smile line fatta a mano.</p>
 ${B("info", "Dettagli che costano punti", "Una competitrice racconta di aver perso 5 punti perché non aveva il cestino accanto al tavolo. Fai una lista di controllo del tavolo e rileggila la sera prima.")}
+<h3>Dettagli di regolamento che sorprendono (Nailympia Sicily 2026)</h3> <table><tr><th>Categoria</th><th>Regola</th></tr> <tr><td>Gel Polish (45 min)</td><td>La modella arriva con la manicure già fatta e le unghie naturali, senza prodotto; nessun allungamento. Una mano rosso vivo pieno (niente metallizzato, glitter, opaco o perlato), l'altra french rosso e bianco. Smile line solo con un pennellino sottile: niente strumenti o fresa.</td></tr> <tr><td>Fantasy</td><td>10 punti in meno se sulle unghie della modella c'è smalto o base.</td></tr> <tr><td>Salon Nails (60 min)</td><td>Un solo sistema, niente miscele; solo french rosa e bianco scolpito; esattamente 10 cartine, non preparate; niente colla sul tavolo se usi le cartine.</td></tr> <tr><td>Tutte</td><td>Scatola di tip nuova con almeno 10 tip per misura; i tip restano nella scatola fino al via. Acqua, sapone e aria compressa solo durante la gara: dopo lo stop si viene squalificati.</td></tr></table> <p>Leggi le regole della <strong>tua</strong> categoria e della <strong>tua</strong> edizione: queste valgono per Sicily 2026.</p>
 <h2>Come si giudica</h2>
 <p>Il giudizio è <strong>anonimo</strong>: i giudici vedono la modella con un numero, non sanno chi ha lavorato. Nelle gare Nailympia possono esserci fino a 10 giudici, in cabine o dietro una tenda, ognuno con i suoi criteri. Le schede si consegnano dopo la premiazione. I giudici non commentano i lavori a fine gara, ma puoi chiedere un parere se le unghie sono ancora disponibili. La lezione successiva spiega una scheda punteggi completa.</p>
 ${F("gara-scheda.svg", "Criteri di giudizio e vista a tunnel.")}
@@ -4187,6 +4246,7 @@ ${F("gara-scheda.svg", "Criteri di giudizio e vista a tunnel.")}
 <li>Gestione del tempo: finire è fondamentale. Molti principianti limano fino allo stop e non mettono top o lucidatura: una competitrice esperta stima che così si perdano 15–20 punti.</li>
 </ul>
 ${F("gara-piano-allenamento.svg", "Piano di allenamento indicativo di 12 settimane.")}
+<div class="box case"><strong class="t">Caso pratico: scegliere la modella</strong> <p>Silvia ha due possibili modelle: la sorella, disponibile sempre ma con dita storte e unghie corte e piatte, e un'amica con letti lunghi e dita dritte, libera però solo nei weekend.</p> <p><strong>Ragionamento.</strong> Il regolamento Nailympia, per la categoria Tip &amp; Overlay French, consiglia proprio una modella con dita e unghie dritte. Dita storte fanno sembrare storte anche unghie perfette viste dall'alto e dal punto di vista della modella, e una lamina piatta rende più difficile una curva a C regolare.</p> <p><strong>La scelta.</strong> L'amica, con un calendario fisso di allenamenti nei weekend. La sorella resta per gli esercizi tecnici su singole unghie durante la settimana.</p> <p><strong>Prima della gara:</strong> cuticole sane e senza tagli (i danni alla pelle costano punti), nessuna preparazione vietata e mani idratate nei giorni precedenti, non il giorno stesso.</p></div>
 <h2>Piano di allenamento (8–12 settimane, prassi)</h2>
 <ol class="steps">
 <li><strong>Settimana 1</strong>: scegli la categoria, scarica regolamento e scheda punteggi, fai la lista del kit.</li>
@@ -4195,6 +4255,7 @@ ${F("gara-piano-allenamento.svg", "Piano di allenamento indicativo di 12 settima
 <li><strong>Ultime settimane</strong>: simulazioni complete con 10 minuti in meno del tempo di gara, kit definitivo, prova del tavolo con la modella.</li>
 <li><strong>Ultima settimana</strong>: niente prodotti nuovi. Controlla la modella: unghie sane, nessuna ferita, nessuna preparazione vietata.</li>
 </ol>
+<div class="box pro"><strong class="t">Consiglio da professionista: i consigli di una giudice Nailympia</strong> <p>Gabriella Kovács, giudice Nailympia, suggerisce cinque abitudini:</p> <ol><li><strong>Tavolo sempre uguale.</strong> Ogni prodotto e attrezzo nella stessa posizione in allenamento e in gara: sotto pressione troverai tutto anche senza guardare.</li> <li><strong>Non guardare le altre.</strong> Ognuna ha la sua velocità: il tuo obiettivo è finire il tuo set con il tuo ritmo.</li> <li><strong>Niente cambi di marchio nell'ultimo mese.</strong> Le mani si abituano alla consistenza e ai tempi di un prodotto.</li> <li><strong>Allenati per pezzi.</strong> Prima la forma della base, poi i lati, poi la smile line, poi la superficie e la lunghezza: una cosa per sessione.</li> <li><strong>Fai domande a chi ha già vinto.</strong> Molte campionesse tengono masterclass di gara.</li></ol></div>
 <h2>Il giorno della gara</h2>
 <ul>
 <li>Arriva presto: registrazione, controllo del tavolo da parte dei giudici di sala.</li>
@@ -4205,7 +4266,7 @@ ${F("gara-piano-allenamento.svg", "Piano di allenamento indicativo di 12 settima
         `,
           sources: ['https://www.nailympia.com/sicily/rules/', 'https://www.nailympia.com/china/rules/',
             'https://www.scratchmagazine.co.uk/feature/the-importance-of-rules-questions/',
-            'https://www.nailpro.com/technique/article/21157846/competition-corner-for-the-win']
+            'https://www.nailpro.com/technique/article/21157846/competition-corner-for-the-win', 'https://www.scratchmagazine.co.uk/feature/gabriella-kovacs-nail-competition-tips']
         },
         {
           id: 'gara-giudizio', title: 'La scheda punteggi: come ragionano i giudici', min: 12,
@@ -4230,6 +4291,7 @@ ${F("gara-punteggio.svg", "I punti della scheda French Twist 3-Shape Challenge 2
 </table>
 ${B("info", "Cosa insegna questa scheda", "La struttura (curva C, apex, spessore, profilo, linee laterali) vale da sola 90 punti su 240. La pulizia della cuticola e la lucentezza valgono 18 punti: sono «facili» e non vanno mai persi per fretta.")}
 ${F("gara-viste-giudice.svg", "Le cinque viste del giudice: dall'alto, di profilo, a tunnel, la cuticola, il punto di vista della modella.")}
+<div class="box deep"><strong class="t">Approfondimento: dove si nascondono i punti "facili"</strong> <p>Raggruppiamo i criteri della scheda per tipo di abilità:</p> <table><tr><th>Gruppo</th><th>Criteri</th><th>Punti</th></tr> <tr><td>Struttura</td><td>Curva C, apex, hair line, convesso/concavo, arco e linee laterali</td><td>90</td></tr> <tr><td>Arte e colore</td><td>Decoro inlay, colore, creatività</td><td>45</td></tr> <tr><td>Rosa e bianco</td><td>Smile line, applicazione allungamento, letto</td><td>39</td></tr> <tr><td>Pulizia e finitura</td><td>Zona cuticolare, lucentezza, aderenza cartina, superficie</td><td>36</td></tr> <tr><td>Proporzioni</td><td>Lunghezza, forma</td><td>30</td></tr></table> <p>La struttura richiede mesi di allenamento. La pulizia e la finitura (36 punti, il 15% del totale) dipendono soprattutto da <strong>tempo e attenzione</strong>: polvere sotto il prodotto, cuticola graffiata o lucentezza incompleta sono punti persi per fretta. Per questo il piano di gara deve riservare gli ultimi minuti alla pulizia e alla lucidatura.</p></div>
 <h2>Le viste del giudice</h2>
 <ol class="steps">
 <li><strong>Dall'alto</strong>: forma, simmetria, lunghezze proporzionate tra le dita, linee laterali.</li>
@@ -4238,6 +4300,7 @@ ${F("gara-viste-giudice.svg", "Le cinque viste del giudice: dall'alto, di profil
 <li><strong>Zona cuticolare</strong>, spesso con la lente: nessuno scalino, nessun taglio, nessun prodotto sulla pelle.</li>
 <li><strong>Dal punto di vista della modella</strong>: la forma deve apparire uniforme anche guardando le proprie mani.</li>
 </ol>
+<div class="box tip"><strong class="t">Controlla anche quello che i giudici non dicono</strong> <ul><li><strong>Sotto l'unghia.</strong> Polvere, colla o residui di cartina sotto il bordo libero si vedono nella vista a tunnel e nella valutazione dell'aderenza.</li> <li><strong>Crema e olio.</strong> Nelle gare Nailympia troppa crema o olio a fine gara costa punti: serve una mano idratata, non lucida di olio.</li> <li><strong>Prodotto non polimerizzato.</strong> Un gel non polimerizzato del tutto non viene giudicato: polimerizza sempre per il tempo pieno, anche negli ultimi minuti.</li> <li><strong>Dopo lo stop.</strong> Qualsiasi pulizia di mani o unghie, anche solo con aria compressa, porta alla squalifica: tutta la pulizia va fatta prima.</li></ul> <p>Prova la sequenza finale (pulizia, lucidatura, olio) con il cronometro: deve diventare automatica.</p></div>
 <h2>Allenarti con la scheda</h2>
 <ol class="steps">
 <li>Stampa la scheda della tua categoria.</li>
@@ -4247,10 +4310,12 @@ ${F("gara-viste-giudice.svg", "Le cinque viste del giudice: dall'alto, di profil
 <li>Ripeti: confronta i punteggi nel tempo.</li>
 </ol>
 ${B("tip", "Decidere dove investire il tempo", "Nessuno prende il punteggio pieno. Sapere quanti punti vale ogni criterio ti aiuta a decidere, in gara, dove spendere gli ultimi minuti: spesso lucidatura e pulizia valgono più di un ritocco alla forma.")}
-        `,
+        
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Nella simulazione Paola ottiene 150 punti su 240. I suoi voti più bassi: arco e linee laterali 16 su 30, decoro e creatività 24 su 45, zona cuticolare e lucentezza 8 su 18.</p> <p><strong>Ragionamento.</strong> Per scegliere cosa allenare guarda due cose: <strong>quanti punti mancano</strong> e <strong>quanto tempo serve</strong> per recuperarli.</p> <ul><li>Cuticola e lucentezza: mancano 10 punti. Si recuperano in poche settimane con una routine fissa di pulizia e 5 minuti di lucidatura riservati.</li> <li>Arco e linee laterali: mancano 14 punti. Serve un lavoro tecnico lungo: 10 profili al giorno su tip, controllati in foto.</li> <li>Decoro: mancano 21 punti, ma dipende anche dal gusto dei giudici. Prova due o tre idee e falle vedere a una collega esperta.</li></ul> <p><strong>Piano.</strong> Subito la routine di pulizia (punti "sicuri"), in parallelo l'allenamento su arco e lati. Alla simulazione successiva confronta i punteggi criterio per criterio.</p></div>
+`,
           sources: ['https://www.scratchmagazine.co.uk/wp-content/uploads/2026/01/Nailympia-2026-Scoresheet_French-Twist-3-shape-challenge.pdf',
             'https://www.nailympia.com/china/rules/',
-            'https://www.scratchmagazine.co.uk/feature/the-importance-of-rules-questions/']
+            'https://www.scratchmagazine.co.uk/feature/the-importance-of-rules-questions/', 'https://www.nailympia.com/sicily/rules/']
         }
       ]
     }
