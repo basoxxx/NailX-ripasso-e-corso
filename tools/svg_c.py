@@ -897,29 +897,46 @@ def grip():
             x + 118, tb - 42, x + 138, tb - 46, x + 160, tb - 46, x + 174, tb - 42)
         return s
 
-    def hand(gx, gy, ang, pinky):
-        """Mano dell'operatrice in vista laterale, ruotata di ang attorno al punto di presa (gx, gy).
-        Dita come capsule unite al palmo; il mignolo resta disteso fino al piano (pinky = punto d'appoggio, non ruotato)."""
-        g = capsule(gx + 58, gy + 22, gx + 34, gy + 44, 17)                 # medio piegato
-        g += capsule(gx + 80, gy + 28, gx + 64, gy + 56, 16)                # anulare piegato
-        g += ('<ellipse cx="%.1f" cy="%.1f" rx="56" ry="33" fill="%s" stroke="%s" stroke-width="1.5" transform="rotate(-24 %.1f %.1f)"/>'
-              % (gx + 86, gy - 4, SKIN_OP, SKIN_OP_D, gx + 86, gy - 4))
-        g += capsule(gx + 44, gy + 18, gx - 6, gy + 10, 16)                 # pollice
-        s = '<g transform="rotate(%.1f %.1f %.1f)">%s</g>' % (ang, gx, gy, g)
-        # mignolo: dal bordo del palmo fino al tavolo
+    def hand(gx, gy, ang, pinky, sc=0.62):
+        """Mano dell'operatrice vista dal lato del pollice che impugna lo strumento a penna.
+        Sistema locale: asse dello strumento lungo +x a partire dal punto di presa (gx, gy), dorso verso -y.
+        Restituisce (dietro, davanti): ciò che sta dietro lo strumento e le dita che lo coprono.
+        Il mignolo resta disteso fino al piano (pinky = punto d'appoggio, in coordinate assolute)."""
+        D, B = gen_svg._digit, gen_svg._blob
+        HC, HD, HS = SKIN_OP, '#e2ad93', SKIN_OP_D
         rad = math.radians(ang)
-        bx = gx + 100 * math.cos(rad) - 26 * math.sin(rad)
-        by = gy + 100 * math.sin(rad) + 26 * math.cos(rad)
-        return capsule(bx, by, pinky[0], pinky[1], 14) + s
+        ca, sa = math.cos(rad), math.sin(rad)
+
+        def T(pts):
+            return [(gx + (px * ca - py * sa) * sc, gy + (px * sa + py * ca) * sc) for px, py in pts]
+
+        def W(ws):
+            return [w * sc for w in ws]
+        back = ''
+        # mignolo disteso fino al tavolo
+        base = T([(150, 44)])[0]
+        mid = ((base[0] + pinky[0]) / 2 + 6, (base[1] + pinky[1]) / 2 - 4)
+        back += D([base, mid, (pinky[0] - 4, pinky[1] - 6)], W([15, 13, 11.5]), nail=0, fill=HD, stroke=HS, creases=(1,))
+        # anulare ripiegato, medio sotto lo strumento
+        back += D(T([(126, 30), (100, 50), (86, 66), (92, 78)]), W([16, 15, 13.5, 12]), nail=0, fill=HD, stroke=HS, creases=(1, 2))
+        back += D(T([(96, 18), (62, 30), (34, 30), (14, 24)]), W([17, 15.5, 14, 12.5]), nail=-1, fill=HD, stroke=HS, creases=(1, 2))
+        # dorso della mano
+        back += B(T([(30, -34), (70, -62), (130, -66), (186, -46), (198, 0), (176, 40), (130, 52), (80, 40), (44, 14)]), HC, HS)
+        back += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.1" fill="none" opacity=".45"/>' % (
+            T([(80, -54)])[0] + T([(116, -64)])[0] + T([(156, -58)])[0] + (HS,))
+        front = ''
+        # indice sopra lo strumento e pollice davanti
+        front += D(T([(112, -50), (70, -48), (36, -30), (6, -14)]), W([18, 16, 14.5, 13]), nail=1, fill=HC, stroke=HS, creases=(1, 2))
+        front += D(T([(110, 14), (70, 10), (36, 8), (6, 8)]), W([22, 19, 16, 14]), nail=1, fill=HC, stroke=HS, creases=(2,))
+        return back, front
 
     # --- pannello sinistro: dotting
     x = 20
     body = client(x)
     dx, dy = x + 150, tb - 49
     gy = dy - 52
-    body += hand(dx + 6, gy, 0, (dx + 104, tb - 8))
-    body += dotter2(dx, dy, -90, 50, 5)
-    body += capsule(dx + 62, gy - 22, dx + 8, gy - 6, 16)                   # indice sul manico
+    hb, hf = hand(dx, dy - 38, -78, (dx + 104, tb - 8))
+    body += hb + dotter2(dx, dy, -90, 50, 5) + hf
     body += arr(dx - 28, dy - 84, dx - 28, dy - 24, DARK, 2.2)
     body += text(x + 22, 104, 'Dotter', 14.5, 'start', 800) + text(x + 22, 122, 'verticale,', 14.5, 'start', 800)
     body += text(x + 22, 141, 'senza premere', 13, 'start', 600, MUTED)
@@ -941,9 +958,8 @@ def grip():
     ang = -22
     rad = math.radians(ang)
     gx, gy = sx + 84 * math.cos(rad), sy + 84 * math.sin(rad)
-    body += hand(gx, gy + 8, ang, (sx + 126, tb - 8))
-    body += liner(sx, sy, ang, 116, bristle='#3b2a30', load='#ffffff')
-    body += capsule(gx + 58 * math.cos(rad) + 8, gy + 58 * math.sin(rad) - 14, gx + 2, gy - 8, 16)   # indice sul manico
+    hb, hf = hand(sx + 52 * math.cos(rad), sy + 52 * math.sin(rad), ang, (sx + 126, tb - 8))
+    body += hb + liner(sx, sy, ang, 116, bristle='#3b2a30', load='#ffffff') + hf
     body += text(x + 22, 100, 'Trascina, non spingere', 14.5, 'start', 800)
     body += text(x + 22, 119, 'pressione costante', 13, 'start', 600, MUTED)
     body += arr(x + 40, 148, x + 120, 148, DARK, 2.2)

@@ -2303,41 +2303,30 @@ def ballerina_steps():
 
 
 def op_hand_file(gx, gy):
-    """Mano dell'operatrice di lato che tiene la lima: indice sopra, pollice sotto, polso morbido.
-    (gx, gy) = punto della lima tra indice e pollice (asse della lima). Tinta unica per evitare giunture visibili."""
-    HC, HD = '#f2cab2', '#e6b79c'
-    ln = 'fill="none" stroke="%s" stroke-width="1.5" stroke-linecap="round"' % SKIN_D
+    """Mano destra dell'operatrice vista dal lato del pollice che tiene la lima: indice disteso sopra,
+    pollice sotto, medio di sostegno, anulare e mignolo raccolti, polso morbido.
+    (gx, gy) = punto della lima tra indice e pollice (asse della lima)."""
+    D, B = gen_svg._digit, gen_svg._blob
+    HC, HD, HS = gen_svg._HAND, gen_svg._HAND_D, gen_svg._HAND_S
 
-    def P(*pts):
-        return ' '.join('%.1f,%.1f' % (gx + pts[k], gy + pts[k + 1]) for k in range(0, len(pts), 2))
+    def T(pts):
+        return [(gx + x, gy + y) for x, y in pts]
     # avambraccio
-    s = '<path d="M%s L%s Q%s %s L%s L%s Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
-        P(-236, 160), P(-160, 40), P(-148, 26), P(-124, 32), P(-100, 90), P(-170, 180), HC, SKIN_D)
-    # medio (dietro), base nascosta dal dorso
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.4"/>' % (
-        P(-80, -36), P(-50, -32), P(-24, -26), P(-2, -21), P(10, -17), P(4, -10), P(-20, -9), P(-48, -10), P(-80, -12), HD, SKIN_D)
-    # dorso della mano
-    s += ('<path d="M%s C%s %s %s C%s %s %s L%s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
-          % (P(-156, 44), P(-170, -6), P(-126, -50), P(-76, -50), P(-48, -50), P(-30, -40), P(-20, -28),
-             P(-28, 22), P(-46, 52), P(-104, 74), P(-140, 64), HC, SKIN_D))
-    s += '<path d="M%s Q%s %s" %s opacity=".55"/>' % (P(-120, -30), P(-96, -42), P(-70, -40), ln)
-    s += tool_file(gx + 70, gy, 0, 240, 20)
-    # indice sopra la lima
-    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s Z" fill="%s"/>' % (
-        P(-96, -44), P(-56, -50), P(-12, -36), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-34, -13), P(-70, -20), P(-96, -20), HC)
-    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s" %s/>' % (
-        P(-40, -44), P(-22, -40), P(0, -32), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-16, -12), P(-24, -13), P(-30, -14), ln)
-    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
-        P(6, -31), P(22, -31), P(30, -22), P(25, -20), P(16, -26), P(6, -26), NAIL, NAIL_S)
-    s += '<path d="M%s q4,6 2,13 M%s q4,6 2,13" fill="none" stroke="%s" stroke-width="1.1" opacity=".6"/>' % (
-        P(-30, -40), P(-24, -39), SKIN_D)
-    # pollice sotto la lima
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s"/>' % (
-        P(-96, 30), P(-56, 16), P(-22, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-50, 50), P(-96, 60), HC)
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s" %s/>' % (
-        P(-40, 15), P(-24, 11), P(-10, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-30, 42), P(-44, 47), ln)
-    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
-        P(-6, 30), P(8, 28), P(13, 20), P(9, 18), P(2, 25), P(-8, 26), NAIL, NAIL_S)
+    s = D(T([(-250, 196), (-206, 130), (-162, 70)]), [36, 33, 30], nail=0)
+    # anulare e mignolo raccolti (dietro)
+    s += D(T([(-96, 8), (-66, 14), (-50, 32), (-58, 50)]), [11, 10, 9, 8], nail=0, fill=HD, creases=(1, 2))
+    s += D(T([(-104, 22), (-80, 34), (-70, 50), (-80, 62)]), [9.5, 8.5, 7.5, 7], nail=0, fill=HD)
+    # medio: sostiene la lima da dietro
+    s += D(T([(-92, -14), (-56, -12), (-22, -2), (-2, 16)]), [12, 11, 10, 9], nail=0, fill=HD, creases=(1, 2))
+    # pollice sotto la lima (unghia sul lato esterno): la base sparisce sotto il dorso
+    s += D(T([(-118, 46), (-74, 40), (-40, 30), (-12, 23)]), [18, 15, 12.5, 10.5], nail=1, creases=(2,))
+    # dorso della mano e base del pollice
+    s += B(T([(-170, 66), (-176, 20), (-150, -28), (-110, -50), (-74, -48), (-56, -34), (-58, -6), (-78, 18), (-96, 40), (-128, 70)]), HC, HS)
+    s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.2" fill="none" opacity=".5"/>' % (
+        gx - 140, gy - 30, gx - 112, gy - 46, gx - 82, gy - 44, HS)
+    s += tool_file(gx + 60, gy, 0, 210, 20)
+    # indice disteso sopra la lima (unghia sul dorso)
+    s += D(T([(-90, -38), (-52, -36), (-16, -28), (14, -21)]), [13, 11.2, 9.6, 8.6], nail=-1, creases=(1, 2))
     return s
 
 
@@ -2345,13 +2334,13 @@ def op_hand_file(gx, gy):
 def file_grip():
     W, H = 760, 350
     b = ''
-    gx, gy = 180, 164
+    gx, gy = 205, 164
     body = op_hand_file(gx, gy)
     body += callout(gx + 14, gy - 30, gx + 40, 92, 'indice sopra: presa leggera', 'middle', 13.5)
-    body += callout(gx + 4, gy + 22, gx + 76, gy + 74, 'pollice sotto', 'start', 13.5)
-    body += callout(gx - 124, gy + 60, gx - 60, 286, 'polso morbido', 'start', 13.5)
-    body += arrow(gx + 96, gy + 48, gx + 146, gy + 48, MUTED, 1.8, True)
-    body += text(gx + 121, gy + 36, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
+    body += callout(gx + 4, gy + 22, gx + 50, gy + 80, 'pollice sotto', 'start', 13.5)
+    body += callout(gx - 150, gy + 90, gx - 90, 290, 'polso morbido', 'start', 13.5)
+    body += arrow(gx + 76, gy + 48, gx + 126, gy + 48, MUTED, 1.8, True)
+    body += text(gx + 101, gy + 36, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
     b += frame(20, 20, 350, 310, 'La lima', 1, body=body)
     # 2 dito della cliente
     x = 390
@@ -2360,7 +2349,11 @@ def file_grip():
     body += text(cx + 50, yc + 64, 'supporto', 12.5, 'middle', 700, '#6b4fa0')
     f, p = top_finger(cx, yc, hw=32, nail_len=104, free_len=36, shape='squoval', finger_len=40)
     body += f
-    body += thumb(cx - 56, yc - 36, 90, 0.85) + thumb(cx + 56, yc - 36, -90, 0.85)
+    pcl = uid('pc')
+    body += '<defs><clipPath id="%s"><rect x="%d" y="20" width="350" height="310" rx="16"/></clipPath></defs>' % (pcl, x)
+    for sx in (-1, 1):   # pollici dell'operatrice ai lati del dito (visti dal dorso)
+        body += '<g clip-path="url(#%s)">' % pcl + gen_svg._digit([(cx + sx * 130, yc - 26), (cx + sx * 104, yc - 31), (cx + sx * 76, yc - 35), (cx + sx * 54, yc - 37)],
+                               [16, 14.5, 12.5, 11], nail=1, view='top', creases=(1, 2)) + '</g>'
     body += arrow(cx - 52, yc - 70, cx - 70, yc - 96, ACC2, 2)
     body += text(cx - 78, yc - 132, 'tira la pelle', 12.5, 'middle', 700, ACC2)
     body += text(cx - 78, yc - 116, 'del solco', 12.5, 'middle', 700, ACC2)
@@ -2369,7 +2362,7 @@ def file_grip():
     # riquadro errore
     body += '<rect x="%d" y="64" width="84" height="158" rx="10" fill="#fff"/>' % (x + 254)
     g, _ = top_finger(0, 0, hw=34, nail_len=90, free_len=20, finger_len=10)
-    g += '<ellipse cx="6" cy="-60" rx="28" ry="32" fill="#efc0a4" stroke="%s" stroke-width="1.5"/>' % SKIN_D
+    g += gen_svg._digit([(40, 30), (27, -8), (12, -46)], [27, 25, 22], nail=1, view='top', creases=(1,))
     body += scaled(x + 296, 152, 0.55, g)
     body += mark(x + 324, 80, False, 10)
     body += text(x + 296, 194, 'non sopra', 12, 'middle', 700, ERR)

@@ -738,6 +738,108 @@ def _ic_brushwash():
     return s
 
 
+
+# ---------------------------------------------------------------- dita e mani "naturali" (usate anche da svg_a/b/c come gen_svg._digit)
+_HAND, _HAND_D, _HAND_S = '#f2c9b0', '#e3b296', '#c98d72'
+
+
+def _smooth(pts):
+    """Curva Catmull-Rom (come comandi C) che passa per i punti dati, a partire dal primo (senza M)."""
+    d = ''
+    n = len(pts)
+    for i in range(n - 1):
+        p0 = pts[i - 1] if i > 0 else pts[i]
+        p1, p2 = pts[i], pts[i + 1]
+        p3 = pts[i + 2] if i + 2 < n else p2
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        d += ' C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (c1[0], c1[1], c2[0], c2[1], p2[0], p2[1])
+    return d
+
+
+def _digit(pts, ws, nail=1, view='side', fill=_HAND, stroke=_HAND_S, creases=(), nail_col='#f4c7d3', sw=1.4, knuckles=True):
+    """Dito affusolato lungo la linea media pts (base -> punta) con semi-larghezze ws.
+    nail = lato del dorso (+1 a sinistra della direzione di marcia, -1 a destra, 0 = nessuna unghia);
+    view='side' mette l'unghia sul bordo dorsale, view='top' la centra (dorso verso chi guarda).
+    creases = indici delle articolazioni (pieghe/nocche)."""
+    n = len(pts)
+    nrm = []
+    for i in range(n):
+        a = pts[max(i - 1, 0)]
+        b = pts[min(i + 1, n - 1)]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        L = math.hypot(dx, dy) or 1
+        nrm.append((-dy / L, dx / L))
+    left = [(p[0] + nn[0] * w, p[1] + nn[1] * w) for p, nn, w in zip(pts, nrm, ws)]
+    right = [(p[0] - nn[0] * w, p[1] - nn[1] * w) for p, nn, w in zip(pts, nrm, ws)]
+    tx, ty = pts[-1][0] - pts[-2][0], pts[-1][1] - pts[-2][1]
+    L = math.hypot(tx, ty) or 1
+    tx, ty = tx / L, ty / L
+    w = ws[-1]
+    tip = (pts[-1][0] + tx * w * 1.05, pts[-1][1] + ty * w * 1.05)
+    nx, ny = nrm[-1]
+    d = 'M%.1f,%.1f' % left[0] + _smooth(left)
+    d += ' C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (left[-1][0] + tx * w * .55, left[-1][1] + ty * w * .55,
+                                             tip[0] + nx * w * .6, tip[1] + ny * w * .6, tip[0], tip[1])
+    d += ' C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (tip[0] - nx * w * .6, tip[1] - ny * w * .6,
+                                             right[-1][0] + tx * w * .55, right[-1][1] + ty * w * .55, right[-1][0], right[-1][1])
+    d += _smooth(right[::-1])
+    # riempimento chiuso + contorno aperto alla base (così il dito si fonde con il dorso senza giunture)
+    s = '<path d="%s Z" fill="%s"/>' % (d, fill)
+    s += '<path d="%s" fill="none" stroke="%s" stroke-width="%s" stroke-linejoin="round" stroke-linecap="round"/>' % (d, stroke, sw)
+    # luce sul dorso
+    if nail:
+        side = left if nail > 0 else right
+        sgn = 1 if nail > 0 else -1
+        hl = [(p[0] - nn[0] * sgn * w * .45, p[1] - nn[1] * sgn * w * .45) for p, nn, w in zip(side, nrm, ws)]
+        s += '<path d="M%.1f,%.1f%s" fill="none" stroke="#fff" stroke-width="%.1f" opacity=".22" stroke-linecap="round"/>' % (
+            hl[1][0], hl[1][1], _smooth(hl[1:-1]), max(1.5, ws[0] * .3))
+    # articolazioni: pieghe sul lato palmare, nocche (piccole pieghe) sul dorso
+    for i in creases:
+        p, nn, w = pts[i], nrm[i], ws[i]
+        for sgn, k in ((1, .55), (-1, .55)):
+            if not knuckles and sgn == (1 if nail >= 0 else -1):
+                continue
+            a = (p[0] + nn[0] * sgn * w * .98, p[1] + nn[1] * sgn * w * .98)
+            b2 = (p[0] + nn[0] * sgn * w * (1 - k), p[1] + nn[1] * sgn * w * (1 - k))
+            s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.1" fill="none" opacity=".55" stroke-linecap="round"/>' % (
+                a[0], a[1], (a[0] + b2[0]) / 2 + tx * 2, (a[1] + b2[1]) / 2 + ty * 2, b2[0], b2[1], stroke)
+    # unghia
+    if nail:
+        sgn = 1 if nail > 0 else -1
+        p1 = pts[-1]
+        ln_ = w * 1.5
+        if view == 'top':
+            # unghia centrata: ovale allungato verso la punta
+            c0 = (p1[0] - tx * ln_ * .55 + tx * w * .25, p1[1] - ty * ln_ * .55 + ty * w * .25)
+            ang = math.degrees(math.atan2(ty, tx))
+            s += ('<g transform="translate(%.1f,%.1f) rotate(%.1f)"><path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,0 %.1f,%.1f L%.1f,%.1f Q%.1f,0 %.1f,%.1f Z" '
+                  'fill="%s" stroke="%s" stroke-width="1"/><rect x="%.1f" y="%.1f" width="%.1f" height="2" rx="1" fill="#fff" opacity=".6"/></g>'
+                  % (c0[0], c0[1], ang, -ln_ * .5, -w * .62, ln_ * .5, -w * .62, ln_ * .5 + w * .5, ln_ * .5, w * .62, -ln_ * .5, w * .62,
+                     -ln_ * .5 - w * .12, -ln_ * .5, -w * .62, nail_col, NAIL_S, -ln_ * .3, -w * .35, ln_ * .55))
+        else:
+            # unghia di profilo: lamina sottile sul bordo dorsale verso la punta
+            e = lambda t, off: (p1[0] - tx * t + nrm[-1][0] * sgn * off, p1[1] - ty * t + nrm[-1][1] * sgn * off)
+            a0, a1 = e(ln_, w * .98), e(-w * .55, w * .62)
+            b0, b1 = e(ln_, w * .62), e(-w * .45, w * .3)
+            s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1"/>'
+                  % (a0[0], a0[1], e(-w * .1, w * 1.08)[0], e(-w * .1, w * 1.08)[1], a1[0], a1[1],
+                     e(-w * .62, w * .42)[0], e(-w * .62, w * .42)[1], b1[0], b1[1],
+                     e(ln_ * .4, w * .6)[0], e(ln_ * .4, w * .6)[1], b0[0], b0[1], nail_col, NAIL_S))
+    return s
+
+
+def _blob(pts, fill=_HAND, stroke=_HAND_S, sw=1.4, extra=''):
+    """Forma chiusa morbida (dorso, palmo, avambraccio) che passa per i punti dati (Catmull-Rom chiusa)."""
+    n = len(pts)
+    d = 'M%.1f,%.1f' % pts[0]
+    for i in range(n):
+        p0, p1, p2, p3 = pts[i - 1], pts[i], pts[(i + 1) % n], pts[(i + 2) % n]
+        d += ' C%.1f,%.1f %.1f,%.1f %.1f,%.1f' % (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6,
+                                                 p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6, p2[0], p2[1])
+    return '<path d="%s Z" fill="%s" stroke="%s" stroke-width="%s" stroke-linejoin="round"%s/>' % (d, fill, stroke, sw, extra)
+
+
 LOGO_INNER = (
     '<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/>'
     '<stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>'
