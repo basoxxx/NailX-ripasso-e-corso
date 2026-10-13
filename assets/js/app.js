@@ -65,6 +65,7 @@
   function header(active) {
     var links = [
       ['index.html', 'home', 'Home'],
+      ['programma.html', 'programma', 'Programma'],
       ['corso.html', 'corso', 'Lezioni'],
       ['esercizi.html', 'esercizi', 'Esercizi'],
       ['ripasso.html', 'ripasso', 'Ripasso'],
@@ -157,7 +158,7 @@
     var exDone = D.exercises.filter(function (e) { return exScore(e) === 100; }).length;
     var quizDone = Object.keys(state.quiz).length;
     $('#stats').innerHTML =
-      stat(D.modules.length, 'moduli') + stat(lessons.length, 'lezioni') +
+      stat(D.modules.length, 'moduli') + stat(lessons.length, 'lezioni') + stat('≈' + hours(totalMinutes().lessons + totalMinutes().exercises), 'ore di formazione') +
       stat(D.exercises.length, 'esercizi pratici') + stat(countQuiz(), 'domande quiz');
     $('#global-progress').innerHTML = progressBar(pct(done, lessons.length),
       done + ' di ' + lessons.length + ' lezioni completate · ' + exDone + ' esercizi superati · ' + quizDone + ' quiz svolti');
@@ -213,8 +214,18 @@
       '<div class="meta">' + badge(m.level) + '<span>⏱ ' + (l.min || 10) + ' min di lettura</span>' +
       '<span>Lezione ' + (m.lessons.indexOf(l) + 1) + ' di ' + m.lessons.length + '</span></div>' +
       (l.simple ? '<div class="box simple"><strong class="t">In parole semplici</strong>' + esc(l.simple) + '</div>' : '') +
-      l.html + videosHtml(l.videos);
-    if (relatedEx.length && m.lessons.indexOf(l) === m.lessons.length - 1) {
+      '<nav class="toc" id="toc" hidden aria-label="In questa lezione"></nav>' +
+      '<div class="lesson-body">' + l.html + '</div>' + videosHtml(l.videos);
+    var isLast = m.lessons.indexOf(l) === m.lessons.length - 1;
+    if (isLast && m.summary && m.summary.length) {
+      html += '<div class="keypoints"><strong class="t">Punti chiave del modulo ' + m.n + '</strong><ol>' +
+        m.summary.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></div>';
+    }
+    html += quickCheckHtml(m, l) +
+      '<details class="notes"><summary>📝 I miei appunti su questa lezione</summary>' +
+      '<textarea id="note" rows="5" placeholder="Scrivi qui cosa vuoi ricordare: restano salvati solo in questo browser."></textarea>' +
+      '<small class="muted" id="note-st"></small></details>';
+    if (relatedEx.length && isLast) {
       html += '<div class="box info"><strong class="t">Mettiti alla prova</strong>Esercizi pratici di questo modulo: ' +
         relatedEx.map(function (e) { return '<a href="esercizi.html#' + e.id + '">' + esc(e.title) + '</a>'; }).join(' · ') +
         (D.quiz[m.id] ? ' — oppure fai il <a href="quiz.html?m=' + m.id + '">quiz del modulo</a>.' : '') + '</div>';
@@ -231,6 +242,7 @@
       '</div>';
     $('#lesson').innerHTML = html;
     linkGlossary($('#lesson'));
+    lessonExtras(key);
 
     var mark = $('#mark');
     function upd() { mark.textContent = state.lessons[key] ? '✓ Completata' : 'Segna come completata'; mark.classList.toggle('ghost', !!state.lessons[key]); }
@@ -275,6 +287,155 @@
       }, { threshold: 0.5 }).observe($('.lesson-nav'));
     }
     $('.menu-toggle').addEventListener('click', function () { $('#sidebar').classList.toggle('open'); });
+  }
+
+  /* ---------- extra della lezione: indice, barra di lettura, verifica rapida, appunti ---------- */
+  function hashStr(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+  function quickCheckHtml(m, l) {
+    var pool = D.quiz[m.id] || [];
+    if (pool.length < 2) return '';
+    var n = m.lessons.indexOf(l), h = hashStr(m.id + l.id);
+    var picks = [pool[(n * 2 + h) % pool.length], pool[(n * 2 + 1 + h) % pool.length]];
+    if (picks[0] === picks[1]) picks.pop();
+    return '<section class="quick-check"><h2>Verifica rapida</h2><p class="muted">Due domande per fissare i concetti del modulo. Non incidono sul punteggio.</p>' +
+      picks.map(function (q, i) {
+        var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
+        return '<div class="quiz-q"><h3>' + (i + 1) + '. ' + esc(q.q) + '</h3>' + opts.map(function (o) {
+          return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>';
+        }).join('') + '<div class="explain" hidden>' + esc(q.e || '') + '</div></div>';
+      }).join('') + '</section>';
+  }
+  var NOTES_KEY = 'nailx-notes-v1';
+  function loadNotes() { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (e) { return {}; } }
+  function lessonExtras(key) {
+    var body = $('.lesson-body');
+    // indice della lezione
+    var hs = body ? body.querySelectorAll('h2') : [];
+    if (hs.length >= 3) {
+      $('#toc').innerHTML = '<strong>In questa lezione</strong><ol>' + Array.prototype.map.call(hs, function (h, i) {
+        h.id = 'sez-' + (i + 1);
+        return '<li><a href="#sez-' + (i + 1) + '">' + esc(h.textContent) + '</a></li>';
+      }).join('') + '</ol>';
+      $('#toc').hidden = false;
+    }
+    // barra di lettura
+    var bar = document.createElement('div');
+    bar.className = 'read-bar'; bar.innerHTML = '<i></i>';
+    document.body.appendChild(bar);
+    function onScroll() {
+      var el = $('#lesson'), r = el.getBoundingClientRect();
+      var total = el.offsetHeight - innerHeight, done = Math.min(Math.max(-r.top, 0), Math.max(total, 1));
+      bar.firstChild.style.width = (total > 0 ? done / total * 100 : 100) + '%';
+    }
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    // verifica rapida
+    var qc = $('.quick-check');
+    if (qc) qc.addEventListener('click', function (ev) {
+      var b = ev.target.closest('.opt'); if (!b || b.disabled) return;
+      var box = b.parentNode;
+      box.querySelectorAll('.opt').forEach(function (o) { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('right'); });
+      if (b.dataset.ok !== '1') b.classList.add('wrong');
+      box.querySelector('.explain').hidden = false;
+    });
+    // appunti (solo in questo browser)
+    var ta = $('#note'), st = $('#note-st'), notes = loadNotes(), tmr;
+    if (notes[key]) { ta.value = notes[key]; ta.closest('details').open = true; }
+    ta.addEventListener('input', function () {
+      clearTimeout(tmr);
+      tmr = setTimeout(function () {
+        var n = loadNotes();
+        if (ta.value.trim()) n[key] = ta.value; else delete n[key];
+        try { localStorage.setItem(NOTES_KEY, JSON.stringify(n)); st.textContent = 'Salvato'; } catch (e) { st.textContent = 'Impossibile salvare in questo browser'; }
+      }, 400);
+    });
+  }
+
+  /* ---------- PROGRAMMA ---------- */
+  function totalMinutes() {
+    var lm = allLessons().reduce(function (a, x) { return a + (x.l.min || 10); }, 0);
+    var em = D.exercises.reduce(function (a, e) { return a + exMinutes(e); }, 0);
+    return { lessons: lm, exercises: em };
+  }
+  function hours(min) { return Math.round(min / 60); }
+  function plain(html) { var d = document.createElement('div'); d.innerHTML = html.replace(/<figure[\s\S]*?<\/figure>/g, ' '); return d.textContent.replace(/\s+/g, ' '); }
+  function renderProgram() {
+    var t = totalMinutes(), lessons = allLessons();
+    $('#pstats').innerHTML = stat(D.modules.length, 'moduli') + stat(lessons.length, 'lezioni') +
+      stat('≈' + hours(t.lessons), 'ore di teoria') + stat('≈' + hours(t.exercises), 'ore di pratica guidata') +
+      stat(countQuiz(), 'domande d\'esame') + stat(D.glossary.length, 'termini nel glossario');
+    $('#syllabus').innerHTML = D.modules.map(function (m) {
+      var min = m.lessons.reduce(function (a, l) { return a + (l.min || 10); }, 0);
+      var ex = D.exercises.filter(function (e) { return e.module === m.id; });
+      return '<details class="syl"><summary><span class="mod-num">' + String(m.n).padStart(2, '0') + '</span>' +
+        '<span class="syl-t"><strong>' + esc(m.title) + '</strong><small>' + m.lessons.length + ' lezioni · ' + min + ' min · ' +
+        ex.length + (ex.length === 1 ? ' esercizio' : ' esercizi') + (D.quiz[m.id] ? ' · quiz da ' + D.quiz[m.id].length + ' domande' : '') + '</small></span>' + badge(m.level) + '</summary>' +
+        '<p>' + esc(m.desc) + '</p>' +
+        (m.summary ? '<p><strong>Al termine saprai:</strong></p><ul>' + m.summary.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '') +
+        '<p><strong>Lezioni</strong></p><ol>' + m.lessons.map(function (l) {
+          return '<li><a href="' + lessonUrl(m, l) + '">' + esc(l.title) + '</a> <small class="muted">· ' + (l.min || 10) + ' min' +
+            (state.lessons[lessonKey(m, l)] ? ' · ✓ completata' : '') + '</small></li>';
+        }).join('') + '</ol>' +
+        (ex.length ? '<p><strong>Esercizi pratici</strong></p><ul>' + ex.map(function (e) {
+          return '<li><a href="esercizi.html#' + e.id + '">' + esc(e.title) + '</a> <small class="muted">· ' + esc(e.time) + '</small></li>';
+        }).join('') + '</ul>' : '') +
+        '<p class="btn-row"><a class="btn small" href="' + lessonUrl(m, m.lessons[0]) + '">Apri il modulo</a>' +
+        '<a class="btn ghost small" href="dispensa.html?m=' + m.id + '">Dispensa del modulo</a></p></details>';
+    }).join('');
+    // ricerca nelle lezioni
+    var idx = lessons.map(function (x) { var raw = x.l.title + ' ' + (x.l.simple || '') + ' ' + plain(x.l.html); return { m: x.m, l: x.l, raw: raw, txt: raw.toLowerCase() }; });
+    var inp = $('#search'), out = $('#results');
+    inp.addEventListener('input', function () {
+      var q = inp.value.trim().toLowerCase();
+      if (q.length < 3) { out.innerHTML = ''; return; }
+      var words = q.split(/\s+/);
+      var hits = idx.filter(function (x) { return words.every(function (w) { return x.txt.indexOf(w) >= 0; }); }).slice(0, 25);
+      out.innerHTML = hits.length ? '<ul class="results">' + hits.map(function (x) {
+        var i = x.txt.indexOf(words[0]), s = Math.max(0, i - 70);
+        var snip = x.raw.slice(s, i + 110);
+        return '<li><a href="' + lessonUrl(x.m, x.l) + '"><strong>' + esc(x.l.title) + '</strong></a> <small class="muted">· Modulo ' + x.m.n + '</small><br><small>…' + esc(snip) + '…</small></li>';
+      }).join('') + '</ul>' : '<p class="muted">Nessuna lezione contiene queste parole.</p>';
+    });
+  }
+
+  /* ---------- DISPENSA (stampabile / PDF) ---------- */
+  function renderHandbook() {
+    var only = qs('m');
+    var mods = D.modules.filter(function (m) { return !only || m.id === only; });
+    if (!mods.length) mods = D.modules;
+    var t = totalMinutes();
+    var title = mods.length === 1 ? 'Modulo ' + mods[0].n + ' · ' + mods[0].title : 'Manuale completo del corso';
+    document.title = title + ' · Dispensa NailX';
+    var html = '<div class="hb-tools no-print"><p class="muted">Usa <strong>Salva in PDF</strong> per avere la dispensa sul telefono o stamparla. ' +
+      'Suggerimento: nella finestra di stampa scegli "Salva come PDF".</p><div class="btn-row">' +
+      '<button class="btn" type="button" id="print">🖨 Salva in PDF / Stampa</button>' +
+      (only ? '<a class="btn ghost" href="dispensa.html">Manuale completo</a>' : '') +
+      '<a class="btn ghost" href="programma.html">← Programma</a></div></div>' +
+      '<section class="hb-cover"><img src="assets/img/logo.svg" alt="" width="72" height="72"><h1>' + esc(title) + '</h1>' +
+      '<p>Corso di ricostruzione unghie NailX · Dispensa didattica</p>' +
+      (mods.length > 1 ? '<p class="muted">' + D.modules.length + ' moduli · ' + allLessons().length + ' lezioni · circa ' + hours(t.lessons) + ' ore di teoria</p>' : '') +
+      '</section>';
+    if (mods.length > 1) {
+      html += '<section class="hb-index"><h2>Indice</h2><ol>' + mods.map(function (m) {
+        return '<li><a href="#mod-' + m.id + '">' + esc(m.title) + '</a><ol>' + m.lessons.map(function (l) {
+          return '<li><a href="#les-' + m.id + '-' + l.id + '">' + esc(l.title) + '</a></li>';
+        }).join('') + '</ol></li>';
+      }).join('') + '</ol></section>';
+    }
+    html += mods.map(function (m) {
+      return '<section class="hb-mod" id="mod-' + m.id + '"><p class="crumbs">Modulo ' + m.n + '</p><h1>' + esc(m.title) + '</h1><p class="lead">' + esc(m.desc) + '</p>' +
+        (m.summary ? '<div class="keypoints"><strong class="t">Punti chiave</strong><ol>' + m.summary.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></div>' : '') +
+        m.lessons.map(function (l) {
+          return '<article class="hb-lesson" id="les-' + m.id + '-' + l.id + '"><h2>' + m.n + '.' + (m.lessons.indexOf(l) + 1) + ' · ' + esc(l.title) + '</h2>' +
+            (l.simple ? '<div class="box simple"><strong class="t">In parole semplici</strong>' + esc(l.simple) + '</div>' : '') +
+            l.html.replace(/<h2>/g, '<h3>').replace(/<\/h2>/g, '</h3>') +
+            (l.sources && l.sources.length ? '<p class="hb-src"><small>Fonti: ' + l.sources.map(esc).join(' · ') + '</small></p>' : '') + '</article>';
+        }).join('') + '</section>';
+    }).join('');
+    var ps = document.createElement('style');
+    ps.textContent = '@page { size: A4 portrait; margin: 14mm 12mm; }';
+    document.head.appendChild(ps);
+    $('#handbook').innerHTML = html;
+    $('#print').addEventListener('click', function () { window.print(); });
   }
 
   /* ---------- ESERCIZI ---------- */
@@ -1037,6 +1198,6 @@
   header(page);
   lightbox();
   ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
-    attestato: renderCertificate, ripasso: renderReview, verifica: renderVerify,
+    attestato: renderCertificate, ripasso: renderReview, verifica: renderVerify, programma: renderProgram, dispensa: renderHandbook,
     accedi: function () { if (window.NAILX_CLOUD) window.NAILX_CLOUD.renderAccount($('#account')); } }[page] || function () {})();
 })();
