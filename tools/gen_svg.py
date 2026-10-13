@@ -6,6 +6,7 @@ Tutte le figure condividono palette e primitive (dito + unghia vista dall'alto,
 profilo laterale, pannelli step-by-step) per avere uno stile coerente.
 """
 import math
+import re
 import random
 import os
 
@@ -30,10 +31,57 @@ def uid(p='c'):
     return '%s%d' % (p, _uid[0])
 
 
+# ---------------------------------------------------------------- finitura "professionale"
+# Le figure usano colori piatti; svg() li sostituisce con sfumature e ombre leggere condivise,
+# così tutte le illustrazioni (anche quelle di tools/svg_*.py) hanno lo stesso aspetto curato.
+FINISH_DEFS = {
+    'nxSkin': '<linearGradient id="nxSkin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e2b29b"/>'
+              '<stop offset=".22" stop-color="#f3cdb6"/><stop offset=".55" stop-color="#f8dccb"/>'
+              '<stop offset=".82" stop-color="#f1c7af"/><stop offset="1" stop-color="#dfac94"/></linearGradient>',
+    'nxNail': '<linearGradient id="nxNail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbd6e0"/>'
+              '<stop offset=".45" stop-color="#f7c1cf"/><stop offset="1" stop-color="#eeaabd"/></linearGradient>',
+    'nxFree': '<linearGradient id="nxFree" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/>'
+              '<stop offset="1" stop-color="#fbeef2"/></linearGradient>',
+    'nxMetal': '<linearGradient id="nxMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d0d7"/>'
+               '<stop offset=".45" stop-color="#9aa3ad"/><stop offset="1" stop-color="#7c8691"/></linearGradient>',
+    'nxMetalD': '<linearGradient id="nxMetalD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa4ae"/>'
+                '<stop offset=".5" stop-color="#6f7983"/><stop offset="1" stop-color="#565f68"/></linearGradient>',
+    'nxPanel': '<linearGradient id="nxPanel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf6f3"/>'
+               '<stop offset="1" stop-color="#f8ece8"/></linearGradient>',
+    'nxSh': '<filter id="nxSh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="1.5" stdDeviation="2.2" '
+            'flood-color="#5a2a3a" flood-opacity=".13"/></filter>',
+    'nxShS': '<filter id="nxShS" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" '
+             'flood-color="#3b2a30" flood-opacity=".25"/></filter>',
+}
+_FINISH = [
+    ('fill="%s"' % SKIN, 'fill="url(#nxSkin)"', 'nxSkin'),
+    ('fill="%s"' % NAIL, 'fill="url(#nxNail)"', 'nxNail'),
+    ('fill="%s"' % FREE, 'fill="url(#nxFree)"', 'nxFree'),
+    ('fill="#9aa3ad"', 'fill="url(#nxMetal)"', 'nxMetal'),
+    ('fill="#6f7983"', 'fill="url(#nxMetalD)"', 'nxMetalD'),
+]
+
+
+def finish(body):
+    used = []
+    for old, new, d in _FINISH:
+        if old in body:
+            body = body.replace(old, new)
+            used.append(d)
+    # pannelli: fondo sfumato, bordo sottile e ombra morbida
+    body, n = re.subn(r'<rect ([^>]*?)fill="%s"' % PANEL,
+                      r'<rect \1fill="url(#nxPanel)" stroke="#efdcd6" stroke-width="1" filter="url(#nxSh)"', body)
+    if n:
+        used += ['nxPanel', 'nxSh']
+    if 'nxShS' in body:
+        used.append('nxShS')
+    return ('<defs>%s</defs>' % ''.join(FINISH_DEFS[d] for d in dict.fromkeys(used)) if used else '') + body
+
+
 def svg(w, h, body, title):
     return ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="%d" height="%d" '
             'font-family="%s" role="img"><title>%s</title>'
-            '<rect width="100%%" height="100%%" fill="#ffffff"/>%s</svg>\n') % (w, h, w, h, FONT, title, body)
+            '<rect width="100%%" height="100%%" fill="#ffffff"/>%s</svg>\n') % (w, h, w, h, FONT, title, finish(body))
 
 
 def text(x, y, s, size=15, anchor='middle', weight=400, fill=INK, style=''):
@@ -70,7 +118,7 @@ def arrow(x1, y1, x2, y2, color=ACC2, w=2.2, both=False, dash=''):
 def panel(x, y, w, h, title, num=None, color=ACC):
     s = '<rect x="%d" y="%d" width="%d" height="%d" rx="16" fill="%s"/>' % (x, y, w, h, PANEL)
     if num is not None:
-        s += '<circle cx="%d" cy="%d" r="15" fill="%s"/>' % (x + 26, y + 26, color)
+        s += '<circle cx="%d" cy="%d" r="15" fill="%s" stroke="#fff" stroke-width="2" filter="url(#nxShS)"/>' % (x + 26, y + 26, color)
         s += text(x + 26, y + 31.5, str(num), 15, weight=800, fill='#fff')
         s += text(x + 50, y + 31, title, 15, 'start', 700)
     else:
@@ -84,7 +132,7 @@ def mark(x, y, ok=True, r=14):
            % (x - 7, y)) if ok else (
         '<path d="M%.1f,%.1f l10,10 M%.1f,%.1f l-10,10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'
         % (x - 5, y - 5, x + 5, y - 5))
-    return '<circle cx="%.1f" cy="%.1f" r="%d" fill="%s"/>%s' % (x, y, r, c, sym)
+    return '<circle cx="%.1f" cy="%.1f" r="%d" fill="%s" stroke="#fff" stroke-width="2" filter="url(#nxShS)"/>%s' % (x, y, r, c, sym)
 
 
 # ---------------------------------------------------------------- unghia vista dall'alto
@@ -153,6 +201,9 @@ def finger_nail(cx, y_c, hw=40, nail_len=95, free_len=40, shape='squoval', smile
         else:
             out += '<path d="%s" fill="%s" clip-path="url(#%s)"/>' % (fp, free, clip)
     out += extra.replace('CLIP', clip)
+    # riflesso di luce sulla lamina
+    out += ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="#fff" opacity=".32" clip-path="url(#%s)"/>'
+            % (cx - hw * 0.62, y_t + 6, hw * 0.22, (y_c - 24) - (y_t + 6), hw * 0.11, clip))
     out += '<path d="%s" fill="none" stroke="%s" stroke-width="1.8"/>' % (outline, NAIL_S)
     # eponichio (piega prossimale a "U") + pieghe laterali
     out += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s"/>'
