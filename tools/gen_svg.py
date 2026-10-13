@@ -69,12 +69,16 @@ def finish(body):
             body = body.replace(old, new)
             used.append(d)
     # pannelli: fondo sfumato, bordo sottile e ombra morbida
-    body, n = re.subn(r'<rect ([^>]*?)fill="%s"' % PANEL,
-                      r'<rect \1fill="url(#nxPanel)" stroke="#efdcd6" stroke-width="1" filter="url(#nxSh)"', body)
+    def panel_rect(m):
+        tag = m.group(0).replace('fill="%s"' % PANEL, 'fill="url(#nxPanel)"')
+        extra = ('' if ' stroke=' in tag else ' stroke="#efdcd6" stroke-width="1"') + ('' if ' filter=' in tag else ' filter="url(#nxSh)"')
+        return tag[:-2] + extra + '/>' if tag.endswith('/>') else tag[:-1] + extra + '>'
+    body, n = re.subn(r'<rect [^>]*fill="%s"[^>]*>' % PANEL, panel_rect, body)
     if n:
         used += ['nxPanel', 'nxSh']
-    if 'nxShS' in body:
-        used.append('nxShS')
+    for d in ('nxSh', 'nxShS'):
+        if 'url(#%s)' % d in body:
+            used.append(d)
     return ('<defs>%s</defs>' % ''.join(FINISH_DEFS[d] for d in dict.fromkeys(used)) if used else '') + body
 
 
