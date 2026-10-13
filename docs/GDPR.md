@@ -22,7 +22,9 @@ L'informativa è in [`privacy.html`](../privacy.html), compilata con titolare **
 
 - [x] Regione del progetto nell'Unione europea: **eu-west-1 (Irlanda)**, verificata.
 - [x] Funzione **Elimina account** attiva e verificata.
-- [ ] Accetta/scarica il **Data Processing Addendum (DPA)** di Supabase e conservane una copia.
+- [x] **DPA di Supabase**: si applica automaticamente con l'accettazione dei Termini di servizio (nessuna firma separata;
+      la clausola 12.2 equipara l'accettazione alla firma delle Clausole contrattuali standard). Contraente: Supabase Pte. Ltd (Singapore).
+      Copia PDF della versione del 1° agosto 2026 salvata il 13/10/2026 (conservala fuori dal repository pubblico).
 - [ ] Se configuri un **SMTP** esterno, conserva anche il suo DPA.
 - [ ] Tieni un semplice **registro dei trattamenti** (art. 30): puoi copiare le tabelle dei punti 2, 3, 5 e 6 dell'informativa.
 
