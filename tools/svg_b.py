@@ -1290,7 +1290,7 @@ def tip_overlay():
     xa, ax, xb = p['xa'], p['ax'], p['xb']
     # zone numerate, tutte sulla stessa riga
     for n, zx, lab, sub in ((3, xa + 50, 'sottile', 'vicino alla cuticola'), (2, ax, 'apex', 'la parte più spessa'),
-                           (1, xb - 60, '≈ 1–1,5 mm', 'sottile in punta')):
+                           (1, xb - 60, '≈ 0,8–1 mm', 'sottile in punta')):
         b += zone_badge(zx, 76, n, lab, ACC2, sub)
         top_y = oy - (34 if n == 2 else 18 if n == 3 else 10)
         b += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.2" stroke-dasharray="3 3"/>' % (zx, 130, zx, top_y, MUTED)
@@ -1634,7 +1634,7 @@ def zone_thick():
     b += dim(p['ox'] + 2, oy - 18, xa + 2, oy - 18, '', 'above')
     b += text(p['ox'] - 4, oy - 32, '≈ 1 mm dalla pelle', 12.5, 'end', 700, ACC2)
     b += dim(xb + 14, oy - 6, xb + 14, oy + 7, '', 'right')
-    b += text(xb + 2, oy + 32, '≈ 1–1,5 mm', 13, 'middle', 800, ACC2)
+    b += text(xb + 2, oy + 32, '≈ 0,8–1 mm', 13, 'middle', 800, ACC2)
     # carta di credito
     b += '<rect x="%.1f" y="%.1f" width="40" height="26" rx="4" fill="#cfe0f0" stroke="%s"/>' % (xb - 70, oy + 46, PROD_S)
     b += '<rect x="%.1f" y="%.1f" width="40" height="6" fill="%s"/>' % (xb - 70, oy + 52, PROD_S)

@@ -2594,9 +2594,9 @@ ${F('baby-boomer.svg', 'Baby boomer in tre passaggi.')}
 <tr><td><strong>Spugnetta</strong></td><td>Bianco picchiettato in più passaggi leggeri</td><td>Sfumatura molto morbida</td><td>Pulire bene la pelle prima della lampada</td></tr>
 </table>
 ${B('tip', 'Colori semitrasparenti', 'Per iniziare scegli un bianco lattiginoso e un nude semitrasparente: si sfumano molto più facilmente di un bianco coprente e perdonano gli errori.')}
-<div class="box pro"><strong class="t">Consiglio da professionista: baby boomer in acrilico "a zone"</strong><ol><li>Posa una perla di cover nella zona cuticolare e sfumala verso il centro.</li><li>Posa una perla di bianco sulla punta e sfumala verso l'alto.</li><li>Aggiungi al centro una <strong>perla piccola, appena più umida</strong>: ammorbidisce il punto d'incontro tra i due colori.</li><li>Modella quasi tutta la forma con il pennello. Ogni passata di lima in più "taglia" la sfumatura.</li></ol><p>Il segreto è che le due perle si incontrino quando sono ancora lavorabili: lavora un'unghia alla volta.</p></div>
+<div class="box pro"><strong class="t">Consiglio da professionista: baby boomer in acrilico "a zone"</strong><ol><li>Posa una perla di cover nella zona cuticolare e sfumala verso il centro.</li><li>Posa una perla di bianco sulla punta e sfumala verso il centro dell'unghia.</li><li>Aggiungi al centro una <strong>perla piccola, appena più umida</strong>: ammorbidisce il punto d'incontro tra i due colori.</li><li>Modella quasi tutta la forma con il pennello. Ogni passata di lima in più "taglia" la sfumatura.</li></ol><p>Il segreto è che le due perle si incontrino quando sono ancora lavorabili: lavora un'unghia alla volta.</p></div>
 <h2>Passo passo in gel builder</h2>
-${F('baby-boomer-step.svg', 'Baby boomer in gel: bianco sulla punta, sfuma verso l\'alto, cover sopra con apex, top.')}
+${F('baby-boomer-step.svg', 'Baby boomer in gel: bianco sulla punta, sfuma verso il centro, cover sopra con apex, top.')}
 <ol class="steps">
 <li><strong>Prepara</strong> l'unghia e applica la base; polimerizza.</li>
 <li>Posa il <strong>bianco lattiginoso</strong> sulla punta, in uno strato sottile.</li>

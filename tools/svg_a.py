@@ -2918,7 +2918,6 @@ def spray(cx, base, s=1.0, col='#dfe9f2', label='DISINF.'):
 def glass_file(cx, cy, ang=0, s=1.0):
     """Lima in vetro: trasparente, con zona incisa e riflessi."""
     o = ('<path d="M-66,-11 L56,-11 Q70,-11 70,0 Q70,11 56,11 L-66,11 Q-72,0 -66,-11 Z" fill="#cfe8f6" fill-opacity=".85" stroke="#6fa7c9" stroke-width="1.4"/>')
-    o += '<path d="M-60,-11 L50,-11 Q62,-11 62,0 Q62,11 50,11 L-60,11 Z" fill="url(#%s)" opacity=".0"/>' % 'none'
     for k in range(26):
         xx = -56 + k * 4.4
         o += '<line x1="%.1f" y1="-8" x2="%.1f" y2="8" stroke="#8fbfdc" stroke-width=".8"/>' % (xx, xx + 3)

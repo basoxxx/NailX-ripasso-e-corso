@@ -1936,7 +1936,7 @@ def tut_acr():
     labels = ['Perla in zona 1', 'Picchietta e modella', 'Perla in zona 2', 'Zona 3 sottilissima', 'Pinching (curva a C)', 'Lima e rifinisci']
 
     def d(i, x, y):
-        cx, yb = x + 140, y + 236
+        cx, yb = x + 140, y + 255
         ys = yb - 90
         s = ''
         if i < 4:

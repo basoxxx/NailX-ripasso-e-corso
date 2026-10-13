@@ -741,7 +741,7 @@ def bboom_steps():
         bb_grad(g1, [(0, '#ffffff', 0), (.38, '#ffffff', 0), (.72, '#ffffff', .92), (1, '#ffffff', 1)]),
         bb_grad(g2, [(0, '#f4a9be', .45), (.6, '#f4a9be', .18), (1, '#f4a9be', .08)]))
     b = title('Baby boomer in gel')
-    heads = ['Bianco sulla punta', 'Sfuma verso l\'alto', 'Cover sopra + apex', 'Top: niente linee']
+    heads = ['Bianco sulla punta', 'Sfuma verso il centro', 'Cover sopra + apex', 'Top: niente linee']
     caps = ['strato sottile', 'colpi brevi, fino a metà', 'il bianco "affiora"', 'sfumatura morbida']
     BBB = '#f1bccb'   # base rosa nude, abbastanza scura da far leggere il bianco
     for i in range(4):
@@ -764,8 +764,12 @@ def bboom_steps():
             body += flat_brush(cx + 24, ys - 26, 40, 56, '#f4f1ec', load='#ffffff', w=6)
         elif i == 1:
             body += flat_brush(cx + 26, ys + 6, 44, 52, '#f4f1ec', w=6)
+            # colpi brevi dal bianco della punta verso il centro dell'unghia, fermandosi a metà
+            ym = (top + yc) / 2 + 6
+            body += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.4" stroke-dasharray="4 3"/>' % (
+                cx - hw + 2, ym, cx + hw - 2, ym, DARK)
             for dx in (-20, -2, 16):
-                body += arr(cx + dx - 6, ys + 16, cx + dx - 6, ys - 14, DARK, 1.8)
+                body += arr(cx + dx - 6, ys - 30, cx + dx - 6, ym - 4, DARK, 1.8)
         elif i == 2:
             ox, oy = x + 116, 280
             mini = box(ox - 10, oy - 36, 92, 52, '#fff', '#d8c8c4', 8)
@@ -935,7 +939,7 @@ def grip():
     body = client(x)
     dx, dy = x + 150, tb - 49
     gy = dy - 52
-    hb, hf = hand(dx, dy - 38, -78, (dx + 104, tb - 8))
+    hb, hf = hand(dx + 2, dy - 22, -25, (dx + 104, tb - 8), 0.55)
     body += hb + dotter2(dx, dy, -90, 50, 5) + hf
     body += arr(dx - 28, dy - 84, dx - 28, dy - 24, DARK, 2.2)
     body += text(x + 22, 104, 'Dotter', 14.5, 'start', 800) + text(x + 22, 122, 'verticale,', 14.5, 'start', 800)
@@ -960,8 +964,8 @@ def grip():
     gx, gy = sx + 84 * math.cos(rad), sy + 84 * math.sin(rad)
     hb, hf = hand(sx + 52 * math.cos(rad), sy + 52 * math.sin(rad), ang, (sx + 126, tb - 8))
     body += hb + liner(sx, sy, ang, 116, bristle='#3b2a30', load='#ffffff') + hf
-    body += text(x + 22, 100, 'Trascina, non spingere', 14.5, 'start', 800)
-    body += text(x + 22, 119, 'pressione costante', 13, 'start', 600, MUTED)
+    body += text(x + 22, 106, 'Trascina, non spingere', 14.5, 'start', 800)
+    body += text(x + 22, 124, 'pressione costante', 13, 'start', 600, MUTED)
     body += arr(x + 40, 148, x + 120, 148, DARK, 2.2)
     body += text(x + 80, 168, 'verso di te', 12.5, fill=MUTED, style='italic')
     body += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="3" stroke-linecap="round"/>' % (x + 30, ey, x + 136, ey, FUCHSIA)
