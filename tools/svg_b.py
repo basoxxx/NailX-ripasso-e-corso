@@ -446,6 +446,216 @@ def cut_steps():
     return svg(W, H, arrow_defs() + b, 'Zona cuticolare in quattro passaggi: arretra, solleva, taglia solo ciò che pende, controlla')
 
 
+
+@figx('pterigio-vero.svg')
+def pterygium():
+    W, H = 760, 350
+    b = ''
+    # sinistra: cuticola normale
+    body = ''
+    f, p = top_finger(140, 262, hw=46, nail_len=140, free_len=16)
+    body += f
+    body += '<path d="%s" fill="none" stroke="#fffaf6" stroke-width="11" opacity=".95" clip-path="url(#%s)"/>' % (epo_curve(p, -10), p['clip'])
+    body += leader(152, 250, 236, 196, 'pelle morta', 'start', 13)
+    body += text(242, 219, 'sulla lamina', 13, 'start', 600)
+    body += text(242, 244, 'si rimuove', 13.5, 'start', 800, OK)
+    b += frame(20, 20, 350, 300, 'Cuticola', ok=True, body=body)
+    # destra: vero pterigio
+    body = ''
+    extra = ('<path d="M%d,%d L%d,%d L%d,%d Z" fill="%s" stroke="%s" stroke-width="1.5" clip-path="url(#CLIP)"/>'
+             % (510 - 30, 262, 510, 262 - 100, 510 + 30, 262, SKIN, SKIN_D))
+    f, p = top_finger(510, 262, hw=46, nail_len=140, free_len=16, extra=extra)
+    body += f
+    body += leader(512, 205, 598, 150, 'pelle saldata', 'start', 13)
+    body += text(604, 173, 'alla lamina', 13, 'start', 600)
+    body += text(598, 215, 'non toccare:', 13.5, 'start', 800, ERR)
+    body += text(598, 235, 'medico', 13.5, 'start', 800, ERR)
+    b += frame(390, 20, 350, 300, 'Vero pterigio', body=body)
+    b += stop_sign(390 + 350 - 26, 45, 13)
+    b += text(W / 2, 342, 'Il pterigio vero è un disturbo, non una pellicina.', 14.5, weight=700, fill=ACC2)
+    return svg(W, H + 6, b, 'Cuticola normale da rimuovere e vero pterigio da non toccare')
+
+
+@figx('opacizzazione-zone.svg')
+def buff_zones():
+    W, H = 760, 410
+    b = text(20, 38, 'Dove opacizzare', 20, 'start', 800, ACC2)
+    cx, yc, hw = 190, 330, 82
+    ys = yc - 220
+    yt = ys - 34
+    zones = ''
+    # 4 bordo libero, 3 centro, 2 lati, 1 base (disegnati in quest'ordine)
+    zones += '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" opacity=".55" clip-path="url(#CLIP)"/>' % (cx - hw - 6, yt - 10, 2 * hw + 12, ys - yt + 14, YEL)
+    zones += '<rect x="%d" y="%d" width="%d" height="%d" fill="#9ed8a8" opacity=".55" clip-path="url(#CLIP)"/>' % (cx - hw + 26, ys + 4, 2 * hw - 52, yc - ys - 40)
+    for sx in (-1, 1):
+        x0 = cx - hw - 6 if sx < 0 else cx + hw - 26
+        zones += '<rect x="%d" y="%d" width="32" height="%d" fill="#8cc2e6" opacity=".6" clip-path="url(#CLIP)"/>' % (x0, ys + 4, yc - ys - 30)
+    zones += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="#f2a65a" stroke-width="30" opacity=".6" clip-path="url(#CLIP)"/>' % (
+        cx - hw - 4, yc - 52, cx, yc - 2, cx + hw + 4, yc - 52)
+    f, p = finger_nail(cx, yc, hw=hw, nail_len=220, free_len=34, shape='tonda', smile=10, finger_len=60, lunula=False, extra=zones)
+    b += '<g>%s</g>' % f
+    # frecce di direzione
+    b += arrow(cx, yc - 70, cx, ys + 20, ACC2, 2.2)
+    b += arrow(cx - 30, yc - 80, cx - 30, ys + 40, ACC2, 1.8)
+    b += arrow(cx + 30, yc - 80, cx + 30, ys + 40, ACC2, 1.8)
+    # numeri e legenda
+    nums = [(1, cx + 52, yc - 40, '#f2a65a', 'Zona cuticolare', 'archetti piccoli lungo la curva'),
+            (2, cx + hw - 10, ys + 120, '#8cc2e6', 'Lati', 'lima inclinata, mai la pelle'),
+            (3, cx - 52, ys + 80, '#9ed8a8', 'Centro', 'dalla base verso la punta'),
+            (4, cx - 40, yt + 14, YEL, 'Bordo libero', 'anche lo spessore del bordo')]
+    for k, (n, nx, ny, col, lab, sub) in enumerate(nums):
+        b += '<circle cx="%d" cy="%d" r="12" fill="%s" stroke="%s" stroke-width="2"/>' % (nx, ny, col, INK)
+        b += text(nx, ny + 5, str(n), 13, weight=800)
+        ly = 96 + k * 60
+        b += '<circle cx="345" cy="%d" r="12" fill="%s" stroke="%s" stroke-width="2"/>' % (ly - 5, col, INK)
+        b += text(345, ly, str(n), 13, weight=800)
+        b += text(366, ly, lab, 15, 'start', 800)
+        b += text(366, ly + 19, sub, 13, 'start', fill=MUTED)
+    # riquadro grana
+    gx, gy = 560, 64
+    b += '<rect x="%d" y="%d" width="180" height="236" rx="16" fill="%s"/>' % (gx, gy, PANEL)
+    b += text(gx + 90, gy + 30, 'Grana', 16, weight=800)
+    for k, (g, ok, c1, c2) in enumerate([('100', False, '#5b4a44', '#8a7469'), ('180', True, '#8a7469', '#c3ad9f'), ('240', True, '#c3ad9f', '#ece1d8')]):
+        yy = gy + 74 + k * 58
+        b += tool_file(gx + 66, yy, 0, 92, 20, c1, c2)
+        b += text(gx + 66, yy + 30, g, 14, weight=800)
+        b += mark(gx + 148, yy, ok, 13)
+    b += mtext(560, 336, ['Leggera, pochi passaggi,', 'nessuna zona lucida'], 15, 'start', 800, ACC2)
+    return svg(W, H, arrow_defs() + b, 'Zone da opacizzare: base, lati, centro e bordo libero; grane adatte')
+
+
+def light_nail(cx, yc, kind):
+    extra = ''
+    if kind == 'lucida':
+        extra = ('<path d="M%d,%d Q%d,%d %d,%d" stroke="#fff" stroke-width="12" fill="none" stroke-linecap="round" opacity=".95" clip-path="url(#CLIP)"/>'
+                 % (cx - 14, yc - 40, cx - 20, yc - 90, cx - 8, yc - 130))
+    elif kind == 'opaca':
+        extra = '<rect x="%d" y="%d" width="120" height="200" fill="#efe2e6" opacity=".55" clip-path="url(#CLIP)"/>' % (cx - 60, yc - 190)
+    else:
+        extra = ('<rect x="%d" y="%d" width="120" height="200" fill="#efe2e6" opacity=".45" clip-path="url(#CLIP)"/>'
+                 '<ellipse cx="%d" cy="%d" rx="18" ry="40" fill="#ec7f9c" opacity=".8" clip-path="url(#CLIP)"/>'
+                 '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#c9627f" stroke-width="3" stroke-linecap="round"/>'
+                 '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="#c9627f" stroke-width="3" stroke-linecap="round"/>'
+                 % (cx - 60, yc - 190, cx, yc - 80, cx - 8, yc - 112, cx - 10, yc - 46, cx + 8, yc - 110, cx + 10, yc - 44))
+    return top_finger(cx, yc, hw=38, nail_len=130, free_len=14, extra=extra)
+
+
+@figx('opacizzazione-controllo.svg')
+def buff_check():
+    W, H = 940, 330
+    b = ''
+    T = [('Ancora lucida', False, 'ripassa'), ('Opaca uniforme', True, 'pronta'), ('Troppo limata', False, 'sottile: calore')]
+    for i, (t, ok, sub) in enumerate(T):
+        x = 20 + i * 304
+        cx = x + (130 if i == 2 else 160)
+        body = ''
+        f, p = light_nail(cx, 268, ['lucida', 'opaca', 'troppo'][i])
+        body += f
+        body += rays(x + 20, 70, cx - 40, 120, 3, 0, 24)
+        if i == 2:
+            # piccola sezione laterale: lamina più sottile al centro
+            sx, sy = x + 200, 150
+            body += '<rect x="%d" y="%d" width="88" height="96" rx="10" fill="#fff"/>' % (sx - 6, sy - 40)
+            body += text(sx + 38, sy - 20, 'sezione', 12.5, weight=700, fill=MUTED)
+            body += '<rect x="%d" y="%d" width="76" height="18" fill="#f0c3ad"/>' % (sx, sy + 14)
+            body += '<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d L%d,%d L%d,%d Z" fill="%s" stroke="%s" stroke-width="1.4"/>' % (
+                sx, sy, sx + 20, sy, sx + 38, sy + 11, sx + 56, sy, sx + 76, sy, sx + 76, sy + 14, sx, sy + 14, NAIL, NAIL_S)
+            body += arrow(sx + 38, sy - 14, sx + 38, sy + 6, ERR, 1.6)
+            body += text(sx + 38, sy + 48, 'più sottile', 12.5, weight=700, fill=ERR)
+        b += frame(x, 20, 290, 290, t, ok=ok, sub=('✓ ' if ok else '✗ ') + sub, body=body)
+    return svg(W, H, arrow_defs() + b, 'Controllo con luce radente: lamina ancora lucida, opaca uniforme, troppo limata')
+
+
+def lens(cx, cy, r, inner, label=''):
+    c = uid('l')
+    s = '<defs><clipPath id="%s"><circle cx="%.1f" cy="%.1f" r="%.1f"/></clipPath></defs>' % (c, cx, cy, r)
+    s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff"/>' % (cx, cy, r)
+    s += '<g clip-path="url(#%s)">%s</g>' % (c, inner)
+    s += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="none" stroke="%s" stroke-width="5"/>' % (cx, cy, r, INK)
+    return s
+
+
+@figx('primer-acido-vs-senza.svg')
+def primers():
+    W, H = 760, 370
+    b = ''
+    for i in range(2):
+        x = 20 + i * 370
+        cx, cy, r = x + 118, 190, 100
+        surf = cy + 12
+        inner = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (cx - r, cy - r, 2 * r, r + 12, PROD)
+        if i == 0:
+            pts = 'M%.1f,%.1f ' % (cx - r, surf)
+            xx = cx - r
+            while xx < cx + r:
+                pts += 'L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f ' % (xx + 10, surf, xx + 16, surf + 16, xx + 22, surf)
+                xx += 26
+            pts += 'L%.1f,%.1f L%.1f,%.1f Z' % (cx + r, cy + r, cx - r, cy + r)
+            inner += '<path d="%s" fill="%s" stroke="%s" stroke-width="1.5"/>' % (pts, NAIL, NAIL_S)
+        else:
+            inner += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" stroke="%s" stroke-width="1.5"/>' % (cx - r, surf, 2 * r, r, NAIL, NAIL_S)
+            inner += '<rect x="%.1f" y="%.1f" width="%.1f" height="9" fill="%s"/>' % (cx - r, surf - 9, 2 * r, YEL)
+            for k in range(14):
+                inner += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#c9a54a" stroke-width="2"/>' % (cx - r + 6 + k * 16, surf - 7, cx - r + 12 + k * 16, surf - 2)
+        for k in range(4):
+            inner += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1" opacity=".5"/>' % (cx - r, surf + 26 + k * 18, cx + r, surf + 26 + k * 18, NAIL_S)
+        inner += text(cx, cy - 46, 'prodotto', 14, weight=700, fill='#41708a')
+        inner += text(cx, cy + 74, 'lamina', 14, weight=700, fill=ACC2)
+        body = lens(cx, cy, r, inner)
+        lx = x + 232
+        if i == 0:
+            body += leader(cx + 32, surf + 12, lx, 140, 'microfori', 'start', 13.5)
+            body += mtext(lx, 196, ['asciutto =', 'bianco gessoso'], 13.5, 'start', 600)
+            body += warn_tri(lx + 10, 262, 1.1, ERR)
+            body += text(lx + 28, 267, 'corrosivo', 13.5, 'start', 800, ERR)
+        else:
+            body += leader(cx + 40, surf - 5, lx, 140, 'effetto', 'start', 13.5)
+            body += text(lx + 6, 163, 'biadesivo', 13.5, 'start', 600)
+            body += mtext(lx, 206, ['attivo circa', '20 minuti'], 13.5, 'start', 600)
+            body += timer(lx + 16, 262, '')
+        b += frame(x, 20, 350, 330, 'Primer acido' if i == 0 else 'Primer senza acido', body=body)
+    return svg(W, H, b, 'Sezione al microscopio: il primer acido incide la lamina, quello senza acido fa da biadesivo')
+
+
+@figx('primer-quantita.svg')
+def primer_amount():
+    W, H = 940, 330
+    b = ''
+    # 1 scarica il pennello
+    x = 20
+    body = bottle(x + 110, 270, '#f4e3a4', 'primer', 70, 96)
+    body = body.replace('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="3" fill="%s"/>' % (x + 110 - 15.4, 270 - 96 - 26, 30.8, 26, INK), '')
+    body += '<rect x="%d" y="%d" width="40" height="12" rx="3" fill="#fff" stroke="%s" stroke-width="1.6"/>' % (x + 90, 270 - 108, MUTED)
+    body += tool_brush(x + 128, 154, -60, 90, '#f4e3a4')
+    body += arrow(x + 150, 128, x + 168, 150)
+    body += drop_c(x + 112, 186, '#e7c95a', s=0.7) + drop_c(x + 124, 204, '#e7c95a', s=0.55)
+    b += frame(x, 20, 290, 290, 'Scarica il pennello', 1, sub='quasi asciutto', body=body, subcol=INK)
+    # 2 giusto
+    x = 324
+    extra = ''
+    cx, yc = x + 130, 250
+    f, p = top_finger(cx, yc, hw=46, nail_len=150, free_len=14, finger_len=10)
+    prim = ('<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Z" fill="#f6e39a" opacity=".75" stroke="#d9b44a" stroke-width="1.2"/>'
+            % (cx - 32, yc - 142, cx - 32, yc - 70, cx, yc - 40, cx + 32, yc - 70, cx + 32, yc - 142))
+    body = f + prim
+    body += dim(cx, yc - 40, cx, yc - 5, '', 'right')
+    body += dashed(cx + 4, yc - 22, x + 200, yc - 60, MUTED, 1, '3 3')
+    body += text(x + 204, yc - 70, '≥ 1 mm', 14, 'start', 800, ACC2)
+    body += text(x + 204, yc - 52, 'dalla pelle', 12.5, 'start', 600, ACC2)
+    b += frame(x, 20, 290, 290, 'Solo sulla lamina', 2, ok=True, sub='piccoli tocchi, lontano dalla pelle', body=body)
+    # 3 troppo
+    x = 628
+    cx = x + 145
+    yc = 250
+    f, p = top_finger(cx, yc, hw=46, nail_len=150, free_len=14, finger_len=10)
+    flood = ('<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="#f2b45a" opacity=".7"/>'
+             % (cx - 62, yc - 160, cx - 64, yc - 30, cx, yc + 26, cx + 64, yc - 30, cx + 62, yc - 160, cx, yc - 170, cx - 62, yc - 160))
+    body = f + flood + drop_c(cx - 66, yc - 8, '#f2b45a') + drop_c(cx + 68, yc - 20, '#f2b45a')
+    body += leader(cx + 60, yc - 40, x + 250, yc - 170, 'sulla pelle', 'middle', 13, fill=ERR)
+    b += frame(x, 20, 290, 290, 'Troppo primer', ok=False, sub='meno adesione, pelle a rischio', body=body)
+    return svg(W, H, arrow_defs() + b, 'La quantità giusta di primer: pennello quasi asciutto, solo sulla lamina, lontano dalla pelle')
+
+
 # ================================================================= MAIN
 def main():
     only = sys.argv[1:]
