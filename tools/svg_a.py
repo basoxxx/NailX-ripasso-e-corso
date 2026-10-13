@@ -2322,13 +2322,13 @@ def lime_forme():
     for yy in (286, 312):
         b += '<rect x="70" y="%d" width="260" height="4" fill="#5d4a3d"/>' % yy
     b += text(200, 340, 'non si piega: lati dritti e forma', 13, weight=600, fill=MUTED)
-    b += frame(400, 222, 340, 128, 'Anima morbida (spugna)', border=None)
+    b += frame(400, 222, 380, 128, 'Anima morbida (spugna)', border=None)
     # unghia curva sotto e lima che si piega
-    b += '<path d="M450,322 Q570,280 690,322" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>' % NAIL_S
-    b += '<path d="M450,310 Q570,268 690,310 L690,294 Q570,250 450,294 Z" fill="#f2e6a8" stroke="#c9b45a" stroke-width="1.5"/>'
-    b += '<path d="M450,313 Q570,271 690,313" fill="none" stroke="#5d4a3d" stroke-width="4"/>'
-    b += '<path d="M450,292 Q570,248 690,292" fill="none" stroke="#5d4a3d" stroke-width="4"/>'
-    b += text(570, 344, 'segue la curva: superficie e buffer', 13, weight=600, fill=MUTED)
+    b += '<path d="M470,322 Q590,280 710,322" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>' % NAIL_S
+    b += '<path d="M470,310 Q590,268 710,310 L710,294 Q590,250 470,294 Z" fill="#f2e6a8" stroke="#c9b45a" stroke-width="1.5"/>'
+    b += '<path d="M470,313 Q590,271 710,313" fill="none" stroke="#5d4a3d" stroke-width="4"/>'
+    b += '<path d="M470,292 Q590,248 710,292" fill="none" stroke="#5d4a3d" stroke-width="4"/>'
+    b += text(590, 344, 'segue la curva: superficie e buffer', 13, weight=600, fill=MUTED)
     return svg(800, 360, b, 'Forme delle lime (dritta, banana, mezzaluna, ovale, buffer) e differenza tra anima rigida e anima morbida')
 
 
@@ -2582,12 +2582,12 @@ def kit_priorita():
                 b += bottle(x + 60 + j * 40, 172, 22, 30, cc, cap=INK)
         else:
             b += dappen(x + 60, 150, 50, 32, 0.5) + powder_jar(x + 130, 150, 50, 32) + tool_brush(x + 190, 132, -30, 50, '#f3eee6')
-        yy = 200
+        yy = 194
         for it in items:
             lines = wrap(it, W - 40, 13, True)
             b += '<circle cx="%d" cy="%d" r="4" fill="%s"/>' % (x + 20, yy - 4, c)
             b += mtext(x + 32, yy, lines, 13, 'start', 700)
-            yy += (19 if k == 0 else 26) + 16 * (len(lines) - 1)
+            yy += (18 if k == 0 else 26) + 16 * (len(lines) - 1)
     b += '<rect x="20" y="376" width="760" height="36" rx="12" fill="%s"/>' % ACC2
     b += text(400, 400, 'Un solo sistema completo all\'inizio', 16, weight=800, fill='#fff')
     return svg(800, 420, b, 'Priorità di acquisto del kit: subito il necessario per un sistema, dopo qualche mese fresa e colori, più avanti acrilico e effetti')
@@ -2780,7 +2780,7 @@ def postura():
         b += '<rect x="%d" y="%d" width="50" height="5" rx="2" fill="%s"/>' % (px + 60, fl - 5, GREY_D)
         if good:
             b += '<rect x="%d" y="%d" width="8" height="80" rx="4" fill="%s"/>' % (px + 46, fl - 190, GREY_D)
-            hip, sh, head = (px + 80, fl - 122), (px + 84, fl - 222), (px + 92, fl - 252)
+            hip, sh, head = (px + 80, fl - 122), (px + 84, fl - 214), (px + 92, fl - 242)
             knee, ank, toe = (px + 150, fl - 122), (px + 150, fl - 12), (px + 176, fl - 6)
             elb, hand = (px + 106, fl - 160), (px + 205, fl - 152)
             ch = px + 236
@@ -2796,7 +2796,7 @@ def postura():
             b += '<rect x="%d" y="%d" width="40" height="44" rx="4" fill="#d5dadf" stroke="%s"/>' % (ch - 20, fl - 130, GREY_D)
             b += text(ch, fl - 70, 'aspiratore', 12, weight=600, fill=MUTED)
             # lampada da tavolo
-            b += '<path d="M%d,%d L%d,%d L%d,%d" fill="none" stroke="%s" stroke-width="4" stroke-linecap="round"/>' % (px + 330, fl - 150, px + 316, fl - 270, ch + 20, fl - 250, GREY_D)
+            b += '<path d="M%d,%d L%d,%d L%d,%d" fill="none" stroke="%s" stroke-width="4" stroke-linecap="round"/>' % (px + 330, fl - 150, px + 306, fl - 256, ch + 20, fl - 250, GREY_D)
             b += '<path d="M%d,%d l-22,22 l24,8 Z" fill="%s"/>' % (ch + 26, fl - 258, GREY_D)
             b += '<path d="M%d,%d L%d,%d L%d,%d Z" fill="#fff3c4" opacity=".7"/>' % (ch + 14, fl - 238, ch - 10, fl - 150, ch + 40, fl - 150)
         # corpo
