@@ -1873,6 +1873,157 @@ def strato_disp():
     return svg(760, 320, arrow_defs() + b, 'Strato di dispersione: patina appiccicosa dovuta all\'ossigeno; si toglie alla fine con una salvietta per dito')
 
 
+
+
+def dappen(cx, base, w=60, h=40, liquid=0.5, lid=False):
+    o = '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="#eef6fb" stroke="%s" stroke-width="2"/>' % (
+        cx - w / 2, base - h, cx + w / 2, base - h, cx + w / 2 - 6, base, cx - w / 2 + 6, base, GREY_D)
+    lh = h * liquid
+    o += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="#cfe6f7" opacity=".9"/>' % (
+        cx - w / 2 + 2 + 6 * (1 - liquid), base - lh, cx + w / 2 - 2 - 6 * (1 - liquid), base - lh, cx + w / 2 - 7, base - 2, cx - w / 2 + 7, base - 2)
+    if lid:
+        o += '<rect x="%.1f" y="%.1f" width="%.1f" height="10" rx="4" fill="%s"/>' % (cx - w / 2 - 4, base - h - 12, w + 8, ACC2)
+    return o
+
+
+def powder_jar(cx, base, w=70, h=44, col='#f6d6df', label=''):
+    o = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="8" fill="#fff" stroke="%s" stroke-width="2"/>' % (cx - w / 2, base - h, w, h, GREY_D)
+    o += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s"/>' % (
+        cx - w / 2 + 3, base - h * 0.55, cx, base - h * 0.75, cx + w / 2 - 3, base - h * 0.55, cx + w / 2 - 3, base - 3, cx - w / 2 + 3, base - 3, col)
+    if label:
+        o += text(cx, base + 18, label, 12.5, weight=700)
+    return o
+
+
+@figx('acrilico-chimica.svg')
+def acrilico_chimica():
+    b = title('Acrilico: cosa c\'è nel liquido e nella polvere')
+    # liquido
+    b += frame(20, 56, 250, 262, 'Liquido – EMA')
+    b += bottle(70, 250, 56, 120, '#e6f1f8', 'EMA', 13)
+    items_l = ['Monomero EMA', 'Accelerante', 'Inibitore (tracce)', 'Reticolante']
+    for k, t in enumerate(items_l):
+        b += '<circle cx="118" cy="%d" r="4" fill="#3f86b8"/>' % (130 + k * 30)
+        b += text(128, 135 + k * 30, t, 13.5, 'start', 700)
+    # polvere
+    b += frame(490, 56, 250, 262, 'Polvere – PMMA')
+    b += powder_jar(546, 250, 76, 56, '#f6d6df')
+    items_p = ['Perline di PMMA', 'Iniziatore BPO', 'Pigmenti']
+    for k, t in enumerate(items_p):
+        b += '<circle cx="600" cy="%d" r="4" fill="%s"/>' % (130 + k * 30, ACC)
+        b += text(610, 135 + k * 30, t, 13.5, 'start', 700)
+    b += ''.join('<circle cx="%d" cy="%d" r="4" fill="#fff" stroke="%s"/>' % (530 + (k % 4) * 10, 222 + (k // 4) * 9, ACC) for k in range(8))
+    # centro
+    b += tool_brush(400, 164, -28, 90, '#e9d6c0')
+    b += bead(370, 182, 20, '#f9e3ea')
+    b += carrow(290, 170, 340, 182, '#3f86b8', 2) + carrow(486, 200, 398, 190, ACC, 2)
+    b += mtext(380, 236, ['Reazione all\'aria:', 'indurisce in pochi minuti'], 14, weight=800, fill=ACC2)
+    b += text(380, 284, 'senza lampada', 13, weight=600, fill=MUTED)
+    b += '<rect x="20" y="330" width="355" height="40" rx="12" fill="%s"/>' % ERR_BG
+    b += mark(44, 350, False, 11) + text(62, 355, 'Non mescolare marche diverse', 14.5, 'start', 800, ERR)
+    b += '<rect x="385" y="330" width="355" height="40" rx="12" fill="%s"/>' % ERR_BG
+    b += mark(409, 350, False, 11) + text(427, 355, 'Mai liquido MMA; niente DMTA', 14.5, 'start', 800, ERR)
+    return svg(760, 384, arrow_defs() + b, 'Composizione del liquido (EMA) e della polvere (PMMA con BPO) dell\'acrilico')
+
+
+@figx('acrilico-dappen.svg')
+def acrilico_dappen():
+    labs = ['Poco liquido, coperchio', 'Immergi', 'Scarica l\'eccesso', 'Raccogli la perla (1–2 s)']
+    b = title('La perla di acrilico in 4 gesti')
+    W = 172
+    for i, lab in enumerate(labs):
+        x = 20 + i * (W + 10)
+        b += frame(x, 56, W, 230, None)
+        b += badge(x + 24, 80, i + 1, ACC, 13)
+        cx = x + W / 2
+        if i == 0:
+            b += dappen(cx, 200, 70, 46, 0.45, lid=True)
+            b += bottle(cx + 52, 200, 26, 54, '#e6f1f8') + '<rect x="%.1f" y="%.1f" width="20" height="8" rx="3" fill="%s"/>' % (cx + 42, 128, ACC2)
+        elif i == 1:
+            b += dappen(cx, 210, 70, 46, 0.5)
+            b += tool_brush(cx + 4, 182, -100, 90, '#e9d6c0')
+        elif i == 2:
+            b += dappen(cx, 210, 70, 46, 0.5)
+            b += tool_brush(cx + 30, 160, -125, 90, '#e9d6c0')
+            b += drop_icon(cx + 28, 186, 0.45, '#9cc7e0')
+            b += carrow(cx + 40, 150, cx + 40, 172, ACC2, 1.8) if False else ''
+        else:
+            b += powder_jar(cx, 214, 96, 50, '#f6d6df')
+            b += tool_brush(cx + 34, 152, -150, 90, '#e9d6c0')
+            b += bead(cx + 2, 172, 12, '#fbeef2')
+        b += mtext(cx, 256, wrap(lab, W - 20, 13.5, True), 13.5, weight=800)
+    return svg(760, 300, arrow_defs() + b, 'Dappen dish, pennello e polvere: immergi, scarica, raccogli la perla')
+
+
+@figx('polygel-step.svg')
+def polygel_step():
+    labs = ['Preleva', 'Taglia', 'Appoggia', 'Modella (poca slip)', 'Polimerizza']
+    b = title('Polygel in 5 passi')
+    W = 144
+    PG = '#f3c1cf'
+    for i, lab in enumerate(labs):
+        x = 20 + i * (W + 10)
+        b += frame(x, 56, W, 228, None)
+        b += badge(x + 22, 78, i + 1, ACC, 13)
+        cx = x + W / 2
+        if i == 0:
+            b += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="#f6d6df" stroke="%s" stroke-width="2"/>' % (cx - 40, 130, cx + 30, 130, cx + 40, 170, cx - 50, 170, NAIL_S)
+            b += '<rect x="%.1f" y="%.1f" width="16" height="22" rx="3" fill="%s"/>' % (cx + 38, 139, ACC2)
+            b += '<path d="M%.1f,%.1f q-14,4 -22,18 q16,4 22,-6 z" fill="%s" stroke="%s"/>' % (cx - 50, 154, PG, NAIL_S)
+            b += '<rect x="%.1f" y="196" width="80" height="10" rx="5" fill="%s" transform="rotate(-15 %.1f 201)"/>' % (cx - 40, METAL, cx)
+        elif i == 1:
+            b += '<rect x="%.1f" y="166" width="70" height="20" rx="10" fill="%s" stroke="%s"/>' % (cx - 40, PG, NAIL_S)
+            b += '<rect x="%.1f" y="130" width="8" height="70" rx="3" fill="%s" transform="rotate(10 %.1f 165)"/>' % (cx + 4, METAL, cx + 8)
+            b += '<line x1="%.1f" y1="160" x2="%.1f" y2="192" stroke="%s" stroke-width="2" stroke-dasharray="3 3"/>' % (cx + 8, cx + 8, ACC2)
+        elif i in (2, 3):
+            ex = ''
+            f, p = finger_nail(cx, 222, hw=30, nail_len=80, free_len=8, shape='squoval', finger_len=30, lunula=False)
+            b += f
+            if i == 2:
+                b += '<ellipse cx="%.1f" cy="%.1f" rx="16" ry="10" fill="%s" stroke="%s"/>' % (cx, 170, PG, NAIL_S)
+            else:
+                b += '<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s" opacity=".9" stroke="%s"/>' % (
+                    cx - 24, 200, cx - 24, 140, cx, 128, cx + 24, 140, cx + 24, 200, PG, NAIL_S)
+                b += tool_brush(cx + 34, 130, -40, 60, '#f1e3a0')
+                b += drop_icon(cx + 44, 112, 0.4, '#9cc7e0')
+        else:
+            b += lamp(cx, 210, 110, 'UV/LED')
+            b += '<rect x="%.1f" y="186" width="54" height="22" rx="10" fill="%s" stroke="%s"/>' % (cx - 27, SKIN, SKIN_D)
+        b += mtext(cx, 256, wrap(lab, W - 16, 13.5, True), 13.5, weight=800)
+    return svg(800, 296, b, 'Polygel: preleva, taglia, appoggia, modella con poca slip solution, polimerizza')
+
+
+@figx('fibra-riparazione.svg')
+def fibra_rip():
+    b = title('Riparare una crepa con la fibra')
+    labs = ['Crepa', 'Toppa più grande della crepa', 'Resina + attivatore, poi lima']
+    W = 196
+    for i, lab in enumerate(labs):
+        x = 20 + i * (W + 10)
+        b += frame(x, 56, W, 250, lab if len(lab) < 8 else None, i + 1 if len(lab) < 8 else None)
+        if len(lab) >= 8:
+            b += badge(x + 24, 80, i + 1, ACC, 13)
+        cx = x + W / 2
+        ex = ''
+        if i >= 1:
+            ex = ('<g clip-path="url(#CLIP)"><rect x="%.1f" y="60" width="%.1f" height="70" fill="url(#mesh)" stroke="%s" stroke-width="1.2" stroke-dasharray="4 3"/></g>' % (
+                cx - 30, 60, '#9a8f7a')) if i == 1 else ('<g clip-path="url(#CLIP)"><rect x="%.1f" y="60" width="%.1f" height="70" fill="#ffffff" opacity=".55"/></g>' % (cx - 30, 60))
+        f, p = finger_nail(cx, 260, hw=44, nail_len=130, free_len=30, shape='squoval', finger_len=40, lunula=False, extra=ex)
+        b += f
+        b += '<path d="M%.1f,%.1f l8,8 l-8,8 l8,8 l-6,8" fill="none" stroke="%s" stroke-width="2.6" stroke-linejoin="round"/>' % (cx + 26, 104, ERR if i < 2 else '#d99aa5')
+        if i == 1:
+            b += callout(cx + 30, 96, cx + 56, 230, '2–3 mm oltre', 12.5, 700, ACC2)
+        if i == 2:
+            b += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".9"/>' % (cx - 20, 200, cx - 24, 140, cx - 14, 96)
+            b += tool_file(cx + 56, 160, -70, 90, 14)
+        b += mtext(cx, 290, [lab] if len(lab) < 8 else wrap(lab, W - 20, 13, True), 13, weight=700) if len(lab) >= 8 else ''
+    b += '<defs><pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#fffaf0"/><path d="M0,0 L6,0 M0,0 L0,6" stroke="#cbbf9f" stroke-width="1"/></pattern></defs>'
+    b += '<rect x="638" y="56" width="102" height="250" rx="16" fill="%s"/>' % WARN_BG
+    b += mtext(689, 120, ['Attivatore:', 'poco', 'e da', 'lontano'], 14, weight=800, fill=WARN)
+    b += mtext(689, 220, ['a 1 mm da', 'cuticola', 'e lati'], 13, weight=700)
+    return svg(760, 320, b, 'Riparazione di una crepa con la fibra: la toppa supera la crepa di qualche millimetro')
+
+
 # ================================================================= main
 def main():
     only = [a for a in sys.argv[1:] if a.endswith('.svg')]
