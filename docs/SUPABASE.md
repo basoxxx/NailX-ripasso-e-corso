@@ -4,30 +4,38 @@ Senza questa configurazione il sito funziona comunque: i progressi restano nel b
 l'attestato è "in autovalutazione". Con Supabase si attivano login via e-mail, progressi
 sincronizzati, esame corretto dal server, attestato con QR code verificabile e area account (GDPR).
 
-Il database è descritto da **migrazioni** in [`supabase/migrations/`](../supabase/migrations):
+## Stato attuale (13 ottobre 2026)
+
+Il progetto **qytmciermutxplrbnqam** (regione eu-west-1, Irlanda, piano Free) è già configurato:
+
+- tutte le migrazioni di [`supabase/migrations/`](../supabase/migrations) sono applicate, **tranne**
+  `…_nailx_oblio.sql` (funzione *Elimina account*): vedi il paragrafo qui sotto;
+- il sito è collegato tramite [`assets/js/config.js`](../assets/js/config.js) (URL e chiave pubblica);
+- la pulizia degli account inattivi è pianificata con `pg_cron` ogni domenica alle 3:17;
+- verifica eseguita sul database reale (in una transazione annullata): catalogo, profilo con privacy,
+  esame corretto dal server, attestato, verifica pubblica e isolamento tra utenti.
+
+### Da fare: funzione "Elimina account"
+
+Apri **SQL Editor → New query**, incolla il contenuto di
+[`supabase/migrations/20261013131500_nailx_oblio.sql`](../supabase/migrations/20261013131500_nailx_oblio.sql) e premi **Run**.
+Senza questa funzione il pulsante *Elimina account* mostra un errore (l'esportazione dei dati funziona).
+
+## 1. Migrazioni
 
 | File | Contenuto |
 |---|---|
-| `…_nailx_schema.sql` | tabelle, regole di sicurezza (RLS), esame, attestati, verifica, cancellazione account |
 | `…_nailx_pulizia.sql` | cancellazione automatica degli account inattivi da 24 mesi (GDPR) |
+| `…_nailx_tabelle.sql` | tabelle con Row Level Security |
+| `…_nailx_regole.sql` | regole di accesso: ognuna vede solo i propri dati |
+| `…_nailx_profilo_esame.sql` | profilo alla registrazione, esame corretto dal server |
+| `…_nailx_attestato.sql` | rilascio dell'attestato e verifica pubblica |
 | `…_nailx_catalogo.sql` | lezioni, esercizi e domande d'esame (generato da `tools/build_supabase_seed.js`) |
+| `…_nailx_permessi_tabelle.sql` | permessi espliciti sulle tabelle (i progetti recenti non li danno in automatico) |
+| `…_nailx_oblio.sql` | funzione *Elimina account* |
 
-Le voci dei menu di Supabase e GitHub possono cambiare nome: se non trovi una voce, cercala nella loro documentazione.
-
-## 1. Integrazione GitHub (applica il database da sola)
-
-Hai già collegato il repository a Supabase. Controlla in **Supabase → Project Settings → Integrations → GitHub**:
-
-- repository: `basoxxx/NailX-ripasso-e-corso`
-- *Supabase directory / working directory*: `.` (la cartella `supabase/` è nella radice)
-- *Production branch*: `main`
-- **Deploy to production: attivo**
-
-Da quel momento, ogni volta che una pull request viene unita su `main`, Supabase applica in automatico
-le migrazioni nuove. Le migrazioni già applicate non vengono rieseguite.
-
-> **Alternativa manuale** (se non vuoi attivare il deploy automatico): apri **SQL Editor** e incolla
-> ed esegui i file di `supabase/migrations/` **in ordine di nome**, uno per volta.
+Sul piano **Free** l'integrazione GitHub non applica le migrazioni da sola: le nuove migrazioni vanno
+applicate dal **SQL Editor** (incollando il file) oppure chiedendolo a Claude con il connettore Supabase.
 
 ## 2. Accesso via e-mail
 
@@ -49,7 +57,7 @@ le migrazioni nuove. Le migrazioni già applicate non vengono rieseguite.
 
 Queste impostazioni non passano dall'integrazione GitHub: vanno fatte una volta dalla dashboard.
 
-## 3. Collegare il sito (2 valori pubblici)
+## 3. Collegare il sito (già fatto)
 
 In **Supabase → Project Settings → API** (o *API Keys*) copia **Project URL** e la chiave **pubblica**
 (*anon public* oppure *publishable*). Poi scegli **uno** dei due modi:
@@ -79,7 +87,7 @@ la configurazione nel sito pubblicato.
 ## Manutenzione
 
 - **Hai modificato lezioni, esercizi o quiz?** Esegui `node tools/build_supabase_seed.js`: se il catalogo
-  è cambiato crea una nuova migrazione `…_nailx_catalogo.sql`. Committala: al merge su `main` Supabase la applica.
+  è cambiato crea una nuova migrazione `…_nailx_catalogo.sql`. Applicala dal SQL Editor (o con il connettore) e committala.
 - **Revocare un attestato** (SQL Editor):
   `update public.certificates set revoked = true where code = 'NX-2026-XXXXXXXX';`
 - **Pulizia account inattivi**: pianificata ogni domenica con `pg_cron` se disponibile; altrimenti esegui
