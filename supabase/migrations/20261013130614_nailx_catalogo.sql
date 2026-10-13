@@ -1,8 +1,7 @@
 -- Generato da tools/build_supabase_seed.js: non modificare a mano.
--- Catalogo del corso NailX (sostituisce integralmente quello precedente).
--- catalogo: 0b29dbe6e1a39313
+-- Catalogo del corso NailX (lezioni, esercizi, domande d'esame).
+-- catalogo: f3ae3cac954e0eea
 
-delete from public.course_lessons;
 insert into public.course_lessons (key, minutes) values
   ('anatomia/struttura', 8),
   ('anatomia/crescita', 4),
@@ -52,9 +51,10 @@ insert into public.course_lessons (key, minutes) values
   ('piedi/piedi-competenze', 6),
   ('arte-gare/effetti', 7),
   ('arte-gare/one-stroke-3d', 6),
-  ('arte-gare/gare', 8);
+  ('arte-gare/gare', 8)
+on conflict (key) do update set minutes = excluded.minutes;
+delete from public.course_lessons where key <> all (array['anatomia/struttura', 'anatomia/crescita', 'anatomia/controindicazioni', 'igiene/livelli', 'igiene/dpi', 'igiene/allergie-ue', 'igiene/normativa-italia', 'sistemi/panoramica', 'sistemi/gel', 'sistemi/acrilico', 'sistemi/polygel-altri', 'sistemi/lampade', 'attrezzatura/lime', 'attrezzatura/fresa', 'attrezzatura/kit', 'preparazione/passaggi', 'preparazione/primer', 'tip/applicazione', 'tip/copertura', 'cartina/posizionamento', 'cartina/zone-apex', 'cartina/curva-c', 'cartina/tutorial-gel', 'cartina/tutorial-acrilico', 'limatura/forme', 'limatura/tecnica', 'decorazioni/french', 'decorazioni/baby-boomer', 'decorazioni/nail-art', 'manutenzione/refill', 'manutenzione/rimozione', 'problemi/lifting', 'problemi/calore-rotture', 'problemi/difetti', 'professione/consulenza', 'professione/aftercare', 'professione/business', 'onicofagia/onicofagia-valutazione', 'onicofagia/onicofagia-costruzione', 'onicofagia/unghie-difficili', 'cover-colori/cover', 'cover-colori/colori', 'cover-colori/gel-colorati', 'piedi/piedi-differenze', 'piedi/piedi-igiene', 'piedi/piedi-competenze', 'arte-gare/effetti', 'arte-gare/one-stroke-3d', 'arte-gare/gare']);
 
-delete from public.course_exercises;
 insert into public.course_exercises (id, title, n_checks, minutes) values
   ('es-anatomia', 'Disegna e nomina l''anatomia', 4, 20),
   ('es-postazione', 'Allestisci una postazione sicura', 4, 30),
@@ -83,9 +83,10 @@ insert into public.course_exercises (id, title, n_checks, minutes) values
   ('es-cover', 'Cartella colori dei cover', 4, 40),
   ('es-pedicure', 'Protocollo pedicure con semipermanente', 5, 60),
   ('es-effetti', 'Chrome, cat-eye e one-stroke', 4, 60),
-  ('es-gara', 'Simulazione Salon Nails (60 min)', 5, 60);
+  ('es-gara', 'Simulazione Salon Nails (60 min)', 5, 60)
+on conflict (id) do update set title = excluded.title, n_checks = excluded.n_checks, minutes = excluded.minutes;
+delete from public.course_exercises where id <> all (array['es-anatomia', 'es-postazione', 'es-semipermanente', 'es-softgel', 'es-fibra', 'es-perla', 'es-fresa', 'es-prep', 'es-tip', 'es-acrilico', 'es-cartina', 'es-apex', 'es-curva-c', 'es-forme', 'es-limatura', 'es-french', 'es-babyboomer', 'es-nailart', 'es-refill', 'es-rimozione', 'es-diagnosi', 'es-consulenza', 'es-onicofagia', 'es-difficili', 'es-cover', 'es-pedicure', 'es-effetti', 'es-gara']);
 
-delete from public.exam_questions;
 insert into public.exam_questions (id, module, question, options, answer, explanation) values
   (1, 'anatomia', 'Quale parte produce la lamina ungueale?', '["Il letto ungueale","La matrice","L''iponichio","L''eponichio"]'::jsonb, 1, 'La matrice è il tessuto vivo che produce la lamina; la lunula ne è la parte visibile.'),
   (2, 'anatomia', 'Cosa si rimuove durante la preparazione?', '["L''eponichio","La cuticola (pelle morta sulla lamina)","L''iponichio","Le pieghe laterali"]'::jsonb, 1, 'Si rimuove solo la cuticola morta; eponichio e iponichio sono tessuti vivi.'),
@@ -175,4 +176,7 @@ insert into public.exam_questions (id, module, question, options, answer, explan
   (86, 'arte-gare', 'Nel one-stroke, per iniziare, il pennello piatto si carica:', '["Con un solo colore","Circa metà e metà con due colori","Fino alla ghiera","Asciutto"]'::jsonb, 1, 'Il colore non deve entrare nella ghiera.'),
   (87, 'arte-gare', 'In gara, il gel non polimerizzato a fine prova comporta:', '["−5 punti","Nessuna penalità","Squalifica","Un bonus"]'::jsonb, 2, 'È una regola tipica dei regolamenti Nailympia.'),
   (88, 'arte-gare', 'La "vista a tunnel" valuta soprattutto:', '["La smile line","La curva C","Il colore","La lucentezza"]'::jsonb, 1, 'Si guarda l''unghia dalla punta.'),
-  (89, 'arte-gare', 'In un''unghia con decorazione incapsulata, l''apex:', '["Non serve","Si costruisce sopra la decorazione","Va alla cuticola","Si sostituisce con glitter"]'::jsonb, 1, 'La struttura deve restare corretta.');
+  (89, 'arte-gare', 'In un''unghia con decorazione incapsulata, l''apex:', '["Non serve","Si costruisce sopra la decorazione","Va alla cuticola","Si sostituisce con glitter"]'::jsonb, 1, 'La struttura deve restare corretta.')
+on conflict (id) do update set module = excluded.module, question = excluded.question, options = excluded.options,
+  answer = excluded.answer, explanation = excluded.explanation;
+delete from public.exam_questions where id > 89;

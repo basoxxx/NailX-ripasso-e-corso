@@ -20,8 +20,8 @@ L'informativa è in [`privacy.html`](../privacy.html), compilata con titolare **
 
 ## Da fare una volta (dalla dashboard di Supabase)
 
-- [ ] Verifica che la **regione del progetto sia nell'Unione europea** (l'informativa lo dichiara).
-      Se non lo è, scrivimelo e aggiorno il testo.
+- [x] Regione del progetto nell'Unione europea: **eu-west-1 (Irlanda)**, verificata.
+- [ ] Applica la funzione **Elimina account** (vedi `docs/SUPABASE.md`, "Da fare").
 - [ ] Accetta/scarica il **Data Processing Addendum (DPA)** di Supabase e conservane una copia.
 - [ ] Se configuri un **SMTP** esterno, conserva anche il suo DPA.
 - [ ] Tieni un semplice **registro dei trattamenti** (art. 30): puoi copiare le tabelle dei punti 2, 3, 5 e 6 dell'informativa.

@@ -5,8 +5,9 @@
  * Uso: node tools/build_supabase_seed.js
  *
  * Le migrazioni già applicate non vengono rieseguite: se il catalogo è cambiato lo script crea
- * una NUOVA migrazione (supabase/migrations/<timestamp>_nailx_catalogo.sql) che l'integrazione
- * GitHub di Supabase applicherà al prossimo merge su main. Se nulla è cambiato non fa niente.
+ * una NUOVA migrazione (supabase/migrations/<timestamp>_nailx_catalogo.sql) da applicare al
+ * progetto (SQL Editor di Supabase o connettore). Se nulla è cambiato non fa niente.
+ * Le righe vengono aggiornate (upsert) e quelle non più presenti nel corso rimosse.
  */
 'use strict';
 const fs = require('fs');
@@ -21,36 +22,39 @@ const DIR = path.join(__dirname, '..', 'supabase', 'migrations');
 const q = (v) => "'" + String(v).replace(/'/g, "''") + "'";
 const j = (v) => q(JSON.stringify(v)) + '::jsonb';
 
-let body = 'delete from public.course_lessons;\n';
-body += 'insert into public.course_lessons (key, minutes) values\n' +
-  D.modules.flatMap((m) => m.lessons.map((l) => `  (${q(m.id + '/' + l.id)}, ${l.min || 10})`)).join(',\n') + ';\n\n';
-body += 'delete from public.course_exercises;\n';
+const lessons = D.modules.flatMap((m) => m.lessons.map((l) => [m.id + '/' + l.id, l.min || 10]));
+let body = 'insert into public.course_lessons (key, minutes) values\n' +
+  lessons.map(([k, m]) => `  (${q(k)}, ${m})`).join(',\n') + '\non conflict (key) do update set minutes = excluded.minutes;\n' +
+  `delete from public.course_lessons where key <> all (array[${lessons.map(([k]) => q(k)).join(', ')}]);\n\n`;
 body += 'insert into public.course_exercises (id, title, n_checks, minutes) values\n' +
   D.exercises.map((e) => {
     const min = parseInt((/(\d+)/.exec(e.time) || [0, 0])[1], 10);
     return `  (${q(e.id)}, ${q(e.title)}, ${e.checks.length}, ${min})`;
-  }).join(',\n') + ';\n\n';
+  }).join(',\n') + '\non conflict (id) do update set title = excluded.title, n_checks = excluded.n_checks, minutes = excluded.minutes;\n' +
+  `delete from public.course_exercises where id <> all (array[${D.exercises.map((e) => q(e.id)).join(', ')}]);\n\n`;
 let id = 0;
 const rows = [];
 D.modules.forEach((m) => (D.quiz[m.id] || []).forEach((x) => {
   id++;
   rows.push(`  (${id}, ${q(m.id)}, ${q(x.q)}, ${j(x.o)}, ${x.a}, ${q(x.e || '')})`);
 }));
-body += 'delete from public.exam_questions;\n';
-body += 'insert into public.exam_questions (id, module, question, options, answer, explanation) values\n' + rows.join(',\n') + ';\n';
+body += 'insert into public.exam_questions (id, module, question, options, answer, explanation) values\n' + rows.join(',\n') +
+  '\non conflict (id) do update set module = excluded.module, question = excluded.question, options = excluded.options,\n' +
+  '  answer = excluded.answer, explanation = excluded.explanation;\n' +
+  `delete from public.exam_questions where id > ${id};\n`;
 
 const hash = crypto.createHash('sha256').update(body).digest('hex').slice(0, 16);
 const existing = fs.readdirSync(DIR).filter((f) => /_nailx_catalogo\.sql$/.test(f)).sort();
 const last = existing.length ? fs.readFileSync(path.join(DIR, existing[existing.length - 1]), 'utf8') : '';
-const lessons = D.modules.reduce((a, m) => a + m.lessons.length, 0);
+const nLessons = lessons.length;
 if (last.includes('-- catalogo: ' + hash)) {
-  console.log(`Catalogo invariato (${lessons} lezioni, ${D.exercises.length} esercizi, ${id} domande): nessuna nuova migrazione.`);
+  console.log(`Catalogo invariato (${nLessons} lezioni, ${D.exercises.length} esercizi, ${id} domande): nessuna nuova migrazione.`);
   process.exit(0);
 }
-const ts = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
+const ts = process.env.NAILX_MIGRATION_VERSION || new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 const name = `${ts}_nailx_catalogo.sql`;
 fs.writeFileSync(path.join(DIR, name),
   '-- Generato da tools/build_supabase_seed.js: non modificare a mano.\n' +
-  '-- Catalogo del corso NailX (sostituisce integralmente quello precedente).\n' +
+  '-- Catalogo del corso NailX (lezioni, esercizi, domande d\'esame).\n' +
   '-- catalogo: ' + hash + '\n\n' + body);
-console.log(`Creata supabase/migrations/${name}: ${lessons} lezioni, ${D.exercises.length} esercizi, ${id} domande.`);
+console.log(`Creata supabase/migrations/${name}: ${nLessons} lezioni, ${D.exercises.length} esercizi, ${id} domande.`);

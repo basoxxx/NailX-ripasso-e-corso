@@ -24,9 +24,8 @@ dal livello base all'avanzato:
 ## Area online (facoltativa): login e attestati verificabili
 
 Con **Supabase** si attivano login via e-mail, progressi sincronizzati, esame corretto dal server e attestati
-con codice e QR code verificabili su `verifica.html`. Il database è in `supabase/migrations/`: con l'integrazione
-GitHub di Supabase ("Deploy to production") viene applicato in automatico a ogni merge su `main`.
-I due valori pubblici del progetto si impostano come variabili del repository (`SUPABASE_URL`, `SUPABASE_ANON_KEY`).
+con codice e QR code verificabili su `verifica.html`. Il database è descritto dalle migrazioni in `supabase/migrations/`,
+già applicate al progetto Supabase collegato (regione UE); il sito è collegato tramite `assets/js/config.js`.
 Guida: [`docs/SUPABASE.md`](docs/SUPABASE.md). Privacy: `privacy.html` e [`docs/GDPR.md`](docs/GDPR.md).
 
 ## Pubblicare su GitHub Pages

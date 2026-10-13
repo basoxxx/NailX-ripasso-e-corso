@@ -18,8 +18,9 @@ end $$;
 set role anon;
 do $$ begin
   begin perform * from exam_questions; raise exception 'anon legge domande'; exception when insufficient_privilege then null; end;
-  assert (select count(*) from profiles) = 0, 'anon vede profili';
-  assert (select count(*) from certificates) = 0, 'anon vede attestati';
+  begin assert (select count(*) from profiles) = 0, 'anon vede profili'; exception when insufficient_privilege then null; end;
+  begin assert (select count(*) from certificates) = 0, 'anon vede attestati'; exception when insufficient_privilege then null; end;
+  begin assert (select count(*) from progress) = 0, 'anon vede progressi'; exception when insufficient_privilege then null; end;
   assert (verify_certificate('NX-0000-XXXX') ->> 'valid')::boolean = false, 'verifica codice inesistente';
   begin perform start_exam(); raise exception 'anon avvia esame'; exception when insufficient_privilege then null; end;
   raise notice 'OK anonimo';
