@@ -13,8 +13,18 @@
   state.lessons = state.lessons || {};
   state.checks = state.checks || {};
   state.quiz = state.quiz || {};
+  state.quizAt = state.quizAt || {};
+  state.exAt = state.exAt || {};
   function save() {
+    state.updatedAt = Date.now();
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+    if (window.NAILX_CLOUD) window.NAILX_CLOUD.queuePush();
+    refreshNavProgress();
+  }
+  // area online (Supabase) attiva solo se configurata in assets/js/config.js
+  function cloudEnabled() {
+    var c = window.NAILX_CONFIG;
+    return !!(c && c.supabaseUrl && c.supabaseAnonKey);
   }
 
   /* ---------- helpers ---------- */
@@ -57,18 +67,23 @@
       ['index.html', 'home', 'Home'],
       ['corso.html', 'corso', 'Lezioni'],
       ['esercizi.html', 'esercizi', 'Esercizi'],
+      ['ripasso.html', 'ripasso', 'Ripasso'],
       ['quiz.html', 'quiz', 'Quiz'],
-      ['glossario.html', 'glossario', 'Glossario']
+      ['glossario.html', 'glossario', 'Glossario'],
+      ['attestato.html', 'attestato', 'Attestato']
     ];
+    if (cloudEnabled()) links.push(['accedi.html', 'accedi', 'Accedi']);
     var h = document.createElement('header');
     h.className = 'site-header';
     h.innerHTML = '<nav class="nav"><a class="brand" href="index.html">' +
       '<img src="assets/img/logo.svg" alt="" width="30" height="30"><span>Nail<b>X</b></span></a>' +
       '<div class="nav-links">' + links.map(function (x) {
-        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + '>' + x[2] + '</a>';
+        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + (x[1] === 'accedi' ? ' id="nav-account"' : '') + '>' + x[2] + '</a>';
       }).join('') + '</div>' +
+      '<a class="nav-progress" href="index.html#progresso" title="Avanzamento del corso"><i></i><span>0%</span></a>' +
       '<button class="theme-btn" type="button" title="Cambia tema" aria-label="Cambia tema">☾</button></nav>';
     document.body.insertBefore(h, document.body.firstChild);
+    refreshNavProgress();
     $('.theme-btn', h).addEventListener('click', function () {
       var cur = document.documentElement.getAttribute('data-theme');
       var dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
@@ -78,8 +93,61 @@
     });
     var f = document.createElement('footer');
     f.innerHTML = 'NailX · Corso di ricostruzione unghie · Materiale didattico a scopo formativo: non sostituisce ' +
-      'la formazione abilitante prevista dalla legge né il parere medico.';
+      'la formazione abilitante prevista dalla legge né il parere medico.<br>' +
+      '<a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
     document.body.appendChild(f);
+  }
+
+  /* ---------- stato del corso (calcolato in automatico) ---------- */
+  function lessonsDone() { return allLessons().filter(function (x) { return state.lessons[lessonKey(x.m, x.l)]; }).length; }
+  function coursePct() {
+    // lezioni 80%, esame finale 20%
+    var l = allLessons().length;
+    return Math.round(80 * lessonsDone() / l + ((state.quiz.final || 0) >= 80 ? 20 : 0));
+  }
+  function refreshNavProgress() {
+    var el = document.querySelector('.nav-progress');
+    if (!el) return;
+    var p = coursePct();
+    el.querySelector('span').textContent = p + '%';
+    el.querySelector('i').style.setProperty('--p', p);
+    el.setAttribute('aria-label', 'Avanzamento del corso: ' + p + '%');
+  }
+  function moduleStatus(m) {
+    var d = moduleDone(m), q = state.quiz[m.id];
+    if (d === m.lessons.length && (!D.quiz[m.id] || q >= 80)) return ['done', 'Completato ✓'];
+    if (d === m.lessons.length) return ['quiz', 'Manca il quiz'];
+    if (d > 0) return ['progress', 'In corso'];
+    return ['todo', 'Da iniziare'];
+  }
+  function nextStep() {
+    var last = state.last && allLessons().filter(function (x) { return lessonKey(x.m, x.l) === state.last; })[0];
+    if (last && !state.lessons[state.last]) return { t: 'Riprendi la lezione', d: last.l.title, href: lessonUrl(last.m, last.l), b: 'Riprendi', short: 'Riprendi: ' + last.l.title };
+    for (var i = 0; i < D.modules.length; i++) {
+      var m = D.modules[i];
+      var todo = m.lessons.filter(function (l) { return !state.lessons[lessonKey(m, l)]; })[0];
+      if (todo) {
+        return { t: lessonsDone() ? 'Prossima lezione' : 'Inizia il corso', d: 'Modulo ' + m.n + ' · ' + todo.title, href: lessonUrl(m, todo), b: lessonsDone() ? 'Continua' : 'Inizia', short: 'Continua: ' + todo.title };
+      }
+      if (D.quiz[m.id] && (state.quiz[m.id] || 0) < 80) {
+        return { t: 'Verifica il modulo ' + m.n, d: 'Quiz: ' + m.title + (state.quiz[m.id] != null ? ' (ultimo ' + state.quiz[m.id] + '%, obiettivo 80%)' : ''), href: 'quiz.html?m=' + m.id, b: 'Fai il quiz', short: 'Quiz del modulo ' + m.n };
+      }
+    }
+    if ((state.quiz.final || 0) < 80) return { t: 'Tutte le lezioni completate!', d: 'Ora l\'esame finale: 40 domande, soglia 80%.', href: 'quiz.html?m=final', b: 'Esame finale', short: 'Vai all\'esame finale' };
+    return { t: 'Corso completato 🎉', d: 'Scarica o aggiorna il tuo attestato di fine corso.', href: 'attestato.html', b: 'Attestato', short: 'Il tuo attestato' };
+  }
+
+  /* ---------- avvisi (toast) ---------- */
+  function toast(html, ms) {
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', 'status');
+    t.innerHTML = html;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add('show'); });
+    var close = function () { t.classList.remove('show'); setTimeout(function () { t.remove(); }, 300); };
+    setTimeout(close, ms || 6000);
+    return { el: t, close: close };
   }
 
   /* ---------- HOME ---------- */
@@ -93,14 +161,19 @@
       stat(D.exercises.length, 'esercizi pratici') + stat(countQuiz(), 'domande quiz');
     $('#global-progress').innerHTML = progressBar(pct(done, lessons.length),
       done + ' di ' + lessons.length + ' lezioni completate · ' + exDone + ' esercizi superati · ' + quizDone + ' quiz svolti');
-    var next = lessons.filter(function (x) { return !state.lessons[lessonKey(x.m, x.l)]; })[0] || lessons[0];
-    $('#continue').href = lessonUrl(next.m, next.l);
-    $('#continue').textContent = done ? 'Continua: ' + next.l.title : 'Inizia il corso';
+    var ns = nextStep();
+    $('#continue').href = ns.href;
+    $('#continue').textContent = done ? ns.short : 'Inizia il corso';
+    if ($('#nextstep')) {
+      $('#nextstep').innerHTML = '<div class="next-card"><div class="ring" style="--p:' + coursePct() + '"><span>' + coursePct() + '%</span></div>' +
+        '<div class="next-txt"><small>Prossimo passo</small><strong>' + esc(ns.t) + '</strong><span>' + esc(ns.d) + '</span></div>' +
+        '<a class="btn" href="' + ns.href + '">' + esc(ns.b) + ' →</a></div>';
+    }
 
     $('#modules').innerHTML = D.modules.map(function (m) {
-      var d = moduleDone(m);
-      return '<article class="card"><div style="display:flex;justify-content:space-between;align-items:center">' +
-        '<span class="mod-num">' + String(m.n).padStart(2, '0') + '</span>' + badge(m.level) + '</div>' +
+      var d = moduleDone(m), st = moduleStatus(m);
+      return '<article class="card mod-' + st[0] + '"><div style="display:flex;justify-content:space-between;align-items:center;gap:.4rem">' +
+        '<span class="mod-num">' + String(m.n).padStart(2, '0') + '</span><span class="status s-' + st[0] + '">' + st[1] + '</span>' + badge(m.level) + '</div>' +
         '<h3><a class="stretch" href="' + lessonUrl(m, m.lessons[0]) + '">' + esc(m.title) + '</a></h3>' +
         '<p>' + esc(m.desc) + '</p>' + progressBar(pct(d, m.lessons.length), d + '/' + m.lessons.length + ' lezioni') +
         '</article>';
@@ -139,7 +212,8 @@
       '<h1>' + esc(l.title) + '</h1>' +
       '<div class="meta">' + badge(m.level) + '<span>⏱ ' + (l.min || 10) + ' min di lettura</span>' +
       '<span>Lezione ' + (m.lessons.indexOf(l) + 1) + ' di ' + m.lessons.length + '</span></div>' +
-      l.html;
+      (l.simple ? '<div class="box simple"><strong class="t">In parole semplici</strong>' + esc(l.simple) + '</div>' : '') +
+      l.html + videosHtml(l.videos);
     if (relatedEx.length && m.lessons.indexOf(l) === m.lessons.length - 1) {
       html += '<div class="box info"><strong class="t">Mettiti alla prova</strong>Esercizi pratici di questo modulo: ' +
         relatedEx.map(function (e) { return '<a href="esercizi.html#' + e.id + '">' + esc(e.title) + '</a>'; }).join(' · ') +
@@ -156,14 +230,50 @@
       (next ? '<a class="btn small" href="' + lessonUrl(next.m, next.l) + '">' + esc(next.l.title) + ' →</a>' : '<a class="btn small" href="quiz.html?m=final">Esame finale →</a>') +
       '</div>';
     $('#lesson').innerHTML = html;
+    linkGlossary($('#lesson'));
 
     var mark = $('#mark');
     function upd() { mark.textContent = state.lessons[key] ? '✓ Completata' : 'Segna come completata'; mark.classList.toggle('ghost', !!state.lessons[key]); }
     upd();
-    mark.addEventListener('click', function () {
-      if (state.lessons[key]) delete state.lessons[key]; else state.lessons[key] = Date.now();
+    state.last = key;
+    save();
+    var userUndid = false;
+    function complete(auto) {
+      var before = lessonsDone(), modBefore = moduleDone(m);
+      state.lessons[key] = Date.now();
       save(); upd(); side();
+      if (auto) {
+        var t = toast('✓ Lezione completata in automatico. <button type="button" class="linklike">Annulla</button>');
+        t.el.querySelector('button').addEventListener('click', function () {
+          delete state.lessons[key]; userUndid = true; save(); upd(); side(); t.close();
+        });
+      }
+      // traguardi
+      if (modBefore < m.lessons.length && moduleDone(m) === m.lessons.length) {
+        toast('🎉 Hai completato il modulo <strong>' + esc(m.title) + '</strong>' +
+          (D.quiz[m.id] ? ' · <a href="quiz.html?m=' + m.id + '">fai il quiz</a>' : ''), 8000);
+      }
+      if (before < list.length && lessonsDone() === list.length) {
+        toast('🏁 Tutte le lezioni completate! <a href="quiz.html?m=final">Vai all\'esame finale</a>', 9000);
+      }
+    }
+    mark.addEventListener('click', function () {
+      if (state.lessons[key]) { delete state.lessons[key]; userUndid = true; save(); upd(); side(); }
+      else complete(false);
     });
+    // completamento automatico: fine della lezione raggiunta dopo un tempo minimo di lettura
+    var minMs = Math.min(30, (l.min || 10) * 6) * 1000, t0 = Date.now(), seenEnd = false, timer = null;
+    function tryAuto() {
+      if (state.lessons[key] || userUndid || !seenEnd) return;
+      var wait = minMs - (Date.now() - t0);
+      if (wait > 0) { clearTimeout(timer); timer = setTimeout(tryAuto, wait); return; }
+      complete(true);
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { seenEnd = true; tryAuto(); }
+      }, { threshold: 0.5 }).observe($('.lesson-nav'));
+    }
     $('.menu-toggle').addEventListener('click', function () { $('#sidebar').classList.toggle('open'); });
   }
 
@@ -205,6 +315,17 @@
             '<h4>Procedimento</h4><ol class="steps">' + e.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
             '</div><div>' +
             (e.img ? '<figure><img src="assets/img/' + e.img + '" alt="' + esc(e.title) + '" loading="lazy"><figcaption>' + esc(e.caption || '') + '</figcaption></figure>' : '') +
+            (e.imgs || []).map(function (src) {
+              return '<figure><img src="assets/img/' + src + '" alt="Tavola di riferimento: ' + esc(e.title) + '" loading="lazy"></figure>';
+            }).join('') +
+            (e.img ? '<div class="photo-eval" data-ref="assets/img/' + e.img + '"><h4>Confronta con il tuo lavoro</h4>' +
+              '<label class="btn small ghost photo-btn">📷 Scatta o scegli una foto<input type="file" accept="image/*" data-photo="' + e.id + '"></label>' +
+              '<p class="muted"><small>La foto resta sul tuo dispositivo e non viene caricata online. Fotografa dall\'alto e di profilo, con luce uniforme.</small></p>' +
+              '<div class="compare" hidden><div class="chips cmp-modes"><button type="button" class="chip active" data-mode="side">Affianca</button>' +
+              '<button type="button" class="chip" data-mode="over">Sovrapponi</button></div>' +
+              '<div class="cmp-stage side"><img class="ref" alt="Tavola di riferimento"><img class="mine" alt="La tua foto"></div>' +
+              '<label class="cmp-range" hidden>Trasparenza della tua foto <input type="range" min="0" max="100" value="55"></label>' +
+              '<p class="muted"><small>Ora rispondi alla checklist guardando la foto accanto alla tavola.</small></p></div></div>' : '') +
             '<h4>Auto-valutazione</h4><ul class="checklist">' + e.checks.map(function (x, j) {
               return '<li><label><input type="checkbox" data-ex="' + e.id + '" data-i="' + j + '"' + (c[j] ? ' checked' : '') + '> <span>' + esc(x) + '</span></label></li>';
             }).join('') + '</ul>' +
@@ -214,12 +335,38 @@
       if (hash) { var t = document.getElementById(hash); if (t) t.scrollIntoView(); }
     }
     draw();
+    var photoUrls = {};
+    $('#exercises').addEventListener('change', function (ev) {
+      var inp = ev.target;
+      if (inp.dataset.photo && inp.files && inp.files[0]) {
+        var box = inp.closest('.photo-eval'), cmp = box.querySelector('.compare');
+        if (photoUrls[inp.dataset.photo]) URL.revokeObjectURL(photoUrls[inp.dataset.photo]);
+        photoUrls[inp.dataset.photo] = URL.createObjectURL(inp.files[0]);
+        cmp.querySelector('.mine').src = photoUrls[inp.dataset.photo];
+        cmp.querySelector('.ref').src = box.dataset.ref;
+        cmp.hidden = false;
+        return;
+      }
+    });
+    $('#exercises').addEventListener('click', function (ev) {
+      var b = ev.target.closest('.cmp-modes .chip'); if (!b) return;
+      var cmp = b.closest('.compare'), over = b.dataset.mode === 'over';
+      cmp.querySelectorAll('.cmp-modes .chip').forEach(function (c) { c.classList.toggle('active', c === b); });
+      cmp.querySelector('.cmp-stage').className = 'cmp-stage ' + (over ? 'over' : 'side');
+      cmp.querySelector('.cmp-range').hidden = !over;
+      cmp.querySelector('.mine').style.opacity = over ? cmp.querySelector('.cmp-range input').value / 100 : '';
+    });
+    $('#exercises').addEventListener('input', function (ev) {
+      if (ev.target.type !== 'range') return;
+      ev.target.closest('.compare').querySelector('.mine').style.opacity = ev.target.value / 100;
+    });
     $('#exercises').addEventListener('change', function (ev) {
       var cb = ev.target; if (!cb.dataset.ex) return;
       var arr = state.checks[cb.dataset.ex] = state.checks[cb.dataset.ex] || [];
       arr[+cb.dataset.i] = cb.checked;
-      save();
       var e = D.exercises.filter(function (x) { return x.id === cb.dataset.ex; })[0];
+      if (exScore(e) === 100) state.exAt[e.id] = state.exAt[e.id] || Date.now(); else delete state.exAt[e.id];
+      save();
       $('[data-score="' + e.id + '"]').textContent = exScore(e) + '%';
     });
   }
@@ -232,6 +379,7 @@
   }
   function renderQuiz() {
     var id = qs('m');
+    if (id === 'final' && cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderExam($('#quiz')); return; }
     var root = $('#quiz');
     if (!id) {
       root.innerHTML = '<div class="grid">' + D.modules.filter(function (m) { return D.quiz[m.id]; }).map(function (m) {
@@ -283,14 +431,83 @@
         var score = pct(correct, qs_.length);
         var prevBest = state.quiz[id];
         state.quiz[id] = Math.max(score, prevBest || 0);
+        if (score >= (prevBest || 0)) state.quizAt[id] = Date.now();
         save();
         var pass = score >= 80;
         $('#qres').innerHTML = '<div class="card result"><b>' + score + '%</b>' +
           '<p>' + correct + ' risposte corrette su ' + qs_.length + '. ' +
           (pass ? 'Ottimo lavoro: obiettivo raggiunto! 🎉' : 'Rivedi le lezioni del modulo e riprova: l\'obiettivo è l\'80%.') + '</p>' +
+          (pass && id === 'final' ? '<p><a class="btn" href="attestato.html">Vai al tuo attestato →</a></p>' : '') +
           '<div class="btn-row" style="justify-content:center"><a class="btn" href="quiz.html?m=' + id + '">Ripeti</a>' +
           '<a class="btn ghost" href="quiz.html">Altri quiz</a></div></div>';
         $('#qres').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+
+  /* ---------- video (caricati solo al clic, per privacy e velocità) ---------- */
+  function videosHtml(list) {
+    if (!list || !list.length) return '';
+    return '<h2>Video consigliati</h2><div class="videos">' + list.map(function (v) {
+      return '<div class="yt" data-id="' + esc(v.id) + '"><button type="button" class="yt-play" aria-label="Riproduci il video: ' + esc(v.title) + '">' +
+        '<span class="yt-icon">▶</span><span class="yt-title">' + esc(v.title) + '</span><span class="yt-ch">' + esc(v.channel || '') +
+        (v.lang ? ' · ' + esc(v.lang) : '') + '</span></button></div>';
+    }).join('') + '</div><p class="muted"><small>Video di terze parti su YouTube, scelti come approfondimento: verifica sempre che le tecniche ' +
+      'mostrate rispettino le regole di igiene e sicurezza del corso. Premendo ▶ il video viene caricato da YouTube (modalità privacy avanzata).</small></p>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.yt-play'); if (!b) return;
+    var box = b.parentNode, id = box.dataset.id;
+    if (!/^[\w-]{11}$/.test(id)) return;
+    box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0" title="Video YouTube" ' +
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  });
+
+  /* ---------- termini del glossario cliccabili nelle lezioni ---------- */
+  var glossIndex = null;
+  function buildGlossIndex() {
+    var list = [];
+    D.glossary.forEach(function (g) {
+      g.t.split(/\s*[\/(]\s*/).forEach(function (part) {
+        part = part.replace(/\)$/, '').trim();
+        if (part.length >= 4 && !/^zone/i.test(part)) list.push({ term: part, def: g.d, label: g.t });
+      });
+    });
+    list.sort(function (a, b) { return b.term.length - a.term.length; });
+    return list;
+  }
+  function linkGlossary(root) {
+    glossIndex = glossIndex || buildGlossIndex();
+    var used = {};
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        return n.parentNode.closest('h1,h2,h3,a,th,figcaption,.box.simple,.gl,.meta,.crumbs,.lesson-nav,.sources,.videos,button,code')
+          ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      for (var i = 0; i < glossIndex.length; i++) {
+        var g = glossIndex[i];
+        if (used[g.label]) continue;
+        var re = new RegExp('(^|[^\\p{L}])(' + g.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![\\p{L}])', 'iu');
+        var m = re.exec(node.nodeValue);
+        if (!m) continue;
+        used[g.label] = true;
+        var start = m.index + m[1].length;
+        var after = node.splitText(start);
+        after.nodeValue = after.nodeValue.slice(m[2].length);
+        var span = document.createElement('span');
+        span.className = 'gl';
+        span.tabIndex = 0;
+        span.textContent = m[2];
+        span.setAttribute('data-def', g.def);
+        span.setAttribute('role', 'note');
+        span.setAttribute('aria-label', m[2] + ': ' + g.def);
+        node.parentNode.insertBefore(span, after);
+        node = after;
+        i = -1;
       }
     });
   }
@@ -310,8 +527,516 @@
     $('#gsearch').addEventListener('input', function (e) { draw(e.target.value); });
   }
 
+
+  /* ---------- RIPASSO: flashcard, schede, quiz a tempo ---------- */
+  function renderReview() {
+    state.cards = state.cards || {};
+    var root = $('#review');
+    var tabs = [['flash', 'Flashcard'], ['schede', 'Schede riassuntive'], ['tempo', 'Quiz a tempo']];
+    function current() { var h = location.hash.slice(1); return tabs.some(function (t) { return t[0] === h; }) ? h : 'flash'; }
+    function nav() {
+      $('#rtabs').innerHTML = tabs.map(function (t) {
+        return '<a class="chip' + (t[0] === current() ? ' active' : '') + '" href="#' + t[0] + '">' + t[1] + '</a>';
+      }).join('');
+    }
+    window.addEventListener('hashchange', function () { nav(); show(); });
+    nav(); show();
+
+    function show() {
+      clearInterval(timerId);
+      ({ flash: flash, schede: sheets, tempo: timed })[current()]();
+    }
+
+    /* flashcard */
+    function deckFor(sel) {
+      var cards = [];
+      if (sel === 'glossario') {
+        D.glossary.forEach(function (g) { cards.push({ k: 'g:' + g.t, f: g.t, b: g.d }); });
+        return cards;
+      }
+      D.modules.forEach(function (m) {
+        if (sel !== 'tutti' && sel !== m.id) return;
+        (D.quiz[m.id] || []).forEach(function (q, i) {
+          cards.push({ k: m.id + ':' + i, f: q.q, b: q.o[q.a] + (q.e ? ' — ' + q.e : ''), m: m.title });
+        });
+      });
+      return cards;
+    }
+    function flash() {
+      var opts = '<option value="tutti">Tutti i moduli</option>' + D.modules.filter(function (m) { return D.quiz[m.id]; }).map(function (m) {
+        return '<option value="' + m.id + '">' + m.n + '. ' + esc(m.title) + '</option>';
+      }).join('') + '<option value="glossario">Glossario (termini)</option>';
+      root.innerHTML = '<div class="fc-bar"><select id="fcsel" class="search" aria-label="Scegli il mazzo">' + opts + '</select>' +
+        '<button class="btn small ghost" id="fcreset" type="button">Ricomincia il mazzo</button></div><div id="fc"></div>';
+      var sel = 'tutti', deck = [], idx = 0;
+      function build() {
+        var all = deckFor(sel);
+        // prima le carte da ripassare o mai viste, poi quelle già sapute
+        deck = shuffle(all.filter(function (c) { return state.cards[c.k] !== 'ok'; }));
+        idx = 0;
+        draw(all.length);
+      }
+      function draw(total) {
+        total = total || deckFor(sel).length;
+        var known = deckFor(sel).filter(function (c) { return state.cards[c.k] === 'ok'; }).length;
+        if (idx >= deck.length) {
+          $('#fc').innerHTML = '<div class="card result"><b>' + known + '/' + total + '</b><p>carte sapute in questo mazzo.</p>' +
+            '<button class="btn" id="fcagain" type="button">Ripassa di nuovo le carte da rivedere</button></div>';
+          $('#fcagain').addEventListener('click', build);
+          return;
+        }
+        var c = deck[idx];
+        $('#fc').innerHTML = progressBar(pct(known, total), known + ' sapute su ' + total + ' · carta ' + (idx + 1) + ' di ' + deck.length + ' da ripassare') +
+          '<button type="button" class="flashcard" id="card" aria-live="polite"><span class="fc-side">Domanda</span>' +
+          (c.m ? '<small class="muted">' + esc(c.m) + '</small>' : '') + '<strong>' + esc(c.f) + '</strong><span class="muted">Tocca per vedere la risposta</span></button>' +
+          '<div class="btn-row fc-actions" hidden><button class="btn ghost" id="fcno" type="button">↺ Da ripassare</button>' +
+          '<button class="btn" id="fcyes" type="button">✓ La so</button></div>';
+        $('#card').addEventListener('click', function () {
+          this.classList.add('flipped');
+          this.innerHTML = '<span class="fc-side">Risposta</span><strong>' + esc(c.b) + '</strong>';
+          $('.fc-actions').hidden = false;
+        });
+        $('#fcyes').addEventListener('click', function () { state.cards[c.k] = 'ok'; save(); idx++; draw(); });
+        $('#fcno').addEventListener('click', function () { state.cards[c.k] = 'again'; save(); deck.push(c); idx++; draw(); });
+      }
+      $('#fcsel').addEventListener('change', function () { sel = this.value; build(); });
+      $('#fcreset').addEventListener('click', function () {
+        deckFor(sel).forEach(function (c) { delete state.cards[c.k]; });
+        save(); build();
+      });
+      build();
+    }
+
+    /* schede riassuntive */
+    function sheets() {
+      root.innerHTML = '<div class="btn-row"><button class="btn small" id="printall" type="button">Stampa tutte le schede</button></div>' +
+        '<div class="sheets">' + D.modules.map(function (m) {
+          return '<article class="card sheet" data-m="' + m.id + '"><div class="sheet-head"><span class="mod-num">' + String(m.n).padStart(2, '0') + '</span>' +
+            badge(m.level) + '</div><h3>' + esc(m.title) + '</h3><ul>' + (m.summary || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+            '<p class="muted sheet-lessons"><small>Lezioni: ' + m.lessons.map(function (l) { return esc(l.title); }).join(' · ') + '</small></p>' +
+            '<button class="btn small ghost sheet-print" type="button">Stampa questa scheda</button></article>';
+        }).join('') + '</div>';
+      function printOnly(id) {
+        document.querySelectorAll('.sheet').forEach(function (el) { el.classList.toggle('no-print', !!id && el.dataset.m !== id); });
+        window.print();
+      }
+      $('#printall').addEventListener('click', function () { printOnly(null); });
+      root.addEventListener('click', function (e) {
+        var b = e.target.closest('.sheet-print'); if (b) printOnly(b.closest('.sheet').dataset.m);
+      });
+    }
+
+    /* quiz a tempo */
+    var timerId = null;
+    function timed() {
+      state.timed = state.timed || {};
+      root.innerHTML = '<div class="card"><h3 style="margin-top:.2rem">Quiz a tempo</h3><p>Domande casuali da tutti i moduli, <strong>15 secondi</strong> per risposta. ' +
+        'Allena la rapidità: le risposte devono diventare automatiche.</p><div class="btn-row">' +
+        [10, 20, 30].map(function (n) { return '<button class="btn small" data-n="' + n + '" type="button">' + n + ' domande' +
+          (state.timed[n] != null ? ' · record ' + state.timed[n] + '%' : '') + '</button>'; }).join('') + '</div></div><div id="tq"></div>';
+      root.querySelectorAll('[data-n]').forEach(function (b) { b.addEventListener('click', function () { start(+b.dataset.n); }); });
+    }
+    function start(n) {
+      var all = [];
+      Object.keys(D.quiz).forEach(function (k) { all = all.concat(D.quiz[k]); });
+      var qs = shuffle(all).slice(0, n), i = 0, ok = 0, log = [];
+      var SEC = 15;
+      function ask() {
+        clearInterval(timerId);
+        if (i >= qs.length) return finish();
+        var q = qs[i], left = SEC * 10;
+        var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
+        $('#tq').innerHTML = '<div class="quiz-q timed"><div class="tbar"><i style="width:100%"></i></div>' +
+          '<p class="muted"><small>Domanda ' + (i + 1) + ' di ' + qs.length + ' · ' + ok + ' corrette</small></p><h3>' + esc(q.q) + '</h3>' +
+          opts.map(function (o) { return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>'; }).join('') + '</div>';
+        $('#tq').scrollIntoView({ block: 'nearest' });
+        var bar = $('#tq .tbar i');
+        timerId = setInterval(function () {
+          left--;
+          bar.style.width = (left / (SEC * 10) * 100) + '%';
+          if (left <= SEC * 3) bar.classList.add('late');
+          if (left <= 0) answer(null);
+        }, 100);
+        $('#tq').querySelectorAll('.opt').forEach(function (b) { b.addEventListener('click', function () { answer(b); }); });
+        function answer(b) {
+          clearInterval(timerId);
+          var right = !!b && b.dataset.ok === '1';
+          if (right) ok++;
+          log.push({ q: q, right: right, timeout: !b });
+          $('#tq').querySelectorAll('.opt').forEach(function (o) { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('right'); });
+          if (b && !right) b.classList.add('wrong');
+          i++;
+          setTimeout(ask, right ? 600 : 1500);
+        }
+      }
+      function finish() {
+        var score = pct(ok, qs.length);
+        state.timed[n] = Math.max(state.timed[n] || 0, score);
+        save();
+        $('#tq').innerHTML = '<div class="card result"><b>' + score + '%</b><p>' + ok + ' su ' + qs.length + ' in tempo.</p>' +
+          '<button class="btn" type="button" id="tagain">Riprova</button></div>' +
+          (log.some(function (x) { return !x.right; }) ? '<h3>Da ripassare</h3><ul class="review-list">' + log.filter(function (x) { return !x.right; }).map(function (x) {
+            return '<li><strong>' + esc(x.q.q) + '</strong><br>' + (x.timeout ? '<span class="muted">Tempo scaduto.</span> ' : '') +
+              'Risposta: ' + esc(x.q.o[x.q.a]) + (x.q.e ? ' <span class="muted">— ' + esc(x.q.e) + '</span>' : '') + '</li>';
+          }).join('') + '</ul>' : '');
+        $('#tagain').addEventListener('click', function () { start(n); });
+      }
+      ask();
+    }
+  }
+
+  /* ---------- zoom immagini ---------- */
+  function lightbox() {
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.hidden = true;
+    box.innerHTML = '<button type="button" class="lb-close" aria-label="Chiudi">✕</button><img alt="">';
+    document.body.appendChild(box);
+    function close() { box.hidden = true; document.body.style.overflow = ''; }
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    document.addEventListener('click', function (e) {
+      var img = e.target.closest('figure img');
+      if (!img) return;
+      e.preventDefault();
+      var big = box.querySelector('img');
+      big.src = img.src;
+      big.alt = img.alt;
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  /* ---------- ATTESTATO ---------- */
+  var PASS = 80;
+  var LOGO = '<defs><linearGradient id="lgc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/><stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>' +
+    '<rect width="64" height="64" rx="16" fill="url(#lgc)"/><rect x="25" y="7" width="14" height="19" rx="3.5" fill="#fff"/>' +
+    '<rect x="22" y="24" width="20" height="6" rx="2" fill="#fff"/><rect x="14" y="29" width="36" height="28" rx="9" fill="#fff"/>' +
+    '<rect x="18" y="35" width="28" height="18" rx="6" fill="#f3a9c0"/><rect x="21" y="37" width="4" height="12" rx="2" fill="#fff" opacity=".75"/>' +
+    '<path d="M50 8 C50.8 12.2 51.8 13.2 56 14 C51.8 14.8 50.8 15.8 50 20 C49.2 15.8 48.2 14.8 44 14 C48.2 13.2 49.2 12.2 50 8 Z" fill="#fff"/>';
+  function fmtDate(t) {
+    return new Date(t).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function exMinutes(e) { var m = /(\d+)/.exec(e.time); return m ? +m[1] : 0; }
+  function certCode(name, date, score) {
+    var str = name + '|' + date + '|' + score, h = 2166136261;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return 'NX-' + new Date(date).getFullYear() + '-' + (h >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(0, 7);
+  }
+  function summary() {
+    var lessons = allLessons();
+    var done = lessons.filter(function (x) { return state.lessons[lessonKey(x.m, x.l)]; });
+    var exDone = D.exercises.filter(function (e) { return exScore(e) === 100; });
+    var minutes = done.reduce(function (a, x) { return a + (x.l.min || 10); }, 0) +
+      exDone.reduce(function (a, e) { return a + exMinutes(e); }, 0);
+    var modQuiz = D.modules.filter(function (m) { return D.quiz[m.id] && state.quiz[m.id] != null; });
+    return {
+      lessons: lessons, done: done, exDone: exDone, hours: Math.max(1, Math.round(minutes / 60)),
+      final: state.quiz.final, modQuiz: modQuiz,
+      allLessons: done.length === lessons.length, finalOk: (state.quiz.final || 0) >= PASS
+    };
+  }
+
+  function certSvg(name, s, cert, qrSvg, opts) {
+    opts = opts || {};
+    var W = 1123, H = 794, GOLD = '#b8892f';
+    var shown = name || 'Il tuo nome';
+    var fs = Math.min(60, Math.floor(1600 / Math.max(shown.length, 10)));
+    var t = function (x, y, str, size, weight, fill, extra) {
+      return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '" font-weight="' + (weight || 400) +
+        '" fill="' + (fill || '#3b2a30') + '"' + (extra || '') + '>' + esc(str) + '</text>';
+    };
+    var sans = ' font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif"';
+    var o = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" ' +
+      'font-family="Georgia, \'Times New Roman\', serif" role="img" aria-label="Attestato di fine corso">' +
+      '<defs>' +
+      '<linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d2668a"/><stop offset="1" stop-color="#7d2f4e"/></linearGradient>' +
+      '<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d58e"/><stop offset=".5" stop-color="#c99a3e"/><stop offset="1" stop-color="#e9c977"/></linearGradient>' +
+      '<radialGradient id="bgr" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fbeff2"/></radialGradient>' +
+      '<pattern id="pt" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="18" stroke="#c2577a" stroke-width="1" opacity=".05"/></pattern>' +
+      '</defs>' +
+      '<rect width="' + W + '" height="' + H + '" fill="url(#bgr)"/>' +
+      '<rect x="56" y="56" width="' + (W - 112) + '" height="' + (H - 112) + '" fill="url(#pt)"/>' +
+      '<rect x="20" y="20" width="' + (W - 40) + '" height="' + (H - 40) + '" fill="none" stroke="url(#cg)" stroke-width="12"/>' +
+      '<rect x="38" y="38" width="' + (W - 76) + '" height="' + (H - 76) + '" fill="none" stroke="url(#gold)" stroke-width="2.5"/>' +
+      '<rect x="46" y="46" width="' + (W - 92) + '" height="' + (H - 92) + '" fill="none" stroke="#e7c3cf" stroke-width="1"/>';
+    // ornamenti agli angoli
+    [[46, 46, 1, 1], [W - 46, 46, -1, 1], [46, H - 46, 1, -1], [W - 46, H - 46, -1, -1]].forEach(function (c) {
+      var x = c[0], y = c[1], sx = c[2], sy = c[3];
+      o += '<path d="M' + x + ',' + (y + sy * 70) + ' L' + x + ',' + y + ' L' + (x + sx * 70) + ',' + y + '" fill="none" stroke="url(#gold)" stroke-width="5"/>' +
+        '<path d="M' + (x + sx * 14) + ',' + (y + sy * 48) + ' Q' + (x + sx * 14) + ',' + (y + sy * 14) + ' ' + (x + sx * 48) + ',' + (y + sy * 14) + '" fill="none" stroke="url(#gold)" stroke-width="2"/>' +
+        '<rect x="' + (x + sx * 22 - 6) + '" y="' + (y + sy * 22 - 6) + '" width="12" height="12" fill="#c2577a" transform="rotate(45 ' + (x + sx * 22) + ' ' + (y + sy * 22) + ')"/>';
+    });
+    o += '<g transform="translate(' + (W / 2 - 26) + ',72) scale(.82)">' + LOGO + '</g>';
+    o += t(W / 2, 158, 'NAILX · CORSO DI RICOSTRUZIONE UNGHIE', 15, 700, '#8e3b5a', ' letter-spacing="5"' + sans);
+    o += t(W / 2, 228, 'Attestato di fine corso', 56, 700, '#2b1f22', ' letter-spacing="1"');
+    o += '<path d="M' + (W / 2 - 150) + ',250 L' + (W / 2 - 14) + ',250 M' + (W / 2 + 14) + ',250 L' + (W / 2 + 150) + ',250" stroke="' + GOLD + '" stroke-width="2"/>' +
+      '<rect x="' + (W / 2 - 6) + '" y="244" width="12" height="12" fill="url(#gold)" transform="rotate(45 ' + W / 2 + ' 250)"/>';
+    o += t(W / 2, 292, 'Si attesta che', 20, 400, '#6e5a5f', ' font-style="italic"');
+    o += t(W / 2, 362, shown, fs, 700, name ? '#b0466c' : '#d8b4c2', ' font-style="italic"');
+    o += '<line x1="' + (W / 2 - 280) + '" y1="384" x2="' + (W / 2 + 280) + '" y2="384" stroke="#e7c3cf" stroke-width="1.5"/>';
+    o += t(W / 2, 422, 'ha completato con successo il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 18.5, 400);
+    o += t(W / 2, 452, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + (s.hours === 1 ? ' ora' : ' ore') + ' di formazione', 16.5, 400, '#6e5a5f');
+    var nEx = s.exDone.length;
+    o += t(W / 2, 482, s.final != null ? 'Esame finale superato con il ' + s.final + '% · ' + nEx + (nEx === 1 ? ' esercizio pratico completato' : ' esercizi pratici completati')
+      : 'Esame finale: da sostenere', 17, 700, s.final != null ? '#2f8a5b' : '#b7791f');
+    var lines = [], cur = 'Programma:';
+    D.modules.forEach(function (m) {
+      var add = (cur === 'Programma:' ? ' ' : ' · ') + m.title;
+      if ((cur + add).length > 140) { lines.push(cur); cur = m.title; } else cur += add;
+    });
+    lines.push(cur);
+    lines.slice(0, 4).forEach(function (ln, i) { o += t(W / 2, 512 + i * 17, ln, 11, 400, '#7a6369', sans); });
+    // data e codice
+    var cx1 = qrSvg ? 250 : 270, cx2 = qrSvg ? W - 360 : W - 270;
+    o += '<line x1="' + (cx1 - 120) + '" y1="652" x2="' + (cx1 + 120) + '" y2="652" stroke="#3b2a30" stroke-width="1"/>' +
+      t(cx1, 642, cert.date ? fmtDate(cert.date) : '—', 19, 700) + t(cx1, 672, 'Data di rilascio', 13.5, 400, '#6e5a5f', sans);
+    o += '<line x1="' + (cx2 - 130) + '" y1="652" x2="' + (cx2 + 130) + '" y2="652" stroke="#3b2a30" stroke-width="1"/>' +
+      t(cx2, 642, cert.code || 'NX-····-········', 19, 700, '#2b1f22', ' font-family="ui-monospace, Menlo, Consolas, monospace"') +
+      t(cx2, 672, qrSvg ? 'Codice · verificabile online' : 'Codice attestato', 13.5, 400, '#6e5a5f', sans);
+    if (qrSvg) o += '<g transform="translate(' + (W - 190) + ',575)">' + qrSvg + '</g>';
+    // sigillo a coccarda con nastri
+    var sx0 = W / 2, sy0 = 628, pts = [];
+    for (var k = 0; k < 48; k++) {
+      var a = Math.PI * 2 * k / 48, r = k % 2 ? 45 : 50;
+      pts.push((sx0 + r * Math.cos(a)).toFixed(1) + ',' + (sy0 + r * Math.sin(a)).toFixed(1));
+    }
+    o += '<path d="M' + (sx0 - 26) + ',' + (sy0 + 26) + ' l-16,40 l14,-6 l9,12 l12,-40 Z" fill="#9c3b60"/>' +
+      '<path d="M' + (sx0 + 26) + ',' + (sy0 + 26) + ' l16,40 l-14,-6 l-9,12 l-12,-40 Z" fill="#b0466c"/>' +
+      '<polygon points="' + pts.join(' ') + '" fill="url(#gold)"/>' +
+      '<circle cx="' + sx0 + '" cy="' + sy0 + '" r="38" fill="url(#cg)"/>' +
+      '<circle cx="' + sx0 + '" cy="' + sy0 + '" r="32" fill="none" stroke="#f1d58e" stroke-width="1.2" stroke-dasharray="2 3"/>' +
+      t(sx0, sy0 - 8, 'CORSO', 11, 700, '#fff', ' letter-spacing="2"' + sans) +
+      t(sx0, sy0 + 7, 'COMPLETATO', 7.5, 700, '#fff', sans) +
+      t(sx0, sy0 + 23, cert.date ? String(new Date(cert.date).getFullYear()) : '★', 11, 700, '#f1d58e', sans);
+    o += t(W / 2, 726, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
+      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 743, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
+    if (opts.preview) {
+      o += '<text x="' + W / 2 + '" y="' + H / 2 + '" text-anchor="middle" font-size="120" font-weight="800" fill="#c2577a" opacity=".1" ' +
+        'transform="rotate(-24 ' + W / 2 + ' ' + H / 2 + ')"' + sans + ' letter-spacing="12">ANTEPRIMA</text>';
+    }
+    return o + '</svg>';
+  }
+
+  function certDetail(name, s, cert) {
+    var h = '<div class="cert-detail"><h2>Dettaglio del percorso svolto</h2>' +
+      '<p><strong>' + esc(name) + '</strong> · codice <code>' + esc(cert.code) + '</code> · rilasciato il ' + fmtDate(cert.date) + '</p>' +
+      '<table><tr><th>#</th><th>Modulo</th><th>Livello</th><th>Lezioni</th><th>Quiz</th><th>Completato il</th></tr>';
+    D.modules.forEach(function (m) {
+      var times = m.lessons.map(function (l) { return state.lessons[lessonKey(m, l)]; }).filter(Boolean);
+      var q = state.quiz[m.id];
+      h += '<tr><td>' + m.n + '</td><td>' + esc(m.title) + '<br><small class="muted">' + m.lessons.map(function (l) { return esc(l.title); }).join(' · ') + '</small></td>' +
+        '<td>' + LEVELS[m.level] + '</td><td>' + times.length + '/' + m.lessons.length + '</td>' +
+        '<td>' + (q != null ? q + '%' : '—') + '</td><td>' + (times.length ? fmtDate(Math.max.apply(null, times)) : '—') + '</td></tr>';
+    });
+    h += '</table><h3>Esercizi pratici completati (' + s.exDone.length + ' di ' + D.exercises.length + ')</h3>';
+    if (s.exDone.length) {
+      h += '<table><tr><th>Esercizio</th><th>Livello</th><th>Durata</th><th>Auto-valutazione</th><th>Data</th></tr>' + s.exDone.map(function (e) {
+        return '<tr><td>' + esc(e.title) + '</td><td>' + LEVELS[e.level] + '</td><td>' + esc(e.time) + '</td><td>100%</td><td>' + (state.exAt[e.id] ? fmtDate(state.exAt[e.id]) : '—') + '</td></tr>';
+      }).join('') + '</table>';
+    } else {
+      h += '<p class="muted">Nessun esercizio completato al 100%.</p>';
+    }
+    var partial = D.exercises.filter(function (e) { var sc = exScore(e); return sc > 0 && sc < 100; });
+    if (partial.length) {
+      h += '<p class="muted"><small>In corso: ' + partial.map(function (e) { return esc(e.title) + ' (' + exScore(e) + '%)'; }).join(' · ') + '</small></p>';
+    }
+    h += '<h3>Verifiche</h3><ul><li>Esame finale: <strong>' + s.final + '%</strong> (soglia ' + PASS + '%)' +
+      (state.quizAt.final ? ', svolto il ' + fmtDate(state.quizAt.final) : '') + '</li>' +
+      '<li>Quiz di modulo svolti: ' + s.modQuiz.length + ' di ' + Object.keys(D.quiz).length + '</li>' +
+      '<li>Ore di formazione stimate (lezioni + esercizi completati): circa ' + s.hours + '</li></ul></div>';
+    return h;
+  }
+
+  /* Interfaccia della pagina attestato (usata in locale e online).
+   * ctx: { lessonsDone, lessonsTotal, best, cert:{name,code,date,final,hours,exercises}|null, verifiable,
+   *        generate(name) → Promise<cert>, qr(cert) → Promise<svg|null>, verifyUrl(cert) → url|null } */
+  function certUI(root, ctx) {
+    var lessonsOk = ctx.lessonsDone >= ctx.lessonsTotal;
+    var examOk = (ctx.best || 0) >= PASS;
+    var cert = ctx.cert;
+    var eligible = lessonsOk && examOk;
+    var ns = nextStep();
+    function step(n, st, title, sub, cta) {
+      var icon = st === 'done' ? '✓' : (st === 'locked' ? '🔒' : n);
+      return '<li class="st-' + st + '"><span class="st-ic">' + icon + '</span><div class="st-txt"><strong>' + title + '</strong><small>' + sub + '</small></div>' +
+        (cta && st !== 'done' && st !== 'locked' ? '<a class="btn small" href="' + cta[1] + '">' + cta[0] + '</a>' : '') + '</li>';
+    }
+    var pctNow = Math.round(80 * ctx.lessonsDone / ctx.lessonsTotal + (examOk ? 20 : 0));
+    var status = cert ? 'Attestato rilasciato il ' + fmtDate(cert.date) + (ctx.verifiable ? ' · verificabile online' : '')
+      : eligible ? 'Requisiti completati: inserisci il nome e genera l\'attestato.'
+        : 'Completa i passaggi qui sotto per sbloccare l\'attestato.';
+    var h = '<section class="card cert-hero no-print">' +
+      '<div class="cert-hero-top"><div class="ring big" style="--p:' + pctNow + '"><span>' + pctNow + '%</span></div>' +
+      '<div><h2>Il tuo percorso</h2><p class="muted">' + status + '</p></div></div><ol class="cert-steps">' +
+      step(1, lessonsOk ? 'done' : 'current', 'Lezioni', ctx.lessonsDone + ' di ' + ctx.lessonsTotal + ' completate', ['Continua', lessonsOk ? 'corso.html' : ns.href]) +
+      step(2, examOk ? 'done' : (lessonsOk ? 'current' : 'todo'), 'Esame finale', ctx.best != null ? 'miglior risultato ' + ctx.best + '% (soglia ' + PASS + '%)' : 'soglia ' + PASS + '% · non ancora svolto', ['Fai l\'esame', 'quiz.html?m=final']) +
+      step(3, cert ? 'done' : (eligible ? 'current' : 'locked'), 'Attestato', cert ? 'codice ' + esc(cert.code) : (eligible ? 'pronto da generare' : 'si sblocca dopo i passi 1 e 2'), null) +
+      '</ol></section>' +
+      '<div class="cert-layout"><aside class="card cert-panel no-print">' +
+      '<label for="cname"><strong>Nome e cognome sull\'attestato</strong></label>' +
+      '<input id="cname" class="search" maxlength="60" autocomplete="name" placeholder="Es. Maria Rossi" value="' + esc((cert && cert.name) || state.certDraft || '') + '">' +
+      '<button class="btn" id="cgen" type="button"' + (eligible ? '' : ' disabled') + '>' + (cert ? 'Aggiorna il nome' : 'Genera l\'attestato') + '</button>' +
+      (eligible ? '' : '<p class="muted"><small>🔒 Il pulsante si attiva quando lezioni ed esame sono completati. Intanto puoi vedere l\'anteprima con il tuo nome.</small></p>') +
+      '<div id="cerr" aria-live="polite"></div>' +
+      '<div class="cert-ex"><strong>Esercizi pratici</strong><span>' + summary().exDone.length + ' di ' + D.exercises.length + ' completati</span>' +
+      '<small class="muted">Facoltativi ma consigliati: compaiono sull\'attestato.</small><a href="esercizi.html">Vai agli esercizi →</a></div>' +
+      '<div id="cactions"></div></aside>' +
+      '<div class="cert-print"><div class="cert-page cert-wrap" id="cpreview"></div><div class="cert-page" id="cdetail"></div></div></div>';
+    root.innerHTML = h;
+
+    var input = $('#cname', root);
+    function svgFor(c, qrSvg) {
+      var s = summary();
+      if (c) { s.final = c.final != null ? c.final : s.final; if (c.hours) s.hours = c.hours; if (c.exercises) s.exDone = c.exercises; }
+      else s.final = ctx.best != null && ctx.best >= PASS ? ctx.best : null;
+      var nm = input.value.trim().replace(/\s+/g, ' ');
+      return certSvg(nm || (c && c.name) || '', s, c || {}, qrSvg, { preview: !c });
+    }
+    function drawPreview() { $('#cpreview', root).innerHTML = svgFor(null); }
+    function drawCert(c) {
+      Promise.resolve(ctx.qr ? ctx.qr(c) : null).then(function (qrSvg) {
+        input.value = c.name;
+        $('#cpreview', root).innerHTML = svgFor(c, qrSvg);
+        $('#cdetail', root).innerHTML = certDetail(c.name, summary(), c);
+        var url = ctx.verifyUrl ? ctx.verifyUrl(c) : null;
+        $('#cactions', root).innerHTML = '<div class="cert-actions"><button class="btn" id="cprint" type="button">🖨 Stampa / salva PDF</button>' +
+          '<button class="btn ghost" id="cpng" type="button">⬇ Scarica immagine</button>' +
+          (navigator.share ? '<button class="btn ghost" id="cshare" type="button">↗ Condividi</button>' : '') +
+          (url ? '<button class="btn ghost" id="ccopy" type="button">🔗 Copia link di verifica</button><a class="small-link" href="' + esc(url) + '" target="_blank" rel="noopener">Apri la pagina di verifica</a>' : '') + '</div>';
+        $('#cprint', root).addEventListener('click', function () { window.print(); });
+        $('#cpng', root).addEventListener('click', function () { downloadPng($('#cpreview svg', root), 'attestato-nailx.png'); });
+        if ($('#cshare', root)) $('#cshare', root).addEventListener('click', function () {
+          navigator.share({ title: 'Il mio attestato NailX', text: 'Ho completato il corso di ricostruzione unghie NailX! Codice ' + c.code, url: url || location.href }).catch(function () {});
+        });
+        if ($('#ccopy', root)) $('#ccopy', root).addEventListener('click', function () {
+          var b = this;
+          (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { b.textContent = '✓ Link copiato'; },
+            function () { prompt('Copia il link di verifica:', url); });
+        });
+      });
+    }
+    input.addEventListener('input', function () {
+      state.certDraft = input.value;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+      if (!cert) drawPreview();
+      else $('#cgen', root).disabled = input.value.trim().replace(/\s+/g, ' ') === cert.name;
+    });
+    $('#cgen', root).addEventListener('click', function () {
+      var btn = this, name = input.value.trim().replace(/\s+/g, ' ');
+      if (name.length < 3) { input.classList.add('invalid'); input.focus(); $('#cerr', root).innerHTML = '<p class="err">Scrivi nome e cognome (almeno 3 caratteri).</p>'; return; }
+      input.classList.remove('invalid');
+      $('#cerr', root).innerHTML = '';
+      btn.disabled = true;
+      Promise.resolve(ctx.generate(name)).then(function (c) {
+        // ridisegna tutta la pagina: passi, pannello e attestato aggiornati
+        certUI(root, Object.assign({}, ctx, { cert: c }));
+        toast('🎓 Attestato ' + (ctx.verifiable ? 'registrato' : 'generato') + ': codice <strong>' + esc(c.code) + '</strong>', 7000);
+        $('#cpreview', root).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }).catch(function (e) {
+        btn.disabled = false;
+        $('#cerr', root).innerHTML = '<div class="box danger">' + esc((e && e.message) || 'Errore imprevisto, riprova.') + '</div>';
+      });
+    });
+    if (cert) { drawCert(cert); $('#cgen', root).disabled = true; } else drawPreview();
+  }
+
+  function renderCertificate() {
+    if (cloudEnabled() && window.NAILX_CLOUD) { window.NAILX_CLOUD.renderCertificate($('#cert')); return; }
+    var s = summary();
+    var c = state.cert && state.cert.name ? { name: state.cert.name, code: state.cert.code, date: state.cert.date, final: s.final } : null;
+    certUI($('#cert'), {
+      lessonsDone: s.done.length, lessonsTotal: s.lessons.length, best: state.quiz.final != null ? state.quiz.final : null,
+      cert: c, verifiable: false,
+      generate: function (name) {
+        var date = (state.cert && state.cert.date) || Date.now();
+        state.cert = { name: name, date: date, code: certCode(name, date, s.final) };
+        save();
+        return { name: name, code: state.cert.code, date: date, final: s.final };
+      }
+    });
+  }
+
+  function downloadPng(svgEl, filename) {
+    var data = new XMLSerializer().serializeToString(svgEl);
+    var url = URL.createObjectURL(new Blob([data], { type: 'image/svg+xml;charset=utf-8' }));
+    var img = new Image();
+    img.onload = function () {
+      var scale = 2, c = document.createElement('canvas');
+      c.width = svgEl.viewBox.baseVal.width * scale;
+      c.height = svgEl.viewBox.baseVal.height * scale;
+      var ctx = c.getContext('2d');
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      c.toBlob(function (blob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      });
+    };
+    img.src = url;
+  }
+
+  /* ---------- VERIFICA ATTESTATO (pubblica) ---------- */
+  function renderVerify() {
+    var root = $('#verify');
+    if (!cloudEnabled()) {
+      root.innerHTML = '<div class="box warn"><strong class="t">Verifica non disponibile</strong>Questo sito non ha ancora attivato l\'archivio online degli attestati.</div>';
+      return;
+    }
+    root.innerHTML = '<form class="card cert-form" id="vform"><label for="vcode"><strong>Codice dell\'attestato</strong></label>' +
+      '<div class="row"><input id="vcode" class="search" placeholder="NX-2026-XXXXXXXX" autocomplete="off" maxlength="20" value="' + esc(qs('c') || '') + '">' +
+      '<button class="btn" type="submit">Verifica</button></div></form><div id="vres" aria-live="polite"></div>';
+    $('#vform').addEventListener('submit', function (e) { e.preventDefault(); check($('#vcode').value); });
+    if (qs('c')) check(qs('c'));
+    function check(code) {
+      code = String(code || '').trim().toUpperCase();
+      if (!/^NX-\d{4}-[0-9A-F]{8}$/.test(code)) { $('#vres').innerHTML = '<div class="box warn">Formato del codice non valido (esempio: NX-2026-1A2B3C4D).</div>'; return; }
+      $('#vres').innerHTML = '<p class="muted">Verifica in corso…</p>';
+      var c = window.NAILX_CONFIG;
+      fetch(c.supabaseUrl.replace(/\/$/, '') + '/rest/v1/rpc/verify_certificate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: c.supabaseAnonKey, Authorization: 'Bearer ' + c.supabaseAnonKey },
+        body: JSON.stringify({ p_code: code })
+      }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (v) {
+        if (!v || !v.code) {
+          $('#vres').innerHTML = '<div class="box danger"><strong class="t">Attestato non trovato</strong>Nessun attestato corrisponde al codice ' + esc(code) + '.</div>';
+        } else if (!v.valid) {
+          $('#vres').innerHTML = '<div class="box danger"><strong class="t">Attestato revocato</strong>Il codice ' + esc(v.code) + ' esiste ma l\'attestato non è più valido.</div>';
+        } else {
+          $('#vres').innerHTML = '<div class="box tip"><strong class="t">✓ Attestato autentico</strong>' +
+            '<p><strong>' + esc(v.full_name) + '</strong> ha completato il corso NailX.</p><ul>' +
+            '<li>Codice: <code>' + esc(v.code) + '</code></li>' +
+            '<li>Rilasciato il ' + fmtDate(v.issued_at) + '</li>' +
+            '<li>Lezioni completate: ' + v.lessons_done + ' di ' + v.lessons_total + '</li>' +
+            '<li>Esame finale: ' + v.final_score + '% (soglia ' + PASS + '%)</li>' +
+            '<li>Ore di formazione stimate: circa ' + v.hours + '</li>' +
+            '<li>Esercizi pratici completati: ' + (v.exercises && v.exercises.length ? v.exercises.map(esc).join(', ') : 'nessuno') + '</li></ul>' +
+            '<p class="muted"><small>Attestato di partecipazione a un corso online: non è un titolo abilitante.</small></p></div>';
+        }
+      }).catch(function () {
+        $('#vres').innerHTML = '<div class="box warn">Servizio di verifica non raggiungibile. Riprova più tardi.</div>';
+      });
+    }
+  }
+
+  // funzioni condivise con assets/js/cloud.js
+  window.NAILX_APP = {
+    state: state, save: save, esc: esc, $: $, qs: qs, pct: pct, progressBar: progressBar, fmtDate: fmtDate,
+    summary: summary, certSvg: certSvg, certDetail: certDetail, certUI: certUI, downloadPng: downloadPng, shuffle: shuffle, toast: toast,
+    PASS: PASS, D: D, cloudEnabled: cloudEnabled
+  };
+
   /* ---------- avvio ---------- */
   var page = document.body.dataset.page;
   header(page);
-  ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary }[page] || function () {})();
+  lightbox();
+  ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
+    attestato: renderCertificate, ripasso: renderReview, verifica: renderVerify,
+    accedi: function () { if (window.NAILX_CLOUD) window.NAILX_CLOUD.renderAccount($('#account')); } }[page] || function () {})();
 })();
