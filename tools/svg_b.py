@@ -123,6 +123,8 @@ def callout(px, py, lx, ly, label, anchor='start', size=13, fill=INK, weight=700
         ey = ly - size * 0.36
     s = ('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.3"/>'
          '<circle cx="%.1f" cy="%.1f" r="3.5" fill="%s" stroke="#fff" stroke-width="1"/>' % (px, py, ex, ey, MUTED, px, py, ACC2))
+    if sub and anchor == 'middle' and py > ly:
+        s = s.replace('y2="%.1f"' % ey, 'y2="%.1f"' % (ey + size + 4), 1)
     s += text(lx, ly, label, size, anchor, weight, fill)
     if sub:
         s += text(lx, ly + size + 3, sub, 12, anchor, 400, MUTED)
@@ -1289,43 +1291,50 @@ def tip_gel_steps():
 
     def d(i, x, y):
         s = ''
-        cx, yb = x + 145, y + 176
-        if i in (0, 1, 2, 5):
+        cx, yb = x + 130, y + 176
+        sc = 0.66
+        if i in (0, 2, 5):
             g, ys = nail_tip()
-            ox = cx - (40 if i == 1 else 0)
-            sc = 0.66
-            if i == 0:
-                g += tool_brush(16, -40, -50, 70, '#f4e3a4')
-                g += mark(64, ys - 40, False, 14)
-                g += text(84, ys - 34, 'tip', 18, 'start', 700, ERR)
-            elif i == 2:
+            if i == 2:
                 g += bead(0, ys + 16, 20, PROD, PROD_S)
                 g += arrow(0, ys + 40, 0, ys + 74, ACC2, 2.4)
                 g += arrow(0, ys - 8, 0, ys - 50, ACC2, 2.4)
             elif i == 5:
                 g += tool_file(64, ys - 20, -70, 110, 16)
-            s += scaled(ox, yb, sc, g)
-            if i == 1:
-                s += lamp(cx + 70, yb, 100)
-                s += timer(x + 30, y + 70, '')
+            s += scaled(cx, yb, sc, g)
+            if i == 0:
+                s += cap_brush(cx + 6, yb - 50, -22, 1.05)
+                s += mark(cx, yb - 104, False, 11)
+                s += text(cx + 18, yb - 99, 'no sul tip', 13, 'start', 800, ERR)
+                s += mark(cx - 52, yb - 40, True, 11)
+            if i == 2:
+                s += callout(cx + 12, yb + (ys + 16) * sc, x + 226, y + 130, 'sul punto', 'middle', 12.5, sub='di stress')
             if i == 5:
                 s += bottle(x + 46, yb, '#f0eaf6', 'top', 34, 50)
-                s += drop_c(x + 240, yb - 40, YEL)
-                s += text(x + 240, yb - 2, 'olio', 12.5, 'middle', 700, MUTED)
+                s += drop_c(x + 236, yb - 44, YEL, '#c9a54a', 1.2)
+                s += text(x + 236, yb - 6, 'olio', 12.5, 'middle', 700, MUTED)
+        elif i == 1:
+            sp, p = overlay_profile(0, 0, L=90, free=14, ext=70, apex_h=5, tip=True)
+            s += lamp(x + 186, y + 170, 150, '')
+            s += scaled(x + 100, y + 150, 0.62, sp)
+            s += callout(x + 100 + 60 * 0.62, y + 150 - 3, x + 70, y + 76, 'base sottile', 'middle', 12.5)
         elif i == 3:
             sp, p = overlay_profile(0, 0, L=90, free=14, ext=70, apex_h=22, tip=True)
-            s += scaled(x + 128, y + 116, 0.62, '<g transform="rotate(180 60 30)">%s</g>' % sp)
-            s += drop_c(x + 150, y + 150, PROD_S, s=0.7)
-            s += text(x + 252, y + 80, '5–30 s', 14, 'middle', 800, ACC2)
-            s += text(x + 120, y + 70, 'unghia verso il basso', 12.5, 'middle', 600, MUTED)
+            s += scaled(x + 70, y + 104, 0.62, '<g transform="rotate(180 60 0)">%s</g>' % sp)
+            s += flip_icon(x + 40, y + 74, 15)
+            ax = x + 70 + (120 - p['ax']) * 0.62
+            s += arrow(ax, y + 116, ax, y + 150, ACC2, 2.4)
+            s += text(ax + 14, y + 144, '5–30 s', 14, 'start', 800, ACC2)
+            s += text(x + 145, y + 176, 'unghia verso il basso', 12.5, 'middle', 600, MUTED)
         else:
             sp, p = overlay_profile(0, 0, L=90, free=14, ext=70, apex_h=22, tip=True)
             sp += '<circle cx="%.1f" cy="%.1f" r="5" fill="%s"/>' % (p['xe'], p['oy'] + 6, ERR)
-            s += scaled(x + 92, y + 120, 0.68, sp)
-            s += eye(x + 262, y + 98, 180, 1.1)
-            s += text(x + 130, y + 70, 'sottile – spesso – sottile', 12.5, 'middle', 600, MUTED)
+            s += scaled(x + 92, y + 130, 0.68, sp)
+            s += eye(x + 262, y + 108, 180, 1.1)
+            s += text(x + 130, y + 72, 'sottile – spesso – sottile', 12.5, 'middle', 600, MUTED)
         return s
-    return steps_fig('Copertura in gel sul tip', labels, 3, 290, 190, d, 'Copertura in gel sul tip in sei passaggi')
+    return steps_fig('Copertura in gel sul tip', labels, 3, 290, 190, d, 'Copertura in gel sul tip in sei passaggi: primer solo sull\'unghia, '
+                     'base e lampada, perla in zona 2, mano capovolta, controllo del profilo, lima, top e olio')
 
 
 # ================================================================= MODULO CARTINA
@@ -1764,6 +1773,12 @@ def pinch_steps():
     return svg(W, H, arrow_defs() + b, 'Pinching passo passo: pressione uguale ai lati, momento giusto, controllo frontale')
 
 
+def flip_icon(cx, cy, r=20):
+    """Freccia circolare: 'capovolgi la mano'."""
+    return ('<path d="M%.1f,%.1f A%.1f,%.1f 0 1 1 %.1f,%.1f" fill="none" stroke="%s" stroke-width="2.6" marker-end="url(#ar)"/>'
+            % (cx - r, cy, r, r, cx + r * 0.2, cy + r * 0.98, ACC2))
+
+
 @figx('tut-gel-flip.svg')
 def gel_flip():
     W, H = 760, 300
@@ -1772,21 +1787,28 @@ def gel_flip():
     for i, t in enumerate(T):
         x = 20 + i * 245
         body = ''
-        s, p = overlay_profile(0, 0, L=110, free=10, ext=60, apex_h=(8 if i == 0 else 22), tip=False)
         if i == 0:
-            s += bead(p['xe'] - 20, -24, 16, PROD, PROD_S)
-            body += scaled(x + 82, 190, 0.7, s)
+            s, p = overlay_profile(0, 0, L=110, free=10, ext=60, apex_h=6, tip=False)
+            s += bead(p['xe'] - 26, -18, 15, PROD, PROD_S)
+            body += scaled(x + 92, 196, 0.78, s)
+            body += callout(x + 92 + (p['xe'] - 26) * 0.78, 196 - 26 * 0.78, x + 150, 104, 'perla di gel', 'middle', 13,
+                            sub='sul punto di stress')
         elif i == 1:
-            body += scaled(x + 40, 150, 0.7, '<g transform="rotate(180 70 0)">%s</g>' % s)
-            body += drop_c(x + 104, 186, PROD_S, s=0.7)
-            body += text(x + 50, 205, '5–30 s', 15, 'middle', 800, ACC2)
-            body += text(x + 115, 244, 'unghia verso il basso', 12.5, 'middle', 600, MUTED)
+            s, p = overlay_profile(0, 0, L=110, free=10, ext=60, apex_h=22, tip=False)
+            body += scaled(x + 60, 150, 0.66, '<g transform="rotate(180 70 0)">%s</g>' % s)
+            body += flip_icon(x + 40, 112, 17)
+            body += arrow(x + 84, 166, x + 84, 204, ACC2, 2.4)
+            body += text(x + 100, 194, '5–30 s', 15, 'start', 800, ACC2)
+            body += text(x + 115, 232, 'la gravità forma l\'apex', 12.5, 'middle', 700, ACC2)
+            body += text(x + 115, 252, 'unghia verso il basso', 12.5, 'middle', 600, MUTED)
         else:
-            s += '<circle cx="%.1f" cy="%.1f" r="5" fill="%s"/>' % (p['xe'], 6, ERR)
-            body += scaled(x + 82, 200, 0.7, s)
-            body += lamp(x + 180, 140, 70)
+            s, p = overlay_profile(0, 0, L=110, free=10, ext=60, apex_h=22, tip=False)
+            body += lamp(x + 150, 236, 130)
+            body += scaled(x + 82, 214, 0.62, s)
+            body += eye(x + 34, 88, 20, 1.0)
+            body += text(x + 56, 92, 'profilo ok?', 12.5, 'start', 700, ACC2)
         b += frame(x, 20, 230, 260, t, i + 1, body=body)
-    return svg(W, H, arrow_defs() + b, 'Capovolgere la mano: la gravità porta il gel verso l\'apex')
+    return svg(W, H, arrow_defs() + b, 'Capovolgere la mano: perla di gel in zona 2, mano capovolta perché la gravità formi l\'apex, controllo del profilo e lampada')
 
 
 @figx('tut-gel-zona1.svg')
@@ -2149,8 +2171,8 @@ def file_grip():
     body += callout(gx + 14, gy - 30, gx + 40, 92, 'indice sopra: presa leggera', 'middle', 13.5)
     body += callout(gx + 4, gy + 22, gx + 76, gy + 74, 'pollice sotto', 'start', 13.5)
     body += callout(gx - 124, gy + 60, gx - 60, 286, 'polso morbido', 'start', 13.5)
-    body += arrow(gx + 130, gy + 40, gx + 180, gy + 40, MUTED, 1.8, True)
-    body += text(gx + 155, gy + 30, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
+    body += arrow(gx + 96, gy + 48, gx + 146, gy + 48, MUTED, 1.8, True)
+    body += text(gx + 121, gy + 36, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
     b += frame(20, 20, 350, 310, 'La lima', 1, body=body)
     # 2 dito della cliente
     x = 390
@@ -2163,17 +2185,16 @@ def file_grip():
     body += arrow(cx - 52, yc - 70, cx - 70, yc - 96, ACC2, 2)
     body += text(cx - 78, yc - 132, 'tira la pelle', 12.5, 'middle', 700, ACC2)
     body += text(cx - 78, yc - 116, 'del solco', 12.5, 'middle', 700, ACC2)
-    body += callout(cx + 70, yc - 40, cx + 88, yc - 104, 'tieni', 'middle', 12.5)
-    body += text(cx + 88, yc - 120, '', 12)
-    body += text(cx + 88, yc - 88 + 0, '', 12)
+    body += callout(cx + 70, yc - 40, cx + 90, yc - 100, 'ai lati', 'middle', 12.5)
+    body += text(cx + 90, yc - 116, 'tieni', 12.5, 'middle', 700)
     # riquadro errore
-    body += '<rect x="%d" y="64" width="84" height="132" rx="10" fill="#fff"/>' % (x + 254)
+    body += '<rect x="%d" y="64" width="84" height="158" rx="10" fill="#fff"/>' % (x + 254)
     g, _ = top_finger(0, 0, hw=34, nail_len=90, free_len=20, finger_len=10)
     g += '<ellipse cx="6" cy="-60" rx="28" ry="32" fill="#efc0a4" stroke="%s" stroke-width="1.5"/>' % SKIN_D
     body += scaled(x + 296, 152, 0.55, g)
     body += mark(x + 324, 80, False, 10)
-    body += text(x + 296, 182, 'non sopra', 12, 'middle', 700, ERR)
-    body += text(x + 296, 216, 'l\'unghia', 12, 'middle', 700, ERR)
+    body += text(x + 296, 194, 'non sopra', 12, 'middle', 700, ERR)
+    body += text(x + 296, 210, 'l\'unghia', 12, 'middle', 700, ERR)
     b += frame(x, 20, 350, 310, 'Il dito della cliente', 2, body=body)
     return svg(W, H, arrow_defs() + b, 'Presa della lima (indice sopra, pollice sotto, polso morbido) e presa del dito della cliente ai lati')
 
@@ -2185,36 +2206,51 @@ def file_sequence():
 
     def d(i, x, y):
         s = ''
-        cx, yb = x + 120, y + 178
+        cx, yb = x + 120, y + 214
+        sc = 0.8
+        if i == 4:
+            cx, yb = x + 130, y + 168
         if i in (0, 1, 2, 4):
-            g, p = finger_nail(0, 0, hw=34, nail_len=90, free_len=60, shape='squoval' if i != 2 else 'ovale', smile=8, finger_len=6)
+            g, p = finger_nail(0, 0, hw=34, nail_len=90, free_len=60 if i != 4 else 22, shape='squoval' if i != 2 else 'ovale',
+                               smile=8, finger_len=40)
             yt = -150
             if i == 0:
-                g += tool_file(0, yt - 10, 0, 130, 16)
+                g += tool_file(0, yt - 12, 0, 150, 18)
+                g += arrow(-54, yt - 38, 54, yt - 38, ACC2, 2.6, True)
             elif i == 1:
-                g += tool_file(48, yt + 60, 90, 130, 16)
+                g += tool_file(48, yt + 64, 90, 150, 18)
+                g += arrow(76, yt + 10, 76, yt + 118, ACC2, 2.6, True)
             elif i == 2:
-                g += tool_file(-40, yt + 10, 45, 110, 14)
-                g += arrow(-70, yt + 50, -14, yt + 4, ACC2, 2.6)
+                g += tool_file(-44, yt + 14, 45, 120, 16)
+                g += arrow(-84, yt + 66, -20, yt + 2, ACC2, 3)
             else:
-                g += tool_file(30, -40, -60, 90, 14)
-                g += '<path d="%s" fill="none" stroke="%s" stroke-width="3" stroke-dasharray="5 4"/>' % (epo_curve(p, -16), ACC2)
-            s += scaled(cx, yb, 0.62, g)
+                g += '<path d="%s" fill="none" stroke="%s" stroke-width="3" stroke-dasharray="6 4"/>' % (epo_curve(p, -16), ACC2)
+                g += tool_file(46, -40, -58, 110, 16)
+                g += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="2.6" marker-end="url(#ar)"/>'
+                      % (-44, -2, -20, 10, 4, 2, ACC2))
+            s += scaled(cx, yb, sc, g)
+            if i == 4:
+                s += text(x + 238, y + 120, 'grana', 12.5, 'middle', 700, MUTED)
+                s += text(x + 238, y + 136, 'fine', 12.5, 'middle', 700, MUTED)
         elif i == 3:
-            sp, p = overlay_profile(0, 0, L=110, free=10, ext=70, apex_h=22, tip=False)
-            s += scaled(x + 70, y + 140, 0.62, sp)
-            s += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>'
-                  % (x + 80, y + 116, x + 140, y + 92, x + 200, y + 118, ACC2))
+            sp, p = overlay_profile(0, 0, L=110, free=10, ext=80, apex_h=22, tip=False)
+            s += scaled(x + 110, y + 150, 0.82, sp)
+            s += ('<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="2.4" marker-end="url(#ar)"/>'
+                  % (x + 104, y + 116, x + 170, y + 92, x + 250, y + 132, ACC2))
         else:
-            # vista dal basso: polpastrello e bordo libero
-            s += '<rect x="%d" y="%d" width="70" height="120" rx="34" fill="%s" stroke="%s" stroke-width="1.5"/>' % (cx - 35, y + 76, SKIN, SKIN_D)
-            s += '<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
-                cx - 42, y + 92, cx - 42, y + 62, cx, y + 54, cx + 42, y + 62, cx + 42, y + 92, cx, y + 80, cx - 42, y + 92, FREE, NAIL_S)
-            s += rot(-20, cx + 30, y + 74, tool_file(cx + 60, y + 74, 0, 100, 14))
-            s += text(cx - 66, y + 160, 'dal basso', 12, 'end', 600, MUTED)
-        s += text(x + 260, y + 30, subs[i], 12.5, 'end', 700, MUTED)
+            # vista dal basso: polpastrello, bordo libero in prolungamento e lima che lo pulisce
+            ex = ('<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="url(#bTipG)" stroke="%s" stroke-width="1.5"/>'
+                  % (cx - 40, y + 118, cx - 40, y + 70, cx, y + 62, cx + 40, y + 70, cx + 40, y + 118, cx, y + 110, cx - 40, y + 118, NAIL_S))
+            ex += dust(cx - 14, y + 100, 7, 10, '#a99a92', 3)
+            fu, _ = finger_under(cx, y + 100, 70, 160)
+            s += ex + fu
+            s += tool_file(cx + 18, y + 112, -18, 110, 14)
+            s += arrow(cx - 30, y + 140, cx + 40, y + 118, ACC2, 2.2, True)
+            s += pill(x + 40, y + 176, 'dal basso', 12, MUTED, 'start')
+        s += text(x + 272, y + 31, subs[i], 12.5, 'end', 700, MUTED)
         return s
-    return steps_fig('La sequenza di limatura', labels, 3, 290, 190, d, 'La sequenza di limatura in sei passaggi')
+    return steps_fig('La sequenza di limatura', labels, 3, 290, 190, d, 'La sequenza di limatura in sei passaggi: lunghezza, lati, punta, '
+                     'superficie, zona cuticolare, sotto il bordo')
 
 
 @figx('limatura-arco-profilo.svg')

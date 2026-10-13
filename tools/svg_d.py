@@ -490,26 +490,42 @@ def scissors(x, y, ang=0, s=1.0, col=GREY_D):
 
 
 def oil_bottle(x, y, s=1.0):
-    b = (rbox(-16, -10, 32, 40, '#f6d58a', '#c9a54a', 2, 6) + rbox(-8, -22, 16, 13, '#8e3b5a', 'none', 0, 3)
-         + P('M-4,-22 Q0,-38 4,-22 Z', '#4b3a40', '#4b3a40', 1) + rbox(-10, 2, 20, 14, '#fff', 'none', 0, 3)
-         + P('M-5,9 h10', 'none', '#c9a54a', 2))
+    """Olio per cuticole: flacone in vetro ambrato con contagocce."""
+    gid = uid('ob')
+    b = '<defs>%s</defs>' % _lg(gid, [(0, '#b8741f'), (.3, '#f0b860'), (.55, '#d99a3a'), (1, '#9c5f15')])
+    b += '<ellipse cx="0" cy="31" rx="17" ry="3.5" fill="#000" opacity=".12"/>'
+    b += P('M-15,30 L-15,-2 Q-15,-10 -8,-12 L8,-12 Q15,-10 15,-2 L15,30 Z', 'url(#%s)' % gid, '#8a5414', 1.4)
+    b += P('M-12,8 L12,8 L12,28 L-12,28 Z', '#e9a94a', 'none', 0, ' opacity=".55"')
+    b += rbox(-10, 0, 20, 16, '#fffaf0', 'none', 0, 3) + ln(-6, 6, 6, 6, '#d9a24a', 1.6) + ln(-6, 11, 3, 11, '#e7c48a', 1.4)
+    b += rbox(-12, -8, 4, 34, '#fff', 'none', 0, 2, ' opacity=".45"')
+    b += rbox(-9, -20, 18, 9, '#3b2a30', 'none', 0, 2)
+    b += P('M-6,-20 L-6,-30 Q-6,-40 0,-40 Q6,-40 6,-30 L6,-20 Z', '#4b3a40', '#22181c', 1)
+    b += rbox(-4, -36, 2.5, 12, '#fff', 'none', 0, 1, ' opacity=".3"')
     return g(b, x, y, 0, s)
-
 
 def glove(x, y, s=1.0, col='#f2c94c'):
-    b = P('M-18,30 L-18,-2 Q-24,-12 -22,-20 Q-16,-22 -12,-12 L-12,-30 Q-6,-34 -2,-30 L-2,-34 Q4,-38 8,-34 L8,-30 Q14,-34 18,-28 L18,30 Z',
-          col, '#b38a1f', 2) + rbox(-20, 28, 40, 10, '#e0b33d', '#b38a1f', 2, 3)
+    """Guanto in gomma: dita separate, pollice laterale, polsino arrotolato."""
+    ed = dark(col, .35)
+    b = P('M-16,28 L-17,0 L-24,-8 Q-28,-14 -24,-18 Q-20,-20 -15,-14 L-13,-10 L-13,-30 Q-13,-35 -9,-35 Q-5,-35 -5,-30 L-5,-34 '
+          'Q-5,-39 -1,-39 Q3,-39 3,-34 L3,-32 Q3,-37 7,-37 Q11,-37 11,-32 L11,-26 Q11,-30 14.5,-30 Q18,-30 18,-25 L18,28 Z', col, ed, 1.6)
+    for xx in (-5, 3, 11):
+        b += P('M%d,-10 L%d,-28' % (xx, xx), 'none', ed, 1, ' opacity=".55"')
+    b += P('M-10,-26 L-10,10', 'none', '#fff', 2.5, ' opacity=".45"')
+    b += rbox(-19, 26, 39, 10, light(col, .15), ed, 1.4, 4) + ln(-17, 31, 18, 31, ed, 0.8, ' opacity=".5"')
     return g(b, x, y, 0, s)
-
 
 def phone_cal(x, y, s=1.0):
-    b = rbox(-20, -34, 40, 68, '#4b3a40', 'none', 0, 8) + rbox(-16, -26, 32, 50, '#fff', 'none', 0, 3)
-    b += rbox(-16, -26, 32, 10, ACC, 'none', 0, 2)
-    for r in range(3):
-        for c in range(4):
-            b += rbox(-13 + c * 7.5, -12 + r * 9, 5, 5, ACC if (r, c) == (1, 2) else '#e5d6d2', 'none', 0, 1)
+    """Smartphone con calendario e promemoria (campanella)."""
+    b = rbox(-21, -36, 42, 72, '#2b2226', 'none', 0, 9) + rbox(-17, -29, 34, 56, '#fff', 'none', 0, 3)
+    b += rbox(-4, -33, 8, 2, '#5a4a50', 'none', 0, 1)
+    b += rbox(-17, -29, 34, 11, ACC, 'none', 0, 2)
+    for r in range(4):
+        for c in range(5):
+            on = (r, c) in ((1, 2), (3, 2))
+            b += rbox(-14.5 + c * 6, -14 + r * 7.5, 4.5, 4.5, ACC if on else '#ecdfdb', 'none', 0, 1)
+    b += circ(13, -31, 7, '#e8b83a', '#fff', 1.5) + P('M10,-30 Q10,-35 13,-35 Q16,-35 16,-30 L17,-29 L9,-29 Z', '#fff', 'none', 0)
+    b += rbox(-12, 18, 24, 5, '#f4d7e0', 'none', 0, 2)
     return g(b, x, y, 0, s)
-
 
 def bulb(x, y, s=1.0):
     b = circ(0, -6, 14, '#fff3b0', '#d9b44a', 2) + rbox(-7, 7, 14, 10, GREY, 'none', 0, 2)
@@ -542,8 +558,15 @@ def mini_lamp(cx, cy, s=0.45):
 
 
 def pen_brush(x, y, ang=0, l=90, bristle=ACC):
-    return tool_brush(x, y, ang, l, bristle)
-
+    """Pennello per gel: manico affusolato, ghiera metallica, setole con colore in punta (punta verso -x)."""
+    b = P('M16,-4.5 L%.1f,-3 Q%.1f,0 %.1f,3 L16,4.5 Z' % (l, l + 4, l), '#3b2a30', '#22181c', 1)
+    b += ln(20, -2, l - 6, -1.5, '#fff', 1.2, ' opacity=".3"')
+    b += rbox(4, -5.5, 14, 11, '#9aa3ad', '#5d6670', 1, 2) + ln(6, -3, 16, -3, '#fff', 1, ' opacity=".7"')
+    b += P('M4,-5 L-10,-4.5 Q-17,0 -10,4.5 L4,5 Z', '#efe3cc', '#b9a77d', 1)
+    b += P('M-3,-4.8 L-10,-4.5 Q-17,0 -10,4.5 L-3,4.8 Z', bristle, 'none', 0)
+    for k in (-2.5, 0, 2.5):
+        b += ln(3, k, -12, k * 0.8, '#000', 0.5, ' opacity=".18"')
+    return g(b, x, y, ang)
 
 # ================================================================= MODULO 13 – ONICOFAGIA
 def bitten_top(cx, yb, hw=46, bed=62, plate=NAT, cushion=True, hangnails=True, dots=True, finger_len=60):
@@ -1012,7 +1035,7 @@ def oni_aftercare():
         if k == 0:
             b += oil_bottle(cx, 130, 1.5)
         elif k == 1:
-            b += tool_file(cx, 130, -35, 130, 20)
+            b += file_pro(cx, 130, -35, 130, 20)
         elif k == 2:
             b += glove(cx, 130, 1.4)
         else:
@@ -1338,9 +1361,10 @@ def sottotono():
     body = ''
     for k, (c1, c2, t, t2) in enumerate([('#d9dde3', '#8c96a3', 'argento', 'freddo'), ('#f3d27a', '#b88a1b', 'oro', 'caldo')]):
         cx = x + 76 + k * 128
-        body += '<ellipse cx="%.1f" cy="%.1f" rx="38" ry="38" fill="none" stroke="%s" stroke-width="12"/>' % (cx, 190, c2)
-        body += '<ellipse cx="%.1f" cy="%.1f" rx="38" ry="38" fill="none" stroke="%s" stroke-width="8"/>' % (cx, 190, c1)
-        body += P('M%.1f,%.1f q8,-6 16,-2' % (cx - 22, 162), 'none', '#fff', 3)
+        body += '<ellipse cx="%.1f" cy="%.1f" rx="36" ry="8" fill="#000" opacity=".1" filter="url(#dxBlurS)"/>' % (cx, 232)
+        body += '<circle cx="%.1f" cy="%.1f" r="38" fill="none" stroke="%s" stroke-width="15"/>' % (cx, 190, c2)
+        body += '<circle cx="%.1f" cy="%.1f" r="38" fill="none" stroke="url(#%s)" stroke-width="11"/>' % (cx, 190, 'dxSilverF' if k == 0 else 'dxGold')
+        body += P('M%.1f,%.1f A38,38 0 0 1 %.1f,%.1f' % (cx - 30, 167, cx + 4, 152), 'none', '#fff', 3, ' opacity=".85"')
         body += text(cx, 256, t, 14, weight=800)
         body += text(cx, 276, 'sta bene? → ' + t2, 12.5, weight=600, fill=MUTED)
     body += text(x + pw / 2, 306, 'entrambi? → neutro', 13, weight=700)
@@ -1444,42 +1468,40 @@ def colore_strati():
     W = 20 + 5 * pw + 4 * 12 + 20
     b = T('Colore in gel: strati sottili')
     RED = '#c62f4a'
+    nw, nh = 60, 124
     for i, lab in enumerate(labels):
         x = 20 + i * (pw + 12)
-        cx, by = x + pw / 2, 58 + 222
+        cx, by = x + pw / 2 - 8, 58 + 226
         s = ''
+        sh = '<ellipse cx="%.1f" cy="%.1f" rx="28" ry="5" fill="#000" opacity=".1" filter="url(#dxBlurS)"/>' % (cx, by + 6)
         if i == 0:
-            s += rbox(cx - 18, 150, 36, 62, RED, '#7a1a2b', 2, 8) + rbox(cx - 9, 132, 18, 20, '#3b2a30', 'none', 0, 3)
-            s += curved_arrow(cx - 50, 232, cx + 50, 232, 22) + curved_arrow(cx + 50, 128, cx - 50, 128, 22)
+            s += gel_bottle(cx + 8, 222, RED, 1.15)
+            s += curved_arrow(cx - 46, 244, cx + 62, 244, 20) + curved_arrow(cx + 62, 118, cx - 46, 118, 20)
         elif i == 1:
-            s += nail_shape(cx - 10, by, 56, 116, '#f6dbe2', NAIL_S, 1.6) + gloss(cx - 10, by, 116, 0.8)
-            s += mini_lamp(cx + 50, 138, 0.42)
+            s += sh + gel(cx, by, nw, nh, '#f6dbe2', NAIL_S) + g(led_lamp(0, 0, 50), cx + 56, 140)
         elif i == 2:
-            ext = ''.join('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#ef8a9d" stroke-width="3" clip-path="url(#CLIP)"/>' % (
-                cx - 18 + j * 9, by - 12, cx - 20 + j * 9, by - 104) for j in range(5))
-            s += nail_shape(cx, by, 58, 116, NAT, NAIL_S, 1.6)
-            s += nail_shape(cx, by - 8, 48, 104, '#d9566d', '#d9566d', 0.1, ext)
-            s += leader(cx, by - 4, cx + 52, by - 36, '', 'start', 12)
-            s += text(cx + 50, by - 54, 'piccolo', 12, 'middle', 700, ACC2)
-            s += text(cx + 50, by - 40, 'margine', 12, 'middle', 700, ACC2)
+            ext = ''.join('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="%.1f" fill="none" opacity=".55" clip-path="url(#CLIP)"/>' % (
+                cx - 20 + j * 8, by - 4, cx - 24 + j * 8, by - 60, cx - 20 + j * 8, by - nh, '#f6dbe2', 2 + (j % 2)) for j in range(6))
+            s += sh + gel(cx, by, nw, nh, '#f6dbe2', NAIL_S, hi=False)
+            s += gel(cx, by - 6, nw - 10, nh - 12, '#d9566d', '#d9566d', fx=ext, sw=0.1, k=0.8)
+            s += mtext(cx + 62, by - 112, ['piccolo', 'margine'], 12, 'middle', 700, ACC2, 1.2)
+            s += P('M%.1f,%.1f L%.1f,%.1f' % (cx + 56, by - 92, cx + nw / 2 - 2, by - 60), 'none', MUTED, 1.2) + circ(cx + nw / 2 - 2, by - 60, 3, ACC2, 'none', 0)
         elif i == 3:
-            yy = 210
+            yy = 214
             s += P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
                 cx - 80, yy, cx + 30, yy, cx + 46, yy, cx + 47, yy + 10, cx + 46, yy + 20, cx + 30, yy + 20, cx - 80, yy + 20), NAT, NAIL_S, 1.6)
             s += P('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (
                 cx - 80, yy - 5, cx + 32, yy - 5, cx + 52, yy - 4, cx + 52, yy + 10, cx + 52, yy + 22, cx + 36, yy + 23), 'none', RED, 6)
-            s += tool_brush(cx + 62, yy - 30, -125, 80, RED)
-            s += text(cx - 30, yy + 50, 'bordo libero', 12, 'middle', 600, MUTED)
-            s += text(cx - 30, yy + 64, 'di profilo', 12, 'middle', 600, MUTED)
+            s += P('M%.1f,%.1f L%.1f,%.1f' % (cx - 70, yy - 6.5, cx + 30, yy - 6.5), 'none', '#fff', 1.4, ' opacity=".6"')
+            s += pen_brush(cx + 56, yy - 30, -125, 90, RED)
+            s += mtext(cx - 30, yy + 52, ['bordo libero', 'di profilo'], 12, 'middle', 600, MUTED, 1.2)
         else:
-            s += nail_shape(cx - 10, by, 58, 116, NAT, NAIL_S, 1.6)
-            s += nail_shape(cx - 10, by - 8, 48, 104, RED, '#7a1a2b', 1) + gloss(cx - 10, by - 6, 104, 0.8)
-            s += mini_lamp(cx + 50, 138, 0.42)
+            s += sh + gel(cx, by, nw, nh, '#f6dbe2', NAIL_S, hi=False)
+            s += gel(cx, by - 6, nw - 10, nh - 12, RED, '#7a1a2b', sw=1, k=1.2) + g(led_lamp(0, 0, 50), cx + 56, 140)
         b += frame(x, 58, pw, ph, lab, i + 1, body=s, tsize=14, sub=subs[i], subcol=OK if i == 4 else MUTED)
         if i < 4:
             b += arrow(x + pw + 1, 58 + ph / 2, x + pw + 11, 58 + ph / 2, MUTED, 2)
     return svg(W, 58 + ph + 20, arrow_defs() + b, 'Stendere il colore in gel: mescola, base, primo strato sottile, sigilla la punta, secondo strato e top')
-
 
 @figx('colori-finiture.svg')
 def finiture():
@@ -1630,14 +1652,6 @@ def thermometer(x, y, s=1.0, col='#e57373'):
     return g(b, x, y, 0, s)
 
 
-def clipper(x, y, ang=0, s=1.0):
-    """Tronchesino: ganasce dritte in alto, manici sotto."""
-    b = (P('M-14,-4 L14,-4 L18,6 L-18,6 Z', '#b9c1ca', GREY_D, 2)
-         + P('M-16,6 Q-22,40 -12,70', 'none', GREY_D, 7) + P('M16,6 Q22,40 12,70', 'none', GREY_D, 7)
-         + P('M-10,30 Q0,22 10,30', 'none', '#b9c1ca', 2.5) + ln(-14, -4, 14, -4, '#5d6670', 2.5))
-    return g(b, x, y, ang, s)
-
-
 def towel(x, y, s=1.0):
     b = rbox(-30, -18, 60, 36, '#cfe8f6', '#7fb4d6', 2, 6)
     for k in range(4):
@@ -1648,7 +1662,7 @@ def towel(x, y, s=1.0):
 def jar(x, y, s=1.0, col='#ffffff', lid='#c2577a', label=''):
     b = rbox(-22, -18, 44, 34, col, '#b5a8a3', 2, 8) + rbox(-24, -28, 48, 12, lid, 'none', 0, 4)
     if label:
-        b += text(0, 6, label, 11, weight=700, fill=MUTED)
+        b += text(0, 6, label, 12, weight=700, fill=MUTED)
     return g(b, x, y, 0, s)
 
 
@@ -1688,7 +1702,7 @@ def notebook(x, y, w=80, h=64, cols=('data', 'ora', 'sigla'), rows=3):
     s = rbox(x, y, w, h, '#fff', '#b5a8a3', 2, 6) + rbox(x, y, w, 14, '#e5d6d2', 'none', 0, 6)
     cw = w / len(cols)
     for k, c in enumerate(cols):
-        s += text(x + cw * (k + 0.5), y + 11, c, 9.5, weight=700, fill=INK)
+        s += text(x + cw * (k + 0.5), y + 11.5, c, 12, weight=700, fill=INK)
         if k:
             s += ln(x + cw * k, y + 14, x + cw * k, y + h, '#d9cfc6', 1)
     for r in range(rows):
@@ -1918,7 +1932,7 @@ def pediluvio():
             ic += ''.join(P('M%.1f,%.1f q4,6 0,9 q-4,-3 0,-9 z' % (8 + j * 0, -2 + j * 11), '#7fc3e8', 'none', 0) for j in range(3))
         elif k == 3:
             ic = rbox(-16, -16, 26, 40, '#e4f0f8', '#2c5a78', 2, 5) + rbox(-10, -24, 14, 9, '#2c5a78', 'none', 0, 2)
-            ic += rbox(-12, -2, 18, 12, '#fff', 'none', 0, 2) + text(-3, 7, '+', 11, weight=800, fill='#2c5a78')
+            ic += rbox(-12, -2, 18, 12, '#fff', 'none', 0, 2) + text(-3, 7.5, '+', 12, weight=800, fill='#2c5a78')
         elif k == 4:
             ic = rbox(-18, -20, 36, 40, '#fff', '#b5a8a3', 2, 3) + ''.join(ln(-14, -12 + j * 9, 14, -12 + j * 9, '#e5d6d2', 1.5) for j in range(4))
         else:
@@ -1956,7 +1970,7 @@ def diabete():
             elif ic == 'towel':
                 s = towel(x + 44, y, 0.55)
             elif ic == 'clip':
-                s = clipper(x + 44, y - 12, 0, 0.42)
+                s = nipper(x + 44, y - 13, 0, 0.3)
             elif ic == 'cream':
                 s = jar(x + 44, y + 4, 0.55)
             elif ic == 'pod':
@@ -2043,7 +2057,7 @@ def postazione():
     b += rbox(vx - 62, 250, 124, 26, '#fff', OK, 1.5, 8) + text(vx, 268, 'disinfettata ✓ 10:15', 12, weight=700, fill=OK)
     # lampada e registro
     b += led_lamp(100, 362, 96) + text(100, 392, 'lampada (fondo rimovibile)', 12, weight=600, fill=MUTED)
-    b += notebook(204, 310, 92, 64) + text(250, 392, 'registro', 12, weight=600, fill=MUTED)
+    b += notebook(196, 310, 108, 64) + text(250, 392, 'registro', 12, weight=600, fill=MUTED)
     # carrello: pulito | usato
     b += rbox(612, 108, 252, 278, '#fff', '#b5a8a3', 2, 12)
     b += ln(738, 118, 738, 376, '#b5a8a3', 1.5, ' stroke-dasharray="5 4"')
@@ -2159,17 +2173,6 @@ def piedi_errori():
             s += P('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (cx - 38, by - 30, cx, by + 16, cx + 38, by - 30), 'none', '#f3cbc6', 5)
         b += frame(x, 58, 196, 250, None, None, ok, s, sub=t, subcol=OK if ok else ERR)
     return svg(W, H, arrow_defs() + b, 'Errori tipici del semipermanente sui piedi: colore sulla pelle, bordo non sigillato, prodotto nei solchi')
-
-
-def chrome_grad(gid, vertical=False):
-    return ('<defs><linearGradient id="%s" x1="0" y1="%s" x2="1" y2="%s"><stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="%s"/>'
-            '<stop offset="1" stop-color="%s"/></linearGradient></defs>') % (gid, 0, 1 if vertical else 0, CHROME[0], CHROME[1], CHROME[2])
-
-
-def magnet(x, y, w=44, h=22, ang=0):
-    b = rbox(-w / 2, -h / 2, w / 2, h, '#d64545', '#4b3a40', 1.5, 3) + rbox(0, -h / 2, w / 2, h, '#3f6fc4', '#4b3a40', 1.5, 3)
-    b += text(-w / 4, h / 4 - 1, 'N', 11, weight=800, fill='#fff') + text(w / 4, h / 4 - 1, 'S', 11, weight=800, fill='#fff')
-    return g(b, x, y, ang)
 
 
 def brush_flat(x, y, ang=0, c1='#ffffff', c2='#e46f8f', load=0.75, s=1.0, ferrule_dirty=False):
@@ -2579,7 +2582,7 @@ def gara_post():
            (7, 'lampada da tavolo', INK), (8, 'cestino! accanto al tavolo', ACC2)]
     for k, (n, t, c) in enumerate(leg):
         yy = ly + 56 + k * 23.5
-        b += circ(lx + 28, yy - 4.5, 9.5, ACC if n != 8 else ACC2, 'none', 0) + text(lx + 28, yy, str(n), 11.5, weight=800, fill='#fff')
+        b += circ(lx + 28, yy - 4.5, 9.5, ACC if n != 8 else ACC2, 'none', 0) + text(lx + 28, yy + 0.3, str(n), 12, weight=800, fill='#fff')
         b += ftext(lx + 46, yy, t, 13, 212, 'start', 700 if c != INK else 600, c)
     # lontano dal tavolo
     b += rbox(lx, 314, 268, 112, RED_BG, ERR, 1.5, 12)
@@ -2615,7 +2618,7 @@ def gara_piano():
         b += '<path d="%s" fill="%s" filter="url(#nxShS)"/>' % (d, col)
         tx = xa + (24 if k else 14)
         b += text(tx, 136, t, 14, 'start', 800, tc)
-        b += text(xz - tip - 8, 136, ph.upper(), 11.5, 'end', 800, tc if k == 2 else ACC2)
+        b += text(xz - tip - 8, 136, ph.upper(), 12, 'end', 800, tc if k == 2 else ACC2)
         b += ftext(tx, 160, sub, 13, xz - xa - 40, 'start', 600, tc)
     # asse delle settimane
     ay = 222
@@ -2682,7 +2685,7 @@ def gara_punti():
 
 @figx('gara-viste-giudice.svg')
 def gara_viste():
-    labels = ['Dall\'alto', 'Di profilo', 'A tunnel', 'Cuticola (lente)', 'Come la vede la modella']
+    labels = ['Dall\'alto', 'Di profilo', 'A tunnel', 'Cuticola (lente)', 'Vista della modella']
     subs = ['forma, lati, simmetria', 'apex, archi, niente gobbe', 'curva C, "hair line"', 'nessuno scalino o taglio', 'forma uniforme anche così']
     pw, ph = 176, 262
     W = 20 + 5 * pw + 4 * 12 + 20
@@ -2754,7 +2757,7 @@ def bar_magnet(x, y, w=44, h=18, ang=0):
     b = '<defs>%s</defs>' % _lg(gid, [(0, '#fff', .45), (.5, '#fff', 0), (1, '#000', .2)], 0, 1)
     b += rbox(-w / 2, -h / 2, w / 2, h, '#d64545', '#4b3a40', 1.3, 3) + rbox(0, -h / 2, w / 2, h, '#3f6fc4', '#4b3a40', 1.3, 3)
     b += rbox(-w / 2, -h / 2, w, h, 'url(#%s)' % gid, 'none', 0, 3)
-    b += text(-w / 4, h * 0.27, 'N', 11, weight=800, fill='#fff') + text(w / 4, h * 0.27, 'S', 11, weight=800, fill='#fff')
+    b += text(-w / 4, h * 0.3, 'N', 12, weight=800, fill='#fff') + text(w / 4, h * 0.3, 'S', 12, weight=800, fill='#fff')
     return g(b, x, y, ang)
 
 def sponge(x, y, w=44, h=56, cols=None, ang=0, face='#fbf6f0'):
@@ -2805,6 +2808,20 @@ def timer_icon(x, y, s=1.0):
     for k in range(12):
         a = math.radians(k * 30)
         b += ln(15 * math.cos(a), 4 + 15 * math.sin(a), 17.5 * math.cos(a), 4 + 17.5 * math.sin(a), '#8a7d74', 1.2)
+    return g(b, x, y, 0, s)
+
+
+def gel_bottle(x, y, col='#c62f4a', s=1.0, label=True):
+    """Flacone di gel colorato con tappo-pennello; y = base."""
+    gid = uid('bt')
+    b = '<defs>%s</defs>' % _lg(gid, [(0, dark(col, .25)), (.25, light(col, .15)), (.5, col), (1, dark(col, .35))])
+    b += '<ellipse cx="0" cy="2" rx="22" ry="4" fill="#000" opacity=".12"/>'
+    b += P('M-20,0 L-20,-44 Q-20,-54 -10,-56 L10,-56 Q20,-54 20,-44 L20,0 Z', 'url(#%s)' % gid, dark(col, .45), 1.4)
+    b += rbox(-12, -84, 24, 30, '#2b2226', 'none', 0, 4) + rbox(-8, -82, 4, 26, '#fff', 'none', 0, 2, ' opacity=".25"')
+    b += rbox(-14, -58, 28, 6, '#4b3a40', 'none', 0, 2)
+    if label:
+        b += rbox(-14, -36, 28, 18, '#fff', 'none', 0, 3, ' opacity=".92"') + ln(-9, -29, 9, -29, '#c9b8bd', 1.4) + ln(-9, -24, 4, -24, '#c9b8bd', 1.4)
+    b += rbox(-16, -50, 4, 44, '#fff', 'none', 0, 2, ' opacity=".35"')
     return g(b, x, y, 0, s)
 
 def main():
