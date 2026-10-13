@@ -180,6 +180,34 @@ dl.gloss dd { margin: .2rem 0 0; color: var(--muted); font-size: .94rem; }
 .muted { color: var(--muted); }
 .center { text-align: center; }
 
+/* Zoom immagini */
+figure img { cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(20, 10, 14, .88); display: grid; place-items: center; padding: 16px; cursor: zoom-out; }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 100%; max-height: 100%; background: #fff; border-radius: 10px; }
+.lb-close { position: absolute; top: 12px; right: 12px; border: 0; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer; background: #fff; color: #2b1f22; }
+
+/* Attestato */
+.req { list-style: none; padding: 0; margin: 0; }
+.req li { display: flex; gap: .8rem; align-items: center; padding: .7rem 0; border-bottom: 1px solid var(--border); }
+.req li:last-child { border-bottom: 0; }
+.req li > div { flex: 1; }
+.req .ic { width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; background: var(--surface-2); color: var(--muted); flex: none; }
+.req li.ok .ic { background: var(--ok); color: #fff; }
+.req li.todo .ic { background: var(--warn-soft); color: var(--warn); }
+.cert-form { margin-top: 1rem; }
+.cert-form .row { display: flex; gap: .6rem; margin-top: .5rem; flex-wrap: wrap; }
+.cert-form .search { flex: 1; min-width: 200px; border-radius: 12px; }
+.search.invalid { border-color: var(--err); }
+.cert-actions { margin: 1.2rem 0; }
+.cert-wrap { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.cert-wrap svg { display: block; width: 100%; height: auto; }
+.cert-detail { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.5rem; margin-top: 1.2rem; }
+.cert-detail h2 { margin-top: .2rem; }
+.cert-detail table { border-collapse: collapse; width: 100%; font-size: .9rem; display: block; overflow-x: auto; }
+.cert-detail th, .cert-detail td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+.cert-detail th { background: var(--surface-2); }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .layout { grid-template-columns: 1fr; }
@@ -195,8 +223,16 @@ dl.gloss dd { margin: .2rem 0 0; color: var(--muted); font-size: .94rem; }
   .nav-links { order: 2; margin-left: 0; width: 100%; overflow-x: auto; flex-wrap: nowrap; }
   .nav-links a { white-space: nowrap; }
 }
+@page { size: A4 landscape; margin: 10mm; }
 @media print {
-  .site-header, .sidebar, .lesson-nav, footer, .menu-toggle { display: none !important; }
+  .site-header, .sidebar, .lesson-nav, footer, .menu-toggle, .lightbox { display: none !important; }
+  body[data-page="attestato"] main > :not(#cert), body[data-page="attestato"] #cert > :not(#cout), .cert-actions { display: none !important; }
+  body[data-page="attestato"] main { padding: 0; max-width: none; }
+  .cert-page { break-after: page; }
+  .cert-page:last-child { break-after: auto; }
+  .cert-wrap { box-shadow: none; border-radius: 0; }
+  .cert-detail { border: 0; padding: 0; margin: 0; color: #000; background: #fff; }
+  body[data-page="attestato"] { background: #fff; }
   .layout { display: block; }
   .lesson { border: 0; box-shadow: none; }
 }

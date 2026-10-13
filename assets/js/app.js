@@ -13,6 +13,8 @@
   state.lessons = state.lessons || {};
   state.checks = state.checks || {};
   state.quiz = state.quiz || {};
+  state.quizAt = state.quizAt || {};
+  state.exAt = state.exAt || {};
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
   }
@@ -58,7 +60,8 @@
       ['corso.html', 'corso', 'Lezioni'],
       ['esercizi.html', 'esercizi', 'Esercizi'],
       ['quiz.html', 'quiz', 'Quiz'],
-      ['glossario.html', 'glossario', 'Glossario']
+      ['glossario.html', 'glossario', 'Glossario'],
+      ['attestato.html', 'attestato', 'Attestato']
     ];
     var h = document.createElement('header');
     h.className = 'site-header';
@@ -205,6 +208,9 @@
             '<h4>Procedimento</h4><ol class="steps">' + e.steps.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
             '</div><div>' +
             (e.img ? '<figure><img src="assets/img/' + e.img + '" alt="' + esc(e.title) + '" loading="lazy"><figcaption>' + esc(e.caption || '') + '</figcaption></figure>' : '') +
+            (e.imgs || []).map(function (src) {
+              return '<figure><img src="assets/img/' + src + '" alt="Tavola di riferimento: ' + esc(e.title) + '" loading="lazy"></figure>';
+            }).join('') +
             '<h4>Auto-valutazione</h4><ul class="checklist">' + e.checks.map(function (x, j) {
               return '<li><label><input type="checkbox" data-ex="' + e.id + '" data-i="' + j + '"' + (c[j] ? ' checked' : '') + '> <span>' + esc(x) + '</span></label></li>';
             }).join('') + '</ul>' +
@@ -218,8 +224,9 @@
       var cb = ev.target; if (!cb.dataset.ex) return;
       var arr = state.checks[cb.dataset.ex] = state.checks[cb.dataset.ex] || [];
       arr[+cb.dataset.i] = cb.checked;
-      save();
       var e = D.exercises.filter(function (x) { return x.id === cb.dataset.ex; })[0];
+      if (exScore(e) === 100) state.exAt[e.id] = state.exAt[e.id] || Date.now(); else delete state.exAt[e.id];
+      save();
       $('[data-score="' + e.id + '"]').textContent = exScore(e) + '%';
     });
   }
@@ -283,11 +290,13 @@
         var score = pct(correct, qs_.length);
         var prevBest = state.quiz[id];
         state.quiz[id] = Math.max(score, prevBest || 0);
+        if (score >= (prevBest || 0)) state.quizAt[id] = Date.now();
         save();
         var pass = score >= 80;
         $('#qres').innerHTML = '<div class="card result"><b>' + score + '%</b>' +
           '<p>' + correct + ' risposte corrette su ' + qs_.length + '. ' +
           (pass ? 'Ottimo lavoro: obiettivo raggiunto! 🎉' : 'Rivedi le lezioni del modulo e riprova: l\'obiettivo è l\'80%.') + '</p>' +
+          (pass && id === 'final' ? '<p><a class="btn" href="attestato.html">Vai al tuo attestato →</a></p>' : '') +
           '<div class="btn-row" style="justify-content:center"><a class="btn" href="quiz.html?m=' + id + '">Ripeti</a>' +
           '<a class="btn ghost" href="quiz.html">Altri quiz</a></div></div>';
         $('#qres').scrollIntoView({ behavior: 'smooth' });
@@ -310,8 +319,199 @@
     $('#gsearch').addEventListener('input', function (e) { draw(e.target.value); });
   }
 
+  /* ---------- zoom immagini ---------- */
+  function lightbox() {
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.hidden = true;
+    box.innerHTML = '<button type="button" class="lb-close" aria-label="Chiudi">✕</button><img alt="">';
+    document.body.appendChild(box);
+    function close() { box.hidden = true; document.body.style.overflow = ''; }
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    document.addEventListener('click', function (e) {
+      var img = e.target.closest('figure img');
+      if (!img) return;
+      e.preventDefault();
+      var big = box.querySelector('img');
+      big.src = img.src;
+      big.alt = img.alt;
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  /* ---------- ATTESTATO ---------- */
+  var PASS = 80;
+  function fmtDate(t) {
+    return new Date(t).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function exMinutes(e) { var m = /(\d+)/.exec(e.time); return m ? +m[1] : 0; }
+  function certCode(name, date, score) {
+    var str = name + '|' + date + '|' + score, h = 2166136261;
+    for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return 'NX-' + new Date(date).getFullYear() + '-' + (h >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(0, 7);
+  }
+  function summary() {
+    var lessons = allLessons();
+    var done = lessons.filter(function (x) { return state.lessons[lessonKey(x.m, x.l)]; });
+    var exDone = D.exercises.filter(function (e) { return exScore(e) === 100; });
+    var minutes = done.reduce(function (a, x) { return a + (x.l.min || 10); }, 0) +
+      exDone.reduce(function (a, e) { return a + exMinutes(e); }, 0);
+    var modQuiz = D.modules.filter(function (m) { return D.quiz[m.id] && state.quiz[m.id] != null; });
+    return {
+      lessons: lessons, done: done, exDone: exDone, hours: Math.max(1, Math.round(minutes / 60)),
+      final: state.quiz.final, modQuiz: modQuiz,
+      allLessons: done.length === lessons.length, finalOk: (state.quiz.final || 0) >= PASS
+    };
+  }
+
+  function certSvg(name, s, cert) {
+    var W = 1123, H = 794, fs = Math.min(58, Math.floor(1500 / Math.max(name.length, 10)));
+    var t = function (x, y, str, size, weight, fill, extra) {
+      return '<text x="' + x + '" y="' + y + '" text-anchor="middle" font-size="' + size + '" font-weight="' + (weight || 400) +
+        '" fill="' + (fill || '#3b2a30') + '"' + (extra || '') + '>' + esc(str) + '</text>';
+    };
+    var o = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" ' +
+      'font-family="Georgia, \'Times New Roman\', serif" role="img" aria-label="Attestato di fine corso">' +
+      '<defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c2577a"/><stop offset="1" stop-color="#8e3b5a"/></linearGradient></defs>' +
+      '<rect width="' + W + '" height="' + H + '" fill="#fffaf8"/>' +
+      '<rect x="22" y="22" width="' + (W - 44) + '" height="' + (H - 44) + '" fill="none" stroke="url(#cg)" stroke-width="10"/>' +
+      '<rect x="44" y="44" width="' + (W - 88) + '" height="' + (H - 88) + '" fill="none" stroke="#e7c3cf" stroke-width="2"/>';
+    [[60, 60], [W - 60, 60], [60, H - 60], [W - 60, H - 60]].forEach(function (c) {
+      o += '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="9" fill="#c2577a"/>';
+    });
+    o += '<g transform="translate(' + (W / 2 - 28) + ',70) scale(.875)"><rect width="64" height="64" rx="16" fill="#c2577a"/>' +
+      '<path d="M20,54 L20,30 C20,14 27,8 32,6 C37,8 44,14 44,30 L44,54 Z" fill="#fff"/>' +
+      '<path d="M24,52 L24,31 C24,20 28,14 32,12 C36,14 40,20 40,31 L40,52 Z" fill="#f7c1cf"/></g>';
+    o += t(W / 2, 165, 'NAILX · CORSO DI RICOSTRUZIONE UNGHIE', 16, 700, '#8e3b5a', ' letter-spacing="4"');
+    o += t(W / 2, 240, 'Attestato di fine corso', 54, 700, '#2b1f22');
+    o += t(W / 2, 290, 'Si attesta che', 20, 400, '#6e5a5f', ' font-style="italic"');
+    o += t(W / 2, 365, name, fs, 700, '#c2577a');
+    o += '<line x1="' + (W / 2 - 260) + '" y1="385" x2="' + (W / 2 + 260) + '" y2="385" stroke="#e7c3cf" stroke-width="2"/>';
+    o += t(W / 2, 425, 'ha completato il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 19, 400);
+    o += t(W / 2, 455, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + ' ore di formazione', 17, 400, '#6e5a5f');
+    o += t(W / 2, 485, 'Esame finale superato con il ' + s.final + '% · ' + s.exDone.length + ' esercizi pratici completati', 17, 700, '#2f8a5b');
+    var mods = D.modules.map(function (m) { return m.title; });
+    var mid = Math.ceil(mods.length / 2);
+    o += t(W / 2, 530, 'Programma: ' + mods.slice(0, mid).join(' · '), 12.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
+    o += t(W / 2, 550, mods.slice(mid).join(' · '), 12.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
+    o += '<line x1="150" y1="640" x2="420" y2="640" stroke="#3b2a30"/>' + t(285, 662, 'Data di rilascio', 14, 400, '#6e5a5f') + t(285, 630, fmtDate(cert.date), 19, 700);
+    o += '<line x1="' + (W - 420) + '" y1="640" x2="' + (W - 150) + '" y2="640" stroke="#3b2a30"/>' + t(W - 285, 662, 'Codice attestato', 14, 400, '#6e5a5f') + t(W - 285, 630, cert.code, 19, 700, '#2b1f22', ' font-family="ui-monospace, monospace"');
+    o += '<circle cx="' + W / 2 + '" cy="630" r="46" fill="url(#cg)"/><circle cx="' + W / 2 + '" cy="630" r="38" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>' +
+      t(W / 2, 624, 'CORSO', 12, 700, '#fff', ' letter-spacing="2"') + t(W / 2, 642, 'COMPLETATO', 9, 700, '#fff');
+    o += t(W / 2, 722, 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
+    o += t(W / 2, 740, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 12, 400, '#8a777d', ' font-family="system-ui, sans-serif"');
+    return o + '</svg>';
+  }
+
+  function certDetail(name, s, cert) {
+    var h = '<div class="cert-detail"><h2>Dettaglio del percorso svolto</h2>' +
+      '<p><strong>' + esc(name) + '</strong> · codice <code>' + esc(cert.code) + '</code> · rilasciato il ' + fmtDate(cert.date) + '</p>' +
+      '<table><tr><th>#</th><th>Modulo</th><th>Livello</th><th>Lezioni</th><th>Quiz</th><th>Completato il</th></tr>';
+    D.modules.forEach(function (m) {
+      var times = m.lessons.map(function (l) { return state.lessons[lessonKey(m, l)]; }).filter(Boolean);
+      var q = state.quiz[m.id];
+      h += '<tr><td>' + m.n + '</td><td>' + esc(m.title) + '<br><small class="muted">' + m.lessons.map(function (l) { return esc(l.title); }).join(' · ') + '</small></td>' +
+        '<td>' + LEVELS[m.level] + '</td><td>' + times.length + '/' + m.lessons.length + '</td>' +
+        '<td>' + (q != null ? q + '%' : '—') + '</td><td>' + (times.length ? fmtDate(Math.max.apply(null, times)) : '—') + '</td></tr>';
+    });
+    h += '</table><h3>Esercizi pratici completati (' + s.exDone.length + ' di ' + D.exercises.length + ')</h3>';
+    if (s.exDone.length) {
+      h += '<table><tr><th>Esercizio</th><th>Livello</th><th>Durata</th><th>Auto-valutazione</th><th>Data</th></tr>' + s.exDone.map(function (e) {
+        return '<tr><td>' + esc(e.title) + '</td><td>' + LEVELS[e.level] + '</td><td>' + esc(e.time) + '</td><td>100%</td><td>' + (state.exAt[e.id] ? fmtDate(state.exAt[e.id]) : '—') + '</td></tr>';
+      }).join('') + '</table>';
+    } else {
+      h += '<p class="muted">Nessun esercizio completato al 100%.</p>';
+    }
+    var partial = D.exercises.filter(function (e) { var sc = exScore(e); return sc > 0 && sc < 100; });
+    if (partial.length) {
+      h += '<p class="muted"><small>In corso: ' + partial.map(function (e) { return esc(e.title) + ' (' + exScore(e) + '%)'; }).join(' · ') + '</small></p>';
+    }
+    h += '<h3>Verifiche</h3><ul><li>Esame finale: <strong>' + s.final + '%</strong> (soglia ' + PASS + '%)' +
+      (state.quizAt.final ? ', svolto il ' + fmtDate(state.quizAt.final) : '') + '</li>' +
+      '<li>Quiz di modulo svolti: ' + s.modQuiz.length + ' di ' + Object.keys(D.quiz).length + '</li>' +
+      '<li>Ore di formazione stimate (lezioni + esercizi completati): circa ' + s.hours + '</li></ul></div>';
+    return h;
+  }
+
+  function renderCertificate() {
+    var root = $('#cert');
+    var s = summary();
+    var req = [
+      [s.allLessons, 'Completa tutte le lezioni', s.done.length + '/' + s.lessons.length + ' lezioni completate', 'corso.html'],
+      [s.finalOk, 'Supera l\'esame finale con almeno l\'' + PASS + '%', s.final != null ? 'miglior risultato: ' + s.final + '%' : 'non ancora svolto', 'quiz.html?m=final']
+    ];
+    var ok = s.allLessons && s.finalOk;
+    var h = '<div class="card"><h2 style="margin-top:.2rem">Requisiti</h2><ul class="req">' + req.map(function (r) {
+      return '<li class="' + (r[0] ? 'ok' : 'todo') + '"><span class="ic">' + (r[0] ? '✓' : '•') + '</span><div><strong>' + r[1] + '</strong><br>' +
+        '<small class="muted">' + r[2] + '</small></div>' + (r[0] ? '' : '<a class="btn small" href="' + r[3] + '">Vai</a>') + '</li>';
+    }).join('') + '<li class="' + (s.exDone.length ? 'ok' : 'opt') + '"><span class="ic">' + (s.exDone.length ? '✓' : '○') + '</span><div><strong>Esercizi pratici (consigliati)</strong><br>' +
+      '<small class="muted">' + s.exDone.length + ' di ' + D.exercises.length + ' completati: verranno elencati nell\'attestato</small></div>' +
+      '<a class="btn small ghost" href="esercizi.html">Esercizi</a></li></ul></div>';
+    if (!ok) {
+      root.innerHTML = h + '<p class="muted">Quando avrai soddisfatto i requisiti potrai inserire il tuo nome e scaricare l\'attestato con il dettaglio del percorso svolto.</p>';
+      return;
+    }
+    var cert = state.cert || {};
+    h += '<div class="card cert-form"><label for="cname"><strong>Nome e cognome da riportare sull\'attestato</strong></label>' +
+      '<div class="row"><input id="cname" class="search" maxlength="60" autocomplete="name" value="' + esc(cert.name || '') + '" placeholder="Es. Maria Rossi">' +
+      '<button class="btn" id="cgen" type="button">' + (cert.code ? 'Aggiorna' : 'Genera attestato') + '</button></div></div>' +
+      '<div id="cout"></div>';
+    root.innerHTML = h;
+
+    function draw() {
+      var c = state.cert;
+      if (!c || !c.name) return;
+      var s2 = summary();
+      $('#cout').innerHTML = '<div class="btn-row cert-actions"><button class="btn" id="cprint" type="button">Stampa / salva in PDF</button>' +
+        '<button class="btn ghost" id="cpng" type="button">Scarica immagine (PNG)</button></div>' +
+        '<div class="cert-print"><div class="cert-page cert-wrap">' + certSvg(c.name, s2, c) + '</div><div class="cert-page">' + certDetail(c.name, s2, c) + '</div></div>';
+      $('#cprint').addEventListener('click', function () { window.print(); });
+      $('#cpng').addEventListener('click', function () { downloadPng($('.cert-wrap svg'), 'attestato-nailx.png'); });
+    }
+    $('#cgen').addEventListener('click', function () {
+      var name = $('#cname').value.trim().replace(/\s+/g, ' ');
+      if (name.length < 3) { $('#cname').focus(); $('#cname').classList.add('invalid'); return; }
+      $('#cname').classList.remove('invalid');
+      var date = (state.cert && state.cert.date) || Date.now();
+      state.cert = { name: name, date: date, code: certCode(name, date, s.final) };
+      save();
+      $('#cgen').textContent = 'Aggiorna';
+      draw();
+      $('#cout').scrollIntoView({ behavior: 'smooth' });
+    });
+    draw();
+  }
+
+  function downloadPng(svgEl, filename) {
+    var data = new XMLSerializer().serializeToString(svgEl);
+    var url = URL.createObjectURL(new Blob([data], { type: 'image/svg+xml;charset=utf-8' }));
+    var img = new Image();
+    img.onload = function () {
+      var scale = 2, c = document.createElement('canvas');
+      c.width = svgEl.viewBox.baseVal.width * scale;
+      c.height = svgEl.viewBox.baseVal.height * scale;
+      var ctx = c.getContext('2d');
+      ctx.scale(scale, scale);
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      c.toBlob(function (blob) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      });
+    };
+    img.src = url;
+  }
+
   /* ---------- avvio ---------- */
   var page = document.body.dataset.page;
   header(page);
-  ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary }[page] || function () {})();
+  lightbox();
+  ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
+    attestato: renderCertificate }[page] || function () {})();
 })();

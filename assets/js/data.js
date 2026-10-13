@@ -96,6 +96,7 @@ ${F('igiene.svg', 'I tre livelli di trattamento igienico.')}
 <li>Lime in carta e buffer sono <strong>monouso</strong> (o si regalano alla cliente).</li>
 <li>A fine servizio: detergi, disinfetta, poi sterilizza gli strumenti; disinfetta il piano di lavoro e la lampada.</li>
 </ol>
+${F('ciclo-sterilizzazione.svg', 'Il ciclo completo degli strumenti dopo ogni cliente.')}
 ${B('danger', 'Controlli reali', 'I NAS controllano i centri: in un caso a Trento un centro è stato sospeso e multato di 3.000 € per mancanza di procedure di sterilizzazione.')}
 `,
           sources: ['https://www.puntosicuro.it/vigilanza-controllo-C-66/vigilanza-nei-centri-estetici-la-sicurezza-dei-clienti-AR-16787/',
@@ -105,6 +106,7 @@ ${B('danger', 'Controlli reali', 'I NAS controllano i centri: in un caso a Trent
           id: 'dpi', title: 'DPI, polveri e vapori', min: 5,
           html: `
 <h2>Dispositivi di protezione</h2>
+${F('dpi.svg', 'I DPI da usare a ogni servizio.')}
 <ul>
 <li><strong>Guanti in nitrile</strong>: il lattice non protegge dai monomeri.</li>
 <li><strong>Mascherina FFP2</strong> durante la limatura.</li>
@@ -229,6 +231,7 @@ ${F('perla-acrilico.svg', 'La consistenza della perla dipende dal rapporto liqui
 <p>Pasta ibrida tra acrilico e gel: si modella con il pennello inumidito di <em>slip solution</em> e indurisce in lampada. <strong>+</strong> tempo di lavoro illimitato, leggero, niente monomero liquido. <strong>−</strong> curva di apprendimento; sollevamenti se la preparazione è scarsa.</p>
 <h2>Semipermanente (gel polish)</h2>
 <p>Base → colore → top, ognuno in lampada; dura 2–3 settimane e si rimuove con acetone. <strong>Non allunga</strong> e non dà struttura.</p>
+${F('tut-semipermanente.svg', 'Semipermanente passo passo: due strati sottili di colore e bordo libero sigillato.')}
 <h2>Soft gel tips</h2>
 <ol class="steps">
 <li>Preparazione, opacizzazione con grana 180, disidratante e primer.</li>
@@ -236,8 +239,10 @@ ${F('perla-acrilico.svg', 'La consistenza della perla dipende dal rapporto liqui
 <li>Gel adesivo dentro il tip, applicazione partendo dalla zona cuticolare (senza toccarla), polimerizzazione.</li>
 <li>Rifinitura e top. Rimozione con acetone puro.</li>
 </ol>
+${F('tut-soft-gel-tips.svg', 'Soft gel tips passo passo.')}
 <h2>Fibra di vetro e seta</h2>
 <p>Un tessuto viene impregnato di resina e indurito con un attivatore. La fibra di vetro è più resistente, la seta più invisibile. Usa l'attivatore <strong>a pennello</strong> più che spray: l'eccesso provoca calore.</p>
+${F('tut-fibra.svg', 'Rinforzo in fibra passo passo.')}
 `,
           sources: ['https://sophiecress.com/blog/gel-x-nails-a-step', 'https://nailknowledge.org/knowledge-base/fibreglass-systems']
         },
@@ -250,6 +255,7 @@ ${F('lampade.svg', 'Bande di emissione tipiche delle lampade.')}
 <li><strong>LED</strong>: circa 375–425 nm, picco intorno a 385–405 nm; 30–60 s per gli strati sottili, 60–90 s per il costruttore.</li>
 <li><strong>Dual UV/LED</strong>: due picchi (es. 365 + 405 nm), molto diffuse.</li>
 </ul>
+${F('lampada-posizione.svg', 'Mano piatta e dita tutte dentro la lampada; il pollice si polimerizza a parte.')}
 ${B('warn', 'I watt non dicono tutto', 'Conta l\'abbinamento tra le lunghezze d\'onda della lampada e i fotoiniziatori del gel. Usa la lampada consigliata dal produttore: con una lampada sbagliata il gel può restare sotto-polimerizzato (allergie) o scaldare troppo.')}
 `,
           sources: ['https://scratchmagazine.co.uk/feature/heat-spikes-in-gel-nail-services-why-they-happen-how-to-avoid-them']
@@ -314,6 +320,8 @@ ${B('warn', 'Sicurezza', 'Pressione leggera e punta sempre in movimento: fermars
 <li>Lime 100/180/240, buffer, spingicuticole, tronchesine, bastoncini d'arancio</li>
 <li>Olio per cuticole, DPI (nitrile, FFP2, occhiali)</li>
 </ul>
+${F('pennelli.svg', 'I pennelli principali e il loro uso.')}
+${F('tip-tipi.svg', 'Tip con incavo, a contatto e scala delle misure.')}
 ${B('tip', 'Consiglio d\'acquisto', 'Scegli un sistema completo di un solo produttore per iniziare: base, gel e lampada sono studiati per funzionare insieme.')}
 `,
           sources: []
@@ -338,6 +346,7 @@ ${F('preparazione.svg', 'Preparazione in sei passaggi.')}
 <li><strong>Elimina la polvere</strong> con un pennello pulito.</li>
 <li><strong>Disidratante</strong> e poi <strong>primer</strong> (vedi lezione successiva).</li>
 </ol>
+${F('cuticola.svg', 'Nella zona cuticolare si arretra e si rimuove solo la pelle morta.')}
 ${B('warn', 'Da non fare', 'Non toccare la lamina con le dita dopo il disidratante: il sebo della pelle riduce l\'adesione.')}
 `,
           sources: ['https://www.katiebarnesacademy.com/blogs/preparation/what-is-the-difference-between-acid-free-and-acid-based-nail-primer']
@@ -370,6 +379,7 @@ ${F('tip-applicazione.svg', 'Applicazione del tip in quattro passaggi.')}
 <li><strong>Con incavo (well)</strong>: hanno una zona di appoggio da incollare sul bordo libero; poi va fusa.</li>
 <li><strong>A contatto (contact)</strong>: senza incavo, non serve fondere.</li>
 </ul>
+${F('tip-tipi.svg', 'Tipi di tip e misure: lo 0 è il più largo.')}
 <h2>Procedimento</h2>
 <ol class="steps">
 <li><strong>Misura</strong>: il tip deve coprire l'unghia da solco laterale a solco laterale. Se sei tra due misure, scegli la più grande e lima i lati.</li>
@@ -442,6 +452,44 @@ ${F('curva-c.svg', 'La curva a C vista dal bordo libero.')}
 ${B('danger', 'Mai dolore', 'Il pinching non deve far male né staccare la lamina dal letto. Non esiste una percentuale di curva valida per tutti: si segue la curva naturale della cliente.')}
 `,
           sources: []
+        },
+        {
+          id: 'tutorial-gel', title: 'Tutorial completo: gel su cartina', min: 10,
+          html: `
+<p>Questo tutorial mette insieme tutto ciò che hai studiato: preparazione, cartina, tre zone, apex e rifinitura. Esercitati prima su una mano da allenamento.</p>
+${F('tut-gel-cartina.svg', 'Ricostruzione in gel su cartina in otto passaggi.')}
+<ol class="steps">
+<li><strong>Prepara</strong>: igiene, cuticola e pterigio, opacizzazione 180–240, polvere via, disidratante e primer.</li>
+<li><strong>Cartina</strong>: a filo del bordo libero, in asse, alette chiuse.</li>
+<li><strong>Base</strong>: uno strato sottile su tutta la lamina, senza toccare la pelle. Polimerizza.</li>
+<li><strong>Zona 1</strong>: con il costruttore disegna l'allungamento sulla cartina, sottile e alla lunghezza voluta; polimerizza brevemente.</li>
+<li><strong>Zona 2</strong>: appoggia una perla di gel al centro e accompagnala verso i lati e verso la cuticola, lasciando circa 1,5 mm di margine.</li>
+<li><strong>Capovolgi</strong> la mano per 5–10 secondi: il gel scorre verso l'apex. Controlla di profilo, poi polimerizza.</li>
+<li><strong>Togli la cartina</strong>, eventuale pinching dopo una flash cure, poi limatura: lunghezza, lati, punta, superficie.</li>
+<li><strong>Cleaner e top</strong>: sigilla anche il bordo libero; polimerizza e finisci con olio.</li>
+</ol>
+${F('zone-costruzione.svg', 'Controllo finale del profilo: sottile – spesso – sottile.')}
+${B('tip', 'Checklist finale', 'Profilo con apex sopra il punto di stress · curva a C regolare · zona cuticolare pulita · bordo libero sottile e sigillato · nessuna sbavatura sulla pelle.')}
+`,
+          sources: []
+        },
+        {
+          id: 'tutorial-acrilico', title: 'Tutorial completo: acrilico su cartina', min: 10,
+          html: `
+<p>Con l'acrilico il prodotto indurisce all'aria: lavora con ordine e con la perla giusta. Indossa guanti in nitrile e accendi l'aspiratore.</p>
+${F('perla-acrilico.svg', 'Prima di iniziare: controlla la consistenza della perla.')}
+${F('tut-acrilico.svg', 'Ricostruzione in acrilico su cartina in sei passaggi.')}
+<ol class="steps">
+<li><strong>Zona 1</strong>: appoggia una perla (bianca per il french o trasparente/rosa) sulla cartina, all'altezza del bordo libero.</li>
+<li><strong>Picchietta e modella</strong> con il ventre del pennello per dare forma e lunghezza; per il french disegna la smile line.</li>
+<li><strong>Zona 2</strong>: perla al centro, sopra il punto di stress, e fondila verso la zona 1.</li>
+<li><strong>Zona 3</strong>: perla piccola e più umida, stesa sottilissima, a circa 1,5 mm dalla pelle.</li>
+<li><strong>Pinching</strong> quando il prodotto è ancora leggermente morbido.</li>
+<li><strong>Lima e rifinisci</strong>: controlla l'apex di profilo, leviga e sigilla.</li>
+</ol>
+${B('warn', 'Pulizia del pennello', 'Pulisci il pennello nel monomero e asciugalo su carta tra una perla e l\'altra; non toccare mai il monomero con la pelle.')}
+`,
+          sources: ['https://open-exam-prep.com/study-guides/oh-nail-technician/artificial-nail-services/sculptured-acrylic-nails']
         }
       ]
     },
@@ -465,6 +513,8 @@ ${F('forme.svg', 'Le forme principali.')}
 <tr><td>Ballerina / coffin</td><td>Rastremata con punta piatta.</td><td>Lunghezze medio-lunghe</td></tr>
 <tr><td>Lipstick</td><td>Taglio obliquo come un rossetto.</td><td>Look moda</td></tr>
 </table>
+<h2>Esempio: ottenere una mandorla</h2>
+${F('forme-limatura-step.svg', 'Dalla quadrata alla mandorla in quattro passaggi.')}
 ${B('tip', 'Scegli con la cliente', 'Considera lavoro, abitudini e forma del letto ungueale: una stiletto lunga non è adatta a chi lavora molto con le mani.')}
 `,
           sources: ['https://www.my-personaltrainer.it/bellezza/qual-e-la-forma-di-unghie-che-slancia-le-dita-e-resiste-davvero-agli-urti-senza-spezzarsi.html']
@@ -496,6 +546,7 @@ ${B('warn', 'Controlla da 4 punti di vista', 'Dall\'alto (simmetria), di profilo
           id: 'french', title: 'Il french e la smile line', min: 6,
           html: `
 ${F('smile-line.svg', 'Smile line corrette ed errate.')}
+${F('tut-french.svg', 'French passo passo.')}
 <p>Il french classico ha la punta bianca separata dal rosa da una <strong>linea del sorriso</strong> (smile line) netta, <strong>simmetrica</strong> e con la stessa profondità sui due lati. Oggi è diffusa anche la variante a "V".</p>
 <h2>Tecniche</h2>
 <ul>
@@ -546,6 +597,7 @@ ${B('tip', 'Spessore', 'Le decorazioni non devono creare gobbe: incapsula con pr
           id: 'refill', title: 'Il refill (riempimento)', min: 6,
           html: `
 ${F('refill.svg', 'Profilo prima, durante e dopo la ricrescita.')}
+${F('refill-step.svg', 'Il refill visto dall\'alto, passo passo.')}
 <p>Il refill si fa ogni <strong>3–4 settimane</strong>: riporta l'apex nella posizione corretta e copre la ricrescita.</p>
 <ol class="steps">
 <li>Accorcia la lunghezza.</li>
@@ -609,6 +661,7 @@ ${F('lifting.svg', 'Dove nasce il sollevamento e perché.')}
 <li><strong>Cause</strong>: strati spessi; lamina assottigliata dalla limatura; lampada troppo potente o non abbinata al gel; troppo attivatore sulla resina.</li>
 <li><strong>Soluzioni</strong>: strati sottili, gel a basso calore, modalità low-heat della lampada, tecnica <em>flash and pull</em> (togliere la mano qualche secondo e rimetterla), non assottigliare la lamina.</li>
 </ul>
+${F('lampada-posizione.svg', 'Flash and pull: uscire qualche secondo dalla lampada tiene il calore sotto la soglia di bruciore.')}
 ${B('danger', 'Unghia "bruciata"', 'Picchi di calore ripetuti e limatura eccessiva possono danneggiare il letto ungueale (onicolisi, infezioni). Fermati, rimuovi il prodotto, consiglia il medico.')}
 `,
           sources: ['https://scratchmagazine.co.uk/feature/heat-spikes-in-gel-nail-services-why-they-happen-how-to-avoid-them',
@@ -640,6 +693,7 @@ ${F('problemi.svg', 'Riconosci il difetto.')}
           id: 'consulenza', title: 'Consulenza e scheda cliente', min: 6,
           html: `
 <p>Ogni nuovo servizio inizia con una consulenza. La scheda cliente protegge la cliente e te.</p>
+${F('scheda-cliente.svg', 'Esempio di scheda cliente.')}
 <h2>Cosa annotare</h2>
 <ul>
 <li><strong>Dati e consenso</strong> al trattamento dei dati personali (GDPR).</li>
@@ -697,43 +751,67 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
 
   /* ==================================================================== ESERCIZI */
   var exercises = [
+    { id: 'es-semipermanente', module: 'sistemi', level: 'base', title: 'Semipermanente perfetto', time: '45 min', img: 'tut-semipermanente.svg', caption: 'I sei passaggi del semipermanente.',
+      goal: 'Stendere un semipermanente pulito, sottile e sigillato sul bordo libero.',
+      materials: ['Mano da allenamento o modella', 'Base, colore e top', 'Lampada', 'Cleaner e olio'],
+      steps: ['Prepara le unghie come nel modulo 5.', 'Base sottile e lampada.', 'Due strati sottili di colore, ognuno in lampada.', 'Top passando anche sul bordo libero, lampada, cleaner se serve, olio.'],
+      checks: ['Nessuna sbavatura sulla pelle', 'Colore uniforme senza zone chiare', 'Bordo libero sigillato', 'Superficie liscia senza grinze'],
+      mistakes: ['Strati di colore troppo spessi (grinze)', 'Prodotto sulle cuticole (sollevamenti)'] },
+    { id: 'es-acrilico', module: 'cartina', level: 'avanz', title: 'Ricostruzione completa in acrilico', time: '90 min', img: 'tut-acrilico.svg', caption: 'Zona 1, zona 2, zona 3, pinching, limatura.', imgs: ['perla-acrilico.svg', 'zone-costruzione.svg'],
+      goal: 'Costruire 5 unghie in acrilico su cartina con struttura corretta.',
+      materials: ['Mano da allenamento', 'Cartine', 'Monomero e polveri', 'Pennello 8–12', 'Lime', 'DPI e aspiratore'],
+      steps: ['Posiziona le cartine.', 'Costruisci zona 1, zona 2 e zona 3 come nel tutorial.', 'Fai il pinching al momento giusto.', 'Lima e confronta di profilo con la tavola delle zone.'],
+      checks: ['Cinque unghie della stessa lunghezza', 'Apex sopra il punto di stress su tutte', 'Zona cuticolare sottile e pulita', 'Nessuna bolla o porosità'],
+      mistakes: ['Perla troppo bagnata in zona 3', 'Saltare il controllo di profilo'] },
+    { id: 'es-softgel', module: 'sistemi', level: 'inter', title: 'Applica i soft gel tips', time: '40 min', img: 'tut-soft-gel-tips.svg', caption: 'Misura, gel adesivo, applicazione, lampada.',
+      goal: 'Applicare soft gel tips ben aderenti e senza bolle.',
+      materials: ['Mano da allenamento', 'Soft gel tips', 'Gel adesivo', 'Lampada LED', 'Disidratante e primer'],
+      steps: ['Scegli e prepara le misure per tutte le dita.', 'Prepara le unghie (180, disidratante, primer).', 'Gel adesivo nel tip, applica dalla zona cuticolare, flash, poi lampada completa.', 'Rifinisci e applica il top.'],
+      checks: ['Ogni tip copre da solco a solco', 'Nessuna bolla sotto il tip', 'Tip non a contatto con la cuticola', 'Tutti in asse'],
+      mistakes: ['Disidratazione insufficiente', 'Tip appoggiato sulla pelle'] },
+    { id: 'es-fibra', module: 'sistemi', level: 'inter', title: 'Riparazione in fibra', time: '30 min', img: 'tut-fibra.svg', caption: 'Taglia, resina, attivatore, lima.',
+      goal: 'Rinforzare o riparare un\'unghia con la fibra senza spessori.',
+      materials: ['Tip da allenamento con una crepa', 'Fibra di vetro o seta', 'Resina', 'Attivatore a pennello', 'Lima 180'],
+      steps: ['Taglia la fibra a forma dell\'unghia.', 'Fissala con la resina coprendo la crepa.', 'Applica poco attivatore a pennello.', 'Lima per eliminare i bordi e sigilla.'],
+      checks: ['Il tessuto non si vede ai bordi', 'Nessun gradino', 'La crepa è coperta', 'Ho usato poco attivatore'],
+      mistakes: ['Troppo attivatore (calore)', 'Fibra che tocca la pelle'] },
     { id: 'es-anatomia', module: 'anatomia', level: 'base', title: 'Disegna e nomina l\'anatomia', time: '20 min', img: 'anatomia-alto.svg', caption: 'Confronta il tuo disegno con questa tavola.',
       goal: 'Memorizzare le parti dell\'unghia e la loro funzione.',
       materials: ['Foglio e matite colorate', 'La tua mano come modello'],
       steps: ['Disegna un dito visto dall\'alto e di lato, senza guardare la tavola.', 'Scrivi i nomi di almeno 8 parti.', 'Accanto a ogni parte scrivi in una riga cosa significa per il tuo lavoro.', 'Confronta con la tavola e correggi in rosso.'],
       checks: ['Ho nominato matrice, lamina, letto, iponichio', 'Ho distinto eponichio (vivo) e cuticola (morta)', 'Ho indicato il punto di stress', 'Ho collegato ogni parte a una regola pratica'],
       mistakes: ['Confondere eponichio e cuticola', 'Dimenticare l\'iponichio sotto il bordo libero'] },
-    { id: 'es-postazione', module: 'igiene', level: 'base', title: 'Allestisci una postazione sicura', time: '30 min', img: 'igiene.svg', caption: 'I tre livelli igienici.',
+    { id: 'es-postazione', imgs: ['ciclo-sterilizzazione.svg', 'dpi.svg'], module: 'igiene', level: 'base', title: 'Allestisci una postazione sicura', time: '30 min', img: 'igiene.svg', caption: 'I tre livelli igienici.',
       goal: 'Preparare e riordinare la postazione con un protocollo igienico completo.',
       materials: ['Disinfettante per superfici e strumenti', 'Buste di sterilizzazione', 'Lime monouso', 'DPI', 'Aspiratore'],
       steps: ['Disinfetta il piano e la lampada.', 'Disponi gli strumenti sterilizzati in busta chiusa.', 'Prepara lime nuove e DPI.', 'Simula il fine servizio: detergi, disinfetta e prepara per l\'autoclave; compila il registro.'],
       checks: ['Ho separato pulito e sporco', 'Le lime usate sono state eliminate o consegnate', 'Ho indossato nitrile e FFP2', 'Ho registrato il ciclo di sterilizzazione'],
       mistakes: ['Riutilizzare lime in carta', 'Aprire le buste sterili in anticipo'] },
-    { id: 'es-forme', module: 'limatura', level: 'base', title: 'Lima 8 forme su una ruota di tip', time: '45 min', img: 'forme.svg', caption: 'Le forme da riprodurre.',
+    { id: 'es-forme', imgs: ['forme-limatura-step.svg'], module: 'limatura', level: 'base', title: 'Lima 8 forme su una ruota di tip', time: '45 min', img: 'forme.svg', caption: 'Le forme da riprodurre.',
       goal: 'Controllare la lima e ottenere forme simmetriche.',
       materials: ['Ruota di tip', 'Lima 100/180 e 180/240', 'Matita'],
       steps: ['Traccia con la matita l\'asse centrale di ogni tip.', 'Lima ogni tip in una forma diversa seguendo la tavola.', 'Controlla la simmetria piegando a metà con lo sguardo lungo l\'asse.', 'Ripeti le forme meno riuscite.'],
       checks: ['Le forme sono simmetriche rispetto all\'asse', 'Gli angoli della squoval sono uguali', 'La punta della mandorla è centrata', 'I lati della ballerina sono dritti'],
       mistakes: ['Limare avanti e indietro come una sega', 'Perdere l\'asse e ottenere forme storte'] },
-    { id: 'es-limatura', module: 'limatura', level: 'base', title: 'Direzioni di limatura su mano finta', time: '30 min', img: 'limatura-direzioni.svg', caption: 'Lati, punta, superficie.',
+    { id: 'es-limatura', imgs: ['forme-limatura-step.svg'], module: 'limatura', level: 'base', title: 'Direzioni di limatura su mano finta', time: '30 min', img: 'limatura-direzioni.svg', caption: 'Lati, punta, superficie.',
       goal: 'Automatizzare i movimenti corretti di limatura.',
       materials: ['Mano da allenamento con tip', 'Lima 180/240', 'Buffer'],
       steps: ['Lima i lati con la lima parallela al solco.', 'Lima la punta dai lati verso il centro.', 'Leviga la superficie con movimenti lunghi dalla base alla punta.', 'Rifinisci sotto il bordo libero.'],
       checks: ['Non ho mai limato dentro il solco', 'Ho usato movimenti in una sola direzione', 'La superficie è liscia al tatto', 'Il bordo è pulito sotto'],
       mistakes: ['Inclinare la lima creando lati obliqui', 'Premere troppo'] },
-    { id: 'es-prep', module: 'preparazione', level: 'base', title: 'Preparazione completa su 10 dita', time: '40 min', img: 'preparazione.svg', caption: 'I sei passaggi della preparazione.',
+    { id: 'es-prep', imgs: ['cuticola.svg'], module: 'preparazione', level: 'base', title: 'Preparazione completa su 10 dita', time: '40 min', img: 'preparazione.svg', caption: 'I sei passaggi della preparazione.',
       goal: 'Eseguire la preparazione in modo ordinato e ripetibile.',
       materials: ['Mano da allenamento o modella', 'Spingicuticole', 'Lima 180/240', 'Pennello per polveri', 'Disidratante e primer'],
       steps: ['Segui i 6 passaggi su ogni dito, nello stesso ordine.', 'Cronometra il tempo totale.', 'Controlla con una luce radente che non resti pellicina sulla lamina.', 'Ripeti cercando di ridurre il tempo senza saltare passaggi.'],
       checks: ['Nessun residuo di pterigio', 'Lamina opaca in modo uniforme ma non assottigliata', 'Primer solo sulla lamina, mai sulla pelle', 'Tempo sotto i 30 minuti'],
       mistakes: ['Toccare la lamina con le dita dopo il disidratante', 'Troppo primer'] },
-    { id: 'es-perla', module: 'sistemi', level: 'inter', title: 'Allenati sulla perla di acrilico', time: '30 min', img: 'perla-acrilico.svg', caption: 'Bagnata, media, asciutta.',
+    { id: 'es-perla', imgs: ['tut-acrilico.svg'], module: 'sistemi', level: 'inter', title: 'Allenati sulla perla di acrilico', time: '30 min', img: 'perla-acrilico.svg', caption: 'Bagnata, media, asciutta.',
       goal: 'Riconoscere e riprodurre il rapporto liquido/polvere corretto.',
       materials: ['Pennello per acrilico 8–12', 'Monomero e polvere', 'Tip o foglio di plastica', 'DPI e aspiratore'],
       steps: ['Fai volutamente una perla bagnata, una media e una asciutta e appoggiale sul foglio.', 'Osserva come si comportano dopo 10 secondi.', 'Fai 10 perle medie di seguito.', 'Prova a stenderne una su un tip senza farla colare.'],
       checks: ['So distinguere a occhio le tre perle', 'Le mie perle medie sono lucide e bombate', 'Non colano dopo l\'appoggio', 'Ho lavorato con guanti e aspirazione'],
       mistakes: ['Pennello troppo bagnato', 'Toccare il monomero a mani nude'] },
-    { id: 'es-tip', module: 'tip', level: 'inter', title: 'Applica e fondi 10 tip', time: '45 min', img: 'tip-applicazione.svg', caption: 'Misura, incolla, taglia, fondi.',
+    { id: 'es-tip', imgs: ['tip-tipi.svg'], module: 'tip', level: 'inter', title: 'Applica e fondi 10 tip', time: '45 min', img: 'tip-applicazione.svg', caption: 'Misura, incolla, taglia, fondi.',
       goal: 'Applicare tip in asse, senza bolle e con fusione invisibile.',
       materials: ['Mano da allenamento', 'Tip con incavo', 'Colla', 'Tagliatip', 'Lima 180'],
       steps: ['Scegli la misura per ogni dito.', 'Incolla a 45° abbassando lentamente.', 'Taglia tutti i tip alla stessa lunghezza.', 'Fondi la linea di contatto.'],
@@ -745,7 +823,7 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
       steps: ['Posiziona la cartina su ogni dito.', 'Controlla dall\'alto l\'asse e di lato il contatto con il bordo libero.', 'Togli e riposiziona finché è perfetta.', 'Fotografa le dieci cartine e confrontale.'],
       checks: ['Nessuno spazio sotto il bordo libero', 'Asse allineato al dito', 'Alette chiuse sotto il polpastrello', 'Curva della cartina coerente con l\'unghia'],
       mistakes: ['Cartina troppo bassa', 'Cartina ruotata verso il pollice'] },
-    { id: 'es-apex', module: 'cartina', level: 'inter', title: 'Costruisci l\'apex in gel', time: '60 min', img: 'zone-costruzione.svg', caption: 'Zona 3 sottile, zona 2 struttura, zona 1 sottile.',
+    { id: 'es-apex', imgs: ['tut-gel-cartina.svg'], module: 'cartina', level: 'inter', title: 'Costruisci l\'apex in gel', time: '60 min', img: 'zone-costruzione.svg', caption: 'Zona 3 sottile, zona 2 struttura, zona 1 sottile.',
       goal: 'Costruire una struttura con apex sopra il punto di stress.',
       materials: ['Tip o cartina su mano da allenamento', 'Gel costruttore', 'Pennello per gel', 'Lampada'],
       steps: ['Stendi una base sottile e polimerizza.', 'Metti una perla di gel in zona 2 e accompagnala verso le zone 1 e 3.', 'Capovolgi la mano qualche secondo per far scendere il gel verso l\'apex, poi polimerizza.', 'Lima e controlla di profilo.'],
@@ -757,7 +835,7 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
       steps: ['Costruisci 3 unghie su cartina.', 'Pizzica la prima poco, la seconda di più, la terza molto, nel momento giusto.', 'Guardale dal bordo libero e confronta con la tavola.', 'Annota il tempo in cui il pinching ha funzionato meglio.'],
       checks: ['Le curve sono simmetriche', 'Nessuna crepa sui lati', 'Ho riconosciuto il momento giusto per pizzicare', 'Ho rispettato la curva naturale'],
       mistakes: ['Pizzicare troppo tardi (crepe)', 'Pizzicare in modo asimmetrico'] },
-    { id: 'es-french', module: 'decorazioni', level: 'inter', title: 'Smile line su 10 tip', time: '40 min', img: 'smile-line.svg', caption: 'Simmetrica, netta, stessa profondità.',
+    { id: 'es-french', imgs: ['tut-french.svg'], module: 'decorazioni', level: 'inter', title: 'Smile line su 10 tip', time: '40 min', img: 'smile-line.svg', caption: 'Simmetrica, netta, stessa profondità.',
       goal: 'Disegnare smile line simmetriche e uguali tra loro.',
       materials: ['Ruota di tip', 'Gel bianco o colore bianco', 'Pennello fine', 'Cleaner'],
       steps: ['Segna i due punti laterali alla stessa altezza.', 'Collega con una curva continua.', 'Riempi il bianco fino alla punta.', 'Confronta le 10 smile line: devono sembrare uguali.'],
@@ -775,13 +853,13 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
       steps: ['Fai una fila di 10 puntini uguali con lo stesso dotter.', 'Fai puntini decrescenti dal più grande al più piccolo.', 'Traccia 5 linee parallele con lo striper.', 'Crea un piccolo fiore con 5 puntini e un centro.'],
       checks: ['Puntini della stessa misura', 'Linee dritte e parallele', 'Spessore costante della linea', 'Composizione centrata'],
       mistakes: ['Ricaricare il dotter in modo diverso a ogni punto', 'Mano non appoggiata'] },
-    { id: 'es-refill', module: 'manutenzione', level: 'avanz', title: 'Refill simulato', time: '60 min', img: 'refill.svg', caption: 'Riporta l\'apex sopra il punto di stress.',
+    { id: 'es-refill', imgs: ['refill-step.svg'], module: 'manutenzione', level: 'avanz', title: 'Refill simulato', time: '60 min', img: 'refill.svg', caption: 'Riporta l\'apex sopra il punto di stress.',
       goal: 'Eseguire un refill completo riequilibrando la struttura.',
       materials: ['Mano da allenamento con ricostruzione', 'Lima 100/180', 'Fresa (facoltativa)', 'Gel'],
       steps: ['Simula la ricrescita limando via 3 mm di prodotto alla base.', 'Accorcia e assottiglia il vecchio prodotto.', 'Prepara la "ricrescita" e ricostruisci l\'apex.', 'Rifinisci e confronta il profilo con la tavola.'],
       checks: ['Nessuna parte sollevata rimasta', 'Nessun gradino tra vecchio e nuovo', 'Apex di nuovo sopra il punto di stress', 'Lunghezza riportata a quella iniziale'],
       mistakes: ['Coprire un sollevamento', 'Aggiungere prodotto senza togliere il vecchio: unghia sempre più spessa'] },
-    { id: 'es-rimozione', module: 'manutenzione', level: 'base', title: 'Rimozione soak-off', time: '30 min', img: 'rimozione.svg', caption: 'Opacizza, acetone, stagnola, bastoncino.',
+    { id: 'es-rimozione', imgs: ['dpi.svg'], module: 'manutenzione', level: 'base', title: 'Rimozione soak-off', time: '30 min', img: 'rimozione.svg', caption: 'Opacizza, acetone, stagnola, bastoncino.',
       goal: 'Rimuovere il prodotto senza danneggiare la lamina.',
       materials: ['Tip con semipermanente o soft gel', 'Acetone', 'Cotone', 'Stagnola', 'Bastoncino d\'arancio', 'Olio'],
       steps: ['Opacizza il top.', 'Applica cotone con acetone e avvolgi.', 'Attendi 10–15 minuti.', 'Spingi via il prodotto, poi olio.'],
@@ -793,13 +871,13 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
       steps: ['Imposta 10.000 RPM e sfuma la superficie di un tip con la punta parallela.', 'Passa a 15.000–20.000 RPM per rimuovere prodotto da un secondo tip.', 'Mantieni la punta sempre in movimento.', 'Controlla al tatto che non ci siano solchi.'],
       checks: ['Nessun solco o "anello"', 'Nessun surriscaldamento', 'Punta sempre in movimento', 'Ho usato carburo solo sul prodotto'],
       mistakes: ['Fermarsi in un punto', 'Inclinare la punta e scavare'] },
-    { id: 'es-diagnosi', module: 'problemi', level: 'avanz', title: 'Diagnosi dei difetti', time: '25 min', img: 'problemi.svg', caption: 'Riconosci il difetto.',
+    { id: 'es-diagnosi', imgs: ['lifting.svg', 'lampada-posizione.svg'], module: 'problemi', level: 'avanz', title: 'Diagnosi dei difetti', time: '25 min', img: 'problemi.svg', caption: 'Riconosci il difetto.',
       goal: 'Associare ogni difetto alla sua causa e soluzione.',
       materials: ['Foto dei tuoi lavori (o lavori di prova)', 'Quaderno'],
       steps: ['Raccogli 10 foto dei tuoi lavori, anche di profilo.', 'Per ognuna indica eventuali difetti (lifting, crepe, bolle, grinze, ingiallimento).', 'Scrivi la causa più probabile.', 'Scrivi cosa cambierai la prossima volta.'],
       checks: ['Ho analizzato tutte le 10 foto', 'Per ogni difetto ho indicato una causa', 'Per ogni causa ho indicato un correttivo', 'Ho ripetuto un lavoro applicando il correttivo'],
       mistakes: ['Dare la colpa al prodotto prima di controllare la preparazione'] },
-    { id: 'es-consulenza', module: 'professione', level: 'inter', title: 'Consulenza simulata', time: '20 min', img: null,
+    { id: 'es-consulenza', module: 'professione', level: 'inter', title: 'Consulenza simulata', time: '20 min', img: 'scheda-cliente.svg', caption: 'Usa una scheda come questa.',
       goal: 'Condurre una consulenza completa e compilare la scheda cliente.',
       materials: ['Scheda cliente stampata', 'Una persona che faccia la cliente'],
       steps: ['Chiedi dati, consenso privacy e informazioni di salute.', 'Valuta l\'unghia e le abitudini.', 'Proponi sistema, forma e lunghezza spiegando il perché.', 'Spiega i consigli post-trattamento e fissa il refill.'],
@@ -955,6 +1033,11 @@ ${B('tip', 'Dallo per iscritto', 'Un biglietto con i consigli e la data del pros
     { t: 'TPO', d: 'Fotoiniziatore vietato nei cosmetici UE dal 1° settembre 2025 (Reg. 2025/877).' },
     { t: 'Zone 1-2-3', d: 'Bordo libero (1), apex/struttura (2) e zona cuticolare (3) della ricostruzione.' }
   ];
+
+  // esercizi ordinati secondo l'ordine dei moduli
+  var order = {};
+  modules.forEach(function (m, i) { order[m.id] = i; });
+  exercises.sort(function (a, b) { return order[a.module] - order[b.module]; });
 
   window.NAILX = { modules: modules, exercises: exercises, quiz: quiz, glossary: glossary };
 })();
