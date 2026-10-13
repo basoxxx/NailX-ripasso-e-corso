@@ -26,6 +26,64 @@ SKIN_RED = '#f2a7a0'
 LIGHT = '#f5c542'
 GREY = '#9aa3ad'
 GREY_D = '#6f7983'
+BED = '#f2a3b6'       # letto ungueale visto in sezione
+
+
+# ================================================================= definizioni locali (gradienti e texture)
+# Vengono inserite una sola volta per figura, solo se usate (vedi svg() qui sotto).
+LOCAL_DEFS = {
+    'bSkinV': '<linearGradient id="bSkinV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9e0d1"/>'
+              '<stop offset=".4" stop-color="#f3cdb6"/><stop offset="1" stop-color="#dcab92"/></linearGradient>',
+    'bTipG': '<linearGradient id="bTipG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ddd3c4"/>'
+             '<stop offset=".3" stop-color="#fbf8f3"/><stop offset=".7" stop-color="#f3eee6"/><stop offset="1" stop-color="#d6cbbb"/></linearGradient>',
+    'bTipV': '<linearGradient id="bTipV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf8f3"/>'
+             '<stop offset="1" stop-color="#e2d8c9"/></linearGradient>',
+    'bProdV': '<linearGradient id="bProdV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f8fd"/>'
+              '<stop offset="1" stop-color="#c6dfee"/></linearGradient>',
+    'bHandle': '<linearGradient id="bHandle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a7480"/>'
+               '<stop offset=".35" stop-color="#4b3a40"/><stop offset="1" stop-color="#271b20"/></linearGradient>',
+    'bFerrule': '<linearGradient id="bFerrule" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/>'
+                '<stop offset=".45" stop-color="#bfc7cf"/><stop offset="1" stop-color="#848d96"/></linearGradient>',
+    'bGrip': '<linearGradient id="bGrip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e48aa8"/>'
+             '<stop offset="1" stop-color="#a8476a"/></linearGradient>',
+    'bForm': '<linearGradient id="bForm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf0c4"/>'
+             '<stop offset="1" stop-color="#f1df98"/></linearGradient>',
+    'bGlass': '<linearGradient id="bGlass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9eef3"/>'
+              '<stop offset=".25" stop-color="#ffffff"/><stop offset=".75" stop-color="#f7f9fb"/><stop offset="1" stop-color="#dfe5eb"/></linearGradient>',
+    'bGritC': '<pattern id="bGritC" width="6" height="6" patternUnits="userSpaceOnUse">'
+              '<circle cx="1.2" cy="1.3" r=".95" fill="#000" fill-opacity=".26"/><circle cx="4.2" cy="3.6" r=".9" fill="#fff" fill-opacity=".38"/>'
+              '<circle cx="2.4" cy="5" r=".7" fill="#000" fill-opacity=".2"/><circle cx="5.3" cy=".6" r=".6" fill="#fff" fill-opacity=".3"/></pattern>',
+    'bGritF': '<pattern id="bGritF" width="4" height="4" patternUnits="userSpaceOnUse">'
+              '<circle cx="1" cy="1" r=".5" fill="#000" fill-opacity=".22"/><circle cx="3" cy="2.6" r=".5" fill="#fff" fill-opacity=".35"/>'
+              '<circle cx="1.8" cy="3.4" r=".4" fill="#000" fill-opacity=".16"/></pattern>',
+    'bKnurl': '<pattern id="bKnurl" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+              '<line x1="0" y1="0" x2="0" y2="3" stroke="#4f5860" stroke-width=".7" stroke-opacity=".55"/>'
+              '<line x1="0" y1="0" x2="3" y2="0" stroke="#4f5860" stroke-width=".7" stroke-opacity=".55"/></pattern>',
+}
+
+
+def svg(w, h, body, title):
+    """Come gen_svg.svg, ma aggiunge (una volta sola) le definizioni locali usate nella figura."""
+    used = [k for k in LOCAL_DEFS if 'url(#%s)' % k in body]
+    if used:
+        body = '<defs>%s</defs>' % ''.join(LOCAL_DEFS[k] for k in used) + body
+    return gen_svg.svg(w, h, body, title)
+
+
+def steps_fig(title, labels, cols, pw, ph, draw, desc, top=60, subs=None):
+    """Variante locale di gen_svg.steps_fig (usa svg() locale; sottotitolo opzionale a destra del titolo)."""
+    rows = (len(labels) + cols - 1) // cols
+    W = 20 + cols * (pw + 14) + 6
+    H = top + rows * (ph + 14) + 6
+    b = text(20, 38, title, 20, 'start', 800, ACC2)
+    for i, lab in enumerate(labels):
+        x = 20 + (i % cols) * (pw + 14)
+        y = top + (i // cols) * (ph + 14)
+        pc = uid('p')
+        b += '<defs><clipPath id="%s"><rect x="%d" y="%d" width="%d" height="%d" rx="16"/></clipPath></defs>' % (pc, x, y, pw, ph)
+        b += panel(x, y, pw, ph, lab, i + 1, ACC2)
+        b += '<g clip-path="url(#%s)">%s</g>' % (pc, draw(i, x, y))
+    return svg(W, H, arrow_defs() + b, desc)
 
 
 # ================================================================= primitive di supporto
@@ -139,21 +197,31 @@ def top_finger(cx, yc, **kw):
 def finger_side(x, y, L=170, free=0, plate=True, free_col=FREE, tip_down=0):
     """Dito di profilo, punta verso destra. x = eponichio, y = superficie della lamina, L = lunghezza del letto."""
     xe = x + L
-    s = ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f '
-         'C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
-         % (x - 110, y - 14, x - 8, y - 14, x + 6, y - 14, x + 10, y - 2, xe, y + 5,
-            xe + 16, y + 8, xe + 20, y + 44, xe - 2, y + 62, xe - 24, y + 80, x - 60, y + 80, x - 110, y + 80, SKIN, SKIN_D))
+    # sagoma unica: dorso, piega dell'eponichio (morbida), letto, polpastrello arrotondato
+    s = ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f '
+         'C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" '
+         'fill="url(#bSkinV)" stroke="%s" stroke-width="1.5" stroke-linejoin="round"/>'
+         % (x - 110, y - 12, x - 60, y - 15, x - 18, y - 16, x - 4, y - 12,
+            x + 6, y - 9, x + 10, y - 4, x + 12, y + 1, xe, y + 6,
+            xe + 18, y + 9, xe + 22, y + 46, xe - 4, y + 64,
+            xe - 26, y + 80, x - 30, y + 82, x - 110, y + 82, x - 110, y + 82, SKIN_D))
+    # pieghe della pelle sul dorso (articolazione) e del polpastrello
+    s += ('<path d="M%.1f,%.1f q8,6 4,14 M%.1f,%.1f q8,6 4,14" fill="none" stroke="%s" stroke-width="1.1" opacity=".6"/>'
+          % (x - 92, y - 11, x - 84, y - 11, SKIN_D))
     if plate:
-        s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
-              % (x + 4, y, xe, y + 1, xe, y + 6, x + 6, y + 5, NAIL, NAIL_S))
+        # letto ungueale rosato sotto la lamina
+        s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" opacity=".55"/>'
+              % (x + 12, y + 5, xe - 2, y + 6, xe - 6, y + 10, x + 12, y + 9, BED))
+        s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.3" stroke-linejoin="round"/>'
+              % (x + 9, y + 0.5, xe, y + 1, xe, y + 6, x + 11, y + 5, NAIL, NAIL_S))
         if free:
-            s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
-                  % (xe, y + 1, xe + free, y + 1 + tip_down, xe + free, y + 6 + tip_down, xe, y + 6, free_col, NAIL_S))
-        # piega dell'eponichio sopra l'inizio della lamina
-        s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s"/>'
-              % (x - 40, y - 13, x - 8, y - 13, x + 8, y - 13, x + 12, y - 1, x - 40, y - 1, SKIN))
-        s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.5"/>'
-              % (x - 8, y - 14, x + 8, y - 14, x + 12, y - 1, SKIN_D))
+            s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.3" stroke-linejoin="round"/>'
+                  % (xe, y + 1, xe + free - 1, y + 1 + tip_down, xe + free + 1, y + 3.5 + tip_down, xe + free - 1, y + 6 + tip_down,
+                     xe, y + 6, free_col, NAIL_S))
+        # riflesso sulla lamina e bordo della piega
+        s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#fff" stroke-width="1.2" opacity=".7"/>' % (x + 16, y + 2, xe - 6, y + 2.6)
+        s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.5"/>'
+              % (x - 4, y - 12, x + 6, y - 9, x + 10, y - 4, x + 12, y + 1, SKIN_D))
     return s
 
 

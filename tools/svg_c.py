@@ -41,6 +41,9 @@ def defs():
     for mid, col in (('ar', ACC2), ('arw', MUTED), ('ag', DARK), ('are', ERR), ('aro', OK), ('arwn', WARN), ('arv', '#9a6be0')):
         m += ('<marker id="%s" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
               '<path d="M0,0 L10,5 L0,10 z" fill="%s"/></marker>' % (mid, col))
+    # ombra morbida per le schede bianche delle infografiche
+    m += ('<filter id="cSh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" '
+          'flood-color="#5a2a3a" flood-opacity=".12"/></filter>')
     return '<defs>%s</defs>' % m
 
 
