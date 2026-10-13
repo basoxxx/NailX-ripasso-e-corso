@@ -59,6 +59,7 @@
       ['index.html', 'home', 'Home'],
       ['corso.html', 'corso', 'Lezioni'],
       ['esercizi.html', 'esercizi', 'Esercizi'],
+      ['ripasso.html', 'ripasso', 'Ripasso'],
       ['quiz.html', 'quiz', 'Quiz'],
       ['glossario.html', 'glossario', 'Glossario'],
       ['attestato.html', 'attestato', 'Attestato']
@@ -142,7 +143,8 @@
       '<h1>' + esc(l.title) + '</h1>' +
       '<div class="meta">' + badge(m.level) + '<span>⏱ ' + (l.min || 10) + ' min di lettura</span>' +
       '<span>Lezione ' + (m.lessons.indexOf(l) + 1) + ' di ' + m.lessons.length + '</span></div>' +
-      l.html;
+      (l.simple ? '<div class="box simple"><strong class="t">In parole semplici</strong>' + esc(l.simple) + '</div>' : '') +
+      l.html + videosHtml(l.videos);
     if (relatedEx.length && m.lessons.indexOf(l) === m.lessons.length - 1) {
       html += '<div class="box info"><strong class="t">Mettiti alla prova</strong>Esercizi pratici di questo modulo: ' +
         relatedEx.map(function (e) { return '<a href="esercizi.html#' + e.id + '">' + esc(e.title) + '</a>'; }).join(' · ') +
@@ -159,6 +161,7 @@
       (next ? '<a class="btn small" href="' + lessonUrl(next.m, next.l) + '">' + esc(next.l.title) + ' →</a>' : '<a class="btn small" href="quiz.html?m=final">Esame finale →</a>') +
       '</div>';
     $('#lesson').innerHTML = html;
+    linkGlossary($('#lesson'));
 
     var mark = $('#mark');
     function upd() { mark.textContent = state.lessons[key] ? '✓ Completata' : 'Segna come completata'; mark.classList.toggle('ghost', !!state.lessons[key]); }
@@ -211,6 +214,14 @@
             (e.imgs || []).map(function (src) {
               return '<figure><img src="assets/img/' + src + '" alt="Tavola di riferimento: ' + esc(e.title) + '" loading="lazy"></figure>';
             }).join('') +
+            (e.img ? '<div class="photo-eval" data-ref="assets/img/' + e.img + '"><h4>Confronta con il tuo lavoro</h4>' +
+              '<label class="btn small ghost photo-btn">📷 Scatta o scegli una foto<input type="file" accept="image/*" data-photo="' + e.id + '"></label>' +
+              '<p class="muted"><small>La foto resta sul tuo dispositivo e non viene caricata online. Fotografa dall\'alto e di profilo, con luce uniforme.</small></p>' +
+              '<div class="compare" hidden><div class="chips cmp-modes"><button type="button" class="chip active" data-mode="side">Affianca</button>' +
+              '<button type="button" class="chip" data-mode="over">Sovrapponi</button></div>' +
+              '<div class="cmp-stage side"><img class="ref" alt="Tavola di riferimento"><img class="mine" alt="La tua foto"></div>' +
+              '<label class="cmp-range" hidden>Trasparenza della tua foto <input type="range" min="0" max="100" value="55"></label>' +
+              '<p class="muted"><small>Ora rispondi alla checklist guardando la foto accanto alla tavola.</small></p></div></div>' : '') +
             '<h4>Auto-valutazione</h4><ul class="checklist">' + e.checks.map(function (x, j) {
               return '<li><label><input type="checkbox" data-ex="' + e.id + '" data-i="' + j + '"' + (c[j] ? ' checked' : '') + '> <span>' + esc(x) + '</span></label></li>';
             }).join('') + '</ul>' +
@@ -220,6 +231,31 @@
       if (hash) { var t = document.getElementById(hash); if (t) t.scrollIntoView(); }
     }
     draw();
+    var photoUrls = {};
+    $('#exercises').addEventListener('change', function (ev) {
+      var inp = ev.target;
+      if (inp.dataset.photo && inp.files && inp.files[0]) {
+        var box = inp.closest('.photo-eval'), cmp = box.querySelector('.compare');
+        if (photoUrls[inp.dataset.photo]) URL.revokeObjectURL(photoUrls[inp.dataset.photo]);
+        photoUrls[inp.dataset.photo] = URL.createObjectURL(inp.files[0]);
+        cmp.querySelector('.mine').src = photoUrls[inp.dataset.photo];
+        cmp.querySelector('.ref').src = box.dataset.ref;
+        cmp.hidden = false;
+        return;
+      }
+    });
+    $('#exercises').addEventListener('click', function (ev) {
+      var b = ev.target.closest('.cmp-modes .chip'); if (!b) return;
+      var cmp = b.closest('.compare'), over = b.dataset.mode === 'over';
+      cmp.querySelectorAll('.cmp-modes .chip').forEach(function (c) { c.classList.toggle('active', c === b); });
+      cmp.querySelector('.cmp-stage').className = 'cmp-stage ' + (over ? 'over' : 'side');
+      cmp.querySelector('.cmp-range').hidden = !over;
+      cmp.querySelector('.mine').style.opacity = over ? cmp.querySelector('.cmp-range input').value / 100 : '';
+    });
+    $('#exercises').addEventListener('input', function (ev) {
+      if (ev.target.type !== 'range') return;
+      ev.target.closest('.compare').querySelector('.mine').style.opacity = ev.target.value / 100;
+    });
     $('#exercises').addEventListener('change', function (ev) {
       var cb = ev.target; if (!cb.dataset.ex) return;
       var arr = state.checks[cb.dataset.ex] = state.checks[cb.dataset.ex] || [];
@@ -304,6 +340,73 @@
     });
   }
 
+  /* ---------- video (caricati solo al clic, per privacy e velocità) ---------- */
+  function videosHtml(list) {
+    if (!list || !list.length) return '';
+    return '<h2>Video consigliati</h2><div class="videos">' + list.map(function (v) {
+      return '<div class="yt" data-id="' + esc(v.id) + '"><button type="button" class="yt-play" aria-label="Riproduci il video: ' + esc(v.title) + '">' +
+        '<span class="yt-icon">▶</span><span class="yt-title">' + esc(v.title) + '</span><span class="yt-ch">' + esc(v.channel || '') +
+        (v.lang ? ' · ' + esc(v.lang) : '') + '</span></button></div>';
+    }).join('') + '</div><p class="muted"><small>Video di terze parti su YouTube, scelti come approfondimento: verifica sempre che le tecniche ' +
+      'mostrate rispettino le regole di igiene e sicurezza del corso. Premendo ▶ il video viene caricato da YouTube (modalità privacy avanzata).</small></p>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.yt-play'); if (!b) return;
+    var box = b.parentNode, id = box.dataset.id;
+    if (!/^[\w-]{11}$/.test(id)) return;
+    box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0" title="Video YouTube" ' +
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  });
+
+  /* ---------- termini del glossario cliccabili nelle lezioni ---------- */
+  var glossIndex = null;
+  function buildGlossIndex() {
+    var list = [];
+    D.glossary.forEach(function (g) {
+      g.t.split(/\s*[\/(]\s*/).forEach(function (part) {
+        part = part.replace(/\)$/, '').trim();
+        if (part.length >= 4 && !/^zone/i.test(part)) list.push({ term: part, def: g.d, label: g.t });
+      });
+    });
+    list.sort(function (a, b) { return b.term.length - a.term.length; });
+    return list;
+  }
+  function linkGlossary(root) {
+    glossIndex = glossIndex || buildGlossIndex();
+    var used = {};
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        return n.parentNode.closest('h1,h2,h3,a,th,figcaption,.box.simple,.gl,.meta,.crumbs,.lesson-nav,.sources,.videos,button,code')
+          ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      for (var i = 0; i < glossIndex.length; i++) {
+        var g = glossIndex[i];
+        if (used[g.label]) continue;
+        var re = new RegExp('(^|[^\\p{L}])(' + g.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![\\p{L}])', 'iu');
+        var m = re.exec(node.nodeValue);
+        if (!m) continue;
+        used[g.label] = true;
+        var start = m.index + m[1].length;
+        var after = node.splitText(start);
+        after.nodeValue = after.nodeValue.slice(m[2].length);
+        var span = document.createElement('span');
+        span.className = 'gl';
+        span.tabIndex = 0;
+        span.textContent = m[2];
+        span.setAttribute('data-def', g.def);
+        span.setAttribute('role', 'note');
+        span.setAttribute('aria-label', m[2] + ': ' + g.def);
+        node.parentNode.insertBefore(span, after);
+        node = after;
+        i = -1;
+      }
+    });
+  }
+
   /* ---------- GLOSSARIO ---------- */
   function renderGlossary() {
     var items = D.glossary.slice().sort(function (a, b) { return a.t.localeCompare(b.t, 'it'); });
@@ -317,6 +420,164 @@
     }
     draw();
     $('#gsearch').addEventListener('input', function (e) { draw(e.target.value); });
+  }
+
+
+  /* ---------- RIPASSO: flashcard, schede, quiz a tempo ---------- */
+  function renderReview() {
+    state.cards = state.cards || {};
+    var root = $('#review');
+    var tabs = [['flash', 'Flashcard'], ['schede', 'Schede riassuntive'], ['tempo', 'Quiz a tempo']];
+    function current() { var h = location.hash.slice(1); return tabs.some(function (t) { return t[0] === h; }) ? h : 'flash'; }
+    function nav() {
+      $('#rtabs').innerHTML = tabs.map(function (t) {
+        return '<a class="chip' + (t[0] === current() ? ' active' : '') + '" href="#' + t[0] + '">' + t[1] + '</a>';
+      }).join('');
+    }
+    window.addEventListener('hashchange', function () { nav(); show(); });
+    nav(); show();
+
+    function show() {
+      clearInterval(timerId);
+      ({ flash: flash, schede: sheets, tempo: timed })[current()]();
+    }
+
+    /* flashcard */
+    function deckFor(sel) {
+      var cards = [];
+      if (sel === 'glossario') {
+        D.glossary.forEach(function (g) { cards.push({ k: 'g:' + g.t, f: g.t, b: g.d }); });
+        return cards;
+      }
+      D.modules.forEach(function (m) {
+        if (sel !== 'tutti' && sel !== m.id) return;
+        (D.quiz[m.id] || []).forEach(function (q, i) {
+          cards.push({ k: m.id + ':' + i, f: q.q, b: q.o[q.a] + (q.e ? ' — ' + q.e : ''), m: m.title });
+        });
+      });
+      return cards;
+    }
+    function flash() {
+      var opts = '<option value="tutti">Tutti i moduli</option>' + D.modules.filter(function (m) { return D.quiz[m.id]; }).map(function (m) {
+        return '<option value="' + m.id + '">' + m.n + '. ' + esc(m.title) + '</option>';
+      }).join('') + '<option value="glossario">Glossario (termini)</option>';
+      root.innerHTML = '<div class="fc-bar"><select id="fcsel" class="search" aria-label="Scegli il mazzo">' + opts + '</select>' +
+        '<button class="btn small ghost" id="fcreset" type="button">Ricomincia il mazzo</button></div><div id="fc"></div>';
+      var sel = 'tutti', deck = [], idx = 0;
+      function build() {
+        var all = deckFor(sel);
+        // prima le carte da ripassare o mai viste, poi quelle già sapute
+        deck = shuffle(all.filter(function (c) { return state.cards[c.k] !== 'ok'; }));
+        idx = 0;
+        draw(all.length);
+      }
+      function draw(total) {
+        total = total || deckFor(sel).length;
+        var known = deckFor(sel).filter(function (c) { return state.cards[c.k] === 'ok'; }).length;
+        if (idx >= deck.length) {
+          $('#fc').innerHTML = '<div class="card result"><b>' + known + '/' + total + '</b><p>carte sapute in questo mazzo.</p>' +
+            '<button class="btn" id="fcagain" type="button">Ripassa di nuovo le carte da rivedere</button></div>';
+          $('#fcagain').addEventListener('click', build);
+          return;
+        }
+        var c = deck[idx];
+        $('#fc').innerHTML = progressBar(pct(known, total), known + ' sapute su ' + total + ' · carta ' + (idx + 1) + ' di ' + deck.length + ' da ripassare') +
+          '<button type="button" class="flashcard" id="card" aria-live="polite"><span class="fc-side">Domanda</span>' +
+          (c.m ? '<small class="muted">' + esc(c.m) + '</small>' : '') + '<strong>' + esc(c.f) + '</strong><span class="muted">Tocca per vedere la risposta</span></button>' +
+          '<div class="btn-row fc-actions" hidden><button class="btn ghost" id="fcno" type="button">↺ Da ripassare</button>' +
+          '<button class="btn" id="fcyes" type="button">✓ La so</button></div>';
+        $('#card').addEventListener('click', function () {
+          this.classList.add('flipped');
+          this.innerHTML = '<span class="fc-side">Risposta</span><strong>' + esc(c.b) + '</strong>';
+          $('.fc-actions').hidden = false;
+        });
+        $('#fcyes').addEventListener('click', function () { state.cards[c.k] = 'ok'; save(); idx++; draw(); });
+        $('#fcno').addEventListener('click', function () { state.cards[c.k] = 'again'; save(); deck.push(c); idx++; draw(); });
+      }
+      $('#fcsel').addEventListener('change', function () { sel = this.value; build(); });
+      $('#fcreset').addEventListener('click', function () {
+        deckFor(sel).forEach(function (c) { delete state.cards[c.k]; });
+        save(); build();
+      });
+      build();
+    }
+
+    /* schede riassuntive */
+    function sheets() {
+      root.innerHTML = '<div class="btn-row"><button class="btn small" id="printall" type="button">Stampa tutte le schede</button></div>' +
+        '<div class="sheets">' + D.modules.map(function (m) {
+          return '<article class="card sheet" data-m="' + m.id + '"><div class="sheet-head"><span class="mod-num">' + String(m.n).padStart(2, '0') + '</span>' +
+            badge(m.level) + '</div><h3>' + esc(m.title) + '</h3><ul>' + (m.summary || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+            '<p class="muted sheet-lessons"><small>Lezioni: ' + m.lessons.map(function (l) { return esc(l.title); }).join(' · ') + '</small></p>' +
+            '<button class="btn small ghost sheet-print" type="button">Stampa questa scheda</button></article>';
+        }).join('') + '</div>';
+      function printOnly(id) {
+        document.querySelectorAll('.sheet').forEach(function (el) { el.classList.toggle('no-print', !!id && el.dataset.m !== id); });
+        window.print();
+      }
+      $('#printall').addEventListener('click', function () { printOnly(null); });
+      root.addEventListener('click', function (e) {
+        var b = e.target.closest('.sheet-print'); if (b) printOnly(b.closest('.sheet').dataset.m);
+      });
+    }
+
+    /* quiz a tempo */
+    var timerId = null;
+    function timed() {
+      state.timed = state.timed || {};
+      root.innerHTML = '<div class="card"><h3 style="margin-top:.2rem">Quiz a tempo</h3><p>Domande casuali da tutti i moduli, <strong>15 secondi</strong> per risposta. ' +
+        'Allena la rapidità: le risposte devono diventare automatiche.</p><div class="btn-row">' +
+        [10, 20, 30].map(function (n) { return '<button class="btn small" data-n="' + n + '" type="button">' + n + ' domande' +
+          (state.timed[n] != null ? ' · record ' + state.timed[n] + '%' : '') + '</button>'; }).join('') + '</div></div><div id="tq"></div>';
+      root.querySelectorAll('[data-n]').forEach(function (b) { b.addEventListener('click', function () { start(+b.dataset.n); }); });
+    }
+    function start(n) {
+      var all = [];
+      Object.keys(D.quiz).forEach(function (k) { all = all.concat(D.quiz[k]); });
+      var qs = shuffle(all).slice(0, n), i = 0, ok = 0, log = [];
+      var SEC = 15;
+      function ask() {
+        clearInterval(timerId);
+        if (i >= qs.length) return finish();
+        var q = qs[i], left = SEC * 10;
+        var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
+        $('#tq').innerHTML = '<div class="quiz-q timed"><div class="tbar"><i style="width:100%"></i></div>' +
+          '<p class="muted"><small>Domanda ' + (i + 1) + ' di ' + qs.length + ' · ' + ok + ' corrette</small></p><h3>' + esc(q.q) + '</h3>' +
+          opts.map(function (o) { return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>'; }).join('') + '</div>';
+        $('#tq').scrollIntoView({ block: 'nearest' });
+        var bar = $('#tq .tbar i');
+        timerId = setInterval(function () {
+          left--;
+          bar.style.width = (left / (SEC * 10) * 100) + '%';
+          if (left <= SEC * 3) bar.classList.add('late');
+          if (left <= 0) answer(null);
+        }, 100);
+        $('#tq').querySelectorAll('.opt').forEach(function (b) { b.addEventListener('click', function () { answer(b); }); });
+        function answer(b) {
+          clearInterval(timerId);
+          var right = !!b && b.dataset.ok === '1';
+          if (right) ok++;
+          log.push({ q: q, right: right, timeout: !b });
+          $('#tq').querySelectorAll('.opt').forEach(function (o) { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('right'); });
+          if (b && !right) b.classList.add('wrong');
+          i++;
+          setTimeout(ask, right ? 600 : 1500);
+        }
+      }
+      function finish() {
+        var score = pct(ok, qs.length);
+        state.timed[n] = Math.max(state.timed[n] || 0, score);
+        save();
+        $('#tq').innerHTML = '<div class="card result"><b>' + score + '%</b><p>' + ok + ' su ' + qs.length + ' in tempo.</p>' +
+          '<button class="btn" type="button" id="tagain">Riprova</button></div>' +
+          (log.some(function (x) { return !x.right; }) ? '<h3>Da ripassare</h3><ul class="review-list">' + log.filter(function (x) { return !x.right; }).map(function (x) {
+            return '<li><strong>' + esc(x.q.q) + '</strong><br>' + (x.timeout ? '<span class="muted">Tempo scaduto.</span> ' : '') +
+              'Risposta: ' + esc(x.q.o[x.q.a]) + (x.q.e ? ' <span class="muted">— ' + esc(x.q.e) + '</span>' : '') + '</li>';
+          }).join('') + '</ul>' : '');
+        $('#tagain').addEventListener('click', function () { start(n); });
+      }
+      ask();
+    }
   }
 
   /* ---------- zoom immagini ---------- */
@@ -392,10 +653,16 @@
     o += t(W / 2, 425, 'ha completato il corso online «Ricostruzione unghie: dalla teoria al banco di lavoro»', 19, 400);
     o += t(W / 2, 455, 'livello base → avanzato · ' + D.modules.length + ' moduli · ' + s.lessons.length + ' lezioni · circa ' + s.hours + ' ore di formazione', 17, 400, '#6e5a5f');
     o += t(W / 2, 485, 'Esame finale superato con il ' + s.final + '% · ' + s.exDone.length + ' esercizi pratici completati', 17, 700, '#2f8a5b');
-    var mods = D.modules.map(function (m) { return m.title; });
-    var mid = Math.ceil(mods.length / 2);
-    o += t(W / 2, 530, 'Programma: ' + mods.slice(0, mid).join(' · '), 12.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
-    o += t(W / 2, 550, mods.slice(mid).join(' · '), 12.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
+    // programma su più righe (max ~125 caratteri ciascuna)
+    var lines = [], cur = 'Programma:';
+    D.modules.forEach(function (m) {
+      var add = (cur === 'Programma:' ? ' ' : ' · ') + m.title;
+      if ((cur + add).length > 140) { lines.push(cur); cur = m.title; } else cur += add;
+    });
+    lines.push(cur);
+    lines.slice(0, 4).forEach(function (ln, i) {
+      o += t(W / 2, 514 + i * 18, ln, 11.5, 400, '#6e5a5f', ' font-family="system-ui, sans-serif"');
+    });
     o += '<line x1="150" y1="640" x2="420" y2="640" stroke="#3b2a30"/>' + t(285, 662, 'Data di rilascio', 14, 400, '#6e5a5f') + t(285, 630, fmtDate(cert.date), 19, 700);
     o += '<line x1="' + (W - 420) + '" y1="640" x2="' + (W - 150) + '" y2="640" stroke="#3b2a30"/>' + t(W - 285, 662, 'Codice attestato', 14, 400, '#6e5a5f') + t(W - 285, 630, cert.code, 19, 700, '#2b1f22', ' font-family="ui-monospace, monospace"');
     o += '<circle cx="' + W / 2 + '" cy="630" r="46" fill="url(#cg)"/><circle cx="' + W / 2 + '" cy="630" r="38" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 3"/>' +
@@ -513,5 +780,5 @@
   header(page);
   lightbox();
   ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
-    attestato: renderCertificate }[page] || function () {})();
+    attestato: renderCertificate, ripasso: renderReview }[page] || function () {})();
 })();

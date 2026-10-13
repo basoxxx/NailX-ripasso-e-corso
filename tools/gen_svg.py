@@ -1373,6 +1373,253 @@ def client_card():
     return svg(680, 560, b, 'Esempio di scheda cliente')
 
 
+# ================================================================= MODULI 13-16
+@fig('onicofagia.svg')
+def nail_biting():
+    labels = ['Valuta l\'unghia', 'Adatta e tira la cartina', 'Letto artificiale (cover)', 'Bordo corto e tondo']
+
+    def d(i, x, y):
+        cx, yb = x + 110, y + 280
+        s = ''
+        if i == 1:
+            s += form_top(cx, yb - 70, 80, 140)
+            s += arrow(cx + 62, yb - 120, cx + 62, yb - 80) + arrow(cx - 62, yb - 120, cx - 62, yb - 80)
+        ext = ''
+        if i >= 2:
+            ext = '<rect x="%d" y="%d" width="80" height="60" fill="%s" clip-path="url(#CLIP)"/>' % (cx - 40, yb - 118, '#f2b3c3')
+        free = 0 if i < 2 else (26 if i == 2 else 22)
+        f, p = finger_nail(cx, yb, hw=32, nail_len=55, free_len=free, shape='tonda', smile=6, finger_len=10,
+                           plate='#f4c4cf', free='#ffffff' if i == 3 else '#f2b3c3', lunula=i < 2, extra=ext)
+        s += f
+        if i == 0:
+            s += '<path d="M%d,%d Q%d,%d %d,%d" stroke="%s" stroke-width="5" fill="none" stroke-linecap="round"/>' % (cx - 34, yb - 58, cx, yb - 74, cx + 34, yb - 58, '#e9a98e')
+            s += leader(cx + 20, yb - 64, cx + 20, y + 80, 'pelle rialzata davanti all\'unghia', 'middle', 12)
+            s += text(cx, y + 64, 'ferite o infiammazione? STOP', 12.5, weight=700, fill=ERR)
+        elif i == 2:
+            s += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-dasharray="4 4"/>' % (cx - 50, yb - 55, cx + 50, yb - 55, ACC2)
+            s += text(cx, y + 64, 'tratteggio = letto naturale', 12.5, fill=MUTED)
+        elif i == 3:
+            s += text(cx, y + 64, 'corta: più difficile da mordere', 12.5, fill=MUTED)
+        return s
+    return steps_fig('Onicofagia: ricostruzione su unghie rosicchiate', labels, 4, 220, 300, d, 'Ricostruzione su unghie rosicchiate in quattro passaggi')
+
+
+@fig('unghie-difficili.svg')
+def difficult():
+    b = text(20, 38, 'Unghie difficili: riconoscerle e adattare la costruzione', 20, 'start', 800, ACC2)
+    items = [('A cucchiaio (coilonichia)', 'livella la conca, poi l\'apex'),
+             ('Ski-jump (punta in su)', 'accorcia, cartina inclinata in giù'),
+             ('A pinza / a tegola', 'curva C moderata, niente pinching'),
+             ('Piatta e larga', 'crea la curva C, lati non svasati')]
+    for k, (t, sub) in enumerate(items):
+        x = 20 + k * 225
+        b += panel(x, 60, 210, 270, t)
+        cx = x + 105
+        if k == 0:
+            b += ('<path d="M%d,200 L%d,200 C%d,200 %d,240 %d,250 L%d,250 Z" fill="%s" stroke="%s"/>' % (x + 10, x + 130, x + 175, x + 175, x + 130, x + 10, SKIN, SKIN_D))
+            b += '<path d="M%d,196 Q%d,214 %d,190" stroke="%s" stroke-width="5" fill="none"/>' % (x + 60, x + 110, x + 165, NAIL_S)
+            b += '<path d="M%d,%d q5,8 0,12 q-5,-4 0,-12 z" fill="#7fc3e8"/>' % (x + 110, 192)
+            b += text(cx, 150, 'test della goccia', 12, fill=MUTED)
+        elif k == 1:
+            b += ('<path d="M%d,200 L%d,200 C%d,200 %d,240 %d,250 L%d,250 Z" fill="%s" stroke="%s"/>' % (x + 10, x + 130, x + 175, x + 175, x + 130, x + 10, SKIN, SKIN_D))
+            b += '<path d="M%d,199 L%d,199 Q%d,196 %d,170" stroke="%s" stroke-width="5" fill="none"/>' % (x + 60, x + 140, x + 165, x + 180, NAIL_S)
+            b += '<line x1="%d" y1="200" x2="%d" y2="206" stroke="%s" stroke-width="2" stroke-dasharray="5 4"/>' % (x + 140, x + 195, OK)
+        elif k == 2:
+            b += '<path d="M%d,230 C%d,150 %d,150 %d,230" stroke="%s" stroke-width="10" fill="none" stroke-linecap="round"/>' % (cx - 40, cx - 30, cx + 30, cx + 40, ACC)
+            b += '<ellipse cx="%d" cy="215" rx="30" ry="22" fill="%s" opacity=".6"/>' % (cx, '#f0a090')
+            b += text(cx, 150, 'vista dalla punta', 12, fill=MUTED)
+        else:
+            b += '<path d="M%d,220 Q%d,205 %d,220" stroke="%s" stroke-width="10" fill="none" stroke-linecap="round"/>' % (cx - 60, cx, cx + 60, ACC)
+            b += '<path d="M%d,250 Q%d,200 %d,250" stroke="%s" stroke-width="3" fill="none" stroke-dasharray="6 4"/>' % (cx - 55, cx, cx + 55, OK)
+            b += text(cx, 150, 'vista dalla punta', 12, fill=MUTED)
+        b += text(cx, 300, sub, 12.5, weight=600)
+    b += text(470, 355, 'Forma insolita, comparsa da poco o dolorosa? Consiglia il medico (es. la coilonichia è spesso legata a carenza di ferro).', 13, fill=ERR, weight=600)
+    return svg(940, 370, b, 'Unghia a cucchiaio, ski-jump, a pinza e piatta')
+
+
+@fig('cover-letto.svg')
+def cover_bed():
+    labels = ['Letto naturale corto', 'Allunga (cartina o tip)', 'Cover oltre il letto', 'Smile line più avanti']
+
+    def d(i, x, y):
+        cx, yb = x + 110, y + 290
+        ext = ''
+        if i >= 2:
+            ext = '<rect x="%d" y="%d" width="80" height="%d" fill="#f0b9c4" clip-path="url(#CLIP)"/>' % (cx - 40, yb - 150, 120)
+        if i == 3:
+            ext += '<path d="M%d,%d Q%d,%d %d,%d L%d,%d L%d,%d Z" fill="#fff" clip-path="url(#CLIP)"/>' % (
+                cx - 40, yb - 128, cx, yb - 156, cx + 40, yb - 128, cx + 40, yb - 260, cx - 40, yb - 260)
+        f, p = finger_nail(cx, yb, hw=32, nail_len=70, free_len=0 if i == 0 else 90, shape='squoval', smile=8, finger_len=6,
+                           plate='#f4c4cf', free='#f7f1ec', lunula=False, extra=ext)
+        s = f
+        s += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-dasharray="4 4"/>' % (cx - 52, yb - 70, cx + 52, yb - 70, ACC2)
+        if i == 0:
+            s += text(cx, y + 64, 'tratteggio = fine del letto', 12.5, fill=MUTED)
+        elif i == 2:
+            s += text(cx, y + 64, 'cover coprente, senza "finestre"', 12.5, fill=MUTED)
+        elif i == 3:
+            s += text(cx, y + 64, 'il letto sembra più lungo', 12.5, fill=OK, weight=600)
+        return s
+    return steps_fig('Cover / camouflage: allungare otticamente il letto ungueale', labels, 4, 220, 300, d, 'Allungamento ottico del letto ungueale con gel cover')
+
+
+@fig('colori-sottotono.svg')
+def colors():
+    b = text(20, 38, 'Colore: cerchio cromatico e scelta del cover', 20, 'start', 800, ACC2)
+    cx, cy, r = 190, 210, 120
+    hues = ['#e53935', '#fb8c00', '#fdd835', '#7cb342', '#1e88e5', '#8e24aa']
+    names = ['rosso', 'arancio', 'giallo', 'verde', 'blu', 'viola']
+    for k, c in enumerate(hues):
+        a0, a1 = math.radians(-90 + k * 60 - 30), math.radians(-90 + k * 60 + 30)
+        b += '<path d="M%d,%d L%.1f,%.1f A%d,%d 0 0 1 %.1f,%.1f Z" fill="%s" stroke="#fff" stroke-width="3"/>' % (
+            cx, cy, cx + r * math.cos(a0), cy + r * math.sin(a0), r, r, cx + r * math.cos(a1), cy + r * math.sin(a1), c)
+        am = math.radians(-90 + k * 60)
+        b += text(cx + (r + 22) * math.cos(am), cy + (r + 22) * math.sin(am) + 5, names[k], 13, weight=600)
+    b += '<circle cx="%d" cy="%d" r="54" fill="#fff"/>' % (cx, cy)
+    b += mtext(cx, cy - 6, ['colori opposti', '= complementari'], 12, weight=700)
+    b += text(cx, 372, 'viola ↔ giallo: un tocco violaceo attenua il giallo', 12.5, fill=MUTED)
+    b += text(420, 90, 'Sottotono della pelle → cover consigliato (indicazione pratica)', 15, 'start', 700)
+    rows = [('Freddo', 'riflessi rosati, vene bluastre', '#f3c6cf', 'rosa / rosa-beige'),
+            ('Caldo', 'riflessi dorati, vene verdastre', '#f5c9a8', 'pesca / nude caldo'),
+            ('Neutro', 'via di mezzo', '#ecc9b6', 'nude beige')]
+    for k, (t, desc, sw, cov) in enumerate(rows):
+        y = 120 + k * 75
+        b += '<rect x="420" y="%d" width="490" height="62" rx="12" fill="%s"/>' % (y, PANEL)
+        b += '<circle cx="452" cy="%d" r="20" fill="%s" stroke="%s"/>' % (y + 31, sw, SKIN_D)
+        b += text(484, y + 27, t, 15, 'start', 800)
+        b += text(484, y + 47, desc, 12.5, 'start', fill=MUTED)
+        b += '<rect x="730" y="%d" width="40" height="40" rx="8" fill="%s"/>' % (y + 11, ['#f2b3c3', '#f6c3a6', '#e9c5b1'][k])
+        b += text(780, y + 36, cov, 13.5, 'start', 600)
+    b += text(665, 372, 'Prova sempre un campione con luce naturale: il colore giusto "sparisce".', 12.5, fill=MUTED)
+    return svg(940, 390, b, 'Cerchio cromatico e scelta del cover in base al sottotono')
+
+
+@fig('piede-taglio.svg')
+def toenail():
+    b = text(20, 38, 'Unghie dei piedi: taglio e crescita', 20, 'start', 800, ACC2)
+    cases = [('Dritto, angoli smussati', True, 'squoval'), ('Tondo e troppo corto', False, 'tonda'), ('Lati scavati', False, 'quadrata')]
+    for k, (t, ok, sh) in enumerate(cases):
+        x = 20 + k * 225
+        b += panel(x, 60, 210, 290, t)
+        b += mark(x + 185, 112, ok)
+        cx, yb = x + 105, 320
+        f, p = finger_nail(cx, yb, hw=48, nail_len=100, free_len=8 if ok else 2, shape=sh, smile=4, finger_len=20, lunula=False,
+                           plate='#f3cbc6')
+        b += f
+        if k == 2:
+            for sx in (-1, 1):
+                b += '<path d="M%d,%d Q%d,%d %d,%d L%d,%d Z" fill="%s"/>' % (cx + sx * 50, yb - 112, cx + sx * 30, yb - 104, cx + sx * 26, yb - 112, cx + sx * 50, yb - 70, '#f3cdb6')
+        if not ok:
+            b += '<circle cx="%d" cy="%d" r="16" fill="none" stroke="%s" stroke-width="3"/>' % (cx + 50, yb - 100, ERR)
+            b += text(cx, 135, 'rischio unghia incarnita', 12.5, weight=600, fill=ERR)
+    x0 = 700
+    b += panel(x0, 60, 220, 290, 'Crescita media')
+    for k, (lab, v, col) in enumerate([('Mani', 3.47, ACC), ('Piedi', 1.62, '#8a7d9e')]):
+        h = v / 3.47 * 170
+        bx = x0 + 50 + k * 80
+        b += '<rect x="%d" y="%.1f" width="50" height="%.1f" rx="6" fill="%s"/>' % (bx, 300 - h, h, col)
+        b += text(bx + 25, 292 - h, ('%.2f' % v).replace('.', ','), 14, weight=800)
+        b += text(bx + 25, 320, lab, 13.5, weight=700)
+    b += text(x0 + 110, 340, 'mm al mese (Yaemsiri 2010)', 11.5, fill=MUTED)
+    return svg(940, 365, b, 'Taglio corretto delle unghie dei piedi e velocità di crescita')
+
+
+@fig('pedicure-protocollo.svg')
+def pedicure():
+    labels = ['Anamnesi', 'Ispeziona: dubbi? STOP', 'Pediluvio igienico', 'Taglio dritto', 'Cuticola senza tagli', 'Semipermanente sottile']
+
+    def d(i, x, y):
+        cx, yb = x + 140, y + 255
+        s = ''
+        if i == 0:
+            s += '<rect x="%d" y="%d" width="120" height="150" rx="10" fill="#fff" stroke="#e5d6d2" stroke-width="2"/>' % (cx - 60, y + 70)
+            for k, t in enumerate(['diabete', 'circolazione', 'farmaci', 'micosi?']):
+                s += '<rect x="%d" y="%d" width="12" height="12" rx="2" fill="none" stroke="%s" stroke-width="2"/>' % (cx - 45, y + 92 + k * 30, ACC2)
+                s += text(cx - 25, y + 103 + k * 30, t, 13, 'start')
+            return s
+        if i == 2:
+            s += '<path d="M%d,%d L%d,%d Q%d,%d %d,%d L%d,%d Z" fill="#e8f3fb" stroke="#9cc3dc" stroke-width="2"/>' % (
+                cx - 90, y + 140, cx - 75, y + 230, cx, y + 240, cx + 75, y + 230, cx + 90, y + 140)
+            for k in range(3):
+                s += '<path d="M%d,%d q15,-8 30,0 q15,8 30,0" stroke="#7fb4d6" stroke-width="2" fill="none"/>' % (cx - 60 + k * 10, y + 160 + k * 18)
+            s += text(cx, y + 80, 'vaschetta disinfettata o monouso', 12.5, fill=MUTED)
+            s += text(cx, y + 100, 'acqua tiepida, non calda', 12.5, fill=MUTED)
+            return s
+        plate = '#c2577a' if i == 5 else '#f3cbc6'
+        f, p = finger_nail(cx, yb, hw=48, nail_len=95, free_len=6, shape='squoval', smile=4, finger_len=20, lunula=False, plate=plate, free=plate)
+        s += f
+        if i == 1:
+            s += text(cx, y + 64, 'gialla, spessa, friabile → medico', 12.5, weight=700, fill=ERR)
+            s += text(cx, y + 82, 'diabete con ferite → podologo', 12.5, weight=700, fill=ERR)
+        elif i == 3:
+            s += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="2" stroke-dasharray="6 4"/>' % (cx - 70, p['y_t'] + 2, cx + 70, p['y_t'] + 2, OK)
+        elif i == 4:
+            s += tool_pusher(cx + 10, yb - 32, -60, 100)
+        else:
+            s += sparkle(cx - 14, yb - 70)
+        return s
+    return steps_fig('Protocollo pedicure estetica con semipermanente', labels, 3, 280, 270, d, 'Protocollo di pedicure estetica in sei passaggi')
+
+
+@fig('nail-art-effetti.svg')
+def art_fx():
+    labels = ['Chrome: top no-wipe', 'Strofina la polvere', 'Cat-eye: magnete', 'One-stroke']
+
+    def d(i, x, y):
+        cx, yb = x + 110, y + 290
+        s = ''
+        if i == 3:
+            s += '<g transform="translate(%d,%d) rotate(-30)"><rect x="18" y="-6" width="110" height="12" rx="6" fill="#4b3a40"/><rect x="6" y="-8" width="14" height="16" fill="#c9b8a0"/>' % (cx - 10, y + 150)
+            s += '<rect x="-30" y="-9" width="36" height="9" fill="#c2577a"/><rect x="-30" y="0" width="36" height="9" fill="#ffffff" stroke="#ddd"/></g>'
+            s += '<path d="M%d,%d c-30,-40 30,-60 0,0 c30,-40 60,10 0,0" fill="#e78aa9" stroke="#fff" stroke-width="2"/>' % (cx - 10, y + 245)
+            s += text(cx, y + 64, 'metà e metà, poi ruota il pennello', 12.5, fill=MUTED)
+            return s
+        plate = '#2b1f22' if i < 2 else '#3a2a55'
+        ext = ''
+        if i == 1:
+            ext = '<defs><linearGradient id="chr" x1="0" x2="1"><stop offset="0" stop-color="#c0c6cc"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#9aa3ad"/></linearGradient></defs>'
+            ext += '<rect x="%d" y="%d" width="80" height="180" fill="url(#chr)" clip-path="url(#CLIP)"/>' % (cx - 40, yb - 190)
+        if i == 2:
+            ext = '<rect x="%d" y="%d" width="14" height="180" fill="#d8c8ff" opacity=".8" clip-path="url(#CLIP)" transform="rotate(20 %d %d)"/>' % (cx - 7, yb - 190, cx, yb - 100)
+        f, p = finger_nail(cx, yb, hw=34, nail_len=110, free_len=50, shape='mandorla', smile=0, finger_len=8, lunula=False, plate=plate, free=plate, extra=ext)
+        s += f
+        if i == 0:
+            s += timer(x + 40, y + 70, 'polimerizza')
+        elif i == 1:
+            s += '<ellipse cx="%d" cy="%d" rx="18" ry="12" fill="#e9e3dd" stroke="#bbb"/>' % (cx + 46, yb - 130)
+            s += text(cx, y + 64, 'velo sottile, poi sigilla i bordi', 12.5, fill=MUTED)
+        elif i == 2:
+            s += '<rect x="%d" y="%d" width="22" height="40" rx="4" fill="#9aa3ad" stroke="#6f7a85"/><rect x="%d" y="%d" width="22" height="10" fill="%s"/>' % (cx + 50, yb - 150, cx + 50, yb - 120, ERR)
+            s += text(cx, y + 64, 'orienta le particelle, poi lampada', 12.5, fill=MUTED)
+        return s
+    return steps_fig('Nail art avanzata: chrome, cat-eye e one-stroke', labels, 4, 220, 300, d, 'Effetti chrome, cat-eye e one-stroke')
+
+
+@fig('gara-scheda.svg')
+def score_sheet():
+    b = text(20, 38, 'Gare: cosa guardano i giudici', 20, 'start', 800, ACC2)
+    b += '<rect x="20" y="60" width="520" height="330" rx="14" fill="#fff" stroke="#e5d6d2" stroke-width="2"/>'
+    b += '<rect x="20" y="60" width="520" height="46" rx="14" fill="%s"/><rect x="20" y="90" width="520" height="16" fill="%s"/>' % (ACC, ACC)
+    b += text(40, 90, 'Scheda di autovalutazione (modello gara)', 16, 'start', 800, '#fff')
+    rows = ['Curva C uniforme (vista a tunnel)', 'Apex nella stessa posizione', 'Bordo libero sottile e uniforme', 'Smile line simmetrica',
+            'Zona cuticolare pulita', 'Superficie lucida, senza graffi']
+    for k, r in enumerate(rows):
+        y = 140 + k * 40
+        b += text(40, y, r, 14, 'start', 600)
+        for j in range(5):
+            b += '<circle cx="%d" cy="%d" r="8" fill="%s" stroke="%s"/>' % (420 + j * 22, y - 5, ACC if j < 4 - k % 3 else '#fff', ACC)
+    b += text(40, 378, 'Leggi sempre il regolamento dell\'edizione: tempi, divieti e punteggi cambiano.', 12.5, 'start', fill=MUTED)
+    b += panel(560, 60, 360, 330, 'Vista "a tunnel"')
+    cx = 740
+    for k, (ok, kk) in enumerate([(True, 34), (False, 14)]):
+        y = 190 + k * 120
+        b += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="%s" stroke-width="10" stroke-linecap="round"/>' % (cx - 70, y, cx, y - 2 * kk, cx + 70, y, ACC)
+        b += '<path d="M%d,%d Q%d,%d %d,%d" fill="none" stroke="#fff" stroke-width="2"/>' % (cx - 64, y, cx, y - 2 * kk + 4, cx + 64, y)
+        b += mark(cx + 120, y - 20, ok)
+        b += text(cx, y + 30, 'arco regolare, spessore uniforme' if ok else 'piatta o irregolare', 12.5, fill=OK if ok else ERR, weight=600)
+    return svg(940, 405, b, 'Scheda di valutazione stile gara e vista a tunnel')
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for name, f in FIGS.items():

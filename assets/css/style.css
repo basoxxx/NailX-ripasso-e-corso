@@ -36,6 +36,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
@@ -208,6 +209,65 @@ figure img { cursor: zoom-in; }
 .cert-detail th, .cert-detail td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
 .cert-detail th { background: var(--surface-2); }
 
+
+/* In parole semplici */
+.box.simple { background: var(--surface-2); border-color: var(--accent-2); }
+
+/* Termini del glossario nelle lezioni */
+.gl { border-bottom: 2px dotted var(--accent); cursor: help; position: relative; }
+.gl:hover::after, .gl:focus::after {
+  content: attr(data-def); position: absolute; left: 0; top: calc(100% + 6px); z-index: 30; width: min(300px, 80vw);
+  background: var(--text); color: var(--bg); padding: .55rem .7rem; border-radius: 10px; font-size: .85rem; line-height: 1.4;
+  font-weight: 400; box-shadow: var(--shadow);
+}
+.gl:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+/* Video (caricati al clic) */
+.videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .8rem; }
+.yt { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #2b1f22; }
+.yt iframe { width: 100%; height: 100%; border: 0; display: block; }
+.yt-play { width: 100%; height: 100%; border: 0; cursor: pointer; color: #fff; text-align: left; padding: 1rem; display: flex; flex-direction: column;
+  justify-content: flex-end; gap: .2rem; font: inherit; background: linear-gradient(135deg, #8e3b5a, #2b1f22); position: relative; }
+.yt-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); width: 58px; height: 58px; border-radius: 50%;
+  background: rgba(255, 255, 255, .92); color: #c2577a; display: grid; place-items: center; font-size: 1.4rem; padding-left: 4px; }
+.yt-play:hover .yt-icon { background: #fff; transform: translate(-50%, -60%) scale(1.06); }
+.yt-title { font-weight: 700; line-height: 1.3; }
+.yt-ch { font-size: .82rem; opacity: .8; }
+
+/* Confronto foto */
+.photo-eval { border: 1px dashed var(--border); border-radius: 12px; padding: .2rem 1rem 1rem; margin: 1rem 0; }
+.photo-btn { position: relative; overflow: hidden; }
+.photo-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.chips { display: flex; gap: .4rem; flex-wrap: wrap; margin: .6rem 0; }
+.cmp-stage { border-radius: 10px; overflow: hidden; background: #fff; }
+.cmp-stage.side { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.cmp-stage.side img { width: 100%; height: 100%; object-fit: contain; }
+.cmp-stage.over { position: relative; }
+.cmp-stage.over .ref { width: 100%; display: block; }
+.cmp-stage.over .mine { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.cmp-range { display: flex; gap: .6rem; align-items: center; font-size: .9rem; margin-top: .5rem; }
+.cmp-range input { flex: 1; accent-color: var(--accent); }
+
+/* Ripasso */
+.filters a.chip { text-decoration: none; }
+.fc-bar { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.fc-bar .search { flex: 1; min-width: 220px; border-radius: 12px; }
+.flashcard { display: flex; flex-direction: column; gap: .6rem; justify-content: center; align-items: center; text-align: center; width: 100%;
+  min-height: 240px; margin-top: 1rem; padding: 1.5rem; border-radius: 18px; border: 2px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: 1.12rem; cursor: pointer; box-shadow: var(--shadow); }
+.flashcard.flipped { background: var(--accent-soft); border-color: var(--accent); }
+.fc-side { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--accent-2); }
+.fc-actions { justify-content: center; }
+.sheets { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.sheet ul { padding-left: 1.2rem; margin: .3rem 0 .6rem; }
+.sheet li { margin: .25rem 0; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+.sheet .btn { margin-top: auto; }
+.tbar { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-bottom: .6rem; }
+.tbar i { display: block; height: 100%; background: var(--ok); transition: width .1s linear; }
+.tbar i.late { background: var(--err); }
+.review-list li { margin-bottom: .7rem; }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .layout { grid-template-columns: 1fr; }
@@ -233,6 +293,9 @@ figure img { cursor: zoom-in; }
   .cert-wrap { box-shadow: none; border-radius: 0; }
   .cert-detail { border: 0; padding: 0; margin: 0; color: #000; background: #fff; }
   body[data-page="attestato"] { background: #fff; }
+  body[data-page="ripasso"] main > :not(#review), #review > .btn-row, .sheet-print, .no-print { display: none !important; }
+  .sheets { display: block; }
+  .sheet { break-inside: avoid; box-shadow: none; margin-bottom: 8mm; }
   .layout { display: block; }
   .lesson { border: 0; box-shadow: none; }
 }
