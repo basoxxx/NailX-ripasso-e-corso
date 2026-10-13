@@ -140,9 +140,9 @@ def finger_side(x, y, L=170, free=0, plate=True, free_col=FREE, tip_down=0):
     """Dito di profilo, punta verso destra. x = eponichio, y = superficie della lamina, L = lunghezza del letto."""
     xe = x + L
     s = ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f '
-         'C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
+         'C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
          % (x - 110, y - 14, x - 8, y - 14, x + 6, y - 14, x + 10, y - 2, xe, y + 5,
-            xe + 26, y + 10, xe + 30, y + 52, xe + 2, y + 70, xe - 20, y + 80, x - 60, y + 80, x - 110, y + 80, SKIN, SKIN_D))
+            xe + 16, y + 8, xe + 20, y + 44, xe - 2, y + 62, xe - 24, y + 80, x - 60, y + 80, x - 110, y + 80, SKIN, SKIN_D))
     if plate:
         s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
               % (x + 4, y, xe, y + 1, xe, y + 6, x + 6, y + 5, NAIL, NAIL_S))
@@ -150,8 +150,10 @@ def finger_side(x, y, L=170, free=0, plate=True, free_col=FREE, tip_down=0):
             s += ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
                   % (xe, y + 1, xe + free, y + 1 + tip_down, xe + free, y + 6 + tip_down, xe, y + 6, free_col, NAIL_S))
         # piega dell'eponichio sopra l'inizio della lamina
-        s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.3"/>'
-              % (x - 40, y - 14, x - 8, y - 14, x + 8, y - 14, x + 12, y - 1, x - 40, y - 1, SKIN, SKIN_D))
+        s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s"/>'
+              % (x - 40, y - 13, x - 8, y - 13, x + 8, y - 13, x + 12, y - 1, x - 40, y - 1, SKIN))
+        s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.5"/>'
+              % (x - 8, y - 14, x + 8, y - 14, x + 12, y - 1, SKIN_D))
     return s
 
 
@@ -583,7 +585,7 @@ def primers():
         x = 20 + i * 370
         cx, cy, r = x + 118, 190, 100
         surf = cy + 12
-        inner = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (cx - r, cy - r, 2 * r, r + 12, PROD)
+        inner = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s"/>' % (cx - r, cy - r, 2 * r, r + 32, PROD)
         if i == 0:
             pts = 'M%.1f,%.1f ' % (cx - r, surf)
             xx = cx - r
@@ -655,6 +657,423 @@ def primer_amount():
     b += frame(x, 20, 290, 290, 'Troppo primer', ok=False, sub='meno adesione, pelle a rischio', body=body)
     return svg(W, H, arrow_defs() + b, 'La quantità giusta di primer: pennello quasi asciutto, solo sulla lamina, lontano dalla pelle')
 
+
+
+# ================================================================= MODULO TIP
+HATCH_ID = 'hatchB'
+
+
+def hatch_defs(col=ACC, op=.55):
+    return ('<defs><pattern id="%s" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+            '<line x1="0" y1="0" x2="0" y2="7" stroke="%s" stroke-width="2.2" opacity="%s"/></pattern></defs>' % (HATCH_ID, col, op))
+
+
+def tip_top(cx, ys, hw, L, well, op=1.0, hatch=True, ang=0, stop=True, outline=TIP_S):
+    """Tip visto dall'alto: ys = punto d'arresto, L = corpo oltre l'arresto, well = incavo verso la cuticola."""
+    yt = ys - L
+    body = ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z'
+            % (cx - hw, ys + well, cx - hw, yt + hw * 0.5, cx - hw, yt, cx, yt, cx + hw, yt, cx + hw, yt + hw * 0.5,
+               cx + hw, ys + well, cx, ys + well + 26, cx - hw, ys + well))
+    s = '<path d="%s" fill="%s" fill-opacity="%.2f" stroke="%s" stroke-width="1.6"/>' % (body, TIPC, op, outline)
+    if hatch and well > 0:
+        c = uid('t')
+        s += '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>' % (c, body)
+        s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)" clip-path="url(#%s)"/>' % (cx - hw - 2, ys, 2 * hw + 4, well + 30, HATCH_ID, c)
+    if stop:
+        s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="2.2"/>' % (cx - hw, ys, cx + hw, ys, outline)
+    if ang:
+        s = rot(ang, cx, ys + well, s)
+    return s
+
+
+def tip_side(x, y, ang=0, well=46, L=120, glue=False):
+    """Tip di profilo: arresto in (x, y) (y = superficie della lamina), corpo verso destra."""
+    t = ('<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" '
+         'fill="%s" stroke="%s" stroke-width="1.5"/>'
+         % (x - well, y - 1, x - well, y - 3.5, x, y - 5, x + L * 0.6, y - 6, x + L, y - 2, x + L, y + 4,
+            x + L * 0.6, y + 2, x, y + 6, x, y, x - well, y - 1, TIPC, TIP_S))
+    if glue:
+        t += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#5aa9dc" stroke-width="3" fill="none" stroke-linecap="round"/>' % (
+            x - well + 6, y + 1, x - well / 2, y + 3, x - 4, y + 1)
+    return rot(ang, x, y, t) if ang else t
+
+
+def finger_front(cx, cy, hw=52, curve=22):
+    """Sezione frontale del dito (vista dal bordo libero): restituisce svg e la quota della lamina al centro."""
+    s = ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
+         % (cx - hw - 22, cy, cx - hw - 26, cy + 70, cx + hw + 26, cy + 70, cx + hw + 22, cy,
+            cx + hw + 18, cy - curve - 18, cx - hw - 18, cy - curve - 18, cx - hw - 22, cy, SKIN, SKIN_D))
+    s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>'
+          % (cx - hw, cy - 4, cx, cy - 2 * curve - 4, cx + hw, cy - 4, NAIL_S))
+    for sx in (-1, 1):
+        s += ('<path d="M%.1f,%.1f q%.1f,-14 %.1f,-4" fill="%s" stroke="%s" stroke-width="1.5"/>'
+              % (cx + sx * (hw + 24), cy + 2, -sx * 10, -sx * 22, SKIN, SKIN_D))
+    return s
+
+
+@figx('tip-anatomia.svg')
+def tip_anat():
+    W, H = 760, 370
+    b = hatch_defs()
+    b += text(20, 38, 'Com\'è fatto un tip', 20, 'start', 800, ACC2)
+    cx, ys = 120, 230
+    b += tip_top(cx, ys, 50, 160, 70)
+    b += leader(cx - 12, ys + 40, 230, 262, 'Incavo (well)', 'start', 14)
+    b += leader(cx + 30, ys, 230, 222, 'Punto d\'arresto', 'start', 14)
+    b += leader(cx + 22, ys + 60, 230, 300, 'Zona di contatto', 'start', 14)
+    b += text(236, 318, '(sotto l\'incavo)', 12.5, 'start', fill=MUTED)
+    b += leader(cx + 10, ys - 90, 230, 130, 'Corpo del tip', 'start', 14)
+    b += text(120, 60, 'dall\'alto', 13, weight=700, fill=MUTED)
+    # vista di profilo
+    b += '<rect x="400" y="64" width="340" height="250" rx="16" fill="%s"/>' % PANEL
+    b += text(570, 92, 'di profilo', 13, weight=700, fill=MUTED)
+    t = ('<path d="M430,176 L430,172 L540,168 L540,160 Q640,158 720,172 L720,180 Q640,170 548,176 L540,184 L540,178 Z" '
+         'fill="%s" stroke="%s" stroke-width="1.8"/>' % (TIPC, TIP_S))
+    b += t
+    b += '<rect x="430" y="178" width="110" height="9" fill="url(#%s)"/>' % HATCH_ID
+    b += '<rect x="430" y="178" width="110" height="9" fill="none" stroke="%s" stroke-dasharray="3 3"/>' % MUTED
+    b += arrow(600, 222, 545, 186)
+    b += mtext(604, 236, ['gradino: si appoggia', 'al bordo libero'], 12.5, 'start', 600)
+    b += leader(480, 172, 470, 130, 'incavo sottile', 'middle', 13)
+    b += leader(484, 186, 470, 222, 'zona di contatto', 'middle', 12.5)
+    # curva a C
+    b += ('<path d="M424,294 Q464,262 504,294" fill="none" stroke="%s" stroke-width="7" stroke-linecap="round"/>' % TIP_S)
+    b += text(516, 284, 'Curva a C', 13, 'start', 700)
+    b += text(516, 300, '(vista dalla punta)', 12, 'start', fill=MUTED)
+    b += text(W / 2, 352, 'L\'incavo copre al massimo metà unghia.', 15, weight=800, fill=ACC2)
+    return svg(W, H, arrow_defs() + b, 'Le parti del tip: incavo, punto d\'arresto, zona di contatto, corpo e curva a C')
+
+
+@figx('tip-misura-errori.svg')
+def tip_size():
+    W, H = 940, 330
+    b = hatch_defs()
+    data = [('Troppo stretto', False, -16, 'lati scoperti: crepe'), ('Giusto', True, 0, 'da solco a solco'),
+            ('Troppo largo', False, 16, 'preme sulla pelle: dolore')]
+    for i, (t, ok, dw, sub) in enumerate(data):
+        x = 20 + i * 304
+        cx, cy = x + 145, 170
+        hw = 52
+        body = finger_front(cx, cy, hw)
+        th = hw + dw
+        k = 22 * th / hw
+        # tip sopra la lamina (vista frontale)
+        body += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="9" stroke-linecap="round" opacity=".95"/>'
+                 % (cx - th, cy - 12 + (abs(dw) * 0.9 if dw > 0 else 0), cx, cy - 2 * k - 14, cx + th, cy - 12 + (abs(dw) * 0.9 if dw > 0 else 0), TIPC))
+        body += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" fill="none" stroke="%s" stroke-width="1.4"/>'
+                 % (cx - th, cy - 16 + (abs(dw) * 0.9 if dw > 0 else 0), cx, cy - 2 * k - 18, cx + th, cy - 16 + (abs(dw) * 0.9 if dw > 0 else 0), TIP_S))
+        if dw < 0:
+            for sx in (-1, 1):
+                body += arrow(cx + sx * 74, cy - 56, cx + sx * (hw - 4), cy - 14, ERR, 2)
+            body += text(cx, 92, 'lati scoperti', 13, weight=700, fill=ERR)
+        elif dw > 0:
+            for sx in (-1, 1):
+                body += '<circle cx="%.1f" cy="%.1f" r="13" fill="%s" opacity=".55"/>' % (cx + sx * (hw + 18), cy - 4, ERR)
+            body += text(cx, 92, 'sulla pelle', 13, weight=700, fill=ERR)
+        else:
+            body += dim(cx - hw, 96, cx + hw, 96, 'solco – solco', 'above', OK)
+            body += leader(cx + 20, cy - 52, cx + 90, cy - 70, 'tip', 'start', 13)
+            body += leader(cx + 36, cy - 26, cx + 96, cy - 36, 'unghia', 'start', 13)
+        body += text(cx, 252, 'vista dalla punta', 12.5, fill=MUTED, style='italic')
+        b += frame(x, 20, 290, 290, t, ok=ok, sub=sub, body=body)
+    return svg(W, H, arrow_defs() + b, 'Misura del tip vista dalla punta: troppo stretto, giusto, troppo largo')
+
+
+@figx('tip-adattare.svg')
+def tip_fit():
+    W, H = 760, 330
+    b = hatch_defs()
+    # 1 lima i lati del tip
+    x = 20
+    cx = x + 150
+    body = tip_top(cx, 190, 56, 120, 60)
+    body += '<path d="M%d,%d L%d,%d" stroke="%s" stroke-width="2" stroke-dasharray="6 4"/>' % (cx + 44, 70, cx + 44, 270, OK)
+    body += '<path d="M%d,%d L%d,%d L%d,%d L%d,%d Z" fill="%s" opacity=".25"/>' % (cx + 44, 76, cx + 56, 80, cx + 56, 250, cx + 44, 250, ERR)
+    body += tool_file(cx + 74, 170, 90, 150, 18)
+    body += arrow(cx + 102, 120, cx + 102, 210, MUTED, 1.6, True)
+    body += leader(cx + 50, 130, cx - 10, 100, 'solo plastica', 'end', 13, fill=ACC2)
+    b += frame(x, 20, 350, 290, 'Lima i lati del tip', 1, sub='prima di incollare', body=body, subcol=INK)
+    # 2 accorcia l'incavo
+    x = 390
+    cx, yc = x + 130, 270
+    body = ''
+    f, p = top_finger(cx, yc, hw=46, nail_len=160, free_len=10, finger_len=20)
+    body += f
+    ys = p['y_s'] - 10
+    body += tip_top(cx, ys, 50, 70, 130, op=0.55, hatch=False)
+    half = yc - 3 - 80
+    body += ('<path d="M%d,%d Q%d,%d %d,%d L%d,%d Q%d,%d %d,%d Z" fill="%s" opacity=".3"/>'
+             % (cx - 50, half - 6, cx, half + 18, cx + 50, half - 6, cx + 50, ys + 130, cx, ys + 156, cx - 50, ys + 130, ERR))
+    body += '<path d="M%d,%d Q%d,%d %d,%d" stroke="%s" stroke-width="2.4" stroke-dasharray="7 5" fill="none"/>' % (cx - 50, ys + 130, cx, ys + 156, cx + 50, ys + 130, ERR)
+    body += '<path d="M%d,%d Q%d,%d %d,%d" stroke="%s" stroke-width="3" fill="none"/>' % (cx - 50, half - 6, cx, half + 18, cx + 50, half - 6, OK)
+    body += tool_scissors(cx + 56, half + 4, 0, 0.8)
+    body += text(cx + 112, half - 40, 'max', 13, 'start', 800, OK)
+    body += text(cx + 112, half - 22, 'metà unghia', 13, 'start', 800, OK)
+    body += text(cx + 112, ys + 150, 'troppo', 13, 'start', 800, ERR)
+    body += text(cx + 112, ys + 168, 'lungo', 13, 'start', 800, ERR)
+    b += frame(x, 20, 350, 290, 'Accorcia l\'incavo', 2, sub='segue la curva della cuticola', body=body, subcol=INK)
+    return svg(W, H, arrow_defs() + b, 'Adattare il tip: limare i lati e accorciare l\'incavo a metà unghia')
+
+
+@figx('tip-incollaggio-45.svg')
+def tip_glue():
+    W, H = 940, 310
+    b = ''
+    T = ['Appoggia a 45°', 'Abbassa lentamente', 'Tieni fermo']
+    for i, t in enumerate(T):
+        x = 20 + i * 228
+        fx, fy = x + 34, 190
+        body = finger_side(fx, fy, L=82, free=14)
+        sx = fx + 96
+        ang = [42, 18, 0][i]
+        body += tip_side(sx, fy + 1, ang, glue=(i == 0))
+        if i == 0:
+            body += dashed(sx, fy + 1, sx + 80, fy + 1, MUTED, 1.2, '4 4')
+            body += arc_angle(sx, fy + 1, 40, 0, 42, '45°', lx=sx + 58, ly=fy + 36)
+            body += leader(sx - 24, fy - 30, sx - 70, fy - 80, 'colla', 'end', 13)
+        elif i == 1:
+            body += ('<path d="M%.1f,%.1f A70,70 0 0 0 %.1f,%.1f" fill="none" stroke="%s" stroke-width="2.2" marker-end="url(#ar)"/>'
+                     % (sx + 52, fy + 52, sx + 70, fy + 12, ACC2))
+            for k in range(3):
+                body += '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#fff" stroke="#5aa9dc" stroke-width="1.4"/>' % (sx - 52 - k * 12, fy - 10 - k * 10, 4 - k * 0.6)
+            body += arrow(sx - 50, fy - 30, sx - 92, fy - 62)
+            body += text(sx - 70, fy - 72, 'aria fuori', 13, 'middle', 700, ACC2)
+        else:
+            body += thumb(sx - 24, fy - 30, 180, 0.8)
+            body += timer(x + 118, 82, '5–10 s')
+        b += frame(x, 20, 216, 270, t, i + 1, body=body)
+    # riquadro errore
+    x = 704
+    fx, fy = x + 40, 180
+    body = finger_side(fx, fy, L=70, free=14)
+    sx = fx + 84
+    body += tip_side(sx, fy - 3, 0)
+    body += '<ellipse cx="%.1f" cy="%.1f" rx="13" ry="3" fill="#fff" stroke="#5aa9dc" stroke-width="1.4"/>' % (sx - 22, fy - 2)
+    body += arrow(sx - 10, fy - 70, sx - 10, fy - 20)
+    body += leader(sx - 22, fy - 2, sx + 10, fy + 50, 'bolla', 'start', 13, fill=ERR)
+    b += frame(x, 20, 216, 270, 'Appoggiato piatto', ok=False, sub='giù di colpo = bolle', body=body)
+    return svg(W, H, arrow_defs() + b, 'Incollare il tip: appoggio a 45 gradi, discesa lenta, tenuta 5–10 secondi; errore: tip appoggiato di colpo')
+
+
+@figx('tip-errori-applicazione.svg')
+def tip_errors():
+    W, H = 940, 320
+    b = hatch_defs()
+    T = [('Bolla', 'togli e riapplica'), ('Fuori asse', 'l\'unghia cresce storta'), ('Inclinato', 'punta che scende')]
+    for i, (t, sub) in enumerate(T):
+        x = 20 + i * 304
+        cx, yc = x + 145, 255
+        body = ''
+        if i < 2:
+            f, p = top_finger(cx, yc, hw=40, nail_len=110, free_len=6, finger_len=14)
+            body += f
+            ys = p['y_s'] - 4
+            body += tip_top(cx, ys, 43, 78, 55, op=0.6, ang=(10 if i == 1 else 0), hatch=False)
+            if i == 0:
+                body += '<circle cx="%.1f" cy="%.1f" r="12" fill="#fff" opacity=".95" stroke="#cfd8de"/>' % (cx + 8, ys + 30)
+                body += leader(cx + 12, ys + 30, cx + 90, ys - 30, 'bolla', 'start', 13.5, fill=ERR)
+            else:
+                body += dashed(cx, yc + 10, cx, 64, OK, 1.8)
+                body += dashed(cx, ys + 60, cx + (ys + 60 - 64) * math.tan(math.radians(10)), 64, ERR, 1.8)
+                body += text(cx - 10, 80, 'asse del dito', 12.5, 'end', 700, OK)
+                body += text(cx + 40, 80, 'tip', 12.5, 'start', 700, ERR)
+        else:
+            fx, fy = x + 26, 180
+            body += finger_side(fx, fy, L=84, free=12)
+            sx = fx + 96
+            body += tip_side(sx, fy + 1, 14)
+            body += dashed(sx, fy + 1, sx + 130, fy + 1, OK, 1.8)
+            body += text(sx + 70, fy - 12, 'linea giusta', 12.5, 'middle', 700, OK)
+            body += arrow(sx + 112, fy + 6, sx + 112, fy + 26, ERR, 2)
+        b += frame(x, 20, 290, 285, t, ok=False, sub=sub, body=body)
+    return svg(W, H, arrow_defs() + b, 'Tre errori di applicazione del tip: bolla, fuori asse, inclinato')
+
+
+@figx('tip-taglio.svg')
+def tip_cut():
+    W, H = 760, 330
+    b = hatch_defs()
+    # 1 taglio perpendicolare
+    x = 20
+    cx, yc = x + 130, 312
+    body = ''
+    f, p = top_finger(cx, yc, hw=38, nail_len=100, free_len=6, finger_len=20)
+    body += f
+    ys = p['y_s'] - 4
+    body += tip_top(cx, ys, 41, 120, 45, op=0.6, hatch=False)
+    cut = ys - 70
+    body += dashed(cx - 66, cut, cx + 66, cut, ERR, 2, '7 5')
+    body += tool_tipcutter(cx, cut, -90, 1.0)
+    body += dim(cx + 60, cut, cx + 60, cut + 20, '', 'left')
+    body += mtext(cx + 72, cut + 18, ['+1–2 mm', 'per limare'], 12.5, 'start', 700, ACC2)
+    body += text(cx - 72, cut + 4, 'taglio', 12.5, 'end', 700, ERR)
+    b += frame(x, 20, 350, 290, 'Taglio perpendicolare', ok=True, body=body)
+    # 2 lunghezza
+    x = 390
+    cx, yc = x + 120, 300
+    body = ''
+    f, p = top_finger(cx, yc, hw=38, nail_len=140, free_len=70, shape='squoval', free=TIPC, finger_len=20)
+    body += f
+    yb0, yb1 = yc - 3, p['y_s']
+    body += '<path d="M%d,%d q-12,0 -12,10 L%d,%d q0,10 -10,10 q10,0 10,10 L%d,%d q0,10 12,10" fill="none" stroke="%s" stroke-width="2"/>' % (
+        cx - 56, yb1, cx - 68, (yb0 + yb1) / 2 - 10, cx - 68, yb0 - 10, ACC2)
+    body += text(cx - 84, (yb0 + yb1) / 2 + 5, 'letto', 13.5, 'end', 800, ACC2)
+    body += '<path d="M%d,%d q12,0 12,10 L%d,%d q0,10 10,10 q-10,0 -10,10 L%d,%d q0,10 -12,10" fill="none" stroke="%s" stroke-width="2"/>' % (
+        cx + 56, p['y_t'], cx + 68, (p['y_t'] + yb1) / 2 - 10, cx + 68, yb1 - 10, OK)
+    body += mtext(cx + 86, (p['y_t'] + yb1) / 2, ['max', '½ letto'], 13.5, 'start', 800, OK)
+    b += frame(x, 20, 350, 290, 'Lunghezza equilibrata', ok=True, body=body)
+    b += text(W / 2, 334, 'Taglia solo a colla asciutta.', 14.5, weight=800, fill=ERR)
+    return svg(W, H + 14, arrow_defs() + b, 'Taglio del tip: tagliatip perpendicolare e lunghezza massima di metà letto ungueale')
+
+
+def blend_section(x, y, w, state):
+    """Sezione ingrandita: lamina (sotto) + fine dell'incavo del tip; state = 'prima', 'lima', 'dopo', 'ko'."""
+    s = '<rect x="%.1f" y="%.1f" width="%.1f" height="40" fill="#f0c3ad"/>' % (x, y + 22, w)
+    lam_top = y
+    if state == 'ko':
+        s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
+              % (x, y, x + w * 0.42, y, x + w * 0.42 + 34, y + 12, x + w * 0.42 + 68, y, x + w, y, x + w, y + 22, x, y + 22, NAIL, NAIL_S))
+    else:
+        s += '<rect x="%.1f" y="%.1f" width="%.1f" height="22" fill="%s" stroke="%s" stroke-width="1.5"/>' % (x, y, w, NAIL, NAIL_S)
+    e = x + w * 0.42  # fine dell'incavo
+    if state == 'prima':
+        s += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
+            x + w, y - 14, e, y - 14, e, y, x + w, y, TIPC, TIP_S)
+    elif state == 'lima':
+        s += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
+            x + w, y - 14, e + 40, y - 14, e, y, x + w, y, TIPC, TIP_S)
+    elif state == 'dopo':
+        s += '<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
+            x + w, y - 14, e + 70, y - 14, e + 30, y - 12, e - 6, y, x + w, y, TIPC, TIP_S)
+    else:
+        s += '<path d="M%.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
+            x + w, y - 14, e + 70, y - 14, e + 68, y, x + w, y, TIPC, TIP_S)
+    s += text(x + 8, y + 16, 'lamina', 12.5, 'start', 700, ACC2)
+    s += text(x + w - 8, y - 22, 'tip', 12.5, 'end', 700, MUTED)
+    return s, e
+
+
+@figx('tip-fusione-step.svg')
+def tip_blend():
+    W, H = 940, 330
+    b = ''
+    T = [('Prima', None, 'il gradino si sente'), ('Lima piatta solo sul tip', None, 'grana 180–240'), ('Dopo: liscio', True, 'nessuno scalino'),
+         ('Lamina limata', False, 'sottile e sensibile')]
+    for i, (t, ok, sub) in enumerate(T):
+        x = 20 + i * 228
+        body = ''
+        sx, sy = x + 10, 190
+        sec, e = blend_section(sx, sy, 196, ['prima', 'lima', 'dopo', 'ko'][i])
+        body += sec
+        if i == 0:
+            body += arrow(e - 20, sy - 60, e - 2, sy - 10)
+            body += text(e - 24, sy - 68, 'gradino', 13, 'middle', 700, ACC2)
+        elif i == 1:
+            body += tool_file(e + 24, sy - 14, -19, 100, 14)
+            body += arrow(e - 10, sy - 44, e + 64, sy - 70, ACC2, 1.8, True)
+        elif i == 2:
+            body += text(e + 10, sy - 50, 'superficie continua', 12.5, 'middle', 700, OK)
+        else:
+            body += arrow(e + 34, sy - 50, e + 34, sy + 4, ERR, 2)
+            body += text(e + 34, sy - 58, 'avvallamento', 12.5, 'middle', 700, ERR)
+        b += frame(x, 20, 216, 290, t, (i + 1) if i < 3 else None, ok=ok if i == 3 else None, sub=sub, body=body,
+                   subcol=ERR if i == 3 else INK)
+        if i == 2:
+            b += mark(x + 192, 45, True, 13)
+    return svg(W, H, arrow_defs() + b, 'Fusione del tip in sezione: dal gradino alla superficie liscia, senza limare la lamina')
+
+
+def overlay_profile(ox, oy, L=170, free=26, ext=130, apex_h=28, prod=True, apex_at=None, tip=True):
+    """Profilo: dito + lamina + (tip) + prodotto. Restituisce svg e punti."""
+    s = finger_side(ox, oy, L=L, free=free)
+    xe = ox + L
+    xn = xe + free           # fine unghia naturale
+    xb = xn + ext            # punta
+    if tip:
+        s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.4"/>'
+              % (xn - 40, oy - 1, xn, oy - 2, xn + ext * 0.6, oy - 1, xb, oy + 3, xb, oy + 7, xn, oy + 6, TIPC, TIP_S))
+    pts = {}
+    if prod:
+        xa = ox + 14
+        ax = apex_at if apex_at is not None else xe - 6
+        top = 'M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f' % (
+            xa, oy - 1, (xa + ax) / 2, oy - apex_h, ax, oy - apex_h, (ax + xb) / 2 + 20, oy - apex_h, xb, oy - 4)
+        s += '<path d="%s L%.1f,%.1f L%.1f,%.1f Z" fill="%s" stroke="%s" stroke-width="1.6" opacity=".92"/>' % (
+            top, xb, oy - 1, xa, oy - 1, PROD, PROD_S)
+        pts = dict(xa=xa, ax=ax, ah=oy - apex_h)
+    pts.update(xe=xe, xn=xn, xb=xb, oy=oy, ox=ox)
+    return s, pts
+
+
+@figx('tip-overlay-sezione.svg')
+def tip_overlay():
+    W, H = 760, 310
+    b = text(20, 38, 'Copertura in gel sul tip (sezione)', 20, 'start', 800, ACC2)
+    s, p = overlay_profile(150, 190, L=200, free=24, ext=200, apex_h=34)
+    b += s
+    xn, xe, oy = p['xn'], p['xe'], p['oy']
+    b += dashed(xn, oy - 70, xn, oy + 40, MUTED, 1.4, '5 4')
+    b += text(xn + 6, oy + 58, 'fine unghia naturale', 12.5, 'middle', 600, MUTED)
+    b += '<circle cx="%.1f" cy="%.1f" r="5" fill="%s"/>' % (xe, oy + 6, ERR)
+    b += leader(xe, oy + 6, xe - 80, oy + 70, 'punto di stress', 'end', 13, fill=ERR)
+    b += text(p['xa'] + 40, 120, 'Zona 3 sottile', 13.5, 'middle', 800)
+    b += text(p['ax'], 112, 'Zona 2 apex', 13.5, 'middle', 800, ACC2)
+    b += arrow(p['ax'], 118, p['ax'], p['ah'] - 2)
+    b += text(p['xb'] - 50, 140, 'Zona 1 ≈ 1–1,5 mm', 13.5, 'middle', 800)
+    b += dim(p['ox'] + 2, oy - 26, p['xa'] + 2, oy - 26, '', 'above')
+    b += text(p['ox'] - 10, oy - 40, '≈ 1 mm dalla pelle', 12.5, 'middle', 700, ACC2)
+    b += leader(p['xb'] - 30, oy + 4, p['xb'] - 10, oy + 50, 'tip', 'start', 13)
+    return svg(W, H, arrow_defs() + b, 'Sezione della copertura in gel sul tip: sottile alla cuticola, apex sopra il punto di stress, sottile in punta')
+
+
+@figx('tip-gel-step.svg')
+def tip_gel_steps():
+    labels = ['Primer solo sull\'unghia', 'Base + lampada', 'Perla in zona 2', 'Capovolgi', 'Controlla il profilo', 'Lima, top, olio']
+
+    def nail_tip():
+        f, p = top_finger(0, 0, hw=34, nail_len=100, free_len=6, finger_len=8)
+        ys = p['y_s'] - 4
+        return f + tip_top(0, ys, 36, 70, 40, op=0.6, hatch=False), ys
+
+    def d(i, x, y):
+        s = ''
+        cx, yb = x + 145, y + 176
+        if i in (0, 1, 2, 5):
+            g, ys = nail_tip()
+            ox = cx - (40 if i == 1 else 0)
+            sc = 0.66
+            if i == 0:
+                g += tool_brush(16, -40, -50, 70, '#f4e3a4')
+                g += mark(64, ys - 40, False, 14)
+                g += text(84, ys - 34, 'tip', 18, 'start', 700, ERR)
+            elif i == 2:
+                g += bead(0, ys + 16, 20, PROD, PROD_S)
+                g += arrow(0, ys + 40, 0, ys + 74, ACC2, 2.4)
+                g += arrow(0, ys - 8, 0, ys - 50, ACC2, 2.4)
+            elif i == 5:
+                g += tool_file(64, ys - 20, -70, 110, 16)
+            s += scaled(ox, yb, sc, g)
+            if i == 1:
+                s += lamp(cx + 70, yb, 100)
+                s += timer(x + 30, y + 70, '')
+            if i == 5:
+                s += bottle(x + 46, yb, '#f0eaf6', 'top', 34, 50)
+                s += drop_c(x + 240, yb - 40, YEL)
+                s += text(x + 240, yb - 2, 'olio', 12.5, 'middle', 700, MUTED)
+        elif i == 3:
+            sp, p = overlay_profile(0, 0, L=90, free=14, ext=70, apex_h=22, tip=True)
+            s += scaled(x + 128, y + 116, 0.62, '<g transform="rotate(180 60 30)">%s</g>' % sp)
+            s += drop_c(x + 150, y + 150, PROD_S, s=0.7)
+            s += text(x + 252, y + 80, '5–30 s', 14, 'middle', 800, ACC2)
+            s += text(x + 120, y + 70, 'unghia verso il basso', 12.5, 'middle', 600, MUTED)
+        else:
+            sp, p = overlay_profile(0, 0, L=90, free=14, ext=70, apex_h=22, tip=True)
+            sp += '<circle cx="%.1f" cy="%.1f" r="5" fill="%s"/>' % (p['xe'], p['oy'] + 6, ERR)
+            s += scaled(x + 92, y + 120, 0.68, sp)
+            s += eye(x + 262, y + 98, 180, 1.1)
+            s += text(x + 130, y + 70, 'sottile – spesso – sottile', 12.5, 'middle', 600, MUTED)
+        return s
+    return steps_fig('Copertura in gel sul tip', labels, 3, 290, 190, d, 'Copertura in gel sul tip in sei passaggi')
 
 # ================================================================= MAIN
 def main():
