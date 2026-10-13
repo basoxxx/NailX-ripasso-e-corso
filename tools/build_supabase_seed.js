@@ -22,42 +22,70 @@ const DIR = path.join(__dirname, '..', 'supabase', 'migrations');
 const q = (v) => "'" + String(v).replace(/'/g, "''") + "'";
 const j = (v) => q(JSON.stringify(v)) + '::jsonb';
 
-// catalogo precedente: le righe da cancellare si calcolano rispetto all'ultima migrazione,
-// così una migrazione contiene un "delete" solo quando qualcosa è stato davvero tolto dal corso
-const prevFiles = fs.readdirSync(DIR).filter((f) => /_nailx_catalogo\.sql$/.test(f)).sort();
-const prev = prevFiles.length ? fs.readFileSync(path.join(DIR, prevFiles[prevFiles.length - 1]), 'utf8') : '';
-const section = (table) => (prev.split('insert into public.' + table)[1] || '').split('on conflict')[0];
-const prevKeys = (table) => [...section(table).matchAll(/^  \('((?:[^']|'')*)'/gm)].map((m) => m[1].replace(/''/g, "'"));
-const prevMaxQ = Math.max(0, ...[...section('exam_questions').matchAll(/^  \((\d+),/gm)].map((m) => +m[1]));
+// Stato attuale del catalogo nel database = somma di tutte le migrazioni "catalogo" già scritte.
+// La nuova migrazione contiene solo le righe nuove o cambiate e i "delete" delle righe tolte dal corso.
+const TABLES = {
+  course_lessons: {
+    head: 'insert into public.course_lessons (key, minutes) values',
+    tail: 'on conflict (key) do update set minutes = excluded.minutes;', col: 'key', num: false
+  },
+  course_exercises: {
+    head: 'insert into public.course_exercises (id, title, n_checks, minutes) values',
+    tail: 'on conflict (id) do update set title = excluded.title, n_checks = excluded.n_checks, minutes = excluded.minutes;', col: 'id', num: false
+  },
+  exam_questions: {
+    head: 'insert into public.exam_questions (id, module, question, options, answer, explanation) values',
+    tail: 'on conflict (id) do update set module = excluded.module, question = excluded.question, options = excluded.options,\n' +
+      '  answer = excluded.answer, explanation = excluded.explanation;', col: 'id', num: true
+  }
+};
+const rowKey = (line) => { const m = /^  \((\d+),|^  \('((?:[^']|'')*)'/.exec(line); return m ? (m[1] || m[2].replace(/''/g, "'")) : null; };
+const state = {};
+Object.keys(TABLES).forEach((t) => { state[t] = new Map(); });
+for (const f of fs.readdirSync(DIR).filter((f) => /_nailx_catalogo\.sql$/.test(f)).sort()) {
+  const sql = fs.readFileSync(path.join(DIR, f), 'utf8');
+  for (const [t, cfg] of Object.entries(TABLES)) {
+    const sec = (sql.split('insert into public.' + t + ' ')[1] || '').split('\non conflict')[0];
+    sec.split('\n').slice(1).forEach((l) => { const k = rowKey(l); if (k !== null) state[t].set(k, l.replace(/,$/, '')); });
+    for (const m of sql.matchAll(new RegExp('delete from public\\.' + t + ' where ' + cfg.col + ' in \\(([^;]*)\\);', 'g'))) {
+      [...m[1].matchAll(/'((?:[^']|'')*)'|(\d+)/g)].forEach((x) => state[t].delete(x[2] || x[1].replace(/''/g, "'")));
+    }
+    for (const m of sql.matchAll(new RegExp('delete from public\\.' + t + ' where id > (\\d+);', 'g'))) {
+      [...state[t].keys()].filter((k) => +k > +m[1]).forEach((k) => state[t].delete(k));
+    }
+  }
+}
 
-const lessons = D.modules.flatMap((m) => m.lessons.map((l) => [m.id + '/' + l.id, l.min || 10]));
-const goneLessons = prevKeys('course_lessons').filter((k) => !lessons.some(([x]) => x === k));
-let body = 'insert into public.course_lessons (key, minutes) values\n' +
-  lessons.map(([k, m]) => `  (${q(k)}, ${m})`).join(',\n') + '\non conflict (key) do update set minutes = excluded.minutes;\n' +
-  (goneLessons.length ? `delete from public.course_lessons where key in (${goneLessons.map(q).join(', ')});\n` : '') + '\n';
-body += 'insert into public.course_exercises (id, title, n_checks, minutes) values\n' +
-  D.exercises.map((e) => {
-    const min = parseInt((/(\d+)/.exec(e.time) || [0, 0])[1], 10);
-    return `  (${q(e.id)}, ${q(e.title)}, ${e.checks.length}, ${min})`;
-  }).join(',\n') + '\non conflict (id) do update set title = excluded.title, n_checks = excluded.n_checks, minutes = excluded.minutes;\n';
-const goneEx = prevKeys('course_exercises').filter((k) => !D.exercises.some((e) => e.id === k));
-body += (goneEx.length ? `delete from public.course_exercises where id in (${goneEx.map(q).join(', ')});\n` : '') + '\n';
+const want = { course_lessons: [], course_exercises: [], exam_questions: [] };
+D.modules.forEach((m) => m.lessons.forEach((l) => want.course_lessons.push(`  (${q(m.id + '/' + l.id)}, ${l.min || 10})`)));
+D.exercises.forEach((e) => {
+  const min = parseInt((/(\d+)/.exec(e.time) || [0, 0])[1], 10);
+  want.course_exercises.push(`  (${q(e.id)}, ${q(e.title)}, ${e.checks.length}, ${min})`);
+});
 let id = 0;
-const rows = [];
 D.modules.forEach((m) => (D.quiz[m.id] || []).forEach((x) => {
   id++;
-  rows.push(`  (${id}, ${q(m.id)}, ${q(x.q)}, ${j(x.o)}, ${x.a}, ${q(x.e || '')})`);
+  want.exam_questions.push(`  (${id}, ${q(m.id)}, ${q(x.q)}, ${j(x.o)}, ${x.a}, ${q(x.e || '')})`);
 }));
-body += 'insert into public.exam_questions (id, module, question, options, answer, explanation) values\n' + rows.join(',\n') +
-  '\non conflict (id) do update set module = excluded.module, question = excluded.question, options = excluded.options,\n' +
-  '  answer = excluded.answer, explanation = excluded.explanation;\n' +
-  (prevMaxQ > id ? `delete from public.exam_questions where id > ${id};\n` : '');
 
-const hash = crypto.createHash('sha256').update(body).digest('hex').slice(0, 16);
+// impronta del catalogo completo (serve a capire se è cambiato qualcosa)
+const full = Object.entries(TABLES).map(([t, c]) => c.head + '\n' + want[t].join(',\n') + '\n' + c.tail).join('\n\n');
+let body = '';
+for (const [t, cfg] of Object.entries(TABLES)) {
+  const keys = new Set(want[t].map(rowKey));
+  const changed = want[t].filter((l) => state[t].get(rowKey(l)) !== l);
+  const gone = [...state[t].keys()].filter((k) => !keys.has(k));
+  if (changed.length) body += cfg.head + '\n' + changed.join(',\n') + '\n' + cfg.tail + '\n';
+  if (gone.length) body += `delete from public.${t} where ${cfg.col} in (${gone.map((k) => (cfg.num ? k : q(k))).join(', ')});\n`;
+  if (changed.length || gone.length) body += '\n';
+}
+const lessons = want.course_lessons;
+
+const hash = crypto.createHash('sha256').update(full).digest('hex').slice(0, 16);
 const existing = fs.readdirSync(DIR).filter((f) => /_nailx_catalogo\.sql$/.test(f)).sort();
 const last = existing.length ? fs.readFileSync(path.join(DIR, existing[existing.length - 1]), 'utf8') : '';
 const nLessons = lessons.length;
-if (last.includes('-- catalogo: ' + hash)) {
+if (last.includes('-- catalogo: ' + hash) || !body) {
   console.log(`Catalogo invariato (${nLessons} lezioni, ${D.exercises.length} esercizi, ${id} domande): nessuna nuova migrazione.`);
   process.exit(0);
 }
@@ -66,5 +94,5 @@ const name = `${ts}_nailx_catalogo.sql`;
 fs.writeFileSync(path.join(DIR, name),
   '-- Generato da tools/build_supabase_seed.js: non modificare a mano.\n' +
   '-- Catalogo del corso NailX (lezioni, esercizi, domande d\'esame).\n' +
-  '-- catalogo: ' + hash + '\n\n' + body);
-console.log(`Creata supabase/migrations/${name}: ${nLessons} lezioni, ${D.exercises.length} esercizi, ${id} domande.`);
+  '-- catalogo: ' + hash + '\n\n' + body.trimEnd() + '\n');
+console.log(`Creata supabase/migrations/${name}: catalogo di ${nLessons} lezioni, ${D.exercises.length} esercizi, ${id} domande (solo le righe cambiate).`);

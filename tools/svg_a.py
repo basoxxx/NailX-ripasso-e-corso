@@ -453,22 +453,70 @@ def mini_section(x, y, w, mlen, thick):
     return s
 
 
+def _matrix_section(x, y, w, ml, th):
+    """Sezione longitudinale del dito (punta a destra). y = fondo della lamina (letto ungueale);
+    ml = lunghezza della matrice, th = spessore della lamina. Restituisce (svg, punti utili)."""
+    xf = x + 96                  # bordo della piega prossimale
+    xm0 = xf - 8 - ml            # inizio della matrice (sotto la piega)
+    xt = x + w - 34              # fine del letto (iponichio)
+    xe = x + w - 6               # bordo libero
+    top = y - th - 26            # dorso del dito
+    gid = uid('ms')
+    s = ('<defs><linearGradient id="%s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8dccb"/>'
+         '<stop offset=".5" stop-color="#f3cdb6"/><stop offset="1" stop-color="#dcab92"/></linearGradient></defs>' % gid)
+    body = ('M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f Z'
+            % (x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, xt, y,
+               xt + 22, y + 4, xt + 26, y + 34, xt + 10, y + 56, xt - 6, y + 74, xt - 40, y + 80, x, y + 80))
+    s += '<path d="%s" fill="url(#%s)" stroke="%s" stroke-width="1.5"/>' % (body, gid, SKIN_D)
+    # falange (osso) e letto ungueale
+    s += ('<path d="M%.1f,%.1f L%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z" fill="#f6efe2" stroke="#d9cbb3" stroke-width="1.2"/>'
+          % (x, y + 22, xt - 40, y + 20, xt - 14, y + 20, xt - 14, y + 52, xt - 40, y + 54, x, y + 56))
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="6" fill="#f2a3b6"/>' % (xm0 + ml, y, xt - xm0 - ml)
+    # matrice (germinativa) a mezzaluna sotto la piega
+    s += ('<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Z" fill="%s" stroke="#8f2a22" stroke-width="1"/>'
+          % (xm0, y - 2, xm0 + ml / 2, y + 14, xm0 + ml, y + 2, xm0 + ml, y + 9, xm0 + ml / 2, y + 22, xm0, y + 7, ERR))
+    # lamina: dalla radice al bordo libero, con strati
+    pl = ('M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z'
+          % (xm0, y - 1, xm0 + 2, y - th, xm0 + 12, y - th, xt, y - th, xe - 2, y - th, xe, y - th / 2 + 1,
+             xe - 2, y, xt, y, xm0 + ml, y, xm0 + 4, y + 1, xm0, y - 1))
+    s += '<path d="%s" fill="%s" stroke="%s" stroke-width="1.5"/>' % (pl, NAIL, NAIL_S)
+    if th > 10:
+        for k in (1, 2):
+            yy = y - th * k / 3
+            s += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1" opacity=".45"/>' % (xm0 + 12, yy, xe - 6, yy, NAIL_S)
+    # piega prossimale sopra la radice
+    s += ('<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="url(#%s)"/>'
+          % (x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, xf - 14, y - th - 2, x, y - th - 2, gid))
+    s += '<path d="M%.1f,%.1f L%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.5" fill="none"/>' % (
+        x, top, xf - 22, top, xf + 2, top + 2, xf + 4, y - th, SKIN_D)
+    s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="2.5" opacity=".8" fill="none" stroke-linecap="round"/>' % (
+        xf + 6, y - th - 1, xf + 14, y - th - 2.5, xf + 22, y - th - 2)
+    return s, dict(xm0=xm0, xm1=xm0 + ml, xe=xe, xt=xt, top=top)
+
+
 @figx('matrice-forma.svg')
 def matrice_forma():
     b = title('La matrice decide spessore e forma della lamina')
     pw = 232
-    for i, (t, ml, th, lab) in enumerate((('Matrice lunga', 64, 22, 'Lamina spessa'), ('Matrice corta', 26, 7, 'Lamina sottile'))):
+    for i, (t, ml, th, lab) in enumerate((('Matrice lunga', 60, 18, 'Lamina spessa'), ('Matrice corta', 24, 6, 'Lamina sottile'))):
         x = 20 + i * (pw + 12)
         b += frame(x, 56, pw, 244, t, i + 1)
-        b += mini_section(x + 12, 176, pw - 24, ml, th)
-        b += callout(x + 90 - ml / 2, 183, x + 70, 272, 'matrice', 13.5, 700, ERR)
-        b += callout(x + 170, 176 - th / 2, x + 150, 112, lab, 15, 800, ACC2)
+        y = 168
+        s, p = _matrix_section(x + 8, y, pw - 16, ml, th)
+        b += s
+        # misura della matrice
+        b += '<path d="M%.1f,%.1f v6 H%.1f v-6" stroke="%s" stroke-width="1.6" fill="none"/>' % (p['xm0'], y + 26, p['xm1'], ERR)
+        b += callout((p['xm0'] + p['xm1']) / 2, y + 32, x + 70, 280, 'matrice', 13.5, 700, ERR)
+        b += callout(p['xe'] - 30, y - th / 2, x + 150, 112, lab, 15, 800, ACC2)
+        # spessore
+        b += '<path d="M%.1f,%.1f h6 M%.1f,%.1f v%.1f M%.1f,%.1f h6" stroke="%s" stroke-width="1.6"/>' % (
+            p['xe'] + 2, y - th, p['xe'] + 5, y - th, th, p['xe'] + 2, y, ACC2)
     x = 20 + 2 * (pw + 12)
     b += frame(x, 56, pw, 244, 'Vista dalla punta', 3)
-    b += nail_front(x + 62, 160, 36, 0.05, thick=7)
-    b += nail_front(x + 172, 160, 36, 1.0, thick=7)
-    b += mtext(x + 62, 228, ['Matrice piatta', '→ unghia piatta'], 13, weight=600)
-    b += mtext(x + 172, 228, ['Matrice curva', '→ curva a C', 'profonda'], 13, weight=600)
+    b += gen_svg._ctip(x + 62, 132, 3, 44, NAIL, 7)
+    b += gen_svg._ctip(x + 172, 140, 22, 40, NAIL, 7)
+    b += mtext(x + 62, 248, ['Matrice piatta', '→ unghia piatta'], 13, weight=600)
+    b += mtext(x + 172, 248, ['Matrice curva', '→ curva a C', 'profonda'], 13, weight=600)
     b += '<rect x="20" y="314" width="720" height="50" rx="12" fill="#f1ecee"/>'
     b += calendar(40, 321, 38, 34)
     b += text(94, 345, 'Dalla matrice al bordo libero: circa 4–6 mesi', 16, 'start', 700)
@@ -2870,7 +2918,6 @@ def spray(cx, base, s=1.0, col='#dfe9f2', label='DISINF.'):
 def glass_file(cx, cy, ang=0, s=1.0):
     """Lima in vetro: trasparente, con zona incisa e riflessi."""
     o = ('<path d="M-66,-11 L56,-11 Q70,-11 70,0 Q70,11 56,11 L-66,11 Q-72,0 -66,-11 Z" fill="#cfe8f6" fill-opacity=".85" stroke="#6fa7c9" stroke-width="1.4"/>')
-    o += '<path d="M-60,-11 L50,-11 Q62,-11 62,0 Q62,11 50,11 L-60,11 Z" fill="url(#%s)" opacity=".0"/>' % 'none'
     for k in range(26):
         xx = -56 + k * 4.4
         o += '<line x1="%.1f" y1="-8" x2="%.1f" y2="8" stroke="#8fbfdc" stroke-width=".8"/>' % (xx, xx + 3)
@@ -3177,33 +3224,28 @@ def client_finger_left(x, y, w=330, prod=True):
 
 def efile_grip(x, y, ang=0, s=1.0, rest=True):
     """Mano dell'operatrice che impugna il manipolo come una penna, mignolo appoggiato (rest=True).
-    (x, y) = attacco testa-gambo della punta; il manipolo va verso destra, la mano sta sopra."""
-    sk, sd, sb = SKIN, SKIN_D, '#e6b49b'
+    (x, y) = attacco testa-gambo della punta; il manipolo va verso destra, la mano sta sopra.
+    Dita affusolate con nocche e unghie (gen_svg._digit)."""
+    D, B = gen_svg._digit, gen_svg._blob
+    HC, HD, HS = gen_svg._HAND, gen_svg._HAND_D, gen_svg._HAND_S
     o = ''
-    # medio (sotto il manipolo) e anulare ripiegato
-    o += '<path d="M150,6 C130,6 104,8 86,10 C76,11 72,18 78,22 C86,26 104,22 124,22 C140,22 150,22 160,20 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd)
-    o += '<path d="M168,8 C160,24 150,30 140,28 C130,26 130,16 140,10 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd)
-    # mignolo disteso fino al dito della cliente
+    # anulare ripiegato e mignolo (disteso fino al dito della cliente oppure raccolto)
+    o += D([(196, -12), (176, 6), (164, 20), (168, 32)], [11.5, 10.5, 9.5, 8.5], nail=0, fill=HD, creases=(1, 2))
     if rest:
-        o += ('<path d="M226,-14 C234,-2 242,6 252,10 C260,13 260,21 252,21 C240,20 226,12 212,-2 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd))
-        o += '<path d="M246,12 C250,10 256,11 258,14 C258,18 255,20 251,20 Z" fill="%s" stroke="%s" stroke-width=".9"/>' % (NAIL, NAIL_S)
+        o += D([(222, -24), (236, -6), (248, 8), (258, 16)], [10.5, 9.5, 8.5, 7.5], nail=-1, fill=HD, creases=(1, 2))
     else:
-        o += '<path d="M182,4 C188,16 186,26 178,30 C170,32 166,22 168,12 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd)
+        o += D([(220, -20), (212, 0), (204, 14), (198, 22)], [10, 9, 8, 7.5], nail=0, fill=HD, creases=(1,))
+    # medio sotto il manipolo
+    o += D([(176, 6), (140, 20), (110, 25), (86, 25)], [12.5, 11.5, 10.5, 9.5], nail=-1, fill=HD, creases=(1, 2))
     # dorso della mano e polso (in alto a destra)
-    o += ('<path d="M96,-30 C110,-62 160,-84 214,-88 L300,-96 L300,-20 L232,-6 C210,2 186,8 168,6 C138,4 110,-4 96,-30 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M150,-66 Q158,-58 154,-50 M176,-74 Q184,-66 180,-58" stroke="%s" stroke-width="1.1" fill="none" opacity=".6"/>' % sd
+    o += B([(98, -32), (126, -66), (180, -86), (260, -96), (400, -110), (404, -30), (300, -16), (250, -10), (200, 2), (150, 4), (116, -8)], HC, HS)
+    o += '<path d="M150,-70 Q178,-82 214,-84" stroke="%s" stroke-width="1.1" fill="none" opacity=".45"/>' % HS
     # manipolo
     o += handpiece_r(0, 0, 0, 1.0, 'cil', 'carburo', 'M', cord=False)
-    # indice sopra il manipolo
-    o += ('<path d="M160,-56 C136,-62 112,-56 98,-42 C88,-32 80,-22 72,-16 C64,-12 64,-4 72,-4 C84,-4 96,-12 106,-22 C118,-34 136,-38 158,-34 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M66,-10 C68,-15 76,-18 82,-16 C83,-12 81,-8 78,-6 C72,-5 68,-6 66,-10 Z" fill="%s" stroke="%s" stroke-width="1"/>' % (NAIL, NAIL_S)
-    o += '<path d="M100,-48 Q108,-42 104,-34" stroke="%s" stroke-width="1.1" fill="none" opacity=".75"/>' % sd
+    # indice arcuato sopra il manipolo
+    o += D([(172, -58), (134, -60), (104, -46), (84, -30), (70, -21)], [14, 12.5, 11, 10, 9], nail=1, creases=(2, 3))
     # pollice davanti
-    o += ('<path d="M170,-14 C146,-12 122,-8 100,-4 C88,-2 80,2 82,9 C84,15 94,15 104,13 C126,10 148,10 168,10 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M82,5 C83,0 90,-3 97,-3 C98,1 98,6 96,9 C90,11 85,10 82,5 Z" fill="%s" stroke="%s" stroke-width="1"/>' % (NAIL, NAIL_S)
+    o += D([(186, -10), (146, -8), (114, -2), (88, 3)], [18, 15.5, 13, 11], nail=1, creases=(2,))
     return _g(x, y, ang, s, o)
 
 
@@ -3466,26 +3508,21 @@ def pen_grip(x, y, ang, s, tool):
     """Mano destra dell'operatrice che impugna uno strumento come una penna (vista dal lato del pollice).
     tool = svg dello strumento disegnato lungo l'asse x positivo con la punta in (0,0).
     (x, y) = punta dello strumento, ang = inclinazione (negativa = sale verso destra)."""
-    sk, sd, sb = SKIN, SKIN_D, '#e6b49b'
+    D, B = gen_svg._digit, gen_svg._blob
+    HC, HD, HS = gen_svg._HAND, gen_svg._HAND_D, gen_svg._HAND_S
     o = ''
     # anulare e mignolo ripiegati, medio sotto lo strumento (in secondo piano, più scuri)
-    o += '<path d="M126,26 C116,40 100,42 94,34 C88,26 98,18 112,14 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd)
-    o += '<path d="M146,-6 C120,-2 94,2 74,2 C62,2 58,8 61,13 C65,19 76,19 92,17 C114,15 132,16 150,18 Z" fill="%s" stroke="%s" stroke-width="1.3"/>' % (sb, sd)
+    o += D([(172, 22), (142, 34), (128, 46), (134, 56)], [9.5, 9, 8, 7.5], nail=0, fill=HD)
+    o += D([(160, 6), (128, 20), (110, 32), (114, 44)], [11, 10.5, 9.5, 8.5], nail=0, fill=HD, creases=(1, 2))
+    o += D([(160, -4), (122, 6), (92, 12), (66, 13)], [12, 11, 10, 9], nail=-1, fill=HD, creases=(1, 2))
     # dorso della mano e polso
-    o += ('<path d="M104,-22 C124,-48 172,-56 214,-50 L260,-44 L260,46 L214,50 C184,54 154,48 136,36 C116,22 100,0 104,-22 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M168,-42 Q174,-34 170,-26 M190,-44 Q196,-36 192,-28" stroke="%s" stroke-width="1.1" fill="none" opacity=".6"/>' % sd
+    o += B([(104, -24), (130, -50), (176, -58), (220, -52), (268, -46), (270, 44), (220, 52), (176, 46), (140, 30), (110, 6)], HC, HS)
+    o += '<path d="M150,-48 Q176,-56 204,-52" stroke="%s" stroke-width="1.1" fill="none" opacity=".45"/>' % HS
     o += tool
     # indice arcuato sopra lo strumento
-    o += ('<path d="M168,-46 C146,-54 124,-54 108,-44 C88,-31 68,-18 52,-12 C40,-8 38,4 50,4 C66,3 84,-6 100,-16 C116,-26 140,-28 166,-20 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M44,-6 C46,-12 56,-15 63,-14 C64,-10 63,-6 60,-4 C54,-2 48,-2 44,-6 Z" fill="%s" stroke="%s" stroke-width="1"/>' % (NAIL, NAIL_S)
-    o += '<path d="M104,-46 Q112,-38 108,-30 M76,-26 Q82,-20 78,-14" stroke="%s" stroke-width="1.1" fill="none" opacity=".75"/>' % sd
+    o += D([(176, -44), (136, -48), (104, -36), (76, -20), (52, -10)], [13.5, 12, 11, 10, 9], nail=1, creases=(2, 3))
     # pollice in primo piano
-    o += ('<path d="M156,-2 C134,-6 108,-6 86,-4 C72,-3 62,0 62,7 C62,14 72,16 84,15 C108,13 132,18 152,26 Z" '
-          'fill="%s" stroke="%s" stroke-width="1.4"/>') % (sk, sd)
-    o += '<path d="M62,4 C63,-1 70,-3 77,-3 C78,1 78,5 76,8 C70,9 65,8 62,4 Z" fill="%s" stroke="%s" stroke-width="1"/>' % (NAIL, NAIL_S)
-    o += '<path d="M112,-4 Q116,4 112,12" stroke="%s" stroke-width="1.1" fill="none" opacity=".75"/>' % sd
+    o += D([(170, 12), (130, 6), (98, 4), (70, 6)], [17, 14.5, 12.5, 10.5], nail=1, creases=(2,))
     return _g(x, y, ang, s, o)
 
 

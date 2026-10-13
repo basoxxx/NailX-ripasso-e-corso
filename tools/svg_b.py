@@ -1290,7 +1290,7 @@ def tip_overlay():
     xa, ax, xb = p['xa'], p['ax'], p['xb']
     # zone numerate, tutte sulla stessa riga
     for n, zx, lab, sub in ((3, xa + 50, 'sottile', 'vicino alla cuticola'), (2, ax, 'apex', 'la parte più spessa'),
-                           (1, xb - 60, '≈ 1–1,5 mm', 'sottile in punta')):
+                           (1, xb - 60, '≈ 0,8–1 mm', 'sottile in punta')):
         b += zone_badge(zx, 76, n, lab, ACC2, sub)
         top_y = oy - (34 if n == 2 else 18 if n == 3 else 10)
         b += '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.2" stroke-dasharray="3 3"/>' % (zx, 130, zx, top_y, MUTED)
@@ -1634,7 +1634,7 @@ def zone_thick():
     b += dim(p['ox'] + 2, oy - 18, xa + 2, oy - 18, '', 'above')
     b += text(p['ox'] - 4, oy - 32, '≈ 1 mm dalla pelle', 12.5, 'end', 700, ACC2)
     b += dim(xb + 14, oy - 6, xb + 14, oy + 7, '', 'right')
-    b += text(xb + 2, oy + 32, '≈ 1–1,5 mm', 13, 'middle', 800, ACC2)
+    b += text(xb + 2, oy + 32, '≈ 0,8–1 mm', 13, 'middle', 800, ACC2)
     # carta di credito
     b += '<rect x="%.1f" y="%.1f" width="40" height="26" rx="4" fill="#cfe0f0" stroke="%s"/>' % (xb - 70, oy + 46, PROD_S)
     b += '<rect x="%.1f" y="%.1f" width="40" height="6" fill="%s"/>' % (xb - 70, oy + 52, PROD_S)
@@ -2044,50 +2044,127 @@ def file_bar(x, y, ang, l=120, w=16):
     return tool_file(x, y, ang, l, w)
 
 
+def _pro_finger(shape, hw=34, nail_len=86, free_len=50, flen=120, fw=None, plate=NAIL, free=FREE, weak=False):
+    """Dito con unghia vista dall'alto, resa "da manuale" (coordinate locali: punta in alto, cuticola in y=0, asse x=0).
+    Dito affusolato con polpastrello che sporge ai lati, pieghe laterali, eponichio, lunula, curva a C ombreggiata,
+    bordo libero con smile line naturale e riflesso. weak=True segna in rosso i punti fragili della forma."""
+    fw = fw or hw * 1.36
+    y_s = -nail_len
+    y_t = y_s - free_len
+    ytip = y_s - hw * 0.30          # polpastrello
+    # dito: leggermente più largo alla base, fianchi morbidi, punta arrotondata
+    fpath = ('M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f '
+             'C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f Z' % (
+                 -fw * 1.06, flen,
+                 -fw * 1.04, flen * .4, -fw * 1.02, y_s * .2, -fw, y_s * .55,
+                 -fw * .98, y_s - hw * .05, -fw * .7, ytip, 0, ytip,
+                 fw * .7, ytip, fw * .98, y_s - hw * .05, fw, y_s * .55,
+                 fw * 1.02, y_s * .2, fw * 1.04, flen * .4, fw * 1.06, flen,
+                 -fw * 1.06, flen))
+    s = '<path d="%s" fill="%s" stroke="%s" stroke-width="1.4"/>' % (fpath, SKIN, SKIN_D)
+    # pieghe dell'articolazione
+    for j, k in enumerate((.62, .74)):
+        s += '<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.2" fill="none" opacity=".55"/>' % (
+            -fw * (.55 - j * .12), flen * k, flen * k + 5, fw * (.55 - j * .12), flen * k, SKIN_D)
+    outline = nail_outline(0, 0, y_s, y_t, hw, shape)
+    clip = uid('pf')
+    sh = uid('pfs')
+    s += ('<defs><clipPath id="%s"><path d="%s"/></clipPath>'
+          '<linearGradient id="%s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a2840" stop-opacity=".28"/>'
+          '<stop offset=".2" stop-color="#7a2840" stop-opacity=".04"/><stop offset=".5" stop-color="#7a2840" stop-opacity="0"/>'
+          '<stop offset=".8" stop-color="#7a2840" stop-opacity=".05"/><stop offset="1" stop-color="#7a2840" stop-opacity=".3"/></linearGradient></defs>'
+          % (clip, outline, sh))
+    s += '<path d="%s" fill="%s"/>' % (outline, plate)
+    s += '<ellipse cx="0" cy="-12" rx="%.1f" ry="20" fill="#fff" opacity=".5" clip-path="url(#%s)"/>' % (hw * .52, clip)
+    if free_len > 0:
+        s += ('<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s" clip-path="url(#%s)"/>'
+              % (-hw - 4, y_s + 7, y_s - 9, hw + 4, y_s + 7, hw + 4, y_t - 40, -hw - 4, y_t - 40, free, clip))
+        s += ('<path d="M%.1f,%.1f Q0,%.1f %.1f,%.1f" stroke="#e9c3cf" stroke-width="1.6" fill="none" clip-path="url(#%s)"/>'
+              % (-hw - 4, y_s + 7, y_s - 9, hw + 4, y_s + 7, clip))
+    s += '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="url(#%s)" clip-path="url(#%s)"/>' % (-hw, y_t - 4, 2 * hw, -y_t + 8, sh, clip)
+    s += ('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="#fff" opacity=".45" clip-path="url(#%s)"/>'
+          % (-hw * .58, y_t + 8, hw * .18, -y_t - 30, hw * .09, clip))
+    s += '<path d="%s" fill="none" stroke="%s" stroke-width="1.6"/>' % (outline, NAIL_S)
+    # pieghe laterali ed eponichio
+    for sx in (-1, 1):
+        s += '<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.4" fill="none"/>' % (
+            sx * (hw + 2), -16, sx * (hw + 4), y_s * .4, sx * (hw + 3), y_s * .8, sx * (hw + 1), y_s + 6, SKIN_D)
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f L%.1f,%.1f L%.1f,%.1f Z" fill="%s"/>'
+          % (-fw * .99, -24, -hw - 6, -24, -hw * .7, 10, 10, hw * .7, 10, hw + 6, -24, fw * .99, -24, fw * 1.0, 26, -fw * 1.0, 26, SKIN))
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.6" fill="none"/>'
+          % (-hw - 6, -24, -hw * .9, 2, -hw * .7, 10, 10, hw * .7, 10, hw * .9, 2, hw + 6, -24, SKIN_D))
+    s += ('<path d="M%.1f,%.1f C%.1f,%.1f %.1f,%.1f 0,%.1f C%.1f,%.1f %.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="2.4" fill="none" opacity=".45"/>'
+          % (-hw * .85, -10, -hw * .75, 8, -hw * .55, 15, 15, hw * .55, 15, hw * .75, 8, hw * .85, -10))
+    if weak:
+        pts = {'quadrata': [(-hw, y_t), (hw, y_t)], 'ballerina': [(-hw * .52, y_t), (hw * .52, y_t)],
+               'stiletto': [(0, y_t)], 'mandorla': [(0, y_t)]}.get(shape, [])
+        for (px, py) in pts:
+            s += '<circle cx="%.1f" cy="%.1f" r="7" fill="%s" fill-opacity=".18" stroke="%s" stroke-width="2"/>' % (px, py, ERR, ERR)
+    return s
+
+
+def _place(x, y, s, inner, ang=0):
+    return '<g transform="translate(%.1f,%.1f) rotate(%.1f) scale(%.3f)">%s</g>' % (x, y, ang, s, inner)
+
+
 @figx('forme-scelta-dita.svg')
 def shapes_fingers():
     W, H = 940, 360
     b = ''
-    rows = [('Dito corto', 'e largo', 46, 70, [('quadrata', False, 'accorcia'), ('ovale', True, 'allunga'), ('mandorla', True, 'slancia')]),
-            ('Dito lungo', 'e sottile', 30, 104, [('quadrata', True, 'equilibra'), ('squoval', True, 'equilibra'), ('stiletto', None, 'molto lunga')])]
-    for r, (l1, l2, hw, nl, items) in enumerate(rows):
+    rows = [('Dito corto', 'e largo', dict(hw=40, nail_len=58, flen=64, fw=60), [('quadrata', False, 'accorcia'), ('ovale', True, 'allunga'), ('mandorla', True, 'slancia')]),
+            ('Dito lungo', 'e sottile', dict(hw=26, nail_len=90, flen=118, fw=36), [('quadrata', True, 'equilibra'), ('squoval', True, 'equilibra'), ('stiletto', None, 'molto lunga')])]
+    FL = {'quadrata': 34, 'squoval': 34, 'ovale': 46, 'mandorla': 52, 'stiletto': 66}
+    for r, (l1, l2, geo, items) in enumerate(rows):
         y0 = 20 + r * 170
         b += '<rect x="20" y="%d" width="900" height="158" rx="16" fill="%s"/>' % (y0, PANEL)
         b += mtext(36, y0 + 72, [l1, l2], 16, 'start', 800, ACC2)
         for k, (sh, ok, eff) in enumerate(items):
-            bx = 260 + k * 230
-            yy = y0 + 84
-            fl = 50 if sh in ('quadrata', 'squoval') else 64
-            f, p = horiz_finger(bx - 40, yy, 0.62, hw=hw, nail_len=nl, free_len=fl, shape=sh, finger_len=60)
-            b += f
+            bx = 300 + k * 230
+            yy = y0 + 88
+            s = .72
+            fin = _pro_finger(sh, geo['hw'], geo['nail_len'], FL[sh], geo['flen'], geo['fw'])
+            b += _place(bx, yy, s, fin, 90)
+            # sfumatura della base del dito nel pannello
+            gid = uid('fd')
+            x0 = bx - geo['flen'] * s - 2
+            b += ('<defs><linearGradient id="%s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fbf2ef"/>'
+                  '<stop offset="1" stop-color="#fbf2ef" stop-opacity="0"/></linearGradient></defs>' % gid)
+            b += '<rect x="%.1f" y="%.1f" width="46" height="%.1f" fill="url(#%s)"/>' % (x0, yy - geo['fw'] * s * 1.2, geo['fw'] * s * 2.4, gid)
             name = {'quadrata': 'Quadrata', 'ovale': 'Ovale', 'mandorla': 'Mandorla', 'squoval': 'Squoval', 'stiletto': 'Stiletto'}[sh]
-            b += text(bx - 22, y0 + 32, name, 14.5, 'start', 800)
+            b += text(bx - 4, y0 + 32, name, 14.5, 'start', 800)
             if ok is None:
-                b += excl(bx - 38, y0 + 27, 11)
+                b += excl(bx - 20, y0 + 27, 11)
             else:
-                b += mark(bx - 38, y0 + 27, ok, 11)
+                b += mark(bx - 20, y0 + 27, ok, 11)
             b += text(bx + 10, y0 + 146, eff, 13, 'middle', 700, OK if ok else (ERR if ok is False else WARN))
     return svg(W, H, b, 'La stessa forma su dita diverse: come cambia l\'effetto su dita corte e larghe o lunghe e sottili')
 
 
 @figx('forme-resistenza.svg')
 def shapes_strength():
-    W, H = 940, 260
+    W, H = 940, 300
     b = text(20, 34, 'Dalla più resistente alla più delicata', 20, 'start', 800, ACC2)
+    b += ('<circle cx="%d" cy="29" r="7" fill="%s" fill-opacity=".18" stroke="%s" stroke-width="2"/>' % (782, ERR, ERR)
+          + text(796, 34, 'punto fragile', 13, 'start', 600, ERR))
     order = [('squoval', 'Squoval'), ('tonda', 'Tonda'), ('ovale', 'Ovale'), ('quadrata', 'Quadrata'), ('mandorla', 'Mandorla'),
              ('ballerina', 'Ballerina'), ('stiletto', 'Stiletto')]
+    base = 206
     for k, (sh, name) in enumerate(order):
-        cx = 90 + k * 128
-        fl = 40 if sh in ('quadrata', 'squoval', 'tonda') else 64
-        f, p = shape_nail(cx, 150, sh, 34, 70, fl, 0.75, finger_len=6)
-        b += f
-        b += text(cx, 196, name, 14, weight=800)
+        cx = 84 + k * 128
+        fl = 30 if sh in ('quadrata', 'squoval', 'tonda') else (54 if sh != 'stiletto' else 62)
+        b += _place(cx, base, .9, _pro_finger(sh, 30, 66, fl, 36, 42, weak=True))
+        b += text(cx, base + 52, name, 14, weight=800)
+    # sfumatura della base delle dita
+    b += ('<defs><linearGradient id="gfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
+          '<stop offset="1" stop-color="#fff"/></linearGradient></defs>')
+    b += '<rect x="0" y="%d" width="%d" height="28" fill="url(#gfade)"/>' % (base + 6, W)
     b += ('<defs><linearGradient id="gres" x1="0" x2="1"><stop offset="0" stop-color="%s"/><stop offset=".5" stop-color="#e8c25a"/>'
           '<stop offset="1" stop-color="%s"/></linearGradient></defs>' % (OK, ERR))
-    b += '<rect x="40" y="210" width="860" height="14" rx="7" fill="url(#gres)"/>'
-    b += text(40, 250, 'uso intenso delle mani', 13.5, 'start', 700, OK)
-    b += text(900, 250, 'serve lunghezza e struttura', 13.5, 'end', 700, ERR)
-    return svg(W, H + 14, b, 'Forme dell\'unghia ordinate dalla più resistente alla più delicata')
+    b += '<rect x="40" y="%d" width="860" height="12" rx="6" fill="url(#gres)"/>' % (base + 62)
+    b += '<path d="M40,%d l-12,6 l12,6 Z" fill="%s"/><path d="M900,%d l12,6 l-12,6 Z" fill="%s"/>' % (base + 62, OK, base + 62, ERR)
+    b += text(40, base + 98, 'uso intenso delle mani', 13.5, 'start', 700, OK)
+    b += text(900, base + 98, 'serve lunghezza e struttura', 13.5, 'end', 700, ERR)
+    return svg(W, H + 26, b, 'Forme dell\'unghia ordinate dalla più resistente alla più delicata, con i punti fragili evidenziati')
 
 
 def step3(title_list, draw, desc, W=940, H=310, oks=(None, None, None)):
@@ -2226,41 +2303,30 @@ def ballerina_steps():
 
 
 def op_hand_file(gx, gy):
-    """Mano dell'operatrice di lato che tiene la lima: indice sopra, pollice sotto, polso morbido.
-    (gx, gy) = punto della lima tra indice e pollice (asse della lima). Tinta unica per evitare giunture visibili."""
-    HC, HD = '#f2cab2', '#e6b79c'
-    ln = 'fill="none" stroke="%s" stroke-width="1.5" stroke-linecap="round"' % SKIN_D
+    """Mano destra dell'operatrice vista dal lato del pollice che tiene la lima: indice disteso sopra,
+    pollice sotto, medio di sostegno, anulare e mignolo raccolti, polso morbido.
+    (gx, gy) = punto della lima tra indice e pollice (asse della lima)."""
+    D, B = gen_svg._digit, gen_svg._blob
+    HC, HD, HS = gen_svg._HAND, gen_svg._HAND_D, gen_svg._HAND_S
 
-    def P(*pts):
-        return ' '.join('%.1f,%.1f' % (gx + pts[k], gy + pts[k + 1]) for k in range(0, len(pts), 2))
+    def T(pts):
+        return [(gx + x, gy + y) for x, y in pts]
     # avambraccio
-    s = '<path d="M%s L%s Q%s %s L%s L%s Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (
-        P(-236, 160), P(-160, 40), P(-148, 26), P(-124, 32), P(-100, 90), P(-170, 180), HC, SKIN_D)
-    # medio (dietro), base nascosta dal dorso
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.4"/>' % (
-        P(-80, -36), P(-50, -32), P(-24, -26), P(-2, -21), P(10, -17), P(4, -10), P(-20, -9), P(-48, -10), P(-80, -12), HD, SKIN_D)
-    # dorso della mano
-    s += ('<path d="M%s C%s %s %s C%s %s %s L%s C%s %s %s Z" fill="%s" stroke="%s" stroke-width="1.5"/>'
-          % (P(-156, 44), P(-170, -6), P(-126, -50), P(-76, -50), P(-48, -50), P(-30, -40), P(-20, -28),
-             P(-28, 22), P(-46, 52), P(-104, 74), P(-140, 64), HC, SKIN_D))
-    s += '<path d="M%s Q%s %s" %s opacity=".55"/>' % (P(-120, -30), P(-96, -42), P(-70, -40), ln)
-    s += tool_file(gx + 70, gy, 0, 240, 20)
-    # indice sopra la lima
-    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s Z" fill="%s"/>' % (
-        P(-96, -44), P(-56, -50), P(-12, -36), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-34, -13), P(-70, -20), P(-96, -20), HC)
-    s += '<path d="M%s C%s %s %s Q%s %s L%s C%s %s %s" %s/>' % (
-        P(-40, -44), P(-22, -40), P(0, -32), P(20, -27), P(34, -22), P(28, -11), P(-4, -11), P(-16, -12), P(-24, -13), P(-30, -14), ln)
-    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
-        P(6, -31), P(22, -31), P(30, -22), P(25, -20), P(16, -26), P(6, -26), NAIL, NAIL_S)
-    s += '<path d="M%s q4,6 2,13 M%s q4,6 2,13" fill="none" stroke="%s" stroke-width="1.1" opacity=".6"/>' % (
-        P(-30, -40), P(-24, -39), SKIN_D)
-    # pollice sotto la lima
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s Z" fill="%s"/>' % (
-        P(-96, 30), P(-56, 16), P(-22, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-50, 50), P(-96, 60), HC)
-    s += '<path d="M%s C%s %s %s Q%s %s C%s %s %s" %s/>' % (
-        P(-40, 15), P(-24, 11), P(-10, 10), P(2, 10), P(16, 12), P(10, 24), P(-14, 36), P(-30, 42), P(-44, 47), ln)
-    s += '<path d="M%s Q%s %s L%s Q%s %s Z" fill="%s" stroke="%s" stroke-width="1.2"/>' % (
-        P(-6, 30), P(8, 28), P(13, 20), P(9, 18), P(2, 25), P(-8, 26), NAIL, NAIL_S)
+    s = D(T([(-250, 196), (-206, 130), (-162, 70)]), [36, 33, 30], nail=0)
+    # anulare e mignolo raccolti (dietro)
+    s += D(T([(-96, 8), (-66, 14), (-50, 32), (-58, 50)]), [11, 10, 9, 8], nail=0, fill=HD, creases=(1, 2))
+    s += D(T([(-104, 22), (-80, 34), (-70, 50), (-80, 62)]), [9.5, 8.5, 7.5, 7], nail=0, fill=HD)
+    # medio: sostiene la lima da dietro
+    s += D(T([(-92, -14), (-56, -12), (-22, -2), (-2, 16)]), [12, 11, 10, 9], nail=0, fill=HD, creases=(1, 2))
+    # pollice sotto la lima (unghia sul lato esterno): la base sparisce sotto il dorso
+    s += D(T([(-118, 46), (-74, 40), (-40, 30), (-12, 23)]), [18, 15, 12.5, 10.5], nail=1, creases=(2,))
+    # dorso della mano e base del pollice
+    s += B(T([(-170, 66), (-176, 20), (-150, -28), (-110, -50), (-74, -48), (-56, -34), (-58, -6), (-78, 18), (-96, 40), (-128, 70)]), HC, HS)
+    s += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="%s" stroke-width="1.2" fill="none" opacity=".5"/>' % (
+        gx - 140, gy - 30, gx - 112, gy - 46, gx - 82, gy - 44, HS)
+    s += tool_file(gx + 60, gy, 0, 210, 20)
+    # indice disteso sopra la lima (unghia sul dorso)
+    s += D(T([(-90, -38), (-52, -36), (-16, -28), (14, -21)]), [13, 11.2, 9.6, 8.6], nail=-1, creases=(1, 2))
     return s
 
 
@@ -2268,13 +2334,13 @@ def op_hand_file(gx, gy):
 def file_grip():
     W, H = 760, 350
     b = ''
-    gx, gy = 180, 164
+    gx, gy = 205, 164
     body = op_hand_file(gx, gy)
     body += callout(gx + 14, gy - 30, gx + 40, 92, 'indice sopra: presa leggera', 'middle', 13.5)
-    body += callout(gx + 4, gy + 22, gx + 76, gy + 74, 'pollice sotto', 'start', 13.5)
-    body += callout(gx - 124, gy + 60, gx - 60, 286, 'polso morbido', 'start', 13.5)
-    body += arrow(gx + 96, gy + 48, gx + 146, gy + 48, MUTED, 1.8, True)
-    body += text(gx + 121, gy + 36, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
+    body += callout(gx + 4, gy + 22, gx + 50, gy + 80, 'pollice sotto', 'start', 13.5)
+    body += callout(gx - 150, gy + 90, gx - 90, 290, 'polso morbido', 'start', 13.5)
+    body += arrow(gx + 76, gy + 48, gx + 126, gy + 48, MUTED, 1.8, True)
+    body += text(gx + 101, gy + 36, 'muovi il braccio', 12.5, 'middle', 600, MUTED)
     b += frame(20, 20, 350, 310, 'La lima', 1, body=body)
     # 2 dito della cliente
     x = 390
@@ -2283,7 +2349,11 @@ def file_grip():
     body += text(cx + 50, yc + 64, 'supporto', 12.5, 'middle', 700, '#6b4fa0')
     f, p = top_finger(cx, yc, hw=32, nail_len=104, free_len=36, shape='squoval', finger_len=40)
     body += f
-    body += thumb(cx - 56, yc - 36, 90, 0.85) + thumb(cx + 56, yc - 36, -90, 0.85)
+    pcl = uid('pc')
+    body += '<defs><clipPath id="%s"><rect x="%d" y="20" width="350" height="310" rx="16"/></clipPath></defs>' % (pcl, x)
+    for sx in (-1, 1):   # pollici dell'operatrice ai lati del dito (visti dal dorso)
+        body += '<g clip-path="url(#%s)">' % pcl + gen_svg._digit([(cx + sx * 130, yc - 26), (cx + sx * 104, yc - 31), (cx + sx * 76, yc - 35), (cx + sx * 54, yc - 37)],
+                               [16, 14.5, 12.5, 11], nail=1, view='top', creases=(1, 2)) + '</g>'
     body += arrow(cx - 52, yc - 70, cx - 70, yc - 96, ACC2, 2)
     body += text(cx - 78, yc - 132, 'tira la pelle', 12.5, 'middle', 700, ACC2)
     body += text(cx - 78, yc - 116, 'del solco', 12.5, 'middle', 700, ACC2)
@@ -2292,7 +2362,7 @@ def file_grip():
     # riquadro errore
     body += '<rect x="%d" y="64" width="84" height="158" rx="10" fill="#fff"/>' % (x + 254)
     g, _ = top_finger(0, 0, hw=34, nail_len=90, free_len=20, finger_len=10)
-    g += '<ellipse cx="6" cy="-60" rx="28" ry="32" fill="#efc0a4" stroke="%s" stroke-width="1.5"/>' % SKIN_D
+    g += gen_svg._digit([(40, 30), (27, -8), (12, -46)], [27, 25, 22], nail=1, view='top', creases=(1,))
     body += scaled(x + 296, 152, 0.55, g)
     body += mark(x + 324, 80, False, 10)
     body += text(x + 296, 194, 'non sopra', 12, 'middle', 700, ERR)
