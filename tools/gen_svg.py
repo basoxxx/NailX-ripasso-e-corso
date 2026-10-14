@@ -967,8 +967,8 @@ def _hero_defs():
           '<stop offset=".3" stop-color="#f7d8c7"/><stop offset=".55" stop-color="#fbe3d6"/><stop offset="1" stop-color="#e6ad92"/></linearGradient>')
     d += ('<linearGradient id="skinT" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3a98d"/>'
           '<stop offset=".45" stop-color="#f6d4c2"/><stop offset="1" stop-color="#e8b29a"/></linearGradient>')
-    d += ('<radialGradient id="backG" cx=".45" cy=".25" r=".85"><stop offset="0" stop-color="#fbe2d4"/>'
-          '<stop offset=".55" stop-color="#f3cbb6"/><stop offset="1" stop-color="#e4a98c"/></radialGradient>')
+    d += ('<radialGradient id="backG" cx=".45" cy=".25" r=".85"><stop offset="0" stop-color="#f9dccb"/>'
+          '<stop offset=".55" stop-color="#f2c7b1"/><stop offset="1" stop-color="#e2a68a"/></radialGradient>')
     d += ('<linearGradient id="nailG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e2557f"/>'
           '<stop offset=".55" stop-color="#d23e6c"/><stop offset="1" stop-color="#b52c5a"/></linearGradient>')
     d += ('<linearGradient id="chromeG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f9d7e2"/>'
@@ -1010,6 +1010,8 @@ def _hero_hero_body():
     # lima appoggiata
     b += ('<g transform="translate(468,392) rotate(-6)"><rect x="0" y="-7" width="118" height="14" rx="7" fill="#f4e6dd" stroke="#e3cbbd"/>'
           '<rect x="5" y="-4.5" width="108" height="9" rx="4.5" fill="#d9b8c4"/><rect x="5" y="-4.5" width="54" height="9" rx="4.5" fill="#c99aab"/></g>')
+    # ombra della mano sul cuscino
+    b += '<ellipse cx="338" cy="394" rx="62" ry="9" fill="#b9657f" opacity=".22" filter="url(#blur8)"/>'
     # mano
     h = '<g filter="url(#soft)" transform="translate(4,-6) rotate(-4 330 330)">'
     # pollice
