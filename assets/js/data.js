@@ -645,7 +645,7 @@ ${B('warn', 'Attenzione agli attestati', 'Un corso privato o un "attestato di on
 <tr><td><strong>Attestato di qualifica regionale</strong></td><td>Enti accreditati dalla Regione, con esame</td><td>Titolo riconosciuto (es. qualifica di estetista): permette di lavorare come dipendente o socia.</td></tr>
 <tr><td><strong>Abilitazione di estetista</strong></td><td>Percorso regionale completo (qualifica + specializzazione o esperienza + esame)</td><td>Permette di essere titolare o responsabile tecnico e di aprire con la SCIA.</td></tr>
 </tbody></table>
-<p>Questo corso è <strong>professionalizzante ma non abilitante</strong>: ti prepara sul piano tecnico, non sostituisce la qualifica. <a href="valore-attestato.html">Che valore ha l'attestato NailX</a></p>
+<p>Questo corso è <strong>professionalizzante ma non abilitante</strong>: ti prepara sul piano tecnico, non sostituisce la qualifica. Se la qualifica ce l'hai già (o stai facendo la scuola), è una specializzazione da mettere nel curriculum. <a href="valore-attestato.html">Che valore ha l'attestato NailX</a></p>
 <h2>Aprire l'attività</h2>
 ${F('apertura-attivita.svg', 'SCIA al SUAP, responsabile tecnico, ComUnica: i passaggi per aprire.')}
 <ol class="steps">
@@ -3249,7 +3249,7 @@ ${B('warn', 'Prima di tutto', 'Questa lezione dà un\'idea del percorso, non sos
 <h2>Il percorso, in ordine</h2>
 ${F('percorso-apertura.svg', 'Dalla qualifica alla prima cliente: qualifica, partita IVA e ATECO, Camera di Commercio e Albo artigiani, INPS e INAIL, SCIA al SUAP, privacy, tariffe e assicurazione.')}
 <ol class="steps">
-<li><strong>Qualifica di estetista</strong> (L. 1/1990 e leggi regionali): in Italia la ricostruzione unghie rientra nell'attività di estetista. Alcuni regolamenti comunali citano esplicitamente l'<em>onicotecnica</em> tra le attività dell'estetista. L'attestato di questo corso è l'attestato di un corso professionalizzante non abilitante: documenta le tue competenze ed è utile per curriculum, portfolio e aggiornamento, ma non sostituisce la qualifica di estetista.</li>
+<li><strong>Qualifica di estetista</strong> (L. 1/1990 e leggi regionali): in Italia la ricostruzione unghie rientra nell'attività di estetista. Alcuni regolamenti comunali citano esplicitamente l'<em>onicotecnica</em> tra le attività dell'estetista. L'attestato di questo corso è l'attestato di un corso professionalizzante non abilitante: documenta le tue competenze ed è utile per curriculum, portfolio e aggiornamento, ma non sostituisce la qualifica di estetista. Se hai già fatto la scuola di estetista, inseriscilo nel curriculum come specializzazione in ricostruzione unghie.</li>
 <li><strong>Partita IVA</strong> con il codice <strong>ATECO</strong> dell'attività. Con la classificazione ATECO 2025 il codice per manicure e pedicure risulta <strong>96.22.01</strong> (prima 96.02.03): fattelo confermare dal commercialista.</li>
 <li><strong>Registro delle imprese e Albo delle imprese artigiane</strong> (Camera di Commercio, pratica unica telematica "ComUnica").</li>
 <li><strong>INPS – Gestione artigiani</strong> e, per le artigiane, <strong>INAIL</strong>.</li>
