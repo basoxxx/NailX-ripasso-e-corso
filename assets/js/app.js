@@ -93,8 +93,8 @@
       try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
     });
     var f = document.createElement('footer');
-    f.innerHTML = 'NailX · Corso di ricostruzione unghie · Materiale didattico a scopo formativo: non sostituisce ' +
-      'la formazione abilitante prevista dalla legge né il parere medico.<br>' +
+    f.innerHTML = 'NailX · Corso di ricostruzione unghie · Formazione professionale non abilitante: non sostituisce ' +
+      'la qualifica di estetista prevista dalla legge né il parere medico.<br>' +
       '<a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
     document.body.appendChild(f);
   }
@@ -970,9 +970,9 @@
       t(sx0, sy0 - 8, 'CORSO', 11, 700, '#fff', ' letter-spacing="2"' + sans) +
       t(sx0, sy0 + 7, 'COMPLETATO', 7.5, 700, '#fff', sans) +
       t(sx0, sy0 + 23, cert.date ? String(new Date(cert.date).getFullYear()) : '★', 11, 700, '#f1d58e', sans);
-    o += t(W / 2, 726, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
-      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
-    o += t(W / 2, 743, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 726, qrSvg ? 'Attestato di formazione professionale rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
+      : 'Attestato di formazione professionale rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 743, 'Formazione professionale non abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
     if (opts.preview) {
       o += '<text x="' + W / 2 + '" y="' + H / 2 + '" text-anchor="middle" font-size="120" font-weight="800" fill="#c2577a" opacity=".1" ' +
         'transform="rotate(-24 ' + W / 2 + ' ' + H / 2 + ')"' + sans + ' letter-spacing="12">ANTEPRIMA</text>';
@@ -1178,7 +1178,7 @@
             '<li>Esame finale: ' + v.final_score + '% (soglia ' + PASS + '%)</li>' +
             '<li>Ore di formazione stimate: circa ' + v.hours + '</li>' +
             '<li>Esercizi pratici completati: ' + (v.exercises && v.exercises.length ? v.exercises.map(esc).join(', ') : 'nessuno') + '</li></ul>' +
-            '<p class="muted"><small>Attestato di partecipazione a un corso online: non è un titolo abilitante.</small></p></div>';
+            '<p class="muted"><small>Attestato di formazione professionale online: documenta le competenze acquisite ma non è un titolo abilitante.</small></p></div>';
         }
       }).catch(function () {
         $('#vres').innerHTML = '<div class="box warn">Servizio di verifica non raggiungibile. Riprova più tardi.</div>';

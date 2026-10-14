@@ -50,5 +50,6 @@ for g in a b c d; do python3 tools/svg_$g.py; done   # illustrazioni dei moduli 
 I contenuti (lezioni, esercizi, quiz, glossario) sono tutti in `assets/js/data.js`.
 Dopo averli modificati esegui `node tools/build_supabase_seed.js`: se il catalogo è cambiato crea una nuova migrazione Supabase.
 
-> Materiale didattico a scopo formativo: non sostituisce la formazione abilitante prevista dalla legge
+> Formazione professionale **non abilitante**: l'attestato documenta le competenze acquisite ed è
+> verificabile online, ma non sostituisce la qualifica di estetista prevista dalla legge (L. 1/1990)
 > né il parere medico.
