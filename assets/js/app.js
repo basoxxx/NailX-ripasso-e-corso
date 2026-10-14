@@ -137,7 +137,7 @@
     var f = document.createElement('footer');
     f.innerHTML = 'NailX · Corso di ricostruzione unghie · Corso professionalizzante non abilitante: non sostituisce ' +
       'la qualifica di estetista prevista dalla legge né il parere medico.<br>' +
-      '<a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
+      '<a href="valore-attestato.html">Valore dell\'attestato</a> · <a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
     document.body.appendChild(f);
   }
 
