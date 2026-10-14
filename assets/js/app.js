@@ -35,6 +35,8 @@
     });
   }
   function qs(name) { return new URLSearchParams(location.search).get(name); }
+  function reducedMotion() { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  function scrollToEl(el, block) { if (el) el.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: block || 'start' }); }
   function allLessons() {
     var out = [];
     D.modules.forEach(function (m) {
@@ -76,26 +78,66 @@
     if (cloudEnabled()) links.push(['accedi.html', 'accedi', 'Accedi']);
     var h = document.createElement('header');
     h.className = 'site-header';
-    h.innerHTML = '<nav class="nav"><a class="brand" href="index.html">' +
+    h.innerHTML = '<nav class="nav" aria-label="Menu principale"><a class="brand" href="index.html" aria-label="NailX, pagina iniziale">' +
       '<img src="assets/img/logo.svg" alt="" width="30" height="30"><span>Nail<b>X</b></span></a>' +
       '<div class="nav-links">' + links.map(function (x) {
-        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active"' : '') + (x[1] === 'accedi' ? ' id="nav-account"' : '') + '>' + x[2] + '</a>';
+        return '<a href="' + x[0] + '"' + (x[1] === active ? ' class="active" aria-current="page"' : '') + (x[1] === 'accedi' ? ' id="nav-account"' : '') + '>' + x[2] + '</a>';
       }).join('') + '</div>' +
-      '<a class="nav-progress" href="index.html#progresso" title="Avanzamento del corso"><i></i><span>0%</span></a>' +
-      '<button class="theme-btn" type="button" title="Cambia tema" aria-label="Cambia tema">☾</button></nav>';
+      '<a class="nav-progress" href="index.html#progresso" title="Avanzamento del corso"><i aria-hidden="true"></i><span>0%</span></a>' +
+      '<button class="theme-btn" type="button"></button></nav>';
     document.body.insertBefore(h, document.body.firstChild);
+    // salto al contenuto principale (primo elemento raggiungibile con Tab)
+    var main = document.querySelector('main');
+    if (main) {
+      if (!main.id) main.id = 'contenuto';
+      main.setAttribute('tabindex', '-1');
+      var skip = document.createElement('a');
+      skip.className = 'skip-link';
+      skip.href = '#' + main.id;
+      skip.textContent = 'Vai al contenuto';
+      skip.addEventListener('click', function (e) { e.preventDefault(); main.focus(); main.scrollIntoView(); });
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
     refreshNavProgress();
-    $('.theme-btn', h).addEventListener('click', function () {
+    var themeBtn = $('.theme-btn', h);
+    function isDark() {
       var cur = document.documentElement.getAttribute('data-theme');
-      var dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      var next = dark ? 'light' : 'dark';
+      return cur ? cur === 'dark' : !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    function themeLabel() {
+      var dark = isDark();
+      themeBtn.textContent = dark ? '☀' : '☾';
+      themeBtn.title = dark ? 'Passa al tema chiaro' : 'Passa al tema scuro';
+      themeBtn.setAttribute('aria-label', themeBtn.title);
+    }
+    themeLabel();
+    themeBtn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
       applyTheme(next);
       try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
+      themeLabel();
     });
+    if (window.matchMedia) {
+      var mq = matchMedia('(prefers-color-scheme: dark)');
+      if (mq.addEventListener) mq.addEventListener('change', themeLabel);
+    }
+    // menu a scorrimento su schermi stretti: sfumatura sul lato dove ci sono altre voci
+    var nl = $('.nav-links', h);
+    function navFade() {
+      var max = nl.scrollWidth - nl.clientWidth;
+      nl.classList.toggle('fade-l', max > 2 && nl.scrollLeft > 2);
+      nl.classList.toggle('fade-r', max > 2 && nl.scrollLeft < max - 2);
+    }
+    var act = $('.active', nl);
+    if (act && nl.scrollWidth > nl.clientWidth) nl.scrollLeft = Math.max(0, act.offsetLeft - nl.clientWidth / 2 + act.offsetWidth / 2);
+    nl.addEventListener('scroll', navFade, { passive: true });
+    nl.addEventListener('focusin', function (e) { if (e.target.scrollIntoView) e.target.scrollIntoView({ block: 'nearest', inline: 'nearest' }); });
+    addEventListener('resize', navFade);
+    navFade();
     var f = document.createElement('footer');
-    f.innerHTML = 'NailX · Corso di ricostruzione unghie · Materiale didattico a scopo formativo: non sostituisce ' +
-      'la formazione abilitante prevista dalla legge né il parere medico.<br>' +
-      '<a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
+    f.innerHTML = 'NailX · Corso di ricostruzione unghie · Corso professionalizzante non abilitante: non sostituisce ' +
+      'la qualifica di estetista prevista dalla legge né il parere medico.<br>' +
+      '<a href="valore-attestato.html">Valore dell\'attestato</a> · <a href="privacy.html">Privacy e cookie</a> · <a href="verifica.html">Verifica un attestato</a>';
     document.body.appendChild(f);
   }
 
@@ -139,12 +181,19 @@
   }
 
   /* ---------- avvisi (toast) ---------- */
+  var toastRegion = null;
   function toast(html, ms) {
+    if (!toastRegion) {
+      toastRegion = document.createElement('div');
+      toastRegion.className = 'toast-region';
+      toastRegion.setAttribute('role', 'status');
+      toastRegion.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toastRegion);
+    }
     var t = document.createElement('div');
     t.className = 'toast';
-    t.setAttribute('role', 'status');
     t.innerHTML = html;
-    document.body.appendChild(t);
+    toastRegion.appendChild(t);
     requestAnimationFrame(function () { t.classList.add('show'); });
     var close = function () { t.classList.remove('show'); setTimeout(function () { t.remove(); }, 300); };
     setTimeout(close, ms || 6000);
@@ -201,7 +250,8 @@
             var cls = [];
             if (mm === m && ll === l) cls.push('current');
             if (state.lessons[lessonKey(mm, ll)]) cls.push('done');
-            return '<li><a class="' + cls.join(' ') + '" href="' + lessonUrl(mm, ll) + '">' + esc(ll.title) + '</a></li>';
+            return '<li><a class="' + cls.join(' ') + '" href="' + lessonUrl(mm, ll) + '"' + (mm === m && ll === l ? ' aria-current="page"' : '') + '>' + esc(ll.title) +
+              (state.lessons[lessonKey(mm, ll)] ? '<span class="sr-only"> (completata)</span>' : '') + '</a></li>';
           }).join('') + '</ul></details>';
       }).join('');
     }
@@ -286,7 +336,13 @@
         if (entries.some(function (e) { return e.isIntersecting; })) { seenEnd = true; tryAuto(); }
       }, { threshold: 0.5 }).observe($('.lesson-nav'));
     }
-    $('.menu-toggle').addEventListener('click', function () { $('#sidebar').classList.toggle('open'); });
+    var mt = $('.menu-toggle');
+    mt.setAttribute('aria-controls', 'sidebar');
+    mt.setAttribute('aria-expanded', 'false');
+    mt.addEventListener('click', function () {
+      var open = $('#sidebar').classList.toggle('open');
+      mt.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   }
 
   /* ---------- extra della lezione: indice, barra di lettura, verifica rapida, appunti ---------- */
@@ -300,10 +356,21 @@
     return '<section class="quick-check"><h2>Verifica rapida</h2><p class="muted">Due domande per fissare i concetti del modulo. Non incidono sul punteggio.</p>' +
       picks.map(function (q, i) {
         var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
-        return '<div class="quiz-q"><h3>' + (i + 1) + '. ' + esc(q.q) + '</h3>' + opts.map(function (o) {
+        var hid = 'qc-' + (i + 1);
+        return '<div class="quiz-q" role="group" aria-labelledby="' + hid + '"><h3 id="' + hid + '">' + (i + 1) + '. ' + esc(q.q) + '</h3>' + opts.map(function (o) {
           return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>';
-        }).join('') + '<div class="explain" hidden>' + esc(q.e || '') + '</div></div>';
+        }).join('') + FB + '<div class="explain" hidden>' + esc(q.e || '') + '</div></div>';
       }).join('') + '</section>';
+  }
+  // riga di esito letta dai lettori di schermo (aria-live) e visibile: l'esito non è affidato solo al colore
+  var FB = '<p class="fb" aria-live="polite"></p>';
+  function feedback(box, chosen, timeout) {
+    var fb = box && box.querySelector('.fb'); if (!fb) return;
+    var right = box.querySelector('.opt.right');
+    var ok = !!chosen && chosen.dataset.ok === '1';
+    fb.className = 'fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ Risposta corretta.' : (timeout ? '⏱ Tempo scaduto. ' : '✗ Risposta sbagliata. ') +
+      (right ? 'Quella corretta è: «' + right.textContent + '».' : '');
   }
   var NOTES_KEY = 'nailx-notes-v1';
   function loadNotes() { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || {}; } catch (e) { return {}; } }
@@ -336,6 +403,7 @@
       box.querySelectorAll('.opt').forEach(function (o) { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('right'); });
       if (b.dataset.ok !== '1') b.classList.add('wrong');
       box.querySelector('.explain').hidden = false;
+      feedback(box, b);
     });
     // appunti (solo in questo browser)
     var ta = $('#note'), st = $('#note-st'), notes = loadNotes(), tmr;
@@ -449,12 +517,12 @@
     var bar = $('#filters');
     var levels = [['all', 'Tutti']].concat(Object.keys(LEVELS).map(function (k) { return [k, LEVELS[k]]; }));
     bar.innerHTML = levels.map(function (x) {
-      return '<button class="chip' + (x[0] === 'all' ? ' active' : '') + '" data-f="' + x[0] + '" type="button">' + x[1] + '</button>';
+      return '<button class="chip' + (x[0] === 'all' ? ' active' : '') + '" data-f="' + x[0] + '" type="button" aria-pressed="' + (x[0] === 'all') + '">' + x[1] + '</button>';
     }).join('');
     bar.addEventListener('click', function (ev) {
       var b = ev.target.closest('.chip'); if (!b) return;
       filter = b.dataset.f;
-      bar.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('active', c === b); });
+      bar.querySelectorAll('.chip').forEach(function (c) { c.classList.toggle('active', c === b); c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
       draw();
     });
 
@@ -571,10 +639,10 @@
       '<div id="qprog"></div><div id="qlist">' + qs_.map(function (q, i) {
         // mescola le opzioni mantenendo traccia di quella corretta
         var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
-        return '<div class="quiz-q"><h3>' + (i + 1) + '. ' + esc(q.q) + '</h3>' + opts.map(function (o) {
+        return '<div class="quiz-q" role="group" aria-labelledby="qh-' + i + '"><h3 id="qh-' + i + '">' + (i + 1) + '. ' + esc(q.q) + '</h3>' + opts.map(function (o) {
           return '<button type="button" class="opt" data-q="' + i + '" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>';
-        }).join('') + '<div class="explain" hidden>' + esc(q.e || '') + '</div></div>';
-      }).join('') + '</div><div id="qres"></div>';
+        }).join('') + FB + '<div class="explain" hidden>' + esc(q.e || '') + '</div></div>';
+      }).join('') + '</div><div id="qres" aria-live="polite"></div>';
     function prog() { $('#qprog').innerHTML = progressBar(pct(answered, qs_.length), answered + '/' + qs_.length + ' risposte · ' + correct + ' corrette'); }
     prog();
     $('#qlist').addEventListener('click', function (ev) {
@@ -587,6 +655,7 @@
       if (b.dataset.ok === '1') correct++; else b.classList.add('wrong');
       answered++;
       box.querySelector('.explain').hidden = false;
+      feedback(box, b);
       prog();
       if (answered === qs_.length) {
         var score = pct(correct, qs_.length);
@@ -601,7 +670,7 @@
           (pass && id === 'final' ? '<p><a class="btn" href="attestato.html">Vai al tuo attestato →</a></p>' : '') +
           '<div class="btn-row" style="justify-content:center"><a class="btn" href="quiz.html?m=' + id + '">Ripeti</a>' +
           '<a class="btn ghost" href="quiz.html">Altri quiz</a></div></div>';
-        $('#qres').scrollIntoView({ behavior: 'smooth' });
+        scrollToEl($('#qres'));
       }
     });
   }
@@ -697,7 +766,7 @@
     function current() { var h = location.hash.slice(1); return tabs.some(function (t) { return t[0] === h; }) ? h : 'flash'; }
     function nav() {
       $('#rtabs').innerHTML = tabs.map(function (t) {
-        return '<a class="chip' + (t[0] === current() ? ' active' : '') + '" href="#' + t[0] + '">' + t[1] + '</a>';
+        return '<a class="chip' + (t[0] === current() ? ' active' : '') + '" href="#' + t[0] + '"' + (t[0] === current() ? ' aria-current="page"' : '') + '>' + t[1] + '</a>';
       }).join('');
     }
     window.addEventListener('hashchange', function () { nav(); show(); });
@@ -807,9 +876,9 @@
         if (i >= qs.length) return finish();
         var q = qs[i], left = SEC * 10;
         var opts = shuffle(q.o.map(function (o, j) { return { t: o, ok: j === q.a }; }));
-        $('#tq').innerHTML = '<div class="quiz-q timed"><div class="tbar"><i style="width:100%"></i></div>' +
-          '<p class="muted"><small>Domanda ' + (i + 1) + ' di ' + qs.length + ' · ' + ok + ' corrette</small></p><h3>' + esc(q.q) + '</h3>' +
-          opts.map(function (o) { return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>'; }).join('') + '</div>';
+        $('#tq').innerHTML = '<div class="quiz-q timed" role="group" aria-labelledby="tqh"><div class="tbar" aria-hidden="true"><i style="width:100%"></i></div>' +
+          '<p class="muted"><small>Domanda ' + (i + 1) + ' di ' + qs.length + ' · ' + ok + ' corrette</small></p><h3 id="tqh">' + esc(q.q) + '</h3>' +
+          opts.map(function (o) { return '<button type="button" class="opt" data-ok="' + (o.ok ? 1 : 0) + '">' + esc(o.t) + '</button>'; }).join('') + FB + '</div>';
         $('#tq').scrollIntoView({ block: 'nearest' });
         var bar = $('#tq .tbar i');
         timerId = setInterval(function () {
@@ -826,6 +895,7 @@
           log.push({ q: q, right: right, timeout: !b });
           $('#tq').querySelectorAll('.opt').forEach(function (o) { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('right'); });
           if (b && !right) b.classList.add('wrong');
+          feedback($('#tq .quiz-q'), b, !b);
           i++;
           setTimeout(ask, right ? 600 : 1500);
         }
@@ -851,21 +921,94 @@
     var box = document.createElement('div');
     box.className = 'lightbox';
     box.hidden = true;
-    box.innerHTML = '<button type="button" class="lb-close" aria-label="Chiudi">✕</button><img alt="">';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Immagine ingrandita');
+    box.innerHTML = '<button type="button" class="lb-close" aria-label="Chiudi l\'immagine ingrandita">✕</button>' +
+      '<p class="lb-hint" aria-hidden="true">Tocca l\'immagine per ingrandirla · Esc o ✕ per chiudere</p><img alt="">';
     document.body.appendChild(box);
-    function close() { box.hidden = true; document.body.style.overflow = ''; }
-    box.addEventListener('click', close);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    var big = box.querySelector('img'), btn = box.querySelector('.lb-close'), opener = null;
+    function close() {
+      if (box.hidden) return;
+      box.hidden = true; box.classList.remove('zoomed'); document.body.style.overflow = '';
+      if (opener && document.contains(opener)) opener.focus();
+      opener = null;
+    }
+    function open(img) {
+      opener = img;
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      box.classList.remove('zoomed');
+      box.hidden = false;
+      box.scrollTop = 0; box.scrollLeft = 0;
+      document.body.style.overflow = 'hidden';
+      btn.focus();
+    }
+    // clic sull'immagine: ingrandisce/riduce (testi piccoli leggibili); clic sullo sfondo o ✕: chiude
+    box.addEventListener('click', function (e) {
+      if (e.target === big) {
+        var zoom = !box.classList.contains('zoomed');
+        var rx = e.offsetX / big.clientWidth, ry = e.offsetY / big.clientHeight;
+        box.classList.toggle('zoomed', zoom);
+        if (zoom) { box.scrollLeft = rx * box.scrollWidth - box.clientWidth / 2; box.scrollTop = ry * box.scrollHeight - box.clientHeight / 2; }
+        return;
+      }
+      close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) {
+        // immagini delle lezioni apribili da tastiera
+        var t = e.target;
+        if ((e.key === 'Enter' || e.key === ' ') && t.matches && t.matches('figure img')) { e.preventDefault(); open(t); }
+        return;
+      }
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') { e.preventDefault(); btn.focus(); } // unico controllo: il focus resta nel dialogo
+    });
     document.addEventListener('click', function (e) {
       var img = e.target.closest('figure img');
-      if (!img) return;
+      if (!img || box.contains(img)) return;
       e.preventDefault();
-      var big = box.querySelector('img');
-      big.src = img.src;
-      big.alt = img.alt;
-      box.hidden = false;
-      document.body.style.overflow = 'hidden';
+      open(img);
     });
+  }
+
+  /* ---------- miglioramenti automatici dei contenuti: immagini ingrandibili da tastiera, tabelle a scorrimento ---------- */
+  function enhance(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('figure img:not([tabindex])').forEach(function (img) {
+      if (img.closest('.cmp-stage')) return;
+      img.tabIndex = 0;
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', 'Ingrandisci immagine' + (img.alt ? ': ' + img.alt : ''));
+    });
+    root.querySelectorAll('table').forEach(function (t) {
+      if (t.parentNode.classList && t.parentNode.classList.contains('table-wrap')) return;
+      if (t.closest('svg')) return;
+      var w = document.createElement('div');
+      w.className = 'table-wrap';
+      var cols = t.rows[0] ? t.rows[0].cells.length : 0;
+      if (cols >= 4) w.classList.add('wide');
+      // area scorrevole raggiungibile da tastiera, con un nome per i lettori di schermo
+      w.tabIndex = 0;
+      w.setAttribute('role', 'region');
+      var cap = t.querySelector('caption'), head = t.querySelector('th');
+      w.setAttribute('aria-label', 'Tabella' + (cap ? ': ' + cap.textContent.trim() : head ? ': ' + head.textContent.trim() : '') + ' (scorrevole)');
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
+    });
+  }
+  function watchContent() {
+    var main = document.querySelector('main');
+    if (!main) return;
+    enhance(main);
+    if (!('MutationObserver' in window)) return;
+    var pending = false;
+    new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () { pending = false; enhance(main); });
+    }).observe(main, { childList: true, subtree: true });
   }
 
   /* ---------- ATTESTATO ---------- */
@@ -970,9 +1113,9 @@
       t(sx0, sy0 - 8, 'CORSO', 11, 700, '#fff', ' letter-spacing="2"' + sans) +
       t(sx0, sy0 + 7, 'COMPLETATO', 7.5, 700, '#fff', sans) +
       t(sx0, sy0 + 23, cert.date ? String(new Date(cert.date).getFullYear()) : '★', 11, 700, '#f1d58e', sans);
-    o += t(W / 2, 726, qrSvg ? 'Attestato di partecipazione rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
-      : 'Attestato di partecipazione rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
-    o += t(W / 2, 743, 'Non è un titolo abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 726, qrSvg ? 'Attestato di corso professionalizzante rilasciato dalla piattaforma didattica NailX: requisiti ed esame finale verificati online.'
+      : 'Attestato di corso professionalizzante rilasciato in autovalutazione dalla piattaforma didattica NailX.', 11.5, 400, '#8a777d', sans);
+    o += t(W / 2, 743, 'Corso professionalizzante non abilitante: in Italia l\'esercizio della professione richiede la qualifica di estetista (L. 1/1990).', 11.5, 400, '#8a777d', sans);
     if (opts.preview) {
       o += '<text x="' + W / 2 + '" y="' + H / 2 + '" text-anchor="middle" font-size="120" font-weight="800" fill="#c2577a" opacity=".1" ' +
         'transform="rotate(-24 ' + W / 2 + ' ' + H / 2 + ')"' + sans + ' letter-spacing="12">ANTEPRIMA</text>';
@@ -1094,7 +1237,7 @@
         // ridisegna tutta la pagina: passi, pannello e attestato aggiornati
         certUI(root, Object.assign({}, ctx, { cert: c }));
         toast('🎓 Attestato ' + (ctx.verifiable ? 'registrato' : 'generato') + ': codice <strong>' + esc(c.code) + '</strong>', 7000);
-        $('#cpreview', root).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollToEl($('#cpreview', root));
       }).catch(function (e) {
         btn.disabled = false;
         $('#cerr', root).innerHTML = '<div class="box danger">' + esc((e && e.message) || 'Errore imprevisto, riprova.') + '</div>';
@@ -1178,7 +1321,7 @@
             '<li>Esame finale: ' + v.final_score + '% (soglia ' + PASS + '%)</li>' +
             '<li>Ore di formazione stimate: circa ' + v.hours + '</li>' +
             '<li>Esercizi pratici completati: ' + (v.exercises && v.exercises.length ? v.exercises.map(esc).join(', ') : 'nessuno') + '</li></ul>' +
-            '<p class="muted"><small>Attestato di partecipazione a un corso online: non è un titolo abilitante.</small></p></div>';
+            '<p class="muted"><small>Attestato di un corso professionalizzante online: documenta le competenze acquisite ma non è un titolo abilitante.</small></p></div>';
         }
       }).catch(function () {
         $('#vres').innerHTML = '<div class="box warn">Servizio di verifica non raggiungibile. Riprova più tardi.</div>';
@@ -1197,6 +1340,7 @@
   var page = document.body.dataset.page;
   header(page);
   lightbox();
+  watchContent();
   ({ home: renderHome, corso: renderCourse, esercizi: renderExercises, quiz: renderQuiz, glossario: renderGlossary,
     attestato: renderCertificate, ripasso: renderReview, verifica: renderVerify, programma: renderProgram, dispensa: renderHandbook,
     accedi: function () { if (window.NAILX_CLOUD) window.NAILX_CLOUD.renderAccount($('#account')); } }[page] || function () {})();

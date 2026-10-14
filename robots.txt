@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://basoxxx.github.io/NailX-ripasso-e-corso/sitemap.xml
