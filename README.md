@@ -53,3 +53,5 @@ Dopo averli modificati esegui `node tools/build_supabase_seed.js`: se il catalog
 > Corso professionalizzante **non abilitante**: l'attestato documenta le competenze acquisite ed è
 > verificabile online, ma non sostituisce la qualifica di estetista prevista dalla legge (L. 1/1990)
 > né il parere medico.
+
+Foto della home: [cottonbro studio su Pexels](https://www.pexels.com/photo/person-holding-black-hand-spinner-3997391/) (licenza Pexels, uso libero).
