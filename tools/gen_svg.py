@@ -862,22 +862,42 @@ def logo():
 
 @fig('hero.svg')
 def hero():
-    b = '<defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe3ea"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>'
+    b = '<defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe3ea"/><stop offset="1" stop-color="#fff"/></linearGradient>'
+    b += '<radialGradient id="hl" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>'
     b += '<rect width="600" height="420" fill="url(#hg)"/>'
-    b += '<circle cx="470" cy="90" r="60" fill="%s" opacity=".35"/><circle cx="90" cy="330" r="80" fill="%s" opacity=".25"/>' % (GEL, GEL)
-    # quattro dita con forme diverse
-    for i, (cx, yc, sh, col, ang) in enumerate([(175, 245, 'mandorla', '#e46f8f', -12), (265, 215, 'mandorla', '#e46f8f', -4),
-                                                (355, 225, 'mandorla', '#e46f8f', 4), (440, 260, 'mandorla', '#e46f8f', 12)]):
-        f, _ = finger_nail(0, 0, hw=30, nail_len=72, free_len=50, shape=sh, plate=col, free=col, finger_len=220, lunula=False)
-        b += '<g transform="translate(%d,%d) rotate(%d)">%s</g>' % (cx, yc, ang, f)
-    # palmo
-    b += '<path d="M120,330 Q300,300 500,330 L520,420 L100,420 Z" fill="%s" stroke="%s" stroke-width="1.5"/>' % (SKIN, SKIN_D)
-    # riflessi
-    for cx, yc, ang in [(175, 245, -12), (265, 215, -4), (355, 225, 4), (440, 260, 12)]:
-        b += '<g transform="translate(%d,%d) rotate(%d)"><path d="M-12,-60 Q-14,-95 -4,-115" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/></g>' % (cx, yc, ang)
-    b += _brush(520, 330, -60, 120)
-    b += _file(80, 120, 35, 170, 24)
-    return svg(600, 420, b, 'Mano con unghie ricostruite a mandorla, pennello e lima')
+    b += '<circle cx="500" cy="92" r="62" fill="%s" opacity=".3"/><circle cx="70" cy="110" r="44" fill="%s" opacity=".18"/>' % (GEL, GEL)
+    b += '<ellipse cx="310" cy="210" rx="230" ry="170" fill="url(#hl)"/>'
+    # piano di lavoro e attrezzi appoggiati (fuori dalla mano, così non coprono le unghie)
+    b += '<rect x="0" y="372" width="600" height="48" fill="#f6dfe6"/><path d="M0,372 H600" stroke="#ecc6d2" stroke-width="2"/>'
+    b += _file(468, 394, -4, 112, 16)
+    b += _brush(522, 300, -70, 100)
+    h = '<g transform="translate(24,42) scale(.92)">'
+    # pollice in diagonale sul lato sinistro (sotto il dorso, che ne copre la base)
+    f, _ = finger_nail(0, 0, hw=28, nail_len=56, free_len=36, shape='mandorla', plate='#e46f8f', free='#e46f8f', finger_len=150, lunula=False)
+    h += '<g transform="translate(118,268) rotate(-48)">%s' % f
+    h += '<path d="M-10,-42 Q-12,-70 -4,-84" stroke="#fff" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".7"/></g>'
+    # dita: indice, medio, anulare, mignolo (il medio è il più lungo); unghie a mandorla
+    fingers = [(214, 178, -9, 30, 70, 46), (290, 150, -2, 31, 74, 50), (364, 168, 5, 30, 70, 46), (430, 222, 13, 26, 58, 38)]
+    for cx, yc, ang, hw, nl, fl in fingers:
+        f, _ = finger_nail(0, 0, hw=hw, nail_len=nl, free_len=fl, shape='mandorla', plate='#e46f8f', free='#e46f8f', finger_len=260, lunula=False)
+        h += '<g transform="translate(%d,%d) rotate(%d)">%s' % (cx, yc, ang, f)
+        h += '<path d="M%.1f,%.1f Q%.1f,%.1f %.1f,%.1f" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/></g>' % (
+            -hw * .4, -nl * .8, -hw * .45, -nl * 1.25, -hw * .12, -nl - fl * .55)
+    # dorso della mano: copre la base di dita e pollice e si stringe verso il polso
+    back = [(150, 330), (230, 300), (300, 296), (372, 304), (448, 326), (452, 380), (430, 440), (190, 440), (160, 400)]
+    h += _blob(back, fill=SKIN, stroke='none')
+    h += '<path d="M160,400 C150,380 146,350 150,330" fill="none" stroke="%s" stroke-width="1.5"/>' % SKIN_D
+    h += '<path d="M448,326 C456,346 455,366 452,380 C446,400 438,424 430,440" fill="none" stroke="%s" stroke-width="1.5"/>' % SKIN_D
+    # nocche
+    for x, y in [(222, 308), (292, 302), (362, 308), (424, 324)]:
+        h += '<path d="M%d,%d q10,-5 20,0" stroke="%s" stroke-width="1.2" fill="none" opacity=".5" stroke-linecap="round"/>' % (x - 10, y, SKIN_D)
+    b += h + '</g>'
+    # scintille
+    for x, y, r in [(150, 70, 9), (470, 180, 7), (540, 250, 5)]:
+        b += ('<path d="M{x} {a} C{x1} {b1} {x2} {c1} {x3} {y} C{x2} {c2} {x1} {b2} {x} {d} C{x4} {b2} {x5} {c2} {x6} {y} C{x5} {c1} {x4} {b1} {x} {a} Z" fill="#fff" opacity=".9"/>'
+              .format(x=x, y=y, a=y - r, d=y + r, x1=x + r * .15, x2=x + r * .3, x3=x + r, x4=x - r * .15, x5=x - r * .3, x6=x - r,
+                      b1=y - r * .3, c1=y - r * .15, c2=y + r * .15, b2=y + r * .3))
+    return svg(600, 420, b, 'Mano con unghie ricostruite a mandorla, lima e pennello sul piano di lavoro')
 
 
 @fig('anatomia-alto.svg')
@@ -1570,8 +1590,8 @@ def lifting():
         b += '<circle cx="572" cy="%d" r="11" fill="%s"/>' % (y - 5, ACC)
         b += text(572, y, str(i + 1), 12, weight=800, fill='#fff')
         b += text(592, y, c, 14.5, 'start')
-    b += '<rect x="555" y="400" width="325" height="60" rx="10" fill="#fbe7e4"/>'
-    b += mtext(570, 425, ['Mai incollare sopra un sollevamento:', 'umidità e batteri (Pseudomonas) si infiltrano.'], 13.5, 'start', 600, ERR)
+    b += '<rect x="555" y="398" width="325" height="70" rx="10" fill="#fbe7e4"/>'
+    b += mtext(570, 419, ['Mai incollare sopra un sollevamento:', 'umidità e batteri (Pseudomonas)', 'si infiltrano sotto.'], 13.5, 'start', 600, ERR)
     return svg(900, 480, b, 'Sollevamento della ricostruzione e sue cause')
 
 

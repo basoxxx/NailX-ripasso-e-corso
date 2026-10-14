@@ -1660,7 +1660,7 @@ def lifting_map():
     b += mini_hand(80, 352, 0.82, (0, 1, 2, 3, 4))
     b += text(124, 372, 'Tutte le dita =', 14.5, 'start', 800) + text(124, 391, 'tecnica / prodotto / lampada', 14, 'start', 600, MUTED)
     b += mini_hand(610, 352, 0.82, (0,))
-    b += text(654, 372, '1–2 dita =', 14.5, 'start', 800) + text(654, 391, 'abitudini, struttura di quel dito', 14, 'start', 600, MUTED)
+    b += text(654, 372, '1–2 dita =', 14.5, 'start', 800) + text(654, 391, 'abitudini o struttura del dito', 13.5, 'start', 600, MUTED)
     return svg(900, 420, defs() + b, 'Mappa del sollevamento: base, lati, punta e centro con le cause tipiche; tutte le dita o solo una o due')
 
 
@@ -2034,7 +2034,7 @@ def consents():
         b += '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" stroke-width="1.3"/>' % (x + 18, y0 + 200, x + w - 18, y0 + 200, MUTED)
         b += text(x + 18, y0 + 196, 'Firma', 12, 'start', 600, MUTED)
     b += '<rect x="608" y="290" width="282" height="36" rx="18" fill="%s" stroke="%s" stroke-width="1.4"/>' % (GREEN_BG, OK)
-    b += mark(628, 308, True, 10) + text(762, 313, 'Se dice no, il servizio si fa lo stesso', 13.5, weight=800, fill=OK)
+    b += mark(628, 308, True, 10) + text(758, 313, 'Il no non blocca il servizio', 13.5, weight=800, fill=OK)
     b += text(24, 313, 'Tre fogli distinti: ogni consenso si firma a parte.', 13.5, 'start', 600, MUTED, 'italic')
     return svg(900, 340, defs() + b, 'Informativa privacy e due consensi separati: dati sulla salute, foto e social (facoltativo)')
 

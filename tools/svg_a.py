@@ -436,7 +436,7 @@ def strati_lamina():
     b += tool_file(504, 350, 0, 40, 12, '#cfc3b8', '#efe8e1')
     b += mark(538, 350, True, 10) + text(552, 355, 'Opacizza solo la superficie', 13, 'start', 600)
     b += tool_file(504, 384, 0, 40, 16, '#6f6259', '#9a8b80')
-    b += mark(538, 384, False, 10) + text(552, 389, 'Non togliere lo strato superiore', 13, 'start', 600)
+    b += mark(538, 384, False, 10) + text(552, 389, 'Non assottigliare la lamina', 13, 'start', 600)
     return svg(760, 420, b, 'Gli strati della lamina ungueale e la matrice che li produce')
 
 
@@ -1309,7 +1309,7 @@ def classif_strumenti():
     b += '<rect x="20" y="366" width="760" height="46" rx="12" fill="#fbe9e7"/>'
     b += file_r('dritta', 62, 388, '#8f8379', '#2f2a28', ('', ''), 0, 0.4, seed=12) + magnifier(70, 384, 13)
     b += text(110, 395, 'Poroso = monouso:', 16, 'start', 900, ERR)
-    b += text(270, 395, 'lime in carta e buffer non si disinfettano davvero, anche se "lavabili".', 14, 'start', 600)
+    b += text(270, 395, 'lime in carta e buffer non si disinfettano, anche se "lavabili".', 14, 'start', 600)
     return svg(800, 420, b, 'Classificazione degli strumenti: monouso, da disinfettare, da sterilizzare')
 
 
