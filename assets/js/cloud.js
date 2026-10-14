@@ -183,10 +183,10 @@
         var ex = r.data, answers = {};
         var html = '<div id="qprog"></div>' + ex.questions.map(function (q, i) {
           var opts = app.shuffle(q.options.map(function (o, j) { return { t: o, j: j }; }));
-          return '<div class="quiz-q" data-q="' + q.id + '"><h3>' + (i + 1) + '. ' + esc(q.question) + '</h3>' + opts.map(function (o) {
-            return '<button type="button" class="opt" data-j="' + o.j + '">' + esc(o.t) + '</button>';
+          return '<div class="quiz-q" data-q="' + q.id + '" role="group" aria-labelledby="xq-' + i + '"><h3 id="xq-' + i + '">' + (i + 1) + '. ' + esc(q.question) + '</h3>' + opts.map(function (o) {
+            return '<button type="button" class="opt" data-j="' + o.j + '" aria-pressed="false">' + esc(o.t) + '</button>';
           }).join('') + '<div class="explain" hidden></div></div>';
-        }).join('') + '<div class="btn-row"><button class="btn" id="xsubmit" type="button" disabled>Consegna l\'esame</button></div><div id="qres"></div>';
+        }).join('') + '<div class="btn-row"><button class="btn" id="xsubmit" type="button" disabled>Consegna l\'esame</button></div><div id="qres" aria-live="polite"></div>';
         body.innerHTML = html;
         function prog() {
           var n = Object.keys(answers).length;
@@ -197,7 +197,7 @@
         body.addEventListener('click', function (e) {
           var b = e.target.closest('.opt'); if (!b || b.disabled) return;
           var box = b.closest('.quiz-q');
-          box.querySelectorAll('.opt').forEach(function (o) { o.classList.toggle('chosen', o === b); });
+          box.querySelectorAll('.opt').forEach(function (o) { o.classList.toggle('chosen', o === b); o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
           answers[box.dataset.q] = +b.dataset.j;
           prog();
         });
@@ -219,6 +219,7 @@
         var r = byId[box.dataset.q];
         box.querySelectorAll('.opt').forEach(function (o) {
           o.disabled = true;
+          o.removeAttribute('aria-pressed');
           if (+o.dataset.j === r.answer) o.classList.add('right');
           else if (+o.dataset.j === answers[box.dataset.q]) o.classList.add('wrong');
         });
@@ -233,7 +234,8 @@
       body.querySelector('#qres').innerHTML = '<div class="card result"><b>' + res.score + '%</b><p>' + res.correct + ' risposte corrette su ' + res.total + '. ' +
         (pass ? 'Esame superato! 🎉' : 'Non ancora: rivedi le spiegazioni qui sopra e riprova.') + '</p><div class="btn-row" style="justify-content:center">' +
         (pass ? '<a class="btn" href="attestato.html">Vai al tuo attestato →</a>' : '<a class="btn" href="quiz.html?m=final">Nuovo tentativo</a>') + '</div></div>';
-      body.querySelector('#qres').scrollIntoView({ behavior: 'smooth' });
+      var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      body.querySelector('#qres').scrollIntoView({ behavior: rm ? 'auto' : 'smooth' });
     }
   }
 
