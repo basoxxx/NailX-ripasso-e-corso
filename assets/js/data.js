@@ -33,8 +33,8 @@ desc: 'Com\'è fatta l\'unghia, come cresce, come osservarla e quando non si dev
           html: `
 <p>Conoscere l'anatomia serve a capire <strong>dove</strong> appoggiare il prodotto, <strong>dove</strong> costruire la struttura e quali zone non vanno <strong>mai</strong> toccate. Ogni regola della preparazione nasce da qui.</p>
 <p>I dermatologi parlano di <strong>apparato ungueale</strong> (o unità ungueale): non solo la lamina dura che vedi, ma anche la pelle e i tessuti che la producono, la sostengono e la proteggono.</p>
-${F('anatomia-alto.svg', 'Le parti visibili dell\'unghia, vista dall\'alto.')}
-${F('anatomia-sezione.svg', 'Sezione laterale: matrice, letto, lamina e iponichio.')}
+${F('anatomia-alto.svg', 'L\'unghia vista dall\'alto: eponichio, cuticola, lunula, lamina, pieghe laterali, smile line e bordo libero.')}
+${F('anatomia-sezione.svg', 'Sezione laterale del dito: matrice, letto ungueale, lamina, iponichio e falange.')}
 <h2>Le parti principali</h2>
 <table>
 <tr><th>Parte</th><th>Cos'è</th><th>Cosa significa per l'onicotecnica</th></tr>
@@ -123,7 +123,7 @@ ${B('tip', 'Da ricordare', 'Si rimuove solo ciò che è morto e attaccato alla l
           min: 9,
           simple: "L'unghia della mano cresce di circa 3 mm al mese, cioè quasi 1 mm a settimana. Dopo 3–4 settimane la ricostruzione si è spostata in avanti e va riequilibrata con il refill.",
           html: `
-<p>La matrice produce lamina di continuo, giorno e notte. La lamina scivola in avanti sul letto come un nastro trasportatore. Sapere <strong>quanto</strong> e <strong>come</strong> cresce ti permette di spiegare alla cliente perché serve il refill e di programmare gli appuntamenti.</p>
+<p>La matrice produce la lamina di continuo, giorno e notte. La lamina scivola in avanti sul letto come un nastro trasportatore. Sapere <strong>quanto</strong> e <strong>come</strong> cresce ti permette di spiegare alla cliente perché serve il refill e di programmare gli appuntamenti.</p>
 <h2>Quanto cresce</h2>
 <table>
 <tr><th></th><th>Mani</th><th>Piedi</th></tr>
@@ -140,7 +140,7 @@ ${F('crescita-timeline.svg', 'Una linea segnata alla base si sposta in avanti di
 <li><strong>Età</strong>: con gli anni la crescita rallenta.</li>
 <li><strong>Salute</strong>: febbre alta, malattie, interventi chirurgici, chemioterapia, problemi di circolazione possono rallentarla o fermarla per un periodo. Quando riparte resta un solco trasversale (<em>linee di Beau</em>).</li>
 <li><strong>Traumi</strong>: un colpo forte alla base (es. dito nella porta) può interrompere la produzione; a volte la vecchia unghia si stacca e ne cresce una nuova sotto.</li>
-<li><strong>Mani e piedi</strong>: le unghie dei piedi crescono molto più lente.</li>
+<li><strong>Mani e piedi</strong>: le unghie dei piedi crescono molto più lentamente.</li>
 </ul>
 <div class="box deep"><strong class="t">Approfondimento: non tutte le dita crescono uguali</strong> <ul><li><strong>Mano dominante</strong>: le unghie della mano che usi di più tendono a crescere un po' più in fretta. La differenza è piccola (frazioni di millimetro a settimana) e in alcune persone non c'è.</li> <li><strong>Dito</strong>: medio e pollice spesso crescono più del mignolo, ma le fonti non sono d'accordo su quale sia il più lento.</li> <li><strong>Stagione</strong>: con il caldo le unghie crescono un po' più in fretta (circolazione migliore).</li></ul> <p>Per questo, quando misuri la ricrescita, usa sempre <strong>lo stesso dito della stessa mano</strong> (per esempio il medio della mano dominante) e annota la stagione: confronti dati omogenei e la previsione del refill diventa affidabile.</p></div>
 <h2>Perché ci interessa: la ricostruzione "scivola"</h2>
@@ -191,7 +191,7 @@ ${B('info', 'Curiosità', 'Alcuni siti italiani riportano "365 mm all\'anno": è
           min: 14,
           simple: "Se l'unghia o la pelle intorno sembrano malate, infiammate, infette o cambiano colore senza un motivo chiaro, non si lavora: si consiglia il medico. Tu osservi e riconosci, non fai diagnosi.",
           html: `
-<p>L'onicotecnica <strong>non fa diagnosi</strong> e <strong>non cura</strong>. Deve però riconoscere i segnali che impongono di <strong>non lavorare</strong> e di consigliare il medico (medico di base, dermatologo o podologo). Le linee guida regionali per l'estetica sono chiare: con clienti affetti da patologie o con lesioni sospette ci si astiene dalla prestazione, si consiglia il medico nel rispetto della privacy e poi si puliscono e disinfettano superfici, strumenti e mani.</p>
+<p>L'onicotecnica <strong>non fa diagnosi</strong> e <strong>non cura</strong>. Deve però riconoscere i segnali che impongono di <strong>non lavorare</strong> e di consigliare il medico (medico di base, dermatologo o podologo). Le linee guida regionali per l'estetica sono chiare: con clienti affetti da patologie o con lesioni sospette ci si astiene dalla prestazione e si consiglia il medico, nel rispetto della privacy. Poi si puliscono e si disinfettano superfici, strumenti e mani.</p>
 <h2>Il semaforo</h2>
 ${F('semaforo-unghie.svg', 'Rosso: non lavorare. Giallo: chiedi, adatta o aspetta il parere del medico. Verde: puoi lavorare.')}
 <table>
@@ -201,7 +201,7 @@ ${F('semaforo-unghie.svg', 'Rosso: non lavorare. Giallo: chiedi, adatta o aspett
 <tr><td><strong>Verde</strong></td><td>Disturbi non contagiosi e non infiammati: linee di Beau, macchioline bianche, striature, unghie fragili o sfogliate.</td><td>Lavori con delicatezza (lezione successiva).</td></tr>
 </table>
 <h2>Le condizioni da riconoscere</h2>
-${F('patologie-tavola.svg', 'Tavola delle principali condizioni che impongono di non lavorare.')}
+${F('patologie-tavola.svg', 'Tavola di riconoscimento: onicomicosi, tinea, paronichia, unghia verde, verruche, granuloma, onicolisi, psoriasi e banda scura.')}
 <table>
 <tr><th>Condizione</th><th>Come si riconosce</th><th>Cosa fare</th></tr>
 <tr><td><strong>Onicomicosi</strong> (micosi dell'unghia)</td><td>Unghia ispessita, opaca, gialla, bianca o grigia, friabile; detriti sotto il bordo libero; a volte odore.</td><td>Rosso: è contagiosa. Non limare, non coprire. Disinfetta tutto ciò che hai toccato e consiglia il medico.</td></tr>
@@ -211,7 +211,7 @@ ${F('patologie-tavola.svg', 'Tavola delle principali condizioni che impongono di
 <tr><td><strong>Granuloma piogenico</strong></td><td>Piccola massa rossa o violacea di "carne" che cresce in fretta e sanguina facilmente.</td><td>Rosso. Non toccarla, non limarla.</td></tr>
 <tr><td><strong>Verruche periungueali</strong></td><td>Escrescenze ruvide e dure intorno o sotto l'unghia (virus).</td><td>Rosso: sono contagiose. Non lavorare sulla zona; consiglia il medico.</td></tr>
 <tr><td><strong>Unghia verde</strong> (sindrome dell'unghia verde)</td><td>Macchia verde, verde-nera o marrone, spesso sotto un sollevamento della ricostruzione.</td><td>Rosso. È un'infezione batterica (<em>Pseudomonas</em>), non "muffa". Rimuovi il prodotto senza limare dentro la macchia, non riapplicare, consiglia il medico.</td></tr>
-<tr><td><strong>Onicolisi</strong></td><td>La lamina si stacca dal letto, di solito dalla punta: zona biancastra o giallastra.</td><td>Giallo/rosso. Se la causa non è nota, niente prodotto: nello spazio si accumulano umidità e germi. Puoi solo accorciare il bordo libero staccato, se pulito e asciutto.</td></tr>
+<tr><td><strong>Onicolisi</strong></td><td>La lamina si stacca dal letto, di solito dalla punta: zona biancastra o giallastra.</td><td>Giallo/rosso. Se la causa non è nota, niente prodotto: nello spazio si accumulano umidità e germi. Puoi solo accorciare il bordo libero staccato, se è pulito e asciutto.</td></tr>
 <tr><td><strong>Banda scura</strong> (melanonichia longitudinale)</td><td>Striscia marrone o nera dalla base alla punta.</td><td>Vedi sotto: in molti casi è innocua, ma alcuni segni vanno visti dal dermatologo con urgenza.</td></tr>
 <tr><td><strong>Psoriasi ungueale</strong></td><td>Puntini a "ditale", macchie color salmone ("goccia d'olio"), onicolisi, ispessimento.</td><td>Giallo. Non è contagiosa, ma la lamina è fragile e spesso staccata: serve il parere del dermatologo prima di applicare prodotto.</td></tr>
 <tr><td><strong>Altre</strong></td><td>Ferite aperte o tagli, eczema/dermatite in corso, ustioni, unghia incarnita arrossata, allergia nota agli acrilati.</td><td>Non lavorare sulla zona. Con allergia agli acrilati: niente gel, acrilico, polygel, semipermanente.</td></tr>
@@ -262,12 +262,12 @@ ${B('warn', 'Documenta sempre', 'Sulla scheda cliente annota data, cosa hai osse
           simple: "Non tutte le unghie \"strane\" sono malate. Solchi, macchioline bianche, striature e sfogliamento di solito non sono contagiosi: si può lavorare, con delicatezza e qualche adattamento.",
           html: `
 <p>Nei testi professionali si distingue tra <strong>malattie</strong> (infezioni, spesso contagiose: non si lavora) e <strong>disturbi</strong> (alterazioni non contagiose, spesso dovute a traumi, secchezza o fattori temporanei). Sui disturbi, se la pelle è sana e non c'è dolore, di solito si può lavorare adattando il servizio.</p>
-${F('disturbi-tavola.svg', 'I disturbi più comuni e come adattare il lavoro.')}
+${F('disturbi-tavola.svg', 'I disturbi più comuni (linee di Beau, macchioline, striature, sfogliamento, pellicine, ematoma…) e come adattare il lavoro.')}
 <h2>I disturbi più comuni</h2>
 <table>
 <tr><th>Disturbo</th><th>Come si riconosce</th><th>Perché succede</th><th>Come adatti il lavoro</th></tr>
 <tr><td><strong>Linee di Beau</strong></td><td>Solchi trasversali, da un lato all'altro.</td><td>La matrice ha rallentato per un periodo (febbre, malattia, trauma).</td><td>Opacizza con grana fine senza "livellare" il solco; il prodotto riempie il dislivello.</td></tr>
-<tr><td><strong>Leuconichia puntata</strong></td><td>Macchioline bianche.</td><td>Piccoli traumi alla matrice. Non è "mancanza di calcio".</td><td>Nessuna limitazione; crescono e se ne vanno.</td></tr>
+<tr><td><strong>Leuconichia puntata</strong></td><td>Macchioline bianche.</td><td>Piccoli traumi alla matrice. Non è "mancanza di calcio".</td><td>Nessuna limitazione: avanzano con la crescita e spariscono.</td></tr>
 <tr><td><strong>Onicoressi</strong></td><td>Striature longitudinali, unghia fragile che si spacca per il lungo.</td><td>Secchezza, detergenti, età.</td><td>Grana 240 o più fine, poca pressione; consiglia olio ogni giorno.</td></tr>
 <tr><td><strong>Onicoschisi</strong> (sfogliamento)</td><td>Il bordo libero si apre a strati.</td><td>Acqua e solventi indeboliscono i legami tra gli strati.</td><td>Accorcia fin sotto la zona sfogliata; sigilla bene il bordo libero.</td></tr>
 <tr><td><strong>Unghia sottile e morbida</strong></td><td>Lamina flessibile, si piega.</td><td>Matrice corta, costituzione, a volte assottigliamento da limature passate.</td><td>Non opacizzare troppo; strati sottili e flash cure per evitare il calore; base flessibile.</td></tr>
@@ -334,9 +334,9 @@ ${F('viste-dito.svg', 'Tre viste dello stesso dito: dall\'alto, di profilo, dall
 <li>"Prende farmaci o ha problemi di circolazione o diabete?"</li>
 <li>"Che lavoro fa con le mani?" (per scegliere lunghezza e forma)</li>
 </ul>
-${F('scheda-cliente.svg', 'Annota tutto sulla scheda cliente.')}
+${F('scheda-cliente.svg', 'Esempio di scheda cliente: dati, consensi, allergie, farmaci, stato della lamina, servizio e prodotti usati.')}
 <div class="box deep"><strong class="t">Approfondimento: farmaci e luce</strong> <p>Alcuni farmaci rendono la pelle e il letto ungueale più sensibili alla luce. L'esempio più documentato è la <strong>doxiciclina</strong> (un antibiotico): con l'esposizione al sole può causare foto-onicolisi, cioè il distacco della lamina dalla punta, a volte con una macchia a mezzaluna. Gli studi riguardano la luce solare, non le lampade per unghie: non ci sono prove dirette di un rischio con la lampada.</p> <p>Per prudenza, se la cliente sta prendendo antibiotici o farmaci "che fanno male al sole" e nota distacchi o dolore alle unghie, rimanda o adatta il servizio e consiglia di chiedere al medico. Annota il farmaco sulla scheda: ti aiuta a interpretare un'onicolisi improvvisa.</p></div>
-<h2>Dalla osservazione alla scelta</h2>
+<h2>Dall'osservazione alla scelta</h2>
 <table>
 <tr><th>Cosa vedi</th><th>Cosa scegli</th></tr>
 <tr><td>Lamina sottile e flessibile</td><td>Opacizzazione minima, strati sottili, flash cure, lunghezza moderata.</td></tr>
@@ -381,8 +381,8 @@ desc: 'Sanificare, disinfettare, sterilizzare; mani, DPI, aria, allergie, regole
           min: 14,
           simple: "Prima si lava via lo sporco, poi si uccidono i germi con un disinfettante, infine gli strumenti di metallo vanno in autoclave, che elimina tutto, anche le spore. Ciò che non si può pulire bene si usa una volta sola e si butta.",
           html: `
-<p>Le mani, la pelle e gli strumenti possono trasmettere <strong>batteri</strong> (es. infezioni della pelle), <strong>funghi</strong> (micosi), <strong>virus</strong> (verruche, e con il sangue anche epatite B, epatite C e HIV). Un piccolo taglio con uno strumento non sterile basta. L'igiene non è un dettaglio: è la prima cosa che controllano i NAS e le ASL.</p>
-${F('igiene.svg', 'I tre livelli di trattamento igienico.')}
+<p>Le mani, la pelle e gli strumenti possono trasmettere <strong>batteri</strong> (es. infezioni della pelle), <strong>funghi</strong> (micosi), <strong>virus</strong> (verruche e, attraverso il sangue, epatite B, epatite C e HIV). Basta un piccolo taglio con uno strumento non sterile. L'igiene non è un dettaglio: è la prima cosa che controllano i NAS e le ASL.</p>
+${F('igiene.svg', 'I tre livelli di trattamento igienico: detersione, disinfezione e sterilizzazione.')}
 <h2>Le parole giuste</h2>
 <table>
 <tr><th>Livello</th><th>Cosa fa</th><th>Con cosa</th><th>Su cosa</th></tr>
@@ -410,7 +410,7 @@ ${F('classificazione-strumenti.svg', 'Monouso, disinfettabile o sterilizzabile: 
 <tr><td><strong>Da sterilizzare</strong> (metallo, possono toccare sangue)</td><td>Tronchesine, forbicine, spingicuticole, curette, punte per fresa in metallo, pinzette.</td><td>Pulizia → disinfezione → busta → autoclave.</td></tr>
 </table>
 <h2>Il percorso degli strumenti in 9 passi</h2>
-${F('ciclo-sterilizzazione.svg', 'Il ciclo completo degli strumenti dopo ogni cliente.')}
+${F('ciclo-sterilizzazione.svg', 'Il ciclo degli strumenti dopo ogni cliente: detersione, disinfezione, risciacquo, busta, autoclave e registro.')}
 <ol class="steps">
 <li><strong>Con i guanti</strong>, metti subito gli strumenti usati in una vaschetta dedicata (se non puoi lavarli subito, immergili in soluzione disinfettante).</li>
 <li><strong>Sciacqua</strong> in acqua corrente tiepida: l'acqua calda "cuoce" i residui di sangue e proteine, quella fredda indurisce i grassi.</li>
@@ -469,7 +469,7 @@ ${B('danger', 'Controlli reali', 'I NAS controllano i centri: in un caso a Trent
           simple: "La polvere della lima e i vapori dei prodotti vanno catturati vicino alle mani, con un aspiratore, e portati via con aria pulita. Poi ti proteggi con guanti in nitrile, occhiali e mascherina quando limi.",
           html: `
 <p>Chi fa unghie respira e tocca ogni giorno piccole quantità di sostanze. Una sola esposizione non fa danni visibili, ma anni di polvere e vapori possono dare <strong>irritazioni</strong>, <strong>asma</strong>, <strong>dermatiti</strong> e <strong>allergie</strong>. La protezione segue un ordine preciso: prima si toglie il rischio alla fonte, poi si usano i DPI.</p>
-${F('dpi.svg', 'I DPI da usare a ogni servizio.')}
+${F('dpi.svg', 'I DPI da usare a ogni servizio (guanti in nitrile, occhiali, FFP2 in limatura) insieme all\'aspiratore da tavolo.')}
 <h2>I rischi in breve</h2>
 <table>
 <tr><th>Rischio</th><th>Da dove viene</th><th>Effetti possibili</th></tr>
@@ -513,7 +513,7 @@ ${F('guanti-togliere.svg', 'Come sfilare i guanti senza toccare l\'esterno con l
 <h2>Il monomero: EMA sì, MMA no</h2>
 <ul>
 <li>Il monomero standard dell'acrilico per unghie è l'<strong>EMA</strong> (etil metacrilato).</li>
-<li>L'<strong>MMA</strong> liquido (metil metacrilato) aderisce in modo troppo rigido, si toglie a fatica (quasi insolubile in acetone), può strappare la lamina e dare forti reazioni. Negli USA la FDA lo ha considerato non adatto e ha fatto ritirare i prodotti negli anni '70 (senza un divieto con regolamento specifico), e diversi Stati lo vietano; in Germania il BfR (2011) lo ha giudicato dannoso nei prodotti per modellare le unghie. Si trova ancora in liquidi economici: <strong>evitalo</strong>.</li>
+<li>L'<strong>MMA</strong> liquido (metil metacrilato) aderisce in modo troppo rigido, si toglie a fatica (quasi insolubile in acetone), può strappare la lamina e dare forti reazioni. Negli USA la FDA lo ha considerato non adatto e negli anni '70 ha fatto ritirare i prodotti (senza un regolamento di divieto specifico); diversi Stati lo vietano. In Germania il BfR (2011) lo ha giudicato dannoso nei prodotti per modellare le unghie. Si trova ancora in liquidi economici: <strong>evitalo</strong>.</li>
 <li>Segnali sospetti di MMA: prezzo molto basso, odore molto forte e "fruttato-acre", prodotto durissimo che non si scioglie in acetone, etichetta senza INCI o non in italiano.</li>
 </ul>
 <div class="box pro"><strong class="t">Consiglio da professionista: verifica il liquido prima di usarlo</strong> <ul><li>Leggi la <strong>SDS, sezione 3</strong> (composizione): deve comparire Ethyl Methacrylate (CAS 97-63-2). Se trovi Methyl Methacrylate (CAS 80-62-6) come componente principale, non usarlo.</li> <li>Guarda la <strong>sezione 2</strong>: i liquidi per acrilico sono di norma classificati come liquidi facilmente infiammabili (H225) e sensibilizzanti per la pelle (H317). Se l'etichetta non riporta nulla, è un cattivo segnale.</li> <li>Diffida di un liquido senza SDS o con SDS in un'altra lingua: per i controlli devi averla in italiano.</li></ul> <p>Due minuti di lettura prima di aprire un flacone nuovo valgono più di qualsiasi "prova dell'odore".</p></div>
@@ -589,7 +589,7 @@ ${F('contatto-pelle.svg', 'Prodotto che tocca cuticola e pieghe (✗) e margine 
 <li>Pubblicato il 13 maggio 2025, si applica dal <strong>1° settembre 2025</strong>. Aggiunge all'Allegato II sostanze classificate CMR (cancerogene, mutagene o tossiche per la riproduzione).</li>
 <li><strong>TPO</strong> (difenil(2,4,6-trimetilbenzoil)fosfina ossido, CAS 75980-60-8): fotoiniziatore di gel e semipermanenti, classificato tossico per la riproduzione (cat. 1B). È stato tolto dall'Allegato III e messo tra i vietati.</li>
 <li><strong>DMTA</strong> (N,N-dimetil-p-toluidina, CAS 99-97-8, detta anche DMPT): <strong>accelerante</strong> usato nei liquidi per acrilico e negli attivatori dei sistemi "dip". Il divieto riguarda quindi anche alcuni monomeri liquidi e attivatori, non solo i gel.</li>
-<li>Nessun periodo di smaltimento: dal 1° settembre 2025 i prodotti con TPO o DMTA non si vendono e non si usano, <strong>anche in salone e anche se già acquistati o aperti</strong>. Secondo le notizie di stampa una circolare del Ministero della Salute (agosto 2025) ha indicato ritiro da parte dei fornitori e smaltimento tramite canali autorizzati.</li>
+<li>Nessun periodo di smaltimento: dal 1° settembre 2025 i prodotti con TPO o DMTA non si vendono e non si usano, <strong>anche in salone e anche se già acquistati o aperti</strong>. Secondo la stampa, una circolare del Ministero della Salute (agosto 2025) ha indicato il ritiro da parte dei fornitori e lo smaltimento tramite canali autorizzati.</li>
 <li>Esistono fotoiniziatori alternativi (per esempio TPO-L, cioè etil fenil(2,4,6-trimetilbenzoil)fosfinato, o BAPO): sono sostanze diverse, ma <strong>controlla sempre l'INCI</strong> e chiedi conferma scritta al fornitore.</li>
 </ul>
 ${F('etichetta-inci.svg', 'Cosa cercare in etichetta: avvertenze HEMA, assenza di TPO e DMTA, lotto e PAO.')}
@@ -604,8 +604,8 @@ ${F('etichetta-inci.svg', 'Cosa cercare in etichetta: avvertenze HEMA, assenza d
 </ol>
 <h2>Errori frequenti</h2>
 <ul>
-<li>"Questo gel è hypoallergenic, quindi posso lavorare più largo": nessun gel è privo di rischio se tocca la pelle.</li>
-<li>Usare una lampada "universale" non indicata dal produttore del gel: il gel può restare sotto-polimerizzato.</li>
+<li>"Questo gel è ipoallergenico, quindi posso lavorare più largo": nessun gel è privo di rischio se tocca la pelle.</li>
+<li>Usare una lampada "universale" non indicata dal produttore del gel: il gel può restare sottopolimerizzato.</li>
 <li>Pensare che il divieto TPO riguardi solo il semipermanente: controlla anche top, base, builder e liquidi per acrilico (DMTA).</li>
 <li>Vendere alla cliente kit con HEMA per uso domestico.</li>
 </ul>
@@ -629,7 +629,7 @@ ${F('etichetta-inci.svg', 'Cosa cercare in etichetta: avvertenze HEMA, assenza d
           simple: "In Italia chi fa unghie a pagamento lavora, di regola, come estetista: serve la qualifica, un responsabile tecnico qualificato e una SCIA al Comune. Un attestato di un corso privato da solo non basta per aprire un'attività.",
           html: `
 <p>In Italia la ricostruzione unghie rientra di norma nell'attività di <strong>estetista</strong>, regolata dalla <strong>Legge 4 gennaio 1990 n. 1</strong> e dalle leggi e regolamenti di Regioni e Comuni. Le schede delle Camere di Commercio elencano l'<strong>onicotecnica</strong> tra le attività di estetica. L'onicotecnico non ha (ancora) una figura professionale nazionale autonoma.</p>
-${B('info', 'Un tema ancora aperto', 'Ci sono state interpretazioni diverse (per esempio una sentenza del TAR Veneto del 2001 la considerava attività artigianale) e alcune Regioni hanno creato registri o percorsi formativi (le Marche hanno un registro regionale degli onicotecnici, la cui iscrizione non è obbligatoria). In Emilia-Romagna una proposta di legge sull\'onicotecnico è stata pubblicata a novembre 2025 per la consultazione. In Parlamento sono stati presentati più disegni di legge. Finché non cambiano le regole, la strada sicura è la qualifica di estetista: <strong>chiedi sempre al SUAP del tuo Comune</strong>.')}
+${B('info', 'Un tema ancora aperto', 'Ci sono state interpretazioni diverse: per esempio, una sentenza del TAR Veneto del 2001 la considerava attività artigianale. Alcune Regioni hanno creato registri o percorsi formativi (le Marche hanno un registro regionale degli onicotecnici, a iscrizione facoltativa). In Emilia-Romagna una proposta di legge sull\'onicotecnico è stata pubblicata a novembre 2025 per la consultazione. In Parlamento sono stati presentati più disegni di legge. Finché non cambiano le regole, la strada sicura è la qualifica di estetista: <strong>chiedi sempre al SUAP del tuo Comune</strong>.')}
 <h2>Come si ottiene la qualifica di estetista</h2>
 ${F('percorsi-estetista.svg', 'I percorsi principali per diventare estetista abilitata.')}
 <p>I dettagli (ore, enti, esami) li decide ogni Regione. A titolo di esempio, in Emilia-Romagna i percorsi sono:</p>
@@ -653,7 +653,7 @@ ${F('apertura-attivita.svg', 'SCIA al SUAP, responsabile tecnico, ComUnica: i pa
 <h2>Dove si può lavorare</h2>
 <ul>
 <li>In un <strong>locale</strong> adatto, conforme ai regolamenti edilizi e igienico-sanitari.</li>
-<li>A <strong>domicilio dell'esercente</strong> solo se i locali sono separati dall'abitazione, destinati solo all'attività e con servizio igienico per i clienti (regole dell'esempio emiliano: verifica le tue).</li>
+<li>A <strong>domicilio dell'esercente</strong> solo se i locali sono separati dall'abitazione, destinati solo all'attività e con servizio igienico per i clienti (così prevede l'esempio emiliano: verifica le regole della tua Regione).</li>
 <li>Presso la sede scelta dal cliente o in strutture convenzionate, dove la Regione lo prevede.</li>
 <li>Non in forma <strong>ambulante</strong> o di posteggio (es. bancarelle).</li>
 <li>Con l'<strong>affitto di cabina</strong> presso un altro centro, se si hanno i titoli abilitanti.</li>
@@ -707,7 +707,7 @@ ${F('incidente-taglio.svg', 'Cosa fare se una cliente sanguina: pressione con ga
 <li>Premi sulla ferita con una <strong>garza sterile</strong> finché il sanguinamento si ferma. Se non si ferma, continua a premere e cerca assistenza medica.</li>
 <li>Disinfetta con un disinfettante per cute lesa e copri con un cerotto.</li>
 <li>Metti da parte lo strumento usato: va pulito, disinfettato e sterilizzato prima di riusarlo. Le lime che hanno toccato sangue si buttano.</li>
-<li>Pulisci superfici sporche di sangue con carta monouso e disinfettante ad ampio spettro, poi risciacqua.</li>
+<li>Pulisci le superfici sporche di sangue con carta monouso e disinfettante ad ampio spettro, poi risciacqua.</li>
 <li>Butta garze e salviette nel contenitore per rifiuti a rischio infettivo e lavati le mani.</li>
 <li>Annota l'episodio sulla scheda cliente.</li>
 </ol>
@@ -773,10 +773,10 @@ desc: 'Gel UV/LED, acrilico, polygel, semipermanente, dip, soft gel tips, fibra,
           min: 10,
           simple: "Gel, acrilico, polygel e gli altri sistemi sono \"parenti\": sono tutti plastiche che si formano sull'unghia. Cambia come diventano duri e come si tolgono. Scegli in base all'unghia della cliente e a cosa vuole.",
           html: `
-${F('sistemi.svg', 'I quattro sistemi principali a confronto.')}
+${F('sistemi.svg', 'Gel, acrilico, polygel e fibra a confronto: come induriscono, punti forti e limiti.')}
 <p>Quasi tutti i prodotti per unghie artificiali sono a base di <strong>(met)acrilati</strong>: piccole molecole (monomeri) o catenelle già formate (oligomeri) che, con una reazione chiamata <strong>polimerizzazione</strong>, si uniscono in una rete solida, una plastica. Ciò che cambia tra un sistema e l'altro è:</p>
 <ul>
-<li><strong>cosa fa partire la reazione</strong>: la luce della lampada (gel, polygel, semipermanente), una reazione chimica tra liquido e polvere, senza lampada (acrilico: l'iniziatore nella polvere e l'accelerante nel liquido), un attivatore (fibra, dip);</li>
+<li><strong>cosa fa partire la reazione</strong>: la luce della lampada (gel, polygel, semipermanente), una reazione chimica tra liquido e polvere, senza lampada (acrilico: iniziatore nella polvere, accelerante nel liquido) oppure un attivatore (fibra, dip);</li>
 <li><strong>quanto è fitta la rete</strong>: rete fitta = duro, si toglie limando; rete più "aperta" = l'acetone ci entra e lo scioglie.</li>
 </ul>
 <h2>Tabella di confronto</h2>
@@ -793,7 +793,7 @@ ${F('sistemi.svg', 'I quattro sistemi principali a confronto.')}
 <tr><td>Press-on (unghie preformate)</td><td>Colla o adesivo</td><td>Acetone / olio, secondo il tipo</td><td>Rapidissime</td><td>Durata limitata</td><td>Eventi, uso temporaneo</td></tr>
 </table>
 ${F('sistemi-rimozione.svg', 'Si scioglie in acetone o si toglie limando: la differenza sta nella rete di polimero.')}
-<div class="box deep"><strong class="t">Approfondimento: l'acrilico non indurisce "con l'aria"</strong> <p>Nella tabella si dice per semplicità che l'acrilico indurisce "all'aria". Il meccanismo reale è chimico: nella polvere c'è un <strong>iniziatore</strong> (perossido di benzoile, BPO), nel liquido un <strong>accelerante</strong>. Quando il monomero bagna le perline di polvere, l'accelerante raggiunge il BPO e lo spezza in radicali liberi, che avviano la polimerizzazione a temperatura ambiente, senza lampada e senza calore esterno.</p> <p>L'aria, anzi, con l'ossigeno tende a rallentare le reazioni radicaliche in superficie. Quello che conta davvero è il rapporto liquido/polvere, la temperatura dell'ambiente e usare liquido e polvere della stessa linea, perché iniziatore e accelerante sono dosati l'uno sull'altro.</p></div>
+<div class="box deep"><strong class="t">Approfondimento: l'acrilico non indurisce "con l'aria"</strong> <p>Si dice spesso, per semplicità, che l'acrilico indurisce "all'aria". Il meccanismo reale è chimico: nella polvere c'è un <strong>iniziatore</strong> (perossido di benzoile, BPO), nel liquido un <strong>accelerante</strong>. Quando il monomero bagna le perline di polvere, l'accelerante raggiunge il BPO e lo spezza in radicali liberi, che avviano la polimerizzazione a temperatura ambiente, senza lampada e senza calore esterno.</p> <p>Anzi, l'ossigeno dell'aria tende a rallentare le reazioni radicaliche in superficie. Quello che conta davvero è il rapporto liquido/polvere, la temperatura dell'ambiente e usare liquido e polvere della stessa linea, perché iniziatore e accelerante sono dosati l'uno sull'altro.</p></div>
 <h2>Come scegliere: 4 domande</h2>
 ${F('sistemi-scelta.svg', 'Albero decisionale: unghia, lunghezza, stile di vita, allergie.')}
 <ol class="steps">
@@ -814,7 +814,7 @@ ${F('sistemi-scelta.svg', 'Albero decisionale: unghia, lunghezza, stile di vita,
 <ul>
 <li>Promettere a tutte "il sistema più resistente": la resistenza dipende soprattutto da preparazione e struttura.</li>
 <li>Usare il semipermanente per allungare: non ha struttura, si spezza.</li>
-<li>Mescolare base di una marca, gel di un'altra e top di una terza: aumentano sollevamenti e sotto-polimerizzazione.</li>
+<li>Mescolare base di una marca, gel di un'altra e top di una terza: aumentano sollevamenti e sottopolimerizzazione.</li>
 </ul>
         `,
           sources: [
@@ -856,7 +856,7 @@ ${F('gel-chimica.svg', 'Oligomeri e fotoiniziatori: la luce fa partire la reazio
 <tr><td>Uso tipico</td><td>Ricostruzioni, lunghezze medie</td><td>Rinforzi, coperture, semipermanente, allungamenti corti</td></tr>
 </table>
 <h2>Monofasico, bifasico, trifasico</h2>
-${F('gel-fasi.svg', 'Tre prodotti, due o uno solo: cosa fa ciascuno.')}
+${F('gel-fasi.svg', 'Trifasico, bifasico e monofasico: base, costruttore e sigillante separati o riuniti in un solo prodotto.')}
 <ul>
 <li><strong>Monofasico</strong>: un solo gel fa da base, costruttore e sigillante. Veloce, meno controllo.</li>
 <li><strong>Bifasico</strong>: base+costruttore in un prodotto, più un sigillante.</li>
@@ -870,7 +870,7 @@ ${F('strato-dispersione.svg', 'L\'ossigeno blocca la reazione in superficie: res
 <li>Alla fine si toglie con il <strong>cleaner</strong> o alcol isopropilico, con una <strong>salvietta pulita per ogni dito</strong>: è gel non polimerizzato e non deve finire sulla pelle.</li>
 <li>I top <strong>no-wipe</strong> sono formulati per non lasciarla.</li>
 </ul>
-<div class="box deep"><strong class="t">Approfondimento: che cosa fa l'ossigeno</strong> <p>Nella polimerizzazione del gel i radicali liberi allungano le catene. L'ossigeno dell'aria reagisce con le estremità delle catene in crescita e le "blocca": in superficie le catene restano corte e lo strato rimane molle e appiccicoso. Sotto, dove l'ossigeno non arriva, la reazione va avanti. Per questo il nome più corretto è <strong>strato di inibizione</strong> (da ossigeno), più che "di dispersione".</p> <ul><li>Lo strato è un gel polimerizzato meno della metà: è <strong>allergizzante</strong>, non va toccato.</li> <li>Se è insolitamente spesso, la causa è spesso la lampada: luce debole, lunghezza d'onda sbagliata, LED sporchi o mano posizionata male.</li> <li>Non è vero che il gel indurisce "dall'alto" o "dal basso": la luce raggiunge tutti gli strati insieme, ma si indebolisce in profondità.</li></ul></div>
+<div class="box deep"><strong class="t">Approfondimento: che cosa fa l'ossigeno</strong> <p>Nella polimerizzazione del gel i radicali liberi allungano le catene. L'ossigeno dell'aria reagisce con le estremità delle catene in crescita e le "blocca": in superficie le catene restano corte e lo strato rimane molle e appiccicoso. Sotto, dove l'ossigeno non arriva, la reazione va avanti. Per questo il nome più corretto è <strong>strato di inibizione</strong> (da ossigeno), più che "di dispersione".</p> <ul><li>Lo strato è gel polimerizzato per meno della metà: è <strong>allergizzante</strong> e non va toccato.</li> <li>Se è insolitamente spesso, la causa è spesso la lampada: luce debole, lunghezza d'onda sbagliata, LED sporchi o mano posizionata male.</li> <li>Non è vero che il gel indurisce "dall'alto" o "dal basso": la luce raggiunge tutti gli strati insieme, ma si indebolisce in profondità.</li></ul></div>
 <h2>Applicare il gel: i passi base</h2>
 <ol class="steps">
 <li>Preparazione completa (modulo 5) e disidratante; primer o bonder se il sistema lo prevede.</li>
@@ -932,7 +932,7 @@ ${F('acrilico-chimica.svg', 'Cosa c\'è nel liquido e nella polvere, e cosa succ
 <tr><td><strong>Inibitore</strong> (es. MEHQ, in tracce): impedisce che il liquido indurisca nel flacone.</td><td>Pigmenti (rosa, bianco, cover, colori).</td></tr>
 <tr><td><strong>Reticolante</strong>: rende il risultato più resistente.</td><td></td></tr>
 </table>
-${B('warn', 'Liquido e polvere della stessa linea', 'La quantità di iniziatore nella polvere è calibrata sul liquido dello stesso produttore. Mescolare marche diverse può dare un acrilico sotto-polimerizzato (più monomero libero, più rischio di allergia) o fragile.')}
+${B('warn', 'Liquido e polvere della stessa linea', 'La quantità di iniziatore nella polvere è calibrata sul liquido dello stesso produttore. Mescolare marche diverse può dare un acrilico sottopolimerizzato (più monomero libero, più rischio di allergia) o fragile.')}
 ${B('danger', 'DMTA e regole UE', 'Un accelerante classico dei liquidi, la DMTA (N,N-dimetil-p-toluidina), è vietato nei cosmetici UE dal 1° settembre 2025 (Reg. UE 2025/877). Controlla l\'INCI dei liquidi che usi e chiedi al fornitore la versione conforme.')}
 <div class="box deep"><strong class="t">Approfondimento: che cosa succede sul pennello</strong> <p>Il monomero liquido bagna le perline di polimero e ne ammorbidisce la superficie. L'accelerante sciolto nel liquido entra nelle perline e incontra il <strong>perossido di benzoile</strong> (circa 1–2% del peso della polvere): il suo legame ossigeno-ossigeno si spezza e nascono i radicali liberi, che uniscono il monomero in catene intorno alle perline.</p> <p>Ecco perché la perla bagnata è un problema: c'è <strong>troppo monomero per l'iniziatore disponibile</strong>. Una parte del liquido non reagisce, resta libera nel prodotto, lo indebolisce e può arrivare alla pelle. La perla troppo asciutta, al contrario, non ha abbastanza liquido per bagnare tutte le perline: restano granuli e porosità.</p></div>
 <h2>La perla</h2>
@@ -959,7 +959,7 @@ ${F('acrilico-dappen.svg', 'Dappen dish, pennello e polvere: immergi, scarica, r
 <ul>
 <li><strong>Temperatura</strong>: con il caldo la reazione accelera, con il freddo rallenta. Lavora in un ambiente temperato e segui la scheda tecnica.</li>
 <li><strong>Quantità di liquido</strong>: perle più bagnate restano lavorabili più a lungo ma induriscono male.</li>
-<li><strong>Tipo di polvere</strong>: esistono polveri a presa rapida e lenta: per imparare scegli una presa lenta.</li>
+<li><strong>Tipo di polvere</strong>: esistono polveri a presa rapida e a presa lenta; per imparare scegli quella lenta.</li>
 </ul>
 <div class="box pro"><strong class="t">Consiglio da professionista: la temperatura del salone</strong> <ul><li>In una stanza calda un acrilico a presa rapida indurisce in fretta e libera tutto il calore in poco tempo: la cliente sente <strong>bruciore</strong>. D'estate preferisci una polvere a presa più lenta.</li> <li>In una stanza fredda la reazione rallenta: la perla resta morbida, scivola e indurisce male. Non scaldare mai il monomero (è infiammabile): porta prodotti e ambiente a temperatura normale.</li> <li>Una polvere di un'altra linea può cambiare i tempi in modo imprevedibile e far scaldare il prodotto.</li></ul> <p>Se cambia la stagione e cambiano i tuoi risultati, prima di cambiare tecnica guarda il termometro.</p></div>
 <h2>Pro e contro</h2>
@@ -995,10 +995,10 @@ ${F('acrilico-dappen.svg', 'Dappen dish, pennello e polvere: immergi, scarica, r
           html: `
 <h2>Polygel (acrygel)</h2>
 ${F('polygel-step.svg', 'Polygel: preleva, taglia, appoggia, modella con slip solution, polimerizza.')}
-<p>Pasta ibrida che unisce caratteristiche di acrilico e gel: densa come una plastilina morbida, si modella con il pennello inumidito di <strong>slip solution</strong> (il liquido indicato dal produttore) e <strong>indurisce solo in lampada</strong>.</p>
+<p>È una pasta ibrida che unisce caratteristiche di acrilico e gel: densa come una plastilina morbida, si modella con il pennello inumidito di <strong>slip solution</strong> (il liquido indicato dal produttore) e <strong>indurisce solo in lampada</strong>.</p>
 <ol class="steps">
 <li>Preparazione e base del sistema, polimerizzata.</li>
-<li>Preleva una piccola quantità con la spatola (pulita, dal tubetto) e tagliala alla misura che serve.</li>
+<li>Preleva dal tubetto una piccola quantità con una spatola pulita e tagliala alla misura che serve.</li>
 <li>Appoggiala al centro dell'unghia o sulla cartina/dual form.</li>
 <li>Inumidisci appena il pennello di slip solution e distribuisci la pasta: zona 3 sottile, apex in zona 2, zona 1 sottile.</li>
 <li>Controlla di profilo e dalla punta; polimerizza con i tempi della scheda tecnica.</li>
@@ -1017,10 +1017,10 @@ ${F('tut-semipermanente.svg', 'Semipermanente passo passo: due strati sottili di
 <li>Top, bordo libero sigillato; lampada; cleaner se il top lo richiede.</li>
 <li>Olio per cuticole a fine servizio.</li>
 </ol>
-<div class="box deep"><strong class="t">Approfondimento: perché i colori scuri vogliono strati più sottili</strong> <p>I pigmenti e i glitter si comportano come tanti piccoli <strong>ombrelli</strong>: assorbono o riflettono la luce prima che arrivi in profondità. In un nero, un rosso scuro o un glitter lo strato in basso riceve molta meno luce di quello in alto e può restare molle, anche se la superficie sembra perfetta.</p> <ul><li>Stendi colori scuri e glitter in strati <strong>molto sottili</strong>, polimerizzando ciascuno per il tempo pieno.</li> <li>Allungare il tempo di lampada non salva uno strato troppo spesso: quando i fotoiniziatori si esauriscono, la reazione si ferma.</li></ul> <p>Segnali di sotto-polimerizzazione: grinze, colore che si sposta sotto il top, semipermanente che si stacca in pellicola.</p></div>
+<div class="box deep"><strong class="t">Approfondimento: perché i colori scuri vogliono strati più sottili</strong> <p>I pigmenti e i glitter si comportano come tanti piccoli <strong>ombrelli</strong>: assorbono o riflettono la luce prima che arrivi in profondità. In un nero, un rosso scuro o un glitter lo strato in basso riceve molta meno luce di quello in alto e può restare molle, anche se la superficie sembra perfetta.</p> <ul><li>Stendi colori scuri e glitter in strati <strong>molto sottili</strong>, polimerizzando ciascuno per il tempo pieno.</li> <li>Allungare il tempo di lampada non salva uno strato troppo spesso: quando i fotoiniziatori si esauriscono, la reazione si ferma.</li></ul> <p>Segnali di sottopolimerizzazione: grinze, colore che si sposta sotto il top, semipermanente che si stacca in pellicola.</p></div>
 <h2>Soft gel tips</h2>
-${F('tut-soft-gel-tips.svg', 'Soft gel tips passo passo.')}
-<p>Tip "full cover" fatti di gel soak-off, che coprono tutta l'unghia. Si incollano con un gel adesivo che indurisce in lampada.</p>
+${F('tut-soft-gel-tips.svg', 'Soft gel tips passo passo: misura, gel adesivo, applicazione con flash cure, lampada e rifinitura.')}
+<p>Sono tip "full cover" in gel soak-off, che coprono tutta l'unghia. Si incollano con un gel adesivo che indurisce in lampada.</p>
 <ol class="steps">
 <li>Preparazione, opacizzazione con grana 180–240, disidratante e primer/bonder.</li>
 <li>Scelta della misura <strong>da solco a solco</strong>, per tutte e dieci le dita prima di iniziare.</li>
@@ -1030,13 +1030,13 @@ ${F('tut-soft-gel-tips.svg', 'Soft gel tips passo passo.')}
 <li>Rifinitura e top. Rimozione con acetone.</li>
 </ol>
 <h2>Fibra di vetro e seta</h2>
-${F('tut-fibra.svg', 'Rinforzo in fibra passo passo.')}
+${F('tut-fibra.svg', 'Rinforzo in fibra passo passo: taglio, resina, attivatore a pennello, limatura e sigillatura.')}
 <p>Un tessuto sottilissimo viene impregnato di <strong>resina cianoacrilica</strong> (la stessa famiglia della colla per tip) e indurito con un <strong>attivatore</strong>. La fibra di vetro è più resistente, la seta più invisibile.</p>
 <ol class="steps">
 <li>Taglia la fibra un po' più piccola dell'unghia, senza toccarla con le dita (si sporca di grasso).</li>
 <li>Strato sottile di resina sull'unghia; appoggia la fibra a circa 1 mm da cuticola e lati.</li>
 <li>Resina sopra la fibra finché diventa trasparente.</li>
-<li>Attivatore <strong>a pennello o a goccia</strong>, poco e da lontano se spray: l'eccesso produce calore.</li>
+<li>Attivatore <strong>a pennello o a goccia</strong>; se usi lo spray, poco e da lontano: l'eccesso produce calore.</li>
 <li>Lima, ripeti se serve un secondo strato, rifinisci.</li>
 </ol>
 ${F('fibra-riparazione.svg', 'Riparare una crepa con la fibra: la toppa supera la crepa di qualche millimetro per lato.')}
@@ -1052,7 +1052,7 @@ ${F('fibra-riparazione.svg', 'Riparare una crepa con la fibra: la toppa supera l
 <h2>Errori frequenti</h2>
 <ul>
 <li>Polygel "annegato" nella slip solution: scivola e si indebolisce.</li>
-<li>Semipermanente in strati spessi per coprire prima: grinze e sotto-polimerizzazione.</li>
+<li>Semipermanente in strati spessi per coprire prima: grinze e sottopolimerizzazione.</li>
 <li>Soft gel tip troppo stretto: preme sulle pieghe, si solleva ai lati.</li>
 <li>Attivatore spray abbondante e vicino: bruciore e resina opaca.</li>
 </ul>
@@ -1070,7 +1070,7 @@ ${F('fibra-riparazione.svg', 'Riparare una crepa con la fibra: la toppa supera l
           min: 11,
           simple: "Ogni gel \"si accende\" con una certa luce: usa la lampada consigliata per quel gel. Contano le lunghezze d'onda e l'intensità che arriva sull'unghia, non i watt scritti sulla scatola.",
           html: `
-${F('lampade.svg', 'Bande di emissione tipiche delle lampade.')}
+${F('lampade.svg', 'Bande di emissione tipiche delle lampade UV, LED e dual, in nanometri.')}
 <h2>Che luce fanno le lampade</h2>
 <p>La luce si misura in <strong>nanometri (nm)</strong>: è la sua "lunghezza d'onda". Gli ultravioletti A (UVA) vanno circa da 315 a 400 nm; oltre 400 nm inizia la luce visibile viola. I fotoiniziatori dei gel reagiscono solo a certe lunghezze d'onda.</p>
 <table>
@@ -1085,7 +1085,7 @@ ${F('lampada-watt-vs-nm.svg', 'Due lampade: i watt dicono quanta corrente consum
 <ul>
 <li>I <strong>watt</strong> indicano quanta corrente consuma la lampada, non quanta luce utile arriva sull'unghia. Una LED da pochi watt può polimerizzare meglio di una UV da 36 W.</li>
 <li>Conta l'<strong>irradianza</strong> (luce che arriva sulla superficie) alle <strong>lunghezze d'onda giuste</strong>.</li>
-<li>Lampada "sbagliata" o debole → gel <strong>sotto-polimerizzato</strong>: sembra duro, ma sotto resta crudo (sollevamenti, grinze, allergie).</li>
+<li>Lampada "sbagliata" o debole → gel <strong>sottopolimerizzato</strong>: sembra duro, ma sotto resta crudo (sollevamenti, grinze, allergie).</li>
 <li>Lampada troppo potente per quel gel → <strong>picco di calore</strong> e prodotto fragile.</li>
 </ul>
 ${B('warn', 'Le lampade "senza UV"', 'Una lampada che non emette nulla tra 365 e 405 nm non può polimerizzare la maggior parte dei gel. Le scritte "UV-free" spesso indicano solo che la luce è intorno ai 405 nm, cioè al confine tra UV e visibile. Fidati della scheda tecnica, non dello slogan.')}
@@ -1142,7 +1142,7 @@ ${F('tre-documenti.svg', 'Etichetta, scheda tecnica e scheda di sicurezza: a cos
 <li>Gli ingredienti sono elencati con nomi internazionali (INCI), in ordine decrescente di quantità (sotto l'1% in ordine libero).</li>
 <li>Nomi da riconoscere: <strong>HEMA</strong>, <strong>Di-HEMA Trimethylhexyl Dicarbamate</strong> (ammessi solo per uso professionale), <strong>Trimethylbenzoyl Diphenylphosphine Oxide</strong> (TPO, vietato), <strong>Dimethyltolylamine</strong> (DMTA, vietata), <strong>Ethyl Methacrylate</strong> (EMA, monomero dell'acrilico).</li>
 </ul>
-${F('sds-sezioni.svg', 'Le sezioni della SDS più utili in salone.')}
+${F('sds-sezioni.svg', 'Le cinque sezioni della SDS più utili in salone: 2, 4, 7, 8 e 13.')}
 <div class="box case"><strong class="t">Caso pratico</strong> <p>Su un builder gel leggi: <em>Di-HEMA Trimethylhexyl Dicarbamate, Hydroxypropyl Methacrylate, HEMA, Ethyl Trimethylbenzoyl Phenylphosphinate, Silica...</em>. Come lo interpreti?</p> <ul><li>I primi ingredienti sono i "mattoni" (oligomeri e monomeri): c'è HEMA, quindi in etichetta devono esserci «Solo per uso professionale» e «Può provocare una reazione allergica».</li> <li><em>Ethyl Trimethylbenzoyl Phenylphosphinate</em> è il TPO-L, un fotoiniziatore ammesso e diverso dal TPO vietato. Non confonderli: il nome del TPO vietato è <em>Trimethylbenzoyl Diphenylphosphine Oxide</em>.</li> <li>Non c'è <em>Dimethyltolylamine</em> (DMTA).</li></ul> <p>Conclusione: prodotto utilizzabile, se le avvertenze sono presenti in italiano. Conserva la scheda tecnica per i tempi di lampada, che con il TPO-L possono essere diversi.</p></div>
 <h2>Le sezioni SDS che userai di più</h2>
 <ol class="steps">
@@ -1183,7 +1183,7 @@ ${B('tip', 'Un raccoglitore per tutto', 'Tieni una cartella (anche digitale) con
           simple: "Il dip è una polvere colorata che si fissa con una resina e un attivatore, senza lampada. Le press-on sono unghie già pronte da incollare. Sono veloci, ma hanno regole d'igiene e di sicurezza precise.",
           html: `
 <h2>Dip powder (polvere a immersione)</h2>
-<p>Sistema senza lampada in tre o quattro prodotti:</p>
+<p>È un sistema senza lampada, composto da tre o quattro prodotti:</p>
 <ul>
 <li><strong>Base</strong>: resina cianoacrilica a presa rapida.</li>
 <li><strong>Polvere</strong>: perline fini di PMMA con pigmenti e iniziatore.</li>
@@ -1266,8 +1266,8 @@ ${F('lime-forme-anime.svg', 'Dritta, banana, mezzaluna, ovale, buffer: forma e a
 <li><strong>Dritta</strong>: per lati e bordo libero; aiuta a fare lati paralleli.</li>
 <li><strong>Banana / mezzaluna</strong>: curve, seguono la zona cuticolare e affaticano meno il polso.</li>
 <li><strong>Ovale</strong>: larga, copre più superficie.</li>
-<li><strong>Anima rigida</strong> (legno, plastica): trasmette più forza, adatta alle grane basse e alla forma.</li>
-<li><strong>Anima morbida</strong> (spugna): si adatta alla curva, adatta a buffer e rifinitura.</li>
+<li><strong>Anima rigida</strong> (legno, plastica): trasmette più forza; indicata per le grane basse e per dare forma.</li>
+<li><strong>Anima morbida</strong> (spugna): segue la curva dell'unghia; ideale per buffer e rifinitura.</li>
 </ul>
 <h2>Igiene: monouso o disinfettabile?</h2>
 ${F('lime-igiene.svg', 'Lima porosa = monouso; vetro e metallo = si puliscono e si disinfettano.')}
@@ -1331,7 +1331,7 @@ ${F('punte-fresa.svg', 'Forme delle punte, codici colore e velocità indicative.
 <tr><td><strong>Bande abrasive</strong> (carta su mandrino in gomma)</td><td>Come una lima.</td><td>Superfici, opacizzazione a bassa velocità.</td><td>Mai riusate: sono <strong>monouso</strong>.</td></tr>
 </table>
 <h2>Codici colore (indicativi)</h2>
-<p>Variano tra i marchi: controlla sempre la tabella del produttore. Il più comune: <strong>giallo</strong> extra-fine, <strong>rosso</strong> fine, <strong>blu</strong> media, <strong>verde</strong> grossa, <strong>nero</strong> extra-grossa. Per il carburo la grana si capisce anche dalle scanalature: larghe e profonde = grossa, strette e basse = fine.</p>
+<p>Variano tra i marchi: controlla sempre la tabella del produttore. Lo schema più comune: <strong>giallo</strong> extra-fine, <strong>rosso</strong> fine, <strong>blu</strong> media, <strong>verde</strong> grossa, <strong>nero</strong> extra-grossa. Per il carburo la grana si capisce anche dalle scanalature: larghe e profonde = grossa, strette e basse = fine.</p>
 <h2>Le forme e a cosa servono</h2>
 ${F('punte-forme.svg', 'Cilindro, cilindro di sicurezza, cono, fiamma, pallina, ago: dove si usa ciascuna.')}
 <table>
@@ -1353,7 +1353,7 @@ ${F('fresa-rpm-scala.svg', 'Scala delle velocità: più vicino alla pelle, più 
 <tr><td>Accorciare e togliere molto prodotto (operatrice esperta)</td><td>circa 15.000–25.000 RPM</td></tr>
 <tr><td>Velocità massima (25.000–35.000)</td><td><strong>Mai durante il servizio</strong></td></tr>
 </table>
-${B('info', 'Perché tanti numeri diversi', 'Le fonti divergono molto: per la zona cuticolare si va da 2.000–5.000 RPM (manuali d\'esame USA) a 5.000–12.000 (alcune accademie); per la rimozione da 12.000–15.000 fino a 20.000–30.000. Dipende da punta, fresa e esperienza. <strong>Per chi inizia</strong>: parti dal valore più basso e alza a piccoli passi solo se la punta "salta" o non scorre.')}
+${B('info', 'Perché tanti numeri diversi', 'Le fonti divergono molto: per la zona cuticolare si va da 2.000–5.000 RPM (manuali d\'esame USA) a 5.000–12.000 (alcune accademie); per la rimozione da 12.000–15.000 fino a 20.000–30.000. Dipende da punta, fresa ed esperienza. <strong>Per chi inizia</strong>: parti dal valore più basso e alza a piccoli passi solo se la punta "salta" o non scorre.')}
 <div class="box pro"><strong class="t">Consiglio da professionista: impara con il manipolo, non con i giri</strong> <ul><li>Allenati su tip incollati a una ruota di tip: lavora a 5.000–8.000 RPM finché il movimento è fluido e la punta resta parallela. Solo dopo aumenta.</li> <li>Ascolta il motore: se cala di giri quando appoggi la punta, stai premendo troppo o la fresa non ha coppia sufficiente.</li> <li>Impara il <strong>senso di rotazione</strong>: in avanti la punta "tira" verso un lato, all'indietro verso l'altro. Chi è mancina spesso lavora al contrario: segui il verso di taglio indicato sulla punta.</li> <li>Prima di usare la fresa sulla zona cuticolare di una cliente, fai pratica su pelle sintetica o con una formatrice.</li></ul></div>
 <h2>Tecnica sicura in 8 passi</h2>
 ${F('fresa-angolo.svg', 'Punta parallela alla lamina (✓); punta inclinata che scava "anelli di fuoco" (✗).')}
@@ -1407,7 +1407,7 @@ ${F('kit-priorita.svg', 'Cosa comprare subito, dopo qualche mese e più avanti.'
 <tr><th>Subito (indispensabile)</th><th>Dopo qualche mese</th><th>Più avanti</th></tr>
 <tr><td>Lampada consigliata dal produttore; aspiratore da tavolo; DPI; sistema gel trifasico (base, builder trasparente e rosa, top); disidratante e primer; cleaner e acetone; lime 100/180 e 240, buffer; spingicuticole, curetta, tronchesine; bastoncini d'arancio; tip e colla; cartine; pennelli per gel; mano da allenamento e ruota di tip</td><td>Fresa professionale con poche punte (diamantata fine a pallina o fiamma, cilindro di sicurezza, carburo medio); gel cover; semipermanenti in pochi colori; pennelli per nail art e dotter</td><td>Sistema acrilico (liquido, polveri, pennello 8–12, dappen); polygel; effetti (chrome, cat-eye); stampini</td></tr>
 </table>
-<div class="box case"><strong class="t">Caso pratico</strong> <p>Trovi un kit "completo" con lampada "universale", 30 colori e gel a un prezzo molto basso. Conviene per iniziare? Ragiona così: la lampada non indica per quali prodotti è testata, i gel non hanno scheda tecnica, i colori non ti servono finché non sai costruire.</p> <p>Il rischio concreto è la <strong>sotto-polimerizzazione</strong>: il gel sembra duro, ma resta crudo sotto, si solleva e può sensibilizzare te e le clienti. Meglio un sistema trifasico con la sua lampada e pochi colori, più aspiratore e DPI. Spendi meno in colori e più in ciò che ti fa lavorare sicura.</p></div>
+<div class="box case"><strong class="t">Caso pratico</strong> <p>Trovi un kit "completo" con lampada "universale", 30 colori e gel a un prezzo molto basso. Conviene per iniziare? Ragiona così: la lampada non indica per quali prodotti è testata, i gel non hanno scheda tecnica, i colori non ti servono finché non sai costruire.</p> <p>Il rischio concreto è la <strong>sottopolimerizzazione</strong>: il gel sembra duro, ma resta crudo sotto, si solleva e può sensibilizzare te e le clienti. Meglio un sistema trifasico con la sua lampada e pochi colori, più aspiratore e DPI. Spendi meno in colori e più in ciò che ti fa lavorare sicura.</p></div>
 <h2>Attrezzature</h2>
 <ul>
 <li><strong>Lampada</strong> UV/LED o dual, adatta al tuo sistema.</li>
@@ -1426,7 +1426,7 @@ ${F('kit-priorita.svg', 'Cosa comprare subito, dopo qualche mese e più avanti.'
 <li>DPI: guanti in nitrile in più taglie, mascherine FFP2, occhiali.</li>
 <li>Disinfettanti per superfici e strumenti con scheda tecnica e SDS.</li>
 </ul>
-${F('pennelli.svg', 'I pennelli principali e il loro uso.')}
+${F('pennelli.svg', 'I pennelli principali e il loro uso: piatto e ovale per il gel, tondo per l\'acrilico, liner, ventaglio e dotter.')}
 ${F('tip-tipi.svg', 'Tip con incavo, a contatto e scala delle misure.')}
 <h2>Come scegliere i prodotti</h2>
 <ol class="steps">
@@ -1461,7 +1461,7 @@ ${B('tip', 'Consiglio d\'acquisto', 'Scegli un sistema completo di un solo produ
           simple: "Ogni pennello ha il suo lavoro: piatto o ovale per il gel, tondo per l'acrilico, sottile per i dettagli. Gli strumenti di metallo (spingicuticole, curetta, tronchesine) vanno usati con delicatezza e sterilizzati.",
           html: `
 <h2>I pennelli</h2>
-${F('pennelli.svg', 'I pennelli principali e il loro uso.')}
+${F('pennelli.svg', 'I pennelli principali e il loro uso: piatto e ovale per il gel, tondo per l\'acrilico, liner, ventaglio e dotter.')}
 <table>
 <tr><th>Pennello</th><th>Forma e setole</th><th>Uso</th><th>Pulizia</th></tr>
 <tr><td><strong>Gel piatto / ovale</strong></td><td>Setole sintetiche, punta piatta, quadrata o ovale.</td><td>Stendere base, builder, cover; la punta ovale aiuta lungo la cuticola.</td><td>Togli il gel con una salvietta; usa il cleaner solo se indicato dal produttore. Chiudi con il cappuccio e tienilo lontano dalla luce.</td></tr>
@@ -1517,14 +1517,14 @@ ${F('strumenti-manuali.svg', 'Spingicuticole, curetta, tronchesine, tagliatip, p
           simple: "Una postazione ordinata, ben illuminata e con l'aspiratore vicino alle mani ti fa lavorare meglio e ti protegge la schiena, il collo e i polsi.",
           html: `
 <p>Una ricostruzione dura anche un'ora e mezza. Ripetuta più volte al giorno, una postura sbagliata dà dolori a collo, spalle, schiena e polsi. Una postazione ben pensata migliora anche igiene e qualità del lavoro.</p>
-${F('postura-tavolo.svg', 'Postura corretta e postura scorretta al tavolo.')}
+${F('postura-tavolo.svg', 'Postura corretta (schiena dritta, avambracci appoggiati, piedi a terra) e scorretta (collo piegato, gomiti sospesi, mano lontana).')}
 <h2>Postura</h2>
 <ul>
 <li><strong>Sedia regolabile</strong> con schienale: piedi appoggiati a terra, ginocchia circa ad angolo retto.</li>
 <li><strong>Avambracci appoggiati</strong> al tavolo; spalle rilassate, non sollevate.</li>
 <li>Avvicina la mano della cliente a te (cuscinetto poggiamano) invece di piegarti in avanti.</li>
 <li>Schiena dritta: piega appena la testa, non tutto il busto.</li>
-<li>Fai brevi pause tra un cliente e l'altro e muovi collo, spalle e polsi.</li>
+<li>Fai brevi pause tra una cliente e l'altra e muovi collo, spalle e polsi.</li>
 </ul>
 <div class="box deep"><strong class="t">Approfondimento: che cosa dicono gli studi</strong> <p>Le ricerche sulle onicotecniche concordano: il disturbo più frequente è il <strong>dolore al collo</strong>. In uno studio iraniano su 80 operatrici lo riferiva il 63,8%, seguito da dolore alla parte alta della schiena (51%) e alle spalle (41%). In un sondaggio canadese su 155 operatrici, chi lavorava più di 30 ore a settimana aveva più spesso dolore al collo. Il NIOSH statunitense ha osservato nei saloni collo e spalle piegati in avanti per molto tempo.</p> <p>Il messaggio: il problema non è un movimento sbagliato, ma la <strong>posizione mantenuta</strong> per ore. Alza la mano della cliente con un poggiamano più alto, alterna i compiti e programma micro-pause.</p></div>
 <h2>Luce</h2>
