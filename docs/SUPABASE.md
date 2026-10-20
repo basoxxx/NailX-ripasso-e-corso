@@ -1,7 +1,7 @@
 # Attivare l'area online (Supabase)
 
 Senza questa configurazione il sito funziona comunque: i progressi restano nel browser e
-l'attestato è "in autovalutazione". Con Supabase si attivano login via e-mail, progressi
+l'attestato è "in autovalutazione". Con Supabase si attivano login con password o link via e-mail, progressi
 sincronizzati, esame corretto dal server, attestato con QR code verificabile e area account (GDPR).
 
 ## Stato attuale (13 ottobre 2026)
@@ -46,7 +46,12 @@ applicate dal **SQL Editor** (incollando il file) oppure chiedendolo a Claude co
    <p>Se non hai chiesto tu l'accesso, ignora questa e-mail.</p>
    ```
 
-4. **Prima di aprire alle allieve**: il servizio e-mail incluso in Supabase invia pochissime e-mail all'ora
+4. **Accesso con password** (il sito offre sia password sia link via e-mail). Il servizio e-mail incluso
+   in Supabase invia solo **2 e-mail all'ora** (oltre risponde `429 email rate limit exceeded`), quindi:
+   - **Authentication → Sign In / Providers → Email**: disattiva **Confirm email**, così chi si registra con la
+     password entra subito senza aspettare nessuna e-mail;
+   - chi si era registrato con il link può accedere un'ultima volta col link e impostare la password dalla pagina **Account**.
+5. **Prima di aprire alle allieve**: il servizio e-mail incluso in Supabase invia pochissime e-mail all'ora
    ed è pensato per le prove. Configura un **SMTP personalizzato** (*Authentication → Emails → SMTP Settings*).
 
 Queste impostazioni non passano dall'integrazione GitHub: vanno fatte una volta dalla dashboard.
@@ -74,7 +79,7 @@ la configurazione nel sito pubblicato.
 
 ## 4. Prova
 
-1. Apri il sito → **Accedi** → inserisci la tua e-mail → apri il link ricevuto.
+1. Apri il sito → **Accedi** → **Registrati** con e-mail e password (oppure ricevi il link via e-mail).
 2. Segna qualche lezione, apri il sito da un altro dispositivo con la stessa e-mail: i progressi ci sono.
 3. Completa le lezioni, supera l'**esame finale** (≥ 80%), registra l'**attestato**, inquadra il QR code.
 

@@ -22,6 +22,25 @@
     });
   }
   function errMsg(e) { return (e && (e.message || e.error_description)) || 'Errore imprevisto, riprova.'; }
+  // messaggi di Supabase Auth tradotti e con un suggerimento pratico
+  function authMsg(e, mode) {
+    var m = (e && e.message) || '', code = (e && e.code) || '';
+    if (code === 'over_email_send_rate_limit' || e && e.status === 429 || /rate limit/i.test(m))
+      return 'Sono state inviate troppe e-mail in poco tempo: riprova tra circa un\'ora' + (mode === 'link' || mode === 'signup' ? ' oppure, se hai già una password, accedi con e-mail e password.' : '.');
+    if (code === 'invalid_credentials' || /invalid login credentials/i.test(m))
+      return 'E-mail o password errate. Se finora entravi con il link via e-mail non hai ancora una password: scegli «Ricevi un link via e-mail» e poi impostala dalla pagina Account.';
+    if (code === 'email_not_confirmed' || /email not confirmed/i.test(m))
+      return 'Devi prima confermare l\'e-mail aprendo il link che ti abbiamo inviato.';
+    if (code === 'weak_password' || /password should|password is too/i.test(m))
+      return 'Password troppo debole: usa almeno 8 caratteri, meglio se con lettere e numeri.';
+    if (code === 'same_password' || /should be different/i.test(m))
+      return 'La nuova password deve essere diversa da quella attuale.';
+    if (code === 'user_already_exists' || /already registered/i.test(m))
+      return 'Esiste già un account con questa e-mail: accedi con la password o ricevi un link.';
+    if (code === 'signup_disabled' || /signups not allowed/i.test(m))
+      return 'Le nuove registrazioni sono momentaneamente chiuse.';
+    return errMsg(e);
+  }
 
   /* ---------- client ---------- */
   var clientP = null;
@@ -296,30 +315,66 @@
     root.innerHTML = '<p class="muted">Caricamento…</p>';
     ready.then(function () { session ? loggedIn() : loggedOut(); });
 
-    function loggedOut() {
-      root.innerHTML = '<form class="card cert-form" id="lform"><h2 style="margin-top:.2rem">Accedi o registrati</h2>' +
-        '<p>Inserisci la tua e-mail: riceverai un <strong>link di accesso</strong> (nessuna password da ricordare).</p>' +
+    function loggedOut(mode) {
+      mode = mode || 'login'; // login | signup | link
+      var needPw = mode !== 'link', newUser = mode !== 'login';
+      var title = { login: 'Accedi', signup: 'Crea il tuo account', link: 'Accedi con un link via e-mail' }[mode];
+      var intro = {
+        login: 'Inserisci e-mail e password del tuo account.',
+        signup: 'Scegli una password di almeno 8 caratteri: la userai per accedere da ogni dispositivo.',
+        link: 'Riceverai un <strong>link di accesso</strong> via e-mail. Utile se non hai ancora una password o l\'hai dimenticata: dopo l\'accesso puoi impostarne una nuova dalla pagina Account.'
+      }[mode];
+      root.innerHTML = '<form class="card cert-form" id="lform"><h2 style="margin-top:.2rem">' + title + '</h2><p>' + intro + '</p>' +
         '<label for="lemail"><strong>E-mail</strong></label><div class="row"><input id="lemail" class="search" type="email" required autocomplete="email" placeholder="nome@esempio.it"></div>' +
-        '<ul class="checklist"><li><label><input type="checkbox" id="lpriv" required> <span>Ho letto l\'<a href="privacy.html" target="_blank">informativa privacy</a> e ' +
-        'chiedo di creare l\'account per seguire il corso e ottenere l\'attestato.</span></label></li>' +
-        '<li><label><input type="checkbox" id="lage" required> <span>Dichiaro di avere almeno 14 anni.</span></label></li></ul>' +
-        '<button class="btn" type="submit">Inviami il link</button><div id="lmsg" aria-live="polite"></div></form>' +
+        (needPw ? '<label for="lpw"><strong>Password</strong></label><div class="row"><input id="lpw" class="search" type="password" required minlength="' + (newUser ? 8 : 1) + '" autocomplete="' +
+          (newUser ? 'new-password' : 'current-password') + '"></div>' : '') +
+        (newUser ? '<ul class="checklist"><li><label><input type="checkbox" id="lpriv" required> <span>Ho letto l\'<a href="privacy.html" target="_blank">informativa privacy</a> e ' +
+          'chiedo di creare l\'account per seguire il corso e ottenere l\'attestato.</span></label></li>' +
+          '<li><label><input type="checkbox" id="lage" required> <span>Dichiaro di avere almeno 14 anni.</span></label></li></ul>' : '') +
+        '<button class="btn" type="submit">' + { login: 'Accedi', signup: 'Crea account', link: 'Inviami il link' }[mode] + '</button><div id="lmsg" aria-live="polite"></div>' +
+        '<p class="muted" style="margin-bottom:0"><small>' + {
+          login: 'Non hai un account? <a href="#" data-mode="signup">Registrati</a> · Password dimenticata o mai impostata? <a href="#" data-mode="link">Ricevi un link via e-mail</a>',
+          signup: 'Hai già un account? <a href="#" data-mode="login">Accedi</a>',
+          link: '<a href="#" data-mode="login">Accedi con la password</a> · <a href="#" data-mode="signup">Registrati</a>'
+        }[mode] + '</small></p></form>' +
         '<p class="muted"><small>Puoi seguire tutto il corso anche senza account: l\'account serve a salvare i progressi online e a ottenere l\'attestato verificabile.</small></p>';
+      root.querySelectorAll('[data-mode]').forEach(function (l) {
+        l.addEventListener('click', function (e) {
+          e.preventDefault();
+          var email = root.querySelector('#lemail').value;
+          loggedOut(l.dataset.mode);
+          root.querySelector('#lemail').value = email;
+        });
+      });
       root.querySelector('#lform').addEventListener('submit', function (e) {
         e.preventDefault();
         var email = root.querySelector('#lemail').value.trim(), msg = root.querySelector('#lmsg');
-        if (!root.querySelector('#lpriv').checked || !root.querySelector('#lage').checked) {
+        var pw = needPw ? root.querySelector('#lpw').value : '';
+        if (newUser && (!root.querySelector('#lpriv').checked || !root.querySelector('#lage').checked)) {
           msg.innerHTML = '<div class="box warn">Per continuare conferma le due caselle.</div>'; return;
         }
-        var redirect = new URL('accedi.html', location.href).href;
-        msg.innerHTML = '<p class="muted">Invio in corso…</p>';
+        var btn = root.querySelector('#lform button[type=submit]'); btn.disabled = true;
+        var redirect = new URL('accedi.html', location.href).href, opts = { emailRedirectTo: redirect, data: { privacy_version: C.privacyVersion || '' } };
+        msg.innerHTML = '<p class="muted">' + (mode === 'link' ? 'Invio in corso…' : 'Attendi…') + '</p>';
         client().then(function (sb) {
-          return sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirect, data: { privacy_version: C.privacyVersion || '' } } });
+          if (mode === 'login') return sb.auth.signInWithPassword({ email: email, password: pw });
+          if (mode === 'signup') return sb.auth.signUp({ email: email, password: pw, options: opts });
+          return sb.auth.signInWithOtp({ email: email, options: opts });
         }).then(function (r) {
           if (r.error) throw r.error;
-          msg.innerHTML = '<div class="box tip"><strong class="t">Controlla la posta</strong>Abbiamo inviato un link a ' + esc(email) +
-            '. Aprilo da questo dispositivo per accedere. Se non lo trovi, guarda nello spam.</div>';
-        }).catch(function (err) { msg.innerHTML = '<div class="box danger">' + esc(errMsg(err)) + '</div>'; });
+          if (r.data && r.data.session) { session = r.data.session; navLabel(); loggedIn(); return; }
+          btn.disabled = false;
+          if (mode === 'signup' && r.data && r.data.user && r.data.user.identities && !r.data.user.identities.length) {
+            msg.innerHTML = '<div class="box warn">Esiste già un account con questa e-mail: <a href="#" data-mode="login">accedi</a>. ' +
+              'Se finora entravi con il link via e-mail, <a href="#" data-mode="link">ricevi un link</a> e imposta la password dalla pagina Account.</div>';
+            msg.querySelectorAll('[data-mode]').forEach(function (l) {
+              l.addEventListener('click', function (ev) { ev.preventDefault(); loggedOut(l.dataset.mode); root.querySelector('#lemail').value = email; });
+            });
+            return;
+          }
+          msg.innerHTML = '<div class="box tip"><strong class="t">Controlla la posta</strong>Abbiamo inviato ' +
+            (mode === 'signup' ? 'un link di conferma' : 'un link') + ' a ' + esc(email) + '. Aprilo da questo dispositivo per accedere. Se non lo trovi, guarda nello spam.</div>';
+        }).catch(function (err) { btn.disabled = false; msg.innerHTML = '<div class="box danger">' + esc(authMsg(err, mode)) + '</div>'; });
       });
     }
 
@@ -330,12 +385,29 @@
         '<p class="muted"><small>I progressi vengono salvati automaticamente nel tuo account e li ritrovi su ogni dispositivo.</small></p>' +
         '<div class="btn-row"><a class="btn" href="corso.html">Continua il corso</a><a class="btn ghost" href="attestato.html">Attestato</a>' +
         '<button class="btn ghost" id="async" type="button">Sincronizza ora</button><button class="btn ghost" id="aout" type="button">Esci</button></div></div>' +
+        '<form class="card cert-form" id="pform" style="margin-top:1rem"><h3 style="margin-top:.2rem">Password</h3>' +
+        '<p>Imposta o cambia la password per accedere senza aspettare l\'e-mail con il link.</p>' +
+        '<label for="pnew"><strong>Nuova password</strong> <small class="muted">(almeno 8 caratteri)</small></label><div class="row"><input id="pnew" class="search" type="password" required minlength="8" autocomplete="new-password"></div>' +
+        '<label for="pnew2"><strong>Ripeti la password</strong></label><div class="row"><input id="pnew2" class="search" type="password" required minlength="8" autocomplete="new-password"></div>' +
+        '<button class="btn" type="submit">Salva password</button><div id="pmsg" aria-live="polite"></div></form>' +
         '<div class="card" style="margin-top:1rem"><h3 style="margin-top:.2rem">I tuoi dati (GDPR)</h3>' +
         '<p>Puoi scaricare una copia di tutti i dati che conserviamo su di te, oppure cancellare definitivamente l\'account. ' +
         'Dettagli nell\'<a href="privacy.html">informativa privacy</a>.</p>' +
         '<div class="btn-row"><button class="btn ghost" id="aexport" type="button">Scarica i miei dati (JSON)</button>' +
         '<button class="btn ghost danger-btn" id="adel" type="button">Elimina account</button></div><div id="amsg" aria-live="polite"></div></div>';
       var msg = root.querySelector('#amsg');
+      root.querySelector('#pform').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var f = this, pmsg = root.querySelector('#pmsg'), pw = root.querySelector('#pnew').value;
+        if (pw !== root.querySelector('#pnew2').value) { pmsg.innerHTML = '<div class="box warn">Le due password non coincidono.</div>'; return; }
+        var b = f.querySelector('button'); b.disabled = true;
+        client().then(function (sb) { return sb.auth.updateUser({ password: pw }); }).then(function (r) {
+          if (r.error) throw r.error;
+          f.reset();
+          pmsg.innerHTML = '<div class="box tip">Password salvata: da ora puoi accedere con e-mail e password.</div>';
+        }).catch(function (err) { pmsg.innerHTML = '<div class="box danger">' + esc(authMsg(err)) + '</div>'; })
+          .then(function () { b.disabled = false; });
+      });
       root.querySelector('#async').addEventListener('click', function () {
         var b = this; b.disabled = true;
         push(true).then(pull).then(function () { b.disabled = false; b.textContent = 'Sincronizzato ✓'; });
